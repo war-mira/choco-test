@@ -7,12 +7,14 @@
     @include('partials.google-analytics')
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{URL::asset("css/bootstrap-datetimepicker.min.css")}}">
     <link rel="stylesheet" href="{{URL::asset("bxslider/jquery.bxslider.min.css")}}">
     <link rel="stylesheet" href="{{asset("css/cabinet.css?2v346gh")}}">
     <link rel="stylesheet" href="{{ URL::asset('css/main.css?v2346h2') }}">
     <link href="{{URL::asset('css/select2.min.css')}}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{{asset('js/bootstrap-datetimepicker.min.js')}}"></script>
     <link rel="stylesheet" href="{{asset('css/material-switch.css')}}">
     <script src="{{URL::asset("bxslider/jquery.bxslider.min.js")}}" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-formhelpers.min.css')}}">
@@ -39,9 +41,10 @@
 
     <script src="{{asset("vendor/bootstrap-slider/bootstrap-slider.min.js")}}"></script>
     <script src="{{asset('js/infinite-paginator.js?2vg346gh')}}"></script>
+    <script src="{{asset('js/infinite-paginator.js?2vg346gh')}}"></script>
 
     <link rel="stylesheet" href="{{asset("css/typography.css?cv23v46bh")}}">
-    <script src="{{asset('js/typography.js?2v34b6h')}}"></script>
+    <script src="{{asset('js/moment.min.js')}}"></script>
 
     <script>
         function copyToClipboard(id) {

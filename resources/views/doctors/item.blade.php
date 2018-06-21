@@ -175,6 +175,16 @@
                                    readonly="readonly"
                                     @endif>
                         </div>
+                        <div class="form__group desktop-ditetime" id="datetime-group">
+                            <label>*Время и дата приема</label><br>
+                            <input class="form-control datepicker" required
+                                   name="client_datetime" id="client_datetime" type="text">
+                        </div>
+                        <div class="form__group mobile-ditetime" id="datetime-group">
+                            <label>*Время и дата приема</label><br>
+                            <input class="form-control datepicker"
+                                   name="client_datetime_2" type="datetime-local">
+                        </div>
                         <div class="form__group">
                             <label>Email</label><br>
                             <input class="form-control " name="client_email" id="client_email" type="text"
@@ -288,6 +298,22 @@
     <!-- begin section -->
 
     <script type="text/javascript">
+        $(function () {
+            $('#client_datetime').datetimepicker();
+        });
+
+        var mobile_detetime = $('.mobile-ditetime');
+        var desktop_detetime = $('.desktop-ditetime');
+        if(mobile_detetime.is(":visible")){
+            mobile_detetime.find('.datepicker').prop('required',true);
+            desktop_detetime.find('.datepicker').removeAttr( "name" );
+            desktop_detetime.find('.datepicker').prop('required', false);
+        }else{
+            desktop_detetime.find('.datepicker').prop('required',true);
+            mobile_detetime.find('.datepicker').removeAttr( "name" );
+            mobile_detetime.find('.datepicker').prop('required', false);
+        }
+
         $phoneInput = $('.bfh-phone');
         $phoneInput.bfhphone($phoneInput.data());
 

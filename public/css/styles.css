@@ -177,3 +177,16 @@
 a.link-primary, a.link-primary:visited, a.link-primary:link {
     color: #399;
 }
+
+.mobile-ditetime{
+    display: none;
+}
+
+@media (max-width: 720px) {
+    .desktop-ditetime{
+        display: none;
+    }
+    .mobile-ditetime{
+        display: block;
+    }
+}

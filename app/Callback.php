@@ -33,6 +33,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $client_name
  * @property string|null $event_date
  * @property string $client_phone
+ * @property int|null $client_datetime
  * @property string|null $operator_comment
  * @property string $source
  * @property int|null $target_id
@@ -89,6 +90,7 @@ class Callback extends Model
         'source_name',
         'status_name'
     ];
+    protected $dates = ['client_datetime'];
 
     public function order()
     {

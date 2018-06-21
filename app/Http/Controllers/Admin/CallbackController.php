@@ -7,6 +7,7 @@ use App\Helpers\BootstrapTableHelper;
 use App\Helpers\FormatHelper;
 use App\Http\Controllers\Controller;
 use App\Order;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CallbackController extends Controller
@@ -64,15 +65,22 @@ class CallbackController extends Controller
     {
         $redirectRoute = $request->query('redirect', null);
         $data = $this->processRequestData($request);
-
         $callback = Callback::find($id);
+
+        if (isset($data['client_datetime']))
+            $data['client_datetime'] = Carbon::createFromFormat("Y-m-d\TH:i", $data['client_datetime']);
+        $callback->client_datetime = $data['client_datetime'];
         $callback->fill($data);
         $callback->save();
 
-        if ($redirectRoute != null) {
-            $response = redirect(route($redirectRoute, ['id' => $callback->id]));
-        } else
-            $response = $callback;
+        if($request->input('action') && $request->input('action') == 'send_order'){
+            $order = $this->createOrderFrom($callback->id);
+            $response = redirect(route('admin.orders.form', ['id' => $order]));
+        }else{
+            if ($redirectRoute != null) {
+                $response = redirect(route($redirectRoute, ['id' => $callback->id]));
+            }
+        }
 
         return $response;
     }
@@ -104,25 +112,29 @@ class CallbackController extends Controller
         $callback = Callback::find($id);
         $callback->status = 2;
         $callback->save();
-        if ($callback->order()->exists())
-            return redirect(route('admin.orders.form', ['id' => $callback->order->id]));
-        $data = [
-            'callback_id' => $id,
-            'city_id' => $callback['city_id'] ?? null,
-            'operator_id' => $callback['operator_id'] ?? null,
-            'client_id' => $callback['client_id'] ?? null,
-            'phone' => FormatHelper::phone($callback['client_phone'] ?? null),
-            'client_name' => $callback['client_name'],
-            'status' => 0,
-            'from_internet' => 1
-        ];
 
-        if ($callback['target_type'] == 'Doctor')
-            $data['doc_id'] = $callback['target_id'];
-        else if ($callback['target_type'] == 'Medcenter')
-            $data['med_id'] = $callback['target_id'];
-        $order = Order::create($data);
+        if (!$callback->order()->exists()){
+            $data = [
+                'callback_id' => $id,
+                'city_id' => $callback['city_id'] ?? null,
+                'operator_id' => $callback['operator_id'] ?? null,
+                'client_id' => $callback['client_id'] ?? null,
+                'phone' => FormatHelper::phone($callback['client_phone'] ?? null),
+                'client_name' => $callback['client_name'],
+                'status' => 0,
+                'from_internet' => 1,
+                'event_date' => $callback['client_datetime']
+            ];
 
-        return redirect(route('admin.orders.form', ['id' => $order->id]));
+            if ($callback['target_type'] == 'Doctor')
+                $data['doc_id'] = $callback['target_id'];
+            else if ($callback['target_type'] == 'Medcenter')
+                $data['med_id'] = $callback['target_id'];
+            $order = Order::create($data);
+        }else{
+            $order = $callback->order;
+        }
+
+        return $order->id;
     }
 }

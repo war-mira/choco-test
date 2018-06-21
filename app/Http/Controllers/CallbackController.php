@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Callback;
 use Request;
+use Carbon\Carbon;
 
 class CallbackController extends Controller
 {
@@ -17,13 +18,20 @@ class CallbackController extends Controller
     public function newDoc(\Illuminate\Http\Request $request)
     {
         $data = $request->all();
-        $callback = Callback::create($data);
+        $callback = new Callback();
+        if(isset($data['client_datetime_2'])){
+            $callback->client_datetime = Carbon::createFromFormat("Y-m-d\TH:i", $data['client_datetime_2']);
+        }else{
+            $callback->client_datetime = Carbon::createFromFormat("Y-m-d H:i", $data['client_datetime']);
+        }
+        $callback->fill($data);
+        $callback->save();
+
         return $callback;
     }
 
     public function update()
     {
-
         $Input = Request::all();
         $Callback = Callback::find($Input['id']);
         $Callback->status = $Input['status'];

@@ -44,6 +44,15 @@
                                 @slot('readonly',true)
                             @endcomponent
                         @endcomponent
+                        @component('components.bootstrap.column',['class'=>'col-md-5'])
+                            @component('components.form.datetime')
+                                @slot('field','client_datetime')
+                                @slot('value',$seed['client_datetime'] ?? \Carbon\Carbon::parse('today noon'))
+                                @slot('placeholder','Время и дата приема')
+                                @slot('label','Время и дата приема')
+                                @slot('min',isset($seed['id']) ? $seed['created_at'] : now())
+                            @endcomponent
+                        @endcomponent
                 @endcomponent
                 @component('components.bootstrap.row')
                     @component('components.bootstrap.column',['class'=>'col-md-3'])
@@ -121,8 +130,7 @@
             @component('components.bootstrap.column',['class'=>'col-md-3'])
                 <div class="btn-group-vertical">
                     @isset($seed['id'])
-                        <a href="{{route('admin.callbacks.orderFrom',['id'=>$seed['id']])}}"
-                           class="btn btn-block btn-success">Оформить в ЗАКАЗ</a>
+                        <button type="submit" name="action" value="send_order" class="btn btn-block btn-success">Оформить в ЗАКАЗ</button>
                     @endisset
                 </div>
             @endcomponent
