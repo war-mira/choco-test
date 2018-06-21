@@ -1,0 +1,26 @@
+.custom-toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.custom-toolbar > .toolbar-item:not(:first-child) {
+    margin-left: 10px;
+}
+
+.toolbar-item {
+    margin-bottom: 0;
+}
+
+.truncate-ellipsis {
+    display: table;
+    table-layout: fixed;
+    white-space: normal;
+}
+
+.truncate-ellipsis > * {
+    display: table-cell;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

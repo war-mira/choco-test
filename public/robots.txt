@@ -1,0 +1,15 @@
+User-agent: *
+Disallow: /*&
+Disallow: /login
+Allow: */uploads
+Allow: /*/*.js
+Allow: /*/*.css
+Sitemap: https://idoctor.kz/sitemap.xml
+
+User-agent: Yandex
+Disallow: /*&
+Disallow: /login
+Allow: */uploads
+Allow: /*/*.js
+Allow: /*/*.css
+Host: https://idoctor.kz/

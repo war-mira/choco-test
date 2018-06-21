@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+<!--  Все врачи iDoctor.kz Караганда  -->
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/all</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<!--  СПЕЦИАЛИЗАЦИИ врачей iDoctor.kz Караганда  -->
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/akusher-ginekolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/allergolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/androlog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/anesteziolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/venerolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/gastroenterolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/gematolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/genetik</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/gepatolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/ginekolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/girudoterapevt-lechenie-piyavkami</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/gomeopat</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/dermatolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/diagnost</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/dietolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/iglorefleksoterapevt</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/immunolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/infektsionist</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/kardiolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/kardiokhirurg</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/kosmetolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/lechenie-alkogolnoy-i-narkoticheskoy-zavisimosti</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/logoped</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/lor-otorinolaringolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/mammolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/manualnyy-terapevt</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/massazhist</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/medsestra-domoy</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/narkolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/narkolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/nevrolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/neyrokhirurg</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/nefrolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/nefrolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/okulist-oftalmolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/onkolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/ortoped</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/osteopat</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/pediatr</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/perfuziolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/plasticheskiy-khirurg</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/proktolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/proktolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/psikhiatr</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/psikholog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/psikhoterapevt</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/pulmonolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/radiolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/reanimatolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/revmatolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/rentgenolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/rentgenolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/reproduktolog-eko</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/seksolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/stomatolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/terapevt</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/travmatolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/trikholog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/uzi-spetsialist</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/urolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/fizioterapevt</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/flebolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/khirurg</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/embriolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/endokrinolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/karaganda/endoskopist</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+</urlset>

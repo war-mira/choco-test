@@ -1,0 +1,60 @@
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  <url>
+    <loc>
+      http://idoctor.kz/post/doktor-v-seti
+    </loc>
+    <video:video>
+      <video:thumbnail_loc>
+        http://i1.ytimg.com/vi/tTGvBePB1YU/0.jpg
+      </video:thumbnail_loc>
+      <video:title>
+        iDoctor.kz - Поиск врача в Алматы и Казахстане.
+      </video:title>
+      <video:description>
+        Сервис «iDoctor.kz» поможет подобрать лечение в Казахстане и за рубежом. Основатели
+        ресурса рассказывают, как оставаться здоровым, экономя свои деньги.
+      </video:description>
+      <video:content_loc>
+        http://www.youtube.com/v/tTGvBePB1YU?version=3&amp;f=videos&amp;app=youtube_gdata
+      </video:content_loc>
+      <video:player_loc allow_embed="yes">
+        http://www.youtube.com/watch?v=tTGvBePB1YU&amp;feature=youtube_gdata_player
+      </video:player_loc>
+      <video:duration>
+        123
+      </video:duration>
+      <video:category>
+        Health
+      </video:category>
+    </video:video>
+  </url>
+  <url>
+    <loc>
+      http://idoctor.kz/post/rbk-o-nas
+    </loc>
+    <video:video>
+      <video:thumbnail_loc>
+        http://i1.ytimg.com/vi/mjWd6P9FLb4/0.jpg
+      </video:thumbnail_loc>
+      <video:title>
+        iDoctor.kz - Первый бесплатный сервис по поиску врачей.
+      </video:title>
+      <video:description>
+        Поиск врача в Алматы и Астане, бесплатная запись на прием. Телефон: +7 727 222 22
+        00 (с 9:00 до 18:00). Сайт: http://iDoctor.kz Почта: info@iDoctor.kz
+      </video:description>
+      <video:content_loc>
+        http://www.youtube.com/v/mjWd6P9FLb4?version=3&amp;f=videos&amp;app=youtube_gdata
+      </video:content_loc>
+      <video:player_loc allow_embed="yes">
+        http://www.youtube.com/watch?v=mjWd6P9FLb4&amp;feature=youtube_gdata_player
+      </video:player_loc>
+      <video:duration>
+        168
+      </video:duration>
+      <video:category>
+        Health
+      </video:category>
+    </video:video>
+  </url>
+</urlset>
