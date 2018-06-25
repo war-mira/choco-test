@@ -20,7 +20,7 @@
                     @if ($page == $paginator->currentPage())
                         <li class="pagination__item current"><a>{{ $page }}</a></li>
                     @else
-                        <li class="pagination__item"><a href="{{ $url }}">{{ $page }}</a></li>
+                        <li class="pagination__item"><a href="{!! str_replace(['?page=1', '&page=1'], '', $url) !!}">{{ $page }}</a></li>
                     @endif
                 @endforeach
             @endif
