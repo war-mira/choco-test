@@ -8,13 +8,21 @@ use Session;
 
 class BaseController extends Controller
 {
-    public function setcity($cytyid)
+    public function setcity(Request $request, $cytyid)
     {
-        if (City::query()->find($cytyid) != null)
-            Session::put('cityid', $cytyid);
-        else
-            Session::put('cityid', 6);
-        return \Redirect::to('/', 302);
+        if($cytyid == 7){
+            $url_to = str_replace('almaty', 'astana', $request->headers->get('referer'));
+        }else{
+            $url_to = str_replace('astana', 'almaty', $request->headers->get('referer'));
+        }
+
+        if (City::query()->find($cytyid) != null){
+            $request->session()->put('cityid', $cytyid);
+        }else{
+            $request->session()->put('cityid', 6);
+        }
+        $request->session()->save();
+        return \Redirect::to($url_to, 302);
     }
 
     public function create_md5(Request $request)
