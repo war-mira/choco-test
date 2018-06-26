@@ -105,9 +105,9 @@
                 <p>Все права защищены.</p>
             </div>
             <ul class="footer__social">
-                <li><a class="icon-facebook" target="_blank" href="https://www.facebook.com/kz.idoctor">fb</a></li>
-                <li><a class="icon-vk" target="_blank" href="https://vk.com/idoctorkz1">vk</a></li>
-                <li><a class="icon-instagram" target="_blank" href="https://www.instagram.com/idoctor_kz/">ins</a></li>
+                <li><a class="icon-facebook" target="_blank" href="https://www.facebook.com/kz.idoctor" rel="nofollow">fb</a></li>
+                <li><a class="icon-vk" target="_blank" href="https://vk.com/idoctorkz1" rel="nofollow">vk</a></li>
+                <li><a class="icon-instagram" target="_blank" href="https://www.instagram.com/idoctor_kz/" rel="nofollow">ins</a></li>
             </ul>
         </div>
         <div class="pull-right">

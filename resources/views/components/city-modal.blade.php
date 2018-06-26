@@ -10,8 +10,8 @@
                     <div class="col-sm-12">
                         <ul class="list-unstyled">
 
-                            <li><a href="{{ URL::asset('setcity/7') }}">Астана</a></li>
-                            <li><a href="{{ URL::asset('setcity/6') }}">Алматы</a></li>
+                            <li><a href="{{ URL::asset('setcity/7') }}" rel="nofollow">Астана</a></li>
+                            <li><a href="{{ URL::asset('setcity/6') }}" rel="nofollow">Алматы</a></li>
 
                         </ul>
                     </div>

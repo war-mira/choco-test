@@ -25,9 +25,8 @@
 
 @if(!empty($meta['description']))
     <meta name="description" content="{{$meta['description']}}"/>
-@else
-    <meta name="description"
-          content="{{$meta['default_description']}}"/>
+@elseif(!empty($meta['default_description']))
+    <meta name="description" content="{{$meta['default_description']}}"/>
 @endif
 
 <!--Facebook Metadata /-->

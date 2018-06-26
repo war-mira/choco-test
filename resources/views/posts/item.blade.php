@@ -23,8 +23,9 @@
         @endcomponent
 
         <h1 class="page-title mbottom-40">{{$post->title}}</h1>
-
+        @if($post->cover_image)
         <p class="mbottom-40"><img class="img-rounded" src="{{asset($post->cover_image)}}" alt=""></p>
+        @endif
 
         <div class="middle">
             <div class="column column--left">

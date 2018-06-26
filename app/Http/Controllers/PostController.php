@@ -15,6 +15,24 @@ class PostController extends Controller
 
         $meta = $post->getMetadata();
 
+        $post->content = str_replace(
+            [
+                'href="http://',
+                'href="https://plus.google.com',
+                'href="https://twitter.com',
+                'href="https://vk.com',
+                'href="https://www.facebook.com',
+            ],
+            [
+                'href="https://',
+                'rel="nofollow" href="https://plus.google.com',
+                'rel="nofollow" href="https://twitter.com',
+                'rel="nofollow" href="https://vk.com',
+                'rel="nofollow" href="https://www.facebook.com',
+            ],
+            str_replace(['rel="publisher"'], "", $post->content)
+        );
+
         return view('posts.item', compact('post', 'meta'));
     }
 
