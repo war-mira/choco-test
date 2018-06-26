@@ -12,14 +12,26 @@ use Illuminate\Http\Request;
 class MedcenterController extends Controller
 {
 
-    public function list(City $city)
+    public function list(Request $request, City $city)
     {
         $sort = \Request::get('sort', 'rate');
         $order = \Request::get('order', 'desc');
 
-
-        $filter = compact('sort', 'order');
         $medcenters = Medcenter::whereStatus(1);
+
+        $query = $request->only([
+            'q',
+            'ambulatory',
+            'sort',
+            'order',
+            'price_range',
+            'rate_range',
+            'page'
+        ]);
+        $filter = $query;
+
+        $this->applyMedcentersFilter($medcenters, $filter);
+
         if ($city) {
             $medcenters = $medcenters->whereCityId($city->id);
             $pageSeo = PageSeo::query()
@@ -47,12 +59,37 @@ class MedcenterController extends Controller
                 'name' => 'по рейтингу'
             ]
         ];
-        return view("medcenters.list")
+        return view("search.search-medcenters-page")
             ->with('h1_title', $h1_title)
             ->with('meta', $meta)
             ->with('Medcenters', $medcenters)
             ->with('Pagination', $medcenters)
             ->with(compact('filter', 'sortOptions'));
+    }
+
+    private function applyMedcentersFilter($medcenters, $filter)
+    {
+        if (isset($filter['rate_range']) && $filter['rate_range']) {
+            $medcenters->whereBetween('rate', explode(',', $filter['rate_range']));
+        }
+
+        if (isset($filter['price_range']) && $filter['price_range']) {
+            $medcenters->whereBetween('price', explode(',', $filter['price_range']));
+        }
+
+        if (isset($filter['ambulatory']) && $filter['ambulatory']) {
+            $medcenters->where('ambulatory', $filter['ambulatory']);
+        }
+        if (isset($filter['q']) && $filter['q'] && trim($filter['q']) != '')
+            SearchHelper::searchByFields($medcenters, ['name', 'content'], $filter['q']);
+
+        $order = [$filter['sort'] ?? 'rate', $filter['order'] ?? 'desc'];
+        if ($order[0] == 'rate')
+            $medcenters->orderBy('rate', $order[1]);
+        else if ($order[0] == 'price')
+            $medcenters->orderBy('price', $order[1]);
+        else if ($order[0] == 'comments_count')
+            $medcenters->withCount('publicComments')->orderBy('public_comments_count', $order[1]);
     }
 
     public function category_list($city_alias = 0)

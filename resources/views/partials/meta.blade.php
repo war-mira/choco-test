@@ -4,6 +4,11 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
+@if(!empty($meta['robots']))
+    <!--Robots metadata /-->
+    <meta name="robots" content="{{ $meta['robots']}}" />
+@endif
+
 <!--Common metadata /-->
 @if(!empty($meta['title']))
     <title>{{ $meta['title']}}</title>

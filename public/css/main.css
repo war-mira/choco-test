@@ -4542,7 +4542,8 @@ a.slick-user__item:hover .slick-user__name {
 
 .slick-logo__item {
   line-height: 70px;
-  padding: 15px
+  padding: 15px;
+    display: inline-block;
 }
 
 .slick-logo__item img {
