@@ -111,7 +111,8 @@
                 @foreach($skillLinks->chunk(ceil($skillLinks->count()/4)) as $skillLinksColumn)
                     <ul class="list-unstyled list-unstyled--count">
                         @foreach($skillLinksColumn as $skillLink)
-                            <li><span>{{$skillLink['doctorsCount']}}</span>
+                            <li>
+                                <span>{{$skillLink['doctorsCount']}}</span>
                                 <a href="{{ $skillLink['href'] }}">{{$skillLink['name']}}</a>
                             </li>
                         @endforeach
