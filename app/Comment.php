@@ -16,11 +16,15 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null                                                         $parent_id
  * @property int|null                                                         $creator_id
  * @property string|null                                                      $user_name
+ * @property string|null                                                      $user_last_name
  * @property string|null                                                      $user_email
  * @property string|null                                                      $text
+ * @property string|null                                                      $user_likes
+ * @property string|null                                                      $user_doest_like
  * @property int|null                                                         $created_at
  * @property int|null                                                         $updated_at
  * @property int                                                              $status
+ * @property int                                                              $type
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Comment whereCommentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Comment whereCommentText($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Comment whereCreateTime($value)
@@ -57,6 +61,10 @@ class Comment extends Model
         1 => 'Допущенный',
         2 => 'Закрытый'
     ];
+
+    const typeCommon = 0;
+    const typeQR = 1;
+
     protected $table = 'comments';
     public $timestamps = true;
     protected $primaryKey = 'id';
@@ -67,8 +75,11 @@ class Comment extends Model
         'user_rate',
         'user_id',
         'user_name',
+        'user_last_name',
         'user_email',
         'text',
+        'user_likes',
+        'user_doest_like',
         'created_at',
         'updated_at'
     ];

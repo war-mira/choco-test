@@ -106,7 +106,7 @@
                     @if(Auth::guest())
                     <div class="col-md-4">
                         <h3 class="form__title">Ваше имя:</h3>
-                        <p><input type="text" class="styler" required id="user_name"/></p>
+                            <p><input type="text" class="styler" required id="user_name"/></p>
                     </div>
                     <div class="col-md-4">
                         <h3 class="form__title">Ваш телефон:</h3>

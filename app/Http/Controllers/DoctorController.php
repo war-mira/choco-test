@@ -193,7 +193,6 @@ class DoctorController extends Controller
             ->with('status_array', $status_array);
     }
 
-
     public function loadComments($city, $doctor, Request $request)
     {
 
@@ -213,6 +212,16 @@ class DoctorController extends Controller
         $left = $total - $offset;
         $left = $left < 0 ? 0 : $left;
         return compact('view', 'offset', 'left');
+    }
+
+    public function feedback(City $city, Doctor $doctor){
+        if ($city->id !== $doctor->city->id) {
+            return redirect()->route('doctor.item', ['doctor' => $doctor->alias]);
+        }
+
+        $meta = SeoMetadataHelper::getMeta($doctor, $city);
+
+        return view('doctors.feedback', compact('city', 'doctor', 'meta'));
     }
 
 
