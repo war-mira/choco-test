@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="{{asset("vendor/bootstrap-slider/css/bootstrap-slider.min.css")}}">
 
     <link rel="stylesheet" href="{{asset("css/header.css?hw34h")}}">
-    <link rel="stylesheet" href="{{asset("css/styles.css?ewg4")}}">
+    <link rel="stylesheet" href="{{asset("css/styles.css?ewg5")}}">
     <link rel="stylesheet" href="{{asset("css/controls.css?hw34h")}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/comments.css?hw34h')}}">
     <link rel="stylesheet" href="{{asset("css/load-spinner.css?hw34h")}}">
@@ -44,7 +44,6 @@
     <script src="{{asset('js/infinite-paginator.js?2vg346gh')}}"></script>
 
     <link rel="stylesheet" href="{{asset("css/typography.css?cv23v46bh")}}">
-    <script src="{{asset('js/moment.min.js')}}"></script>
 
     <script>
         function copyToClipboard(id) {

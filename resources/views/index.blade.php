@@ -5,7 +5,7 @@
          data-image-src="images/parallax/mount.jpg">
 
         <div class="intro__text">
-            <h2 class="intro__title"><strong>Бесплатный -</strong> сервис поиска врачей</h2>
+            <h2 class="intro__title"><strong>Бесплатный</strong> сервис поиска врачей</h2>
             <p></p>
         </div>
 

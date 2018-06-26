@@ -46,9 +46,9 @@ class CommentController extends Controller
             $data['user_name'] = $user->name;
             $data['author_id'] = $user->id;
         }
-        $data['user_email'] = FormatHelper::phone($data['user_email']);
+        $data['user_email'] = isset($data['user_email']) ? FormatHelper::phone($data['user_email']):'';
         $authorize = $this->authorizeComment($data);
-        if ($authorize <= 0)
+        if ($authorize <= 0 && $data['type'] != Comment::typeQR)
             return ['error' => 'Комментарий можно оставлять только после посещения врача! Если вы уже посетили врача,'
                 . ' то проверьте совпадает ли номер телефона с использовавшимся при записи.'];
         $data['text'] = strip_tags($data['text'] ?? "");
@@ -146,4 +146,6 @@ class CommentController extends Controller
         return ['up' => $comment->rates()->up()->count(), 'down' => $comment->rates()->down()->count()];
 
     }
+
+
 }
