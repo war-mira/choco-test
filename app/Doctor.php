@@ -4,6 +4,7 @@ namespace App;
 
 use App\Helpers\FormatHelper;
 use App\Helpers\MathHelper;
+use App\Helpers\SeoMetadataHelper;
 use App\Helpers\SessionContext;
 use App\Interfaces\IReferenceable;
 use App\Interfaces\ISeoMetadata;
@@ -396,7 +397,7 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     public function getMetaDescription()
     {
         return empty($this->meta_desc)
-            ? (substr(strip_tags(str_replace('\r\n', '', $this->content)), 0, 256))
+            ? $this->getMetaTitle() . ". " . SeoMetadataHelper::DEFAULT_DESCRIPTION
             : $this->meta_desc;
     }
 

@@ -27,7 +27,7 @@
     <meta name="description" content="{{$meta['description']}}"/>
 @else
     <meta name="description"
-          content="iDoctor.kz - Сервис для поиска врача и бесплатной записи на прием. Мы собрали базу врачей в Алматы и Астане с рейтингами и отзывами наших клиентов."/>
+          content="{{$meta['default_description']}}"/>
 @endif
 
 <!--Facebook Metadata /-->

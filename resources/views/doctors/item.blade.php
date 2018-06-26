@@ -19,7 +19,6 @@
 
             <!-- begin middle -->
             <div class="middle mtop-20">
-
                 <div class="sidebar sidebar--left">
                     @component('components.profile-img')
                         @slot('src')

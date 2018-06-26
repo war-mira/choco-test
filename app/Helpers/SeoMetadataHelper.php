@@ -13,6 +13,8 @@ class SeoMetadataHelper
         7 => 'Астане'
     ];
 
+    const DEFAULT_DESCRIPTION = "iDoctor.kz - Сервис для поиска врача и бесплатной записи на прием. Мы собрали базу врачей в Алматы и Астане с рейтингами и отзывами наших клиентов.";
+
     public static function getMeta($model, City $city = null)
     {
         if(!$model instanceof ISeoMetadata) {
@@ -21,13 +23,14 @@ class SeoMetadataHelper
 
         $title = $model->getMetaTitle();
         $description = $model->getMetaDescription();
+        $default_description = self::DEFAULT_DESCRIPTION;
         $keywords = $model->getMetaKeywords();
         $h1 = $model->getMetaHeader();
         $seoText = $model->getSeoText();
         $robots = self::getMetaRobots();
 
         $phs = self::getCityPhs($city);
-        $meta = compact('title', 'description', 'keywords', 'h1', 'seoText', 'robots');
+        $meta = compact('title', 'description', 'keywords', 'h1', 'seoText', 'robots', 'default_description');
 
         self::replacePlaceHolders($meta, $phs);
 
