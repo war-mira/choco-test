@@ -1,6 +1,8 @@
 <div class="feedback__header">
     <div class="feedback-logo">
-    <img src="{{ url('img/feedback/logo_white.png') }}">
+        <a href="{{ route('home') }}">
+            <img src="{{ url('img/feedback/logo_white.png') }}">
+        </a>
 </div>
     <div class="feedback__info">
     <h1>премия Врач года 2018</h1>

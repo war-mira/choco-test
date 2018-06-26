@@ -258,11 +258,37 @@ border-color: #00a8ff;
     background: url(../img/feedback/stars_horizontal_sprite.png) -32px -62px;
 }
 
-@media (max-width: 720px) {
-    .desktop-ditetime{
-        display: none;
+@media (max-width: 500px) {
+    .feedback__info{
+        width: 480px;
+        padding-top: 50px;
     }
-    .mobile-ditetime{
-        display: block;
+
+    .doctors-feedback-wrap{
+        padding-bottom: 40px;
+    }
+}
+
+@media (max-width: 480px)  {
+    .feedback__info{
+        width: 400px;
+    }
+}
+
+@media (max-width: 400px)  {
+    .feedback__info, .feedback__tips-container, .feedback__doctor-container{
+        width: 325px;
+    }
+}
+
+@media (max-width: 300px)  {
+    .feedback__info, .feedback__tips-container, .feedback__doctor-container{
+        width: 250px;
+    }
+    .rating:hover .rating__star, .rating__star {
+        width: 26px;
+        height: 27px;
+        background: url(../img/feedback/stars_horizontal_sprite.png) -30px -55px;
+        background-size: 106%;
     }
 }
