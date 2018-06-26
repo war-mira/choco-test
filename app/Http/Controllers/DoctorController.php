@@ -11,7 +11,7 @@ use App\Skill;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class DoctorController extends Controller
+class  DoctorController extends Controller
 {
 
     public function item(City $city, Doctor $doctor)
