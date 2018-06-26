@@ -102,12 +102,16 @@
                     user_rate: $('input[name=user_rate]:checked').val(),
                 })
                     .done(function (json) {
-                        console.log(json);
-                        if (json.id != '') {
-                            $('#save_comment_mess_ok').show();
-                            $('#user_email').removeClass('has-warning');
                             $('#user_name').removeClass('has-warning');
                             $('#text').removeClass('has-warning');
+
+                        if (json.error) {
+                            $('#save_comment_mess_ok').removeClass('access').addClass('error').html('<b>' + json.error + '</b>');
+                            $('#save_comment_mess_ok').show();
+                        }
+                        else if (json.id) {
+                            $('#save_comment_mess_ok').removeClass('error').addClass('access').html('<b>Спасибо! Ваш комментарий отправлен на модерацию</b>');
+                            $('#save_comment_mess_ok').show();
                             $("#feedback__form")[0].reset();
                         }
                     });

@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null                                                      $user_name
  * @property string|null                                                      $user_last_name
  * @property string|null                                                      $user_email
+ * @property int|null                                                         $user_ip
  * @property string|null                                                      $text
  * @property string|null                                                      $user_likes
  * @property string|null                                                      $user_doest_like
@@ -77,6 +78,7 @@ class Comment extends Model
         'user_name',
         'user_last_name',
         'user_email',
+        'user_ip',
         'text',
         'user_likes',
         'user_doest_like',
