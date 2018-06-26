@@ -225,6 +225,14 @@ border-color: #00a8ff;
     padding-top: 25px;
 }
 
+#save_comment_mess_ok.access{
+    color: mediumspringgreen;
+}
+
+#save_comment_mess_ok.error{
+    color: red;
+}
+
 .stars__item {
     width: 16px;
     height: 15px;

@@ -48,9 +48,19 @@ class CommentController extends Controller
         }
         $data['user_email'] = isset($data['user_email']) ? FormatHelper::phone($data['user_email']):'';
         $authorize = $this->authorizeComment($data);
+        $ip = $this->getUserIp();
+        $existCommentsCount = 0;
+        if($ip){
+            $data['user_ip'] = ip2long($ip);
+            $existCommentsCount = $this->existCommentsFromIp($data['user_ip'], $data['owner_id']);
+        }
+        if($existCommentsCount > 0)
+            return ['error' => 'Вы уже оставляли отзыв этому врачу.'];
+
         if ($authorize <= 0 && $data['type'] != Comment::typeQR)
             return ['error' => 'Комментарий можно оставлять только после посещения врача! Если вы уже посетили врача,'
                 . ' то проверьте совпадает ли номер телефона с использовавшимся при записи.'];
+
         $data['text'] = strip_tags($data['text'] ?? "");
         $comment = Comment::create($data);
         $comment->created_at = Carbon::now()->timestamp;
@@ -75,6 +85,24 @@ class CommentController extends Controller
         $authorize = $orders->count() > 0;
 
         return $authorize;
+    }
+
+    private function getUserIp(){
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+
+        return $ip;
+    }
+
+    private function existCommentsFromIp($ip, $doctorId){
+        $comments = Comment::where('owner_id', $doctorId)->where('user_ip', $ip)->count();
+
+        return$comments;
     }
 
     public function list(Request $request, $type = 'allow')

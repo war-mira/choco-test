@@ -72,6 +72,7 @@
                 {{ csrf_field() }}
                 <input type="hidden" id="owner_type" value="{{$owner['type']}}">
                 <input type="hidden" id="owner_id" value="{{$owner['id']}}">
+                <input type="hidden" id="type" value="{{ \App\Comment::typeCommon }}">
                 <div class="row">
                     <div class="col-md-12">
                         <h3 class="form__title">Ваш отзыв:</h3>
@@ -133,6 +134,7 @@
             $.getJSON("{{url('/comment/new')}}", {
                 owner_id: $('#owner_id').val(),
                 owner_type: $('#owner_type').val(),
+                type: $('#type').val(),
                 user_email: $('#user_email').val(),
                 user_name: $('#user_name').val(),
                 text: $('#comment_text').val(),
