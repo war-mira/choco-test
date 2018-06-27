@@ -122,7 +122,7 @@ class MedcenterController extends Controller
     public function item(City $city, Medcenter $medcenter)
     {
         if ($city->id !== $medcenter->city->id) {
-            return redirect()->route('medcenter.item', ['medcenter' => $medcenter->alias]);
+            //return redirect()->route('medcenter.item', ['medcenter' => $medcenter->alias]);
         }
 
         $doctors = $medcenter->doctors()->where('doctors.status', 1)->get();
