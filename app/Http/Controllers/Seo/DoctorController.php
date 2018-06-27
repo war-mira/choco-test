@@ -25,6 +25,7 @@ class DoctorController extends Controller
 
     public function tableData(Request $request)
     {
+
         $query = Doctor::select(['id', 'lastname', 'firstname', 'city_id', 'alias', 'meta_title', 'meta_key', 'meta_desc']);
         $response = SearchHelper::processDataTableRequest($request, $query, ['lastname', 'firstname', 'city_id', 'alias', 'meta_title', 'meta_key', 'meta_desc']);
         return $response;
