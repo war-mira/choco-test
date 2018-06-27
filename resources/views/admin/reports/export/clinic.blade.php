@@ -41,7 +41,7 @@
                 style="border:  1px solid #000000;">{{$Order['client_info']['phone'] ??'-'}}</td>
             @if(!empty($Order->doctor))
                 <td align="left" valign="bottom" style="border:  1px solid #000000;">
-                    <b>{{$Order->doctor->firstname}}</b></td>
+                    <b>{{$Order->doctor->firstname}} {{$Order->doctor->lastname}}</b></td>
             @else
                 <td align="left" valign="bottom" style="border:  1px solid #000000;"><b>Врач не
                         указан. {{$Order->action}}</b></td>
