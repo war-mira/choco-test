@@ -10,9 +10,6 @@
                     <a href="{{$skill->href}}" style="text-decoration: none">{{$skill->name }}</a>
                 @endforeach</div>
         </div>
-        <div style="display:none" id="save_comment_mess_ok">
-            <b>Спасибо! Ваш комментарий отправлен на модерацию</b>
-        </div>
         <div class="feedback__review-container">
             <form class="feedback__form" id="feedback__form">
                 {{ csrf_field() }}
@@ -22,7 +19,8 @@
                 <div class="feedback__rating">
                     <p>Оцените данного врача</p>
                     <div class="rating">
-                        <input type="radio" class="rating__input" id="rating-input-1-5" value="10" name="user_rate" checked/>
+                        <input type="radio" class="rating__input" id="rating-input-1-5" value="10" name="user_rate"
+                               checked/>
                         <label for="rating-input-1-5" class="rating__star"> </label>
 
                         <input type="radio" class="rating__input" id="rating-input-1-4" value="8" name="user_rate"/>
@@ -49,24 +47,15 @@
                             <input id="user_last_name" type="text" name="user_last_name" required>
                         </div>
                     </div>
-                    <div class="row with-border-row">
-                        <div class="form-group col-md-12">
-                            <label>Ваш отзыв о враче</label>
-                            <textarea id="text" name="text" minlength="100" required></textarea>
-                            <p class="tip">Минимум 100 символов.</p>
-                            <p class="characters-count">0</p>
-                        </div>
-                    </div>
-                    <div class="row with-border-row">
-                        <div class="form-group col-md-12">
-                            <label>Что вам понравилось?</label>
-                            <textarea id="user_likes" name="user_likes"></textarea>
-                        </div>
-                    </div>
                     <div class="row with-padding">
                         <div class="form-group col-md-12">
-                            <label>Что не понравилось?</label>
-                            <textarea id="user_doest_like" name="user_doest_like"></textarea>
+                            <label>Ваш отзыв о враче</label>
+                            <p class="tip small">Поделитесь впечатлениями о приеме: комфортно ли для вас прошла косультация и
+                                процедуры, компетентно ли общался врач, понятно ли ответил на вопросы... Будьте
+                                объективны, ваш отзыв поможет другим пользователям выбрать подходящего специалиста!</p>
+                            <textarea id="text" name="text" minlength="100" required rows="6"></textarea>
+                            <p class="tip">Минимум 100 символов.</p>
+                            <p class="characters-count">0</p>
                         </div>
                     </div>
                     <div class="row">
@@ -85,7 +74,21 @@
         </p>
         <a href="">Публичная оферта</a>
     </div>
+    <div id="feedback__modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content modal-light">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3 class="modal-title">Оцените данного врача</h3>
+                </div>
+                <div style="display:none" id="save_comment_mess_ok" class="modal-body">
+                    <b>Спасибо! Ваш комментарий отправлен на модерацию</b>
+                </div>
 
+
+            </div>
+        </div>
+    </div>
 
     <script>
         $("#save_comment").click(function () {
@@ -102,9 +105,9 @@
                     user_rate: $('input[name=user_rate]:checked').val(),
                 })
                     .done(function (json) {
-                            $('#user_name').removeClass('has-warning');
-                            $('#text').removeClass('has-warning');
-
+                        $('#user_name').removeClass('has-warning');
+                        $('#text').removeClass('has-warning');
+                        $('#feedback__modal').addClass('in').show();
                         if (json.error) {
                             $('#save_comment_mess_ok').removeClass('access').addClass('error').html('<b>' + json.error + '</b>');
                             $('#save_comment_mess_ok').show();
@@ -127,6 +130,10 @@
         $("#text").on('keyup', function () {
             var len = $(this).val().length;
             $('.characters-count').text(len);
+        });
+
+        $('.close').on('click', function () {
+            $('#feedback__modal').removeClass('in').hide();
         });
 
     </script>
