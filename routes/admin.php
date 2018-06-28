@@ -9,8 +9,12 @@
 Route::get('/', 'AdminController@dashboard');
 Route::get('dashboard', 'AdminController@dashboard')->name('dashboard');
 
-
 Route::get('/clients/search', 'SearchController@searchClients');
+
+Route::group(['as' => 'settings.', 'prefix' => 'settings'], function () {
+    Route::get('/', 'Admin\SettingsController@form')->name("form");
+    Route::post('/form/update', 'Admin\SettingsController@update')->name("update");
+});
 
 Route::group(['as' => 'dashboard.', 'prefix' => 'dashboard'], function () {
     Route::get('/getNotifications', 'Admin\DashboardNotificationController@getNotifications');

@@ -193,6 +193,9 @@
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="{{route('admin.settings.form')}}"><i class="fa fa-cog fa-fw"></i> Настройки</a>
+                    </li>
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->
