@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int                                                              $owner_id
  * @property int                                                              $id
  * @property int                                                              $user_rate
+ * @property int                                                              $recommended
  * @property int|null                                                         $parent_id
  * @property int|null                                                         $creator_id
  * @property string|null                                                      $user_name
@@ -20,8 +21,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null                                                      $user_email
  * @property int|null                                                         $user_ip
  * @property string|null                                                      $text
- * @property string|null                                                      $user_likes
- * @property string|null                                                      $user_doest_like
  * @property int|null                                                         $created_at
  * @property int|null                                                         $updated_at
  * @property int                                                              $status
@@ -66,6 +65,9 @@ class Comment extends Model
     const typeCommon = 0;
     const typeQR = 1;
 
+    const notRecommended = 0;
+    const recommended = 1;
+
     protected $table = 'comments';
     public $timestamps = true;
     protected $primaryKey = 'id';
@@ -74,14 +76,13 @@ class Comment extends Model
         'owner_type',
         'author_id',
         'user_rate',
+        'recommended',
         'user_id',
         'user_name',
         'user_last_name',
         'user_email',
         'user_ip',
         'text',
-        'user_likes',
-        'user_doest_like',
         'created_at',
         'updated_at'
     ];

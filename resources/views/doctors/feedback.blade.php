@@ -58,6 +58,20 @@
                             <p class="characters-count">0</p>
                         </div>
                     </div>
+                    <div class="row with-padding">
+                        <div class="form-group col-md-12">
+                            <div class="leave-review__review-recommend review-recommend">
+                                <label class="review-recommend__item">
+                                    <input type="radio" name="recommended" value="{{ \App\Comment::recommended  }}">
+                                    <span class="review-recommend__btn review-recommend__btn_yes">Рекомендую</span>
+                                </label>
+                                <label class="review-recommend__item">
+                                    <input type="radio" name="recommended" value="{{ \App\Comment::notRecommended  }}">
+                                    <span class="review-recommend__btn review-recommend__btn_no">Не рекомендую</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="form-group col-md-12 center">
                             <button type="button" id="save_comment">Оставить свой голос</button>
@@ -103,6 +117,7 @@
                     user_likes: $('#user_likes').val(),
                     user_doest_like: $('#user_doest_like').val(),
                     user_rate: $('input[name=user_rate]:checked').val(),
+                    recommended: $('input[name=recommended]:checked').val(),
                 })
                     .done(function (json) {
                         $('#user_name').removeClass('has-warning');
