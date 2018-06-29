@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\City;
+use App\Helpers\SearchHelper;
 use App\Medcenter;
 use App\Helpers\SeoMetadataHelper;
 use App\PageSeo;
