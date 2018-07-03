@@ -1,5 +1,21 @@
 @charset "UTF-8";
 
+@font-face {
+    font-family: 'ProximaNova-Semibold';
+    src: url(../fonts/ProximaNova-Semibold.eot);
+    src: url(../fonts/ProximaNova-Semibold.eot?#iefix) format("embedded-opentype"), url(../fonts/ProximaNova-Semibold.woff) format("woff"), url(../fonts/ProximaNova-Semibold.ttf) format("truetype"), url(../fonts/ProximaNova-Semibold.svg#fab9a8c1b21288b85f46d8d57dbcc79a) format("svg");
+    font-style: normal;
+    font-weight: 200
+}
+
+@font-face {
+    font-family: 'Montserrat-Reqular';
+    src: url(../fonts/Montserrat-Regular.eot);
+    src: url(../fonts/Montserrat-Regular.eot) format("embedded-opentype"), url(../fonts/Montserrat-Regular.woff) format("woff"), url(../fonts/Montserrat-Regular.ttf) format("truetype");
+    font-style: normal;
+    font-weight: 200
+}
+
 .navbar .brand, .navbar .nav, .navbar .nav > .active > a {
     color: inherit !important
 }
@@ -6684,6 +6700,47 @@ a.ui-button:active {
   display: block;
   line-height: 1.6;
   margin-top: 5px
+}
+
+.question__form{
+    padding-top: 40px;
+    display: none;
+}
+
+.question__form .tips {
+    font-size: 12px;
+    color: #7b7b7b;
+    font-family: Montserrat-Reqular;
+    padding: 15px;
+}
+
+.question__form  .form-group input, .question__form  .form-group select, .question__form .form-group textarea{
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #c5c5c5;
+}
+
+.question__form  .form-group textarea {
+    border-color: #00a8ff;
+}
+
+.question__form button{
+    background: #00a8ff;
+    border: 1px solid #00a8ff;
+    font-family: ProximaNova-Semibold;
+    font-size: 15px;
+    color: #fff;
+    padding: 15px 40px;
+}
+
+.question__form  .form-group.center{
+    text-align: center;
+}
+
+.question__form .form-group input.has-warning, .question__form .form-group textarea.has-warning, .question__form .form-group select.has-warning {
+    color: #8a6d3b;
+    background: none;
+    border-color: red;
 }
 
 .search {

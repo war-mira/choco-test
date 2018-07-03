@@ -64,6 +64,8 @@ Route::get('callback/newDoc/', 'CallbackController@newDoc')->name('callback.newD
 
 Route::get('comment/new', 'CommentController@new');
 Route::get('comment/{id}/rate/{rate}', 'CommentController@rateComment')->name('rateComment');
+//******questions*****************
+Route::post('question/add', 'QuestionController@add');
 //******Posts***************************
 Route::get('post/{alias}', 'PostController@item');
 Route::get('posts', 'PostController@list');

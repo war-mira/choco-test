@@ -264,6 +264,55 @@ border-color: #00a8ff;
     background: url(../img/feedback/stars_horizontal_sprite.png) -32px -62px;
 }
 
+.leave-review__review-recommend.review-recommend{
+    display: flex;
+}
+
+.review-recommend__item {
+    width: 50%;
+    cursor: pointer;
+}
+
+.review-recommend__item input {
+    display: none;
+}
+
+.review-recommend__item input:checked + .review-recommend__btn_yes {
+    color: #fff;
+    background: #00A8FF;
+    border-color: #0085C7;
+}
+
+.review-recommend__item input:checked + .review-recommend__btn_no {
+    color: #fff;
+    background: #FF005A;
+    border-color: #D00049;
+}
+
+.review-recommend__btn {
+    height: 33px;
+    line-height: 33px;
+    text-align: center;
+    color: #9d9d9d;
+    border: 1px solid #9d9d9d;
+    /*box-shadow: 0 0 0 1px #9d9d9d;*/
+    white-space: nowrap;
+    font-weight: 700;
+    font-size: 14px;
+    width: 100%;
+    display: block;
+}
+
+.review-recommend__btn_yes {
+    -webkit-border-radius: 17px 0 0 17px;
+    border-radius: 17px 0 0 17px;
+}
+
+.review-recommend__btn_no {
+    -webkit-border-radius: 0 17px 17px 0;
+    border-radius: 0 17px 17px 0;
+}
+
 @media (max-width: 910px) {
     .feedback__form .form-group.small-padding-left {
          padding-left: 25px;
