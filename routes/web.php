@@ -19,13 +19,16 @@ Route::get('order/update/', 'OrderController@update');
 Route::get('doctor/{doctor}', function (\App\Doctor $doctor) {
     return redirect()->route('doctor.item', ['doctor' => $doctor->alias]);
 });
-Route::get('doctors/{city?}/{skill?}', function (\App\City $city, \App\Skill $skill = null) {
-    return redirect()->route('doctors.list', ['skill' => $skill->alias ?? null]);
-});
+//Route::get('doctors/{city?}/{skill?}', function (\App\City $city, \App\Skill $skill = null) {
+//    return redirect()->route('doctors.list', ['skill' => $skill->alias ?? null]);
+//});
 
-Route::get('medcenters/{city?}', function (\App\City $city = null) {
-    return redirect()->route('medcenters.list');
-});
+Route::get('doctors', 'DoctorController@list')->name('all.doctors.list');
+Route::get('medcenters', 'MedcenterController@list')->name('all.medcenters.list');
+
+//Route::get('medcenters/{city?}', function (\App\City $city = null) {
+//    return redirect()->route('medcenters.list');
+//});
 Route::get('medcenter/{medcenter}', function (\App\Medcenter $medcenter) {
     return redirect()->route('medcenter.item', ['medcenter' => $medcenter->alias]);
 });

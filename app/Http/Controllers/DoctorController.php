@@ -29,9 +29,7 @@ class  DoctorController extends Controller
 
     public function list(City $city = null, Skill $skill = null, Request $request)
     {
-        $cityId = $city->id;
-        $doctors = Doctor::query()->where('doctors.status', 1)
-            ->where('doctors.city_id', $cityId);
+        $doctors = Doctor::query()->where('doctors.status', 1);
         $query = $request->only([
             'q',
             'child',
@@ -57,21 +55,48 @@ class  DoctorController extends Controller
 
         $this->applyDoctorsFilter($doctors, $filter);
 
-        $doctors = $doctors->paginate(10)->appends($query);
-        if ($doctors->lastPage() < ($filter['page'] ?? 1))
-            return redirect($doctors->url(1));
 
-        $skills = \App\Skill::havingDoctorsInCity($city)->orderBy('name')->get();
-        $medcenters = \App\Medcenter::havingDoctorsInCity($city)->orderBy('name')->get();
-
-        if (isset($skill)) {
-            $meta = SeoMetadataHelper::getMeta($skill, $city);
-        } else {
+        if (!empty($city->id)) {
+            $doctors = $doctors->where('doctors.city_id', $city->id);
             $pageSeo = PageSeo::query()
                 ->where('class','Doctor')
                 ->where('action', 'list')
                 ->first();
             $meta = SeoMetadataHelper::getMeta($pageSeo, $city);
+        } else {
+            $title = 'iDoctor.kz - Врачи-специалисты. Список врачей-специалистов в Казахстане';
+            $description = 'iDoctor.kz - Список врачей-специалистов по всему Казахстану. Поиск и бесплатная запись на прием к врачу любой специальности. У нас собрана большая база врачей различных специализаций по всему Казахстану';
+            $meta = compact('title', 'description');
+        }
+
+
+
+
+
+        $doctors = $doctors->paginate(10)->appends($query);
+        if ($doctors->lastPage() < ($filter['page'] ?? 1))
+            return redirect($doctors->url(1));
+
+        $skills = \App\Skill::orderBy('name');
+        if (!empty($city->id)) {
+            $skills = $skills->havingDoctorsInCity($city);
+        }
+        $skills = $skills->get();
+
+        $medcenters = \App\Medcenter::orderBy('name');
+        if (!empty($city->id)) {
+            $medcenters = $medcenters->havingDoctorsInCity($city);
+        }
+        $medcenters = $medcenters->get();
+
+        if (isset($skill)) {
+            $meta = SeoMetadataHelper::getMeta($skill, $city);
+        } else {
+//            $pageSeo = PageSeo::query()
+//                ->where('class','Doctor')
+//                ->where('action', 'list')
+//                ->first();
+//            $meta = SeoMetadataHelper::getMeta($pageSeo, $city);
         }
 
 

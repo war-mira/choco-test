@@ -32,7 +32,7 @@ class MedcenterController extends Controller
 
         $this->applyMedcentersFilter($medcenters, $filter);
 
-        if ($city) {
+        if (!empty($city->id)) {
             $medcenters = $medcenters->whereCityId($city->id);
             $pageSeo = PageSeo::query()
                 ->where('class','Medcenter')
@@ -44,6 +44,7 @@ class MedcenterController extends Controller
             $description = 'iDoctor.kz - Медициские центры оказывающие услуги по всему Казахстану';
             $meta = compact('title', 'description');
         }
+
         $medcenters = $medcenters->paginate(10);
 
 
