@@ -389,15 +389,25 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
 
     public function getMetaTitle()
     {
+        $skills_result = [];
+        $skills = $this->skills()->get();
+        foreach($skills as $skill){
+            $skills_result[] = $skill->name;
+        }
         return empty($this->meta_title)
-            ? ($this->firstname . ' ' . $this->lastname . ' - ' . $this->city->name)
+            ? ($this->firstname . ' ' . $this->lastname . ' - ' . implode(", ", $skills_result) . ' - ' . $this->city->name)
             : $this->meta_title;
     }
 
     public function getMetaDescription()
     {
+        $skills_result = [];
+        $skills = $this->skills()->get();
+        foreach($skills as $skill){
+            $skills_result[] = $skill->name;
+        }
         return empty($this->meta_desc)
-            ? $this->getMetaTitle() . ". " . SeoMetadataHelper::DEFAULT_DESCRIPTION
+            ? ($this->firstname . ' ' . $this->lastname . ' - ' . implode(", ", $skills_result)) . ". " . SeoMetadataHelper::DEFAULT_DESCRIPTION
             : $this->meta_desc;
     }
 
