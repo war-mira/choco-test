@@ -23,7 +23,9 @@ Route::get('doctor/{doctor}', function (\App\Doctor $doctor) {
 //    return redirect()->route('doctors.list', ['skill' => $skill->alias ?? null]);
 //});
 
-Route::get('doctors', 'DoctorController@list')->name('all.doctors.list');
+Route::group(['prefix' => 'doctors', 'as' => 'all.doctors.'], function () {
+    Route::get('/{skill?}', 'DoctorController@commonList')->name('list');
+});
 Route::get('medcenters', 'MedcenterController@list')->name('all.medcenters.list');
 
 //Route::get('medcenters/{city?}', function (\App\City $city = null) {

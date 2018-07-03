@@ -17,7 +17,7 @@ class  DoctorController extends Controller
     public function item(City $city, Doctor $doctor)
     {
         if ($city->id !== $doctor->city->id) {
-            //return redirect()->route('doctor.item', ['doctor' => $doctor->alias]);
+            return redirect()->route('doctor.item', ['doctor' => $doctor->alias, 'city' => $doctor->city->alias]);
         }
 
         $meta = SeoMetadataHelper::getMeta($doctor, $city);
@@ -25,6 +25,10 @@ class  DoctorController extends Controller
         return view('doctors.item')
             ->with('meta', $meta)
             ->with('doctor', $doctor);
+    }
+
+    public function commonList(Skill $skill = null, Request $request){
+        return $this->list(City::find(1), $skill, $request);
     }
 
     public function list(City $city = null, Skill $skill = null, Request $request)
@@ -45,19 +49,23 @@ class  DoctorController extends Controller
         $filter = $query;
 
         if (isset($skill)) {
+
             $filter['skill'] = $skill->alias ?? null;
             $doctors = $doctors->whereHas('skills', function ($skillsQuery) use ($skill) {
                 $skillsQuery->where('skills.id', $skill->id);
             });
         }
-        if (isset($filter['page']) && $filter['page'] == 1)
-            return redirect()->route('doctors.list', array_merge(['city' => $city->alias ?? null, 'skill' => $skill->alias ?? null], array_except($filter, 'page')));
+
+        if (isset($filter['page']) && $filter['page'] == 1){
+            return redirect()->route(((empty($city->id) || $city->id == 1) ? "all.doctors.list" : 'doctors.list'), array_merge(['city' => $city->alias ?? null, 'skill' => $skill->alias ?? null], array_except($filter, 'page')));
+        }
 
         $this->applyDoctorsFilter($doctors, $filter);
 
 
-        if (!empty($city->id)) {
+        if (!empty($city->id) && $city->id != 1) {
             $doctors = $doctors->where('doctors.city_id', $city->id);
+
             $pageSeo = PageSeo::query()
                 ->where('class','Doctor')
                 ->where('action', 'list')
@@ -74,8 +82,10 @@ class  DoctorController extends Controller
 
 
         $doctors = $doctors->paginate(10)->appends($query);
-        if ($doctors->lastPage() < ($filter['page'] ?? 1))
+
+        if ($doctors->lastPage() < ($filter['page'] ?? 1)){
             return redirect($doctors->url(1));
+        }
 
         $skills = \App\Skill::orderBy('name');
         if (!empty($city->id)) {
@@ -101,7 +111,7 @@ class  DoctorController extends Controller
 
 
         return view('search.page',
-            compact('meta', 'doctors', 'skills', 'medcenters', 'filter', 'query'));
+            compact('meta', 'doctors', 'skills', 'medcenters', 'filter', 'query', 'city'));
     }
 
     private function applyDoctorsFilter($doctors, $filter)
