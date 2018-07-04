@@ -17,7 +17,7 @@ class  DoctorController extends Controller
     public function item(City $city, Doctor $doctor)
     {
         if ($city->id !== $doctor->city->id) {
-            //return redirect()->route('doctor.item', ['doctor' => $doctor->alias]);
+            return redirect()->route('doctor.item', ['doctor' => $doctor->alias, 'city' => $doctor->city->alias]);
         }
 
         $meta = SeoMetadataHelper::getMeta($doctor, $city);
@@ -27,11 +27,13 @@ class  DoctorController extends Controller
             ->with('doctor', $doctor);
     }
 
+    public function commonList(Skill $skill = null, Request $request){
+        return $this->list(City::find(1), $skill, $request);
+    }
+
     public function list(City $city = null, Skill $skill = null, Request $request)
     {
-        $cityId = $city->id;
-        $doctors = Doctor::query()->where('doctors.status', 1)
-            ->where('doctors.city_id', $cityId);
+        $doctors = Doctor::query()->where('doctors.status', 1);
         $query = $request->only([
             'q',
             'child',
@@ -47,36 +49,69 @@ class  DoctorController extends Controller
         $filter = $query;
 
         if (isset($skill)) {
+
             $filter['skill'] = $skill->alias ?? null;
             $doctors = $doctors->whereHas('skills', function ($skillsQuery) use ($skill) {
                 $skillsQuery->where('skills.id', $skill->id);
             });
         }
-        if (isset($filter['page']) && $filter['page'] == 1)
-            return redirect()->route('doctors.list', array_merge(['city' => $city->alias ?? null, 'skill' => $skill->alias ?? null], array_except($filter, 'page')));
+
+        if (isset($filter['page']) && $filter['page'] == 1){
+            return redirect()->route(((empty($city->id) || $city->id == 1) ? "all.doctors.list" : 'doctors.list'), array_merge(['city' => $city->alias ?? null, 'skill' => $skill->alias ?? null], array_except($filter, 'page')));
+        }
 
         $this->applyDoctorsFilter($doctors, $filter);
 
-        $doctors = $doctors->paginate(10)->appends($query);
-        if ($doctors->lastPage() < ($filter['page'] ?? 1))
-            return redirect($doctors->url(1));
 
-        $skills = \App\Skill::havingDoctorsInCity($city)->orderBy('name')->get();
-        $medcenters = \App\Medcenter::havingDoctorsInCity($city)->orderBy('name')->get();
+        if (!empty($city->id) && $city->id != 1) {
+            $doctors = $doctors->where('doctors.city_id', $city->id);
 
-        if (isset($skill)) {
-            $meta = SeoMetadataHelper::getMeta($skill, $city);
-        } else {
             $pageSeo = PageSeo::query()
                 ->where('class','Doctor')
                 ->where('action', 'list')
                 ->first();
             $meta = SeoMetadataHelper::getMeta($pageSeo, $city);
+        } else {
+            $title = 'iDoctor.kz - Врачи-специалисты. Список врачей-специалистов в Казахстане';
+            $description = 'iDoctor.kz - Список врачей-специалистов по всему Казахстану. Поиск и бесплатная запись на прием к врачу любой специальности. У нас собрана большая база врачей различных специализаций по всему Казахстану';
+            $meta = compact('title', 'description');
+        }
+
+
+
+
+
+        $doctors = $doctors->paginate(10)->appends($query);
+
+        if ($doctors->lastPage() < ($filter['page'] ?? 1)){
+            return redirect($doctors->url(1));
+        }
+
+        $skills = \App\Skill::orderBy('name');
+        if (!empty($city->id)) {
+            $skills = $skills->havingDoctorsInCity($city);
+        }
+        $skills = $skills->get();
+
+        $medcenters = \App\Medcenter::orderBy('name');
+        if (!empty($city->id)) {
+            $medcenters = $medcenters->havingDoctorsInCity($city);
+        }
+        $medcenters = $medcenters->get();
+
+        if (isset($skill)) {
+            $meta = SeoMetadataHelper::getMeta($skill, $city);
+        } else {
+//            $pageSeo = PageSeo::query()
+//                ->where('class','Doctor')
+//                ->where('action', 'list')
+//                ->first();
+//            $meta = SeoMetadataHelper::getMeta($pageSeo, $city);
         }
 
 
         return view('search.page',
-            compact('meta', 'doctors', 'skills', 'medcenters', 'filter', 'query'));
+            compact('meta', 'doctors', 'skills', 'medcenters', 'filter', 'query', 'city'));
     }
 
     private function applyDoctorsFilter($doctors, $filter)

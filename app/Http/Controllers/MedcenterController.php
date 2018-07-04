@@ -33,7 +33,7 @@ class MedcenterController extends Controller
 
         $this->applyMedcentersFilter($medcenters, $filter);
 
-        if ($city) {
+        if (!empty($city->id)) {
             $medcenters = $medcenters->whereCityId($city->id);
             $pageSeo = PageSeo::query()
                 ->where('class','Medcenter')
@@ -45,6 +45,7 @@ class MedcenterController extends Controller
             $description = 'iDoctor.kz - Медициские центры оказывающие услуги по всему Казахстану';
             $meta = compact('title', 'description');
         }
+
         $medcenters = $medcenters->paginate(10);
 
 
@@ -123,7 +124,7 @@ class MedcenterController extends Controller
     public function item(City $city, Medcenter $medcenter)
     {
         if ($city->id !== $medcenter->city->id) {
-            //return redirect()->route('medcenter.item', ['medcenter' => $medcenter->alias]);
+            return redirect()->route('medcenter.item', ['medcenter' => $medcenter->alias, 'city' => $medcenter->city->alias]);
         }
 
         $doctors = $medcenter->doctors()->where('doctors.status', 1)->get();

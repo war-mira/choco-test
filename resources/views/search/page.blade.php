@@ -222,7 +222,7 @@
             $('input[name=order]').val(['{{$filter['order'] ?? 'desc'}}']).trigger('change');
             $typeSelect.on('change', function () {
                 if ($(this).val() === 'all') {
-                    var url = "{{route('doctors.list')}}";
+                    var url = "{{(!empty($city) && $city->id != 1) ? route('doctors.list') : route('all.doctors.list')}}";
                     var query = "{!!explode('?',url()->full())[1] ?? ""!!}";
                     if (query.length > 0)
                         query = '?' + query;
@@ -235,7 +235,7 @@
             });
 
             $skillSelect.on('change', function () {
-                var url = "{{route('doctors.list')}}";
+                var url = "{{(!empty($city) && $city->id != 1) ? route('doctors.list') : route('all.doctors.list')}}";
                 var query = "{!!explode('?',url()->full())[1] ?? ""!!}";
                 if (query.length > 0)
                     query = '?' + query;
