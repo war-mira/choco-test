@@ -40,6 +40,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int                                                          $updated_at_unix Дата изменения
  * @property int                                                          $views Колличество просмотров
  * @property int                                                          $user_id
+ * @property int                                                          $phone
  * @property int                                                          $orders_count
  * @property int                                                          $status Опубликован?
  * @property int                                                          $on_top

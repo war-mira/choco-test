@@ -86,6 +86,8 @@ class RegisterController extends Controller
 
             if($doctor){
                 $this->setDoctorUser($doctor, $user);
+            }else{
+                $this->createDoctor($user);
             }
         }
 
@@ -117,4 +119,14 @@ class RegisterController extends Controller
         $doctor->user_id = $user->id;
         $doctor->update();
     }
+
+    protected function createDoctor($user){
+        $doctor = new Doctor();
+        $doctor->firstname = $user->name;
+        $doctor->city_id = $user->city_id;
+        $doctor->phone = $user->phone;
+        $doctor->user_id = $user->id;
+        $doctor->save();
+    }
+
 }
