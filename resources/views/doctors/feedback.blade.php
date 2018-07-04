@@ -50,7 +50,7 @@
                     <div class="row with-padding">
                         <div class="form-group col-md-12">
                             <label>Ваш отзыв о враче</label>
-                            <p class="tip small">Поделитесь впечатлениями о приеме: комфортно ли для вас прошла косультация и
+                            <p class="tip small with-border-row">Поделитесь впечатлениями о приеме: комфортно ли для вас прошла косультация и
                                 процедуры, компетентно ли общался врач, понятно ли ответил на вопросы... Будьте
                                 объективны, ваш отзыв поможет другим пользователям выбрать подходящего специалиста!</p>
                             <textarea id="text" name="text" minlength="100" required rows="6"></textarea>
@@ -98,8 +98,6 @@
                 <div style="display:none" id="save_comment_mess_ok" class="modal-body">
                     <b>Спасибо! Ваш комментарий отправлен на модерацию</b>
                 </div>
-
-
             </div>
         </div>
     </div>

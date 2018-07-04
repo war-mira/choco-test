@@ -27,7 +27,6 @@
             <td>{{$order->event_date}}</td>
             <td>{{$order->doctor['name'] ?? '-'}}</td>
             <td>{{$order->medcenter['name'] ?? '-'}}</td>
-            <td>{{$order->status_description }}</td>
         </tr>
     @endforeach
     </tbody>

@@ -154,4 +154,9 @@ class Comment extends Model
     {
         return $this->hasMany(CommentRate::class, 'comment_id', 'id');
     }
+
+    public function scopeLocalPublic($query)
+    {
+        return $query->where('status', 1);
+    }
 }

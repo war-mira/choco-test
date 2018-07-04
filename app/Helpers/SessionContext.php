@@ -19,6 +19,7 @@ class SessionContext
     public static function city()
     {
         $city_id = self::cityId();
+
         return City::find($city_id);
     }
 

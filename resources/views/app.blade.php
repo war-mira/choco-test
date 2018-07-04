@@ -126,7 +126,6 @@
     @endif
 @endforeach
 
-
 <script type="text/javascript">
     $("#setskill").click(function () {
         $("#search_input").val($("#setskill").text());

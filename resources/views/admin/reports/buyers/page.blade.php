@@ -3,7 +3,7 @@
     <div class="row">
         <form method="post">
             {{csrf_field()}}
-            <div class="col-md-4">
+            <div class="col-md-12">
 
                 <div class="col-sm-4" style="height:130px;">
                     <div class="form-group">
