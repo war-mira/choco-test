@@ -1,5 +1,4 @@
-<div class="modal-container">
-    <div class="modal-window w20" id="signin-modal">
+<div class="modal-window w20" id="signin-modal">
         <div class="modal-close"></div>
         <div class="modal__title py-4">
             Вход
@@ -14,7 +13,9 @@
                     <input class="input-block__input" name="password" type="password" value="" placeholder="Пароль"
                            required>
                 </div>
-                <button type="submit" class="btn btn_theme_usual">Войти</button>
+                <div class="text-center">
+                    <button type="submit" class="btn btn_theme_usual">Войти</button>
+                </div>
                 <div class="input-block--text x14 text-center">
                     <a href="{{ route('password.phone.request-form') }}">
                         Забыли пароль?
@@ -27,4 +28,3 @@
             </form>
         </div>
     </div>
-</div>

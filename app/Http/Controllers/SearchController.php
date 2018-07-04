@@ -28,7 +28,6 @@ class SearchController extends Controller
 
     private function searchSkills($query)
     {
-
         $skills = Skill::
         where('name', 'like', "%$query%")
             ->with(['doctors' => function ($query) {
@@ -49,7 +48,6 @@ class SearchController extends Controller
 
     private function searchDoctors($query)
     {
-
         $doctors = Doctor::where('status', 1)->where('city_id', Session::get('cityid', 6));
         $doctors = $doctors->
         where(function (Builder $q) use ($query) {
@@ -103,7 +101,6 @@ class SearchController extends Controller
 
     public function searchPage(Request $request, $primarySuffix = false, $secondarySuffix = false)
     {
-
         $type = $request->input('type', 'doctor');
         $sort = $request->input('sort', 'rate');
         $order = $request->input('order', 'desc');
@@ -212,7 +209,6 @@ class SearchController extends Controller
 
     private function old_searchDoctors($query, $is_child, $ambulatory)
     {
-
         $doctors = Doctor::where('status', 1)->where('city_id', Session::get('cityid', 6));
         if ($is_child == 'true')
             $doctors = $doctors->where('child', 1);

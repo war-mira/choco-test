@@ -12,7 +12,6 @@
     <li class="specs__placeholder">Врачи</li>
 
     @foreach($doctors as $doctor)
-
         <li class="specs__doctor">
             <a href="{{route('doctor.item',['alias'=>$doctor->alias])}}">
                 <div class="specs__doctor-photo">

@@ -1,16 +1,23 @@
 <header class="main-header">
     <div class="main-header__container">
         <div class="main-header__line">
-            <a href="index.html" class="main-header__logo"><img src="img/header-logo.png" alt="iDoctor.kz" title="iDoctor.kz"></a>
+            <a href="{{route('home')}}" class="main-header__logo"><img src="{{asset('img/header-logo.png')}}" alt="iDoctor.kz" title="iDoctor.kz"></a>
             <div class="main-header__actions">
                 <a href="#" class="main-header__action-item header-link-btn header-link-btn_highlight">
                     <span class="header-link-btn__icon"><i class="icon-6 hover-icon"></i></span>
                     <span>Сотрудничество</span>
                 </a>
+                @if(Auth::guest())
                 <a href="#signin-modal"  rel="modal-link" class="main-header__action-item header-link-btn header-login-btn">
                     <span class="header-link-btn__icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>
                     <span>Вход / Регистрация</span>
                 </a>
+                @else
+                    <a href="{{route('user.profile')}}" class="main-header__action-item header-link-btn header-login-btn">
+                        <span class="header-link-btn__icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>
+                        <span>Профиль</span>
+                    </a>
+                @endif
                 <div class="main-header__action-item main-header-location">
                     <select name="location" class="js-header-location" placeholder="{{\App\Helpers\SessionContext::city()->name}}">
                         <option value="6" {{\App\Helpers\SessionContext::cityId() == 6 ? 'selected':''}}>Алматы</option>
@@ -28,7 +35,7 @@
             </div>
         </div>
         <div class="mobile-menu pattern-bg">
-            <a href="#" class="mobile-menu__item mobile-menu-item">
+            <a href="#signin-modal"  rel="modal-link"  class="mobile-menu__item mobile-menu-item">
                 <span>Вход / Регистрация</span>
             </a>
             <a href="#" class="mobile-menu__item mobile-menu-item">

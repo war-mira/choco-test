@@ -448,6 +448,41 @@ $(document).ready(function() {
 
             modalClose(modalId);
         });
+
+    $('#searchform').on("input", function (e) {
+        let checkInput = $(this)
+            .val();
+
+        if (
+            checkInput.length != 0 ||
+            !$(this)
+                .hasClass("live-search--fold")
+        ) {
+            $(".live-search")
+                .addClass("live-search--fold");
+        }
+
+        if (checkInput.length == 0) {
+            $(".live-search")
+                .removeClass("live-search--fold");
+        }
+    });
+
+    $('#searchform').on("focusout", function (e) {
+        $(".live-search")
+            .removeClass("live-search--fold");
+    });
+
+    $('.js-type-select').on('change', function () {
+        let type = $(this).val();
+        let text = '';
+        if (type == 'doctor') {
+            text = 'Специализация или фамилия';
+        } else if(type == 'medcenter') {
+            text = 'Название медцентра';
+        }
+       $('#searchform').attr("placeholder", text);
+    });
 });
 
 

@@ -1,7 +1,7 @@
 <div class="index-intro__search-bar search-bar index-search-bar">
     <form action="{{($type ?? 'doctor') == 'doctor'? route('doctors.list',['skill'=>$skill->alias?? null]) : route('medcenters.list')}}" class="search-bar__line index-search-bar__line">
         <div class="search-bar__item search-bar__item_type">
-            <select name="type" placeholder="Поиск медцентра" class="js-simple-select">
+            <select name="type" placeholder="Поиск медцентра" class="js-simple-select js-type-select">
                 <option data-action="{{route('doctors.list')}}" value="doctor"
                         @if(($type ?? 'doctor') == 'doctor') selected @endif>Поиск врача</option>
                 <option  data-action="{{route('medcenters.list')}}" value="medcenter"
@@ -9,8 +9,8 @@
             </select>
         </div>
         <div class="search-bar__item search-bar__item_search">
-            <i class="fa fa-search"></i>
-            <input id="searchform" name="q" value="{{$q ?? ""}}"  placeholder="Название медцентра" class="js-search-input"  autocomplete="off">
+            <input id="searchform" name="q" value="{{$q ?? ""}}"  placeholder="Специализация или фамилия" class="js-search-input"  autocomplete="off">
+            <label for="searchform" class="input-block__icon"><img src="/img/icons/search-inactive.png" alt=""></label>
             <div class="live-search">
                 <div class="live-search__inner" id="liveresults">
                 </div>
