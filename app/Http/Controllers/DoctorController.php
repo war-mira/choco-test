@@ -49,7 +49,6 @@ class  DoctorController extends Controller
         $filter = $query;
 
         if (isset($skill)) {
-
             $filter['skill'] = $skill->alias ?? null;
             $doctors = $doctors->whereHas('skills', function ($skillsQuery) use ($skill) {
                 $skillsQuery->where('skills.id', $skill->id);

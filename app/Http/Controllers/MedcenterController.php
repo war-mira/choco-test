@@ -31,6 +31,10 @@ class MedcenterController extends Controller
         ]);
         $filter = $query;
 
+        if (isset($filter['page']) && $filter['page'] == 1){
+            return redirect()->route(((empty($city->id) || $city->id == 1) ? "all.medcenters.list" : 'medcenters.list'), array_merge(['city' => $city->alias ?? null], array_except($filter, 'page')));
+        }
+
         $this->applyMedcentersFilter($medcenters, $filter);
 
         if (!empty($city->id)) {
