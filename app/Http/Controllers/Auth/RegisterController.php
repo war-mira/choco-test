@@ -71,8 +71,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $data['role'];
-        return User::create([
+       $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => FormatHelper::phone($data['phone']),
@@ -80,6 +79,17 @@ class RegisterController extends Controller
             'role' => $data['role'],
             'password' => bcrypt($data['password']),
         ]);
+
+        if(!empty($user->phone) && $user->role == 20){
+
+            $doctor = $this->ifDoctorExist($user->phone);
+
+            if($doctor){
+                $this->setDoctorUser($doctor, $user);
+            }
+        }
+
+        return $user;
     }
 
     public function registerUser(Request $request)
