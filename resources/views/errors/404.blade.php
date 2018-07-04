@@ -18,7 +18,7 @@
             <a class="statistics__item" href="{{route('doctors.list')}}"
                style="text-decoration: none">
                     <span class="statistics__img">
-                        <img src="images/icons/icon_expert.png" width="47" height="55"
+                        <img src="/images/icons/icon_expert.png" width="47" height="55"
                              alt="квалифицированных специалистов в вашем городе"
                              title="квалифицированных специалистов в вашем городе">
                     </span>
@@ -27,7 +27,7 @@
             </a>
             <a class="statistics__item" href="{{route('medcenters.list')}}" style="text-decoration: none">
                     <span class="statistics__img">
-                        <img src="images/icons/icon_catalog.png" width="61" height="50"
+                        <img src="/images/icons/icon_catalog.png" width="61" height="50"
                              alt="частных и государственных клиник в каталоге"
                              title="частных и государственных клиник в каталоге">
                     </span>
@@ -36,7 +36,7 @@
             </a>
             <a class="statistics__item" href="#comments" style="text-decoration: none">
                     <span class="statistics__img">
-                        <img src="images/icons/icon_heart.png" width="57" height="49"
+                        <img src="/images/icons/icon_heart.png" width="57" height="49"
                              alt="довольных пользователя нашего сервиса" title="довольных пользователя нашего сервиса">
                     </span>
                 <strong class="statistics__num">{{\App\Comment::count()}}</strong>
