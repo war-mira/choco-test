@@ -301,18 +301,26 @@
             $('#client_datetime').datetimepicker();
         });
 
+        // get the iso time string formatted for usage in an input['type="datetime-local"']
+        var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+        var localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0,-1);
+        var localISOTimeWithoutSeconds = localISOTime.slice(0,16);
+
+        // select the "datetime-local" input to set the default value on
+        var dtlInput = document.querySelector('input[type="datetime-local"]');
+
+        // set it and forget it ;)
+        dtlInput.value = localISOTime.slice(0,16);
+
         var mobile_detetime = $('.mobile-ditetime');
         var desktop_detetime = $('.desktop-ditetime');
-        if(mobile_detetime.is(":visible")){
+        if(desktop_detetime.is(":visible")){
+            mobile_detetime.remove();
             mobile_detetime.find('.datepicker').prop('required',true);
-            desktop_detetime.find('.datepicker').removeAttr( "name" );
-            desktop_detetime.find('.datepicker').prop('required', false);
         }else{
+            desktop_detetime.remove();
             desktop_detetime.find('.datepicker').prop('required',true);
-            mobile_detetime.find('.datepicker').removeAttr( "name" );
-            mobile_detetime.find('.datepicker').prop('required', false);
         }
-
         $phoneInput = $('.bfh-phone');
         $phoneInput.bfhphone($phoneInput.data());
 

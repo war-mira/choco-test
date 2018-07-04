@@ -60,10 +60,9 @@ class User extends Authenticatable implements CanResetPassword
 
     const OPERATORS = [
         33,//Кесиди
-        120,//Арай
         396,//Жулдыз
-        494,//Махида
-        2322//Виктория Казбековна
+        2322,//Виктория Казбековна
+        10131,//Айгерим Халелова
     ];
     /**
      * The attributes that are mass assignable.

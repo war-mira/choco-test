@@ -165,4 +165,9 @@ class Callback extends Model
     {
         return $this->morphMany(GaEvent::class, 'source');
     }
+
+    public function scopeLocalPublic($query)
+    {
+        return $query->where('status', 2);
+    }
 }

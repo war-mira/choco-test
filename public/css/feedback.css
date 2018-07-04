@@ -193,6 +193,11 @@
     border-bottom: 1px solid #c5c5c5;
 }
 
+#text{
+    border: 2px solid #00a8ff;
+    border-bottom-color: #00a8ff;
+}
+
 .feedback__form .form-group textarea {
 border-color: #00a8ff;
 }
@@ -333,6 +338,15 @@ border-color: #00a8ff;
 @media (max-width: 480px)  {
     .feedback__info{
         width: 400px;
+    }
+}
+
+@media (max-width: 430px)  {
+    .feedback__doctor-container {
+        width: 385px;
+    }
+    .feedback__info {
+        width: 380px;
     }
 }
 

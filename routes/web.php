@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'IndexController@home')->name('home');
+Route::get('/', 'IndexController@r_home')->name('home');
 
 Route::get('order/gotopay/{id}', 'OrderController@gotopay');
 Route::get('order/newFromSite', 'OrderController@newFromSite');
@@ -97,6 +97,7 @@ Route::get('/banner/{id}', 'BannerController@click')->name('banner.link');
 
 //LIVESEARCH
 Route::get('/ajax/search', 'SearchController@livesearch');
+Route::get('/ajax/index_search', 'SearchController@livesearchIndex');
 
 Route::get('/api/345168965432865/order/new/{phone}/{operator_id}', 'MightyCall\OrderController@getFormView')->name('api.order.form');
 Route::post('/api/345168965432865/order/save', "MightyCall\OrderController@create")->name('api.order.create');

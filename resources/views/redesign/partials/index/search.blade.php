@@ -1,43 +1,59 @@
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <div class="main-search-block">
-                <form class="row" action="{{route('doctors.searchPage')}}" method="get">
-
-                    <div class="col-sm-3">
-                        <select id="type" name="type">
-                            <!-- <option value="hide">Поиск вр</option> -->
-                            <option value="doctor">Поиск врача</option>
-                            <option value="medcenter">Поиск медцентра</option>
-                        </select>
-                    </div>
-                    <!-- /Select top -->
-                    <div class="col-sm-3">
-                        <div class="input-block--text">
-                            <input id="search_query" class="input-block__input" name="q" type="text"
-                                   placeholder="Специализация или фамилия">
-                            <label for="search_query" class="input-block__icon"><img
-                                        src="img/icons/search-inactive.png" alt=""></label>
-                        </div>
-
-                    </div>
-                    <div class="col-sm-3">
-                        <select id="district" name="district">
-                            <option value="null">Алматы</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-3">
-                        <button type="submit" class="main-search-block__search-btn">
-                            Найти
-                        </button>
-                    </div>
-                </form>
-
-
-            </div>
-            <div class="heart-bg">
-                <img src="img/heart.png" alt="">
+<div class="index-intro__search-bar search-bar index-search-bar">
+    <form action="{{($type ?? 'doctor') == 'doctor'? route('doctors.list',['skill'=>$skill->alias?? null]) : route('medcenters.list')}}" class="search-bar__line index-search-bar__line">
+        <div class="search-bar__item search-bar__item_type">
+            <select name="type" placeholder="Поиск медцентра" class="js-simple-select">
+                <option data-action="{{route('doctors.list')}}" value="doctor"
+                        @if(($type ?? 'doctor') == 'doctor') selected @endif>Поиск врача</option>
+                <option  data-action="{{route('medcenters.list')}}" value="medcenter"
+                         @if(($type ?? 'doctor') == 'medcenter') selected @endif>Поиск медцентра</option>
+            </select>
+        </div>
+        <div class="search-bar__item search-bar__item_search">
+            <i class="fa fa-search"></i>
+            <input id="searchform" name="q" value="{{$q ?? ""}}"  placeholder="Название медцентра" class="js-search-input"  autocomplete="off">
+            <div class="live-search">
+                <div class="live-search__inner" id="liveresults">
+                </div>
             </div>
         </div>
-    </div>
+        <div class="search-bar__item search-bar__item_region">
+            <select name="region" placeholder="Алмалинский район" class="js-simple-select js-select-region">
+                <option value="region-1">Алмалинский район</option>
+                <option value="region-2">Бескарагайский район</option>
+            </select>
+        </div>
+        <div class="search-bar__item search-bar__item_submit">
+            <button class="btn">Найти</button>
+        </div>
+    </form>
 </div>
+
+<script>
+    var liveSearchXHR = null;
+
+    function livesearch() {
+        var input = $("#searchform").val();
+
+        if (liveSearchXHR !== null)
+            liveSearchXHR.abort();
+
+        setTimeout(function () {
+            var url = "{{url("/ajax/index_search")}}?q=" + input;
+            liveSearchXHR = $.get(url, function (data, textStatus) {
+                $("#liveresults").html(data);
+            });
+        }, 300);
+    }
+
+    $("#searchform").on('input', livesearch);
+
+    $('form').each(function () {
+        var $form = $(this);
+        $form.on('change', 'select[data-select="action"]', function () {
+            var action = $(this).find('option:selected').data('action');
+            $form.attr('action', action);
+        });
+
+    });
+
+</script>

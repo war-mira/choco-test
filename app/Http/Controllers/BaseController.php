@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\City;
+use App\Helpers\SessionContext;
 use Illuminate\Http\Request;
 use Session;
 
@@ -23,6 +24,9 @@ class BaseController extends Controller
         }
 
         $request->session()->save();
+
+        if($request->ajax())
+            return 'success';
         return \Redirect::to($url_to, 302);
     }
 
