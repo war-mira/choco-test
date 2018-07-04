@@ -7618,3 +7618,13 @@ input[type=submit].button[disabled] {
 .filter h1 {
     margin-bottom: 0;
 }
+
+.row.radio-group {
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 7px;
+}
+
+.form-horizontal .row.radio-group .control-label{
+    padding-top: 0;
+}

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\City;
+use App\Doctor;
 use App\Helpers\FormatHelper;
 use App\Http\Controllers\Controller;
 use App\Rules\PhoneNumber;
@@ -58,6 +59,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->where('email_confirmed', 1)],
             'phone' => ['required', new PhoneNumber, Rule::unique('users')->where('phone_verified', 1)],
             'password' => 'required|string|min:6|confirmed',
+            'role' =>'required'
         ]);
     }
 
@@ -69,18 +71,19 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $data['role'];
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => FormatHelper::phone($data['phone']),
             'city' => $data['city'],
+            'role' => $data['role'],
             'password' => bcrypt($data['password']),
         ]);
     }
 
     public function registerUser(Request $request)
     {
-        dd($request);
         if ($phone = $request->get('phone', false))
             $request->request->set('phone', preg_replace("/[^0-9]/", '', $phone));
 
@@ -92,5 +95,16 @@ class RegisterController extends Controller
     {
         $cities = City::query()->orderBy('name')->get();
         return view('auth.register', compact('cities'));
+    }
+
+    protected function ifDoctorExist($phone){
+        $doctor = Doctor::where('phone', $phone)->first();
+
+        return $doctor;
+    }
+
+    protected function setDoctorUser($doctor, $user){
+        $doctor->user_id = $user->id;
+        $doctor->update();
     }
 }

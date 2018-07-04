@@ -56,10 +56,10 @@
                         <div class="index-intro__stat-text">Реальных отзывов</div>
                     </div>
                 </div>
+                <div class="heart-bg responsive_hide">
+                    <img src="img/heart.png" alt="">
+                </div>
             </div>
-        </div>
-        <div class="heart-bg responsive_hide">
-            <img src="img/heart.png" alt="">
         </div>
     </section>
     <!-- section intro end -->

@@ -7,6 +7,25 @@
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
+                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                            <div class="row radio-group">
+                                <label for="role-user" class="control-label col-sm-8">Зарегистрироваться как пользователь:</label>
+                                <div class="col-sm-4">
+                                    <input id="role-user" type="radio" name="role" value="0" required autofocus>
+                                </div>
+                            </div>
+                            <div class="row radio-group">
+                                <label for="role-doctor" class="control-label col-sm-8">Зарегистрироваться как доктор:</label>
+                                <div class="col-sm-4">
+                                    <input id="role-doctor" type="radio" name="role" value="20" required autofocus>
+                                </div>
+                            </div>
+                                @if ($errors->has('name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('role') }}</strong>
+                                    </span>
+                                @endif
+                        </div>
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="control-label col-sm-4">Имя и Фамилия:</label>
