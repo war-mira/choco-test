@@ -53,8 +53,8 @@
                             <p class="tip small with-border-row">Поделитесь впечатлениями о приеме: комфортно ли для вас прошла косультация и
                                 процедуры, компетентно ли общался врач, понятно ли ответил на вопросы... Будьте
                                 объективны, ваш отзыв поможет другим пользователям выбрать подходящего специалиста!</p>
-                            <textarea id="text" name="text" minlength="100" required rows="6"></textarea>
-                            <p class="tip">Минимум 100 символов.</p>
+                            <textarea id="text" name="text" required rows="6"></textarea>
+                            <p class="tip">Желательно не менее 100 символов.</p>
                             <p class="characters-count">0</p>
                         </div>
                     </div>
