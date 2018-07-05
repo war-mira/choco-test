@@ -3,27 +3,59 @@
         <div class="main-footer__line">
             <div class="main-footer__column"><a href="#" class="footer-logo"><img src="img/footer-logo.png" alt=""></a></div>
             <div class="main-footer__column main-footer__footer-nav footer-nav">
-                <div class="footer-nav__column footer-nav-column">
-                    <div class="footer-nav-column__heading">Сервис</div>
-                    <a href="#" class="footer-nav-column__item">О нас</a>
-                    <a href="#" class="footer-nav-column__item">О рейтинге</a>
-                    <a href="{{url('posts')}}" class="footer-nav-column__item">Блог</a>
-                    <a href="#" class="footer-nav-column__item">Партнерам</a>
-                    <a href="#" class="footer-nav-column__item">Правила сервиса</a>
-                    <a href="#" class="footer-nav-column__item">Политика конфиденциальности</a>
+                <div class="footer-nav__column footer-nav-column accordion accordion_mobile">
+                    <div class="footer-nav-column__heading accordion__title"><span>Сервис</span><i class="fa fa-chevron-down" aria-hidden="true"></i></div>
+                    <div class="footer-nav-column__items accordion__body">
+                        <div class="footer-nav-column__item">
+                            <a href="#">О нас</a>
+                        </div>
+                        <div class="footer-nav-column__item">
+                            <a href="#">О рейтинге</a>
+                        </div>
+                        <div class="footer-nav-column__item">
+                            <a href="{{url('posts')}}">Блог</a>
+                        </div>
+                        <div class="footer-nav-column__item">
+                            <a href="#">Партнерам</a>
+                        </div>
+                        <div class="footer-nav-column__item">
+                            <a href="#">Правила сервиса</a>
+                        </div>
+                        <div class="footer-nav-column__item">
+                            <a href="#">Политика конфиденциальности</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="footer-nav-column">
-                    <div class="footer-nav-column__heading">Пациенту</div>
-                    <a href="{{route('doctors.list')}}" class="footer-nav-column__item">Врачи</a>
-                    <a href="{{route('medcenters.list')}}" class="footer-nav-column__item">Клиники</a>
-                    <a href="/#doc-letter-search__result" class="footer-nav-column__item">Специализации</a>
-                    <a href="#" class="footer-nav-column__item">Акции</a>
-                    <a href="#" class="footer-nav-column__item">Справочник заболеваний</a>
+                <div class="footer-nav__column footer-nav-column accordion accordion_mobile">
+                    <div class="footer-nav-column__heading accordion__title"><span>Пациенту</span><i class="fa fa-chevron-down" aria-hidden="true"></i></div>
+                    <div class="footer-nav-column__items accordion__body">
+                        <div class="footer-nav-column__item">
+                            <a href="{{route('doctors.list')}}">Врачи</a>
+                        </div>
+                        <div class="footer-nav-column__item">
+                            <a href="{{route('medcenters.list')}}">Клиники</a>
+                        </div>
+                        <div class="footer-nav-column__item">
+                            <a href="/#doc-letter-search__result">Специализации</a>
+                        </div>
+                        <div class="footer-nav-column__item">
+                            <a href="#">Акции</a>
+                        </div>
+                        <div class="footer-nav-column__item">
+                            <a href="#">Справочник заболеваний</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="footer-nav-column">
-                    <div class="footer-nav-column__heading">Врачу</div>
-                    <a href="#" class="footer-nav-column__item">Регистрация</a>
-                    <a href="#" class="footer-nav-column__item">Сотрудничество</a>
+                <div class="footer-nav__column footer-nav-column accordion accordion_mobile">
+                    <div class="footer-nav-column__heading accordion__title"><span>Врачу</span><i class="fa fa-chevron-down" aria-hidden="true"></i></div>
+                    <div class="footer-nav-column__items accordion__body">
+                        <div class="footer-nav-column__item">
+                            <a href="#">Регистрация</a>
+                        </div>
+                        <div class="footer-nav-column__item">
+                            <a href="#">Сотрудничество</a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="main-footer__column">
@@ -36,7 +68,7 @@
                         <a href="https://www.facebook.com/kz.idoctor" class="footer-contacts__social-btn social-btn" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
                     </div>
                     <div class="footer-contacts__appointment">
-                        <a href="#quick-order-modal"  rel="modal-link" class="btn">Записаться на прием</a>
+                        <button class="btn">Записаться на прием</button>
                     </div>
                 </div>
             </div>

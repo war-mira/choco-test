@@ -31,7 +31,6 @@
     <script src="{{URL::asset("js/jquery.magnific-popup.min.js")}}"></script>
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
     <script src="{{URL::asset("js/scripts.js")}}"></script>
-    <script src="{{URL::asset("js/spaghetti.js")}}"></script>
 </head>
 <body>
 <div class="main-wrap">
@@ -43,6 +42,7 @@
     <div class="modal-container">
         @include('redesign.partials.modals.modal-login')
         @include('redesign.partials.modals.quick-order')
+        @include('redesign.partials.modals.feedback-callback')
     </div>
 </div>
 </body>

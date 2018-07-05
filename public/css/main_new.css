@@ -3899,9 +3899,14 @@ span.tab-line__item {
     width: 720px; }
   .nav-toggle {
     display: block; }
-  .main-header-phone,
   .header-link-btn:not(.header-login-btn) {
     display: none; }
+  .main-header-phone {
+    font-size: 14px;
+    position: absolute;
+    width: 148px;
+    top: 70px;
+  }
   .index-search-bar__line {
     -webkit-box-pack: center;
     -webkit-justify-content: center;
@@ -4280,4 +4285,9 @@ span.tab-line__item {
   .index-nav__item {
     margin: 0 5px; }
   .index-nav {
-    margin: 0 -5px; } }
+    margin: 0 -5px; }
+  .main-header-phone {
+    top: 55px;
+    font-size: 12px;
+    width: 129px;
+  }}

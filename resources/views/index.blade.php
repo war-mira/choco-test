@@ -62,7 +62,7 @@
             @endcomponent
             @component('components.bootstrap.row')
                 @component('components.bootstrap.column',['class'=>'col-md-8 col-md-offset-2'])
-                    @include('forms.public.question-form')
+                    @include('forms.public.question-form-old')
                 @endcomponent
             @endcomponent
         </div>

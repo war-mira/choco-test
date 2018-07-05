@@ -451,3 +451,92 @@
     height: 100%;
 }
 
+.show-question-form{
+    text-align: center;
+}
+
+.show-question-form .btn {
+    padding: 0 33px;
+    line-height: 45px;
+    height: 45px;
+    -webkit-border-radius: 23px;
+    border-radius: 23px;
+}
+
+.question__form{
+    padding-top: 40px;
+    display: none;
+}
+
+.question__form .tips {
+    font-size: 14px;
+    color: #7b7b7b;
+    font-family: ProximaNova-Regular;
+    padding: 15px;
+}
+
+.question__form  .form-group input, .question__form  .form-group select, .question__form .form-group textarea{
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #c5c5c5;
+}
+
+.question__form  .form-group{
+    padding: 15px 0;
+}
+
+.question__form  .form-group textarea {
+    border-color: #00a8ff;
+}
+
+.question__form button{
+    background: #00a8ff;
+    border: 1px solid #00a8ff;
+    font-family: ProximaNova-Semibold;
+    font-size: 15px;
+    color: #fff;
+    padding: 15px 40px;
+    -webkit-border-radius: 23px;
+    border-radius: 23px;
+}
+
+.question__form  .form-group.center, .question__form .button-send-container{
+    text-align: center;
+}
+
+.question__form .form-group input.has-warning, .question__form .form-group textarea.has-warning, .question__form .form-group select.has-warning {
+    color: #8a6d3b;
+    background: none;
+    border-color: red;
+}
+
+.question__form .form-row{
+    display: flex;
+}
+
+.question__form .form-group select{
+    height: 30px;
+}
+
+.question__form .form-row .form-group {
+    width: 48%;
+    margin: 0 10px;
+}
+
+.question__form .form-group label {
+    line-height: 22.15385px;
+    font-size: 16px;
+    font-family: "ProximaNova-Semibold", sans-serif;
+    white-space: nowrap;
+    color: #303030;
+}
+
+.question__form .date-radio__item {
+    text-align: right;
+    padding-right: 10px;
+}
+
+#save_comment_mess_ok{
+    padding: 30px 0;
+    color: #00a47c;
+}

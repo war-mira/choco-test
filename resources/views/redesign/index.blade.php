@@ -23,10 +23,10 @@
                         {{--<span class="index-nav-item__icon"><i class="icon-4 hover-icon"></i></span>--}}
                         {{--<span>Библиотека</span>--}}
                         {{--</a>--}}
-                        <a href="#" class="index-nav__item index-nav-item">
-                            <span class="index-nav-item__icon"><i class="icon-5 hover-icon"></i></span>
-                            <span>Акции</span>
-                        </a>
+                        {{--<a href="#" class="index-nav__item index-nav-item">--}}
+                            {{--<span class="index-nav-item__icon"><i class="icon-5 hover-icon"></i></span>--}}
+                            {{--<span>Акции</span>--}}
+                        {{--</a>--}}
                     </nav>
                 </div>
             </div>
@@ -38,7 +38,9 @@
                     <div>Бесплатный сервис поиска врача</div>
                     <div>НАЙТи ПРОВЕРЕННОГО Врача — легко!</div>
                 </div>
+
                 @include('redesign.partials.index.search')
+
                 <div class="index-intro__stats">
                     <div class="index-intro__stat-item">
                         <div class="index-intro__stat-img"><img src="{{asset('img/icon-stat-1.svg')}}" alt=""></div>
@@ -57,12 +59,25 @@
                     </div>
                 </div>
                 <div class="heart-bg responsive_hide">
-                    <img src="img/heart.png" alt="">
+                    <img src="{{asset('img/heart.png')}}" alt="">
                 </div>
             </div>
         </div>
     </section>
     <!-- section intro end -->
+
+    <!-- begin questions -->
+    <div class="section questions">
+        <div class="container">
+            <div class="questions-container">
+                    <div class="show-question-form">
+                        <button class="btn button">Задать вопрос врачу</button>
+                    </div>
+                    @include('forms.public.question-form')
+            </div>
+        </div>
+    </div>
+    <!-- end section -->
 
     <!-- section letter search start -->
     <section class="section pattern-bg doc-letter-search">
@@ -280,4 +295,54 @@
         </div>
     </section>
     <!-- section partners end-->
+
+    <!-- begin section -->
+    <script type="text/javascript">
+
+        $('.show-question-form button').on('click', function () {
+            $('.question__form').slideToggle(300);
+        });
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        var form = $("#question__form");
+        $("#question__form-send").click(function () {
+            if (form[0].checkValidity()) {
+                var data = form.serialize();
+                $.post("{{url('/question/add')}}", form.serialize())
+                    .done(function (json) {
+                        $('#user-email').removeClass('has-warning');
+                        $('#user-phone').removeClass('has-warning');
+                        $('#user-birthday').removeClass('has-warning');
+                        $('#user-gender').removeClass('has-warning');
+                        $('#question-text').removeClass('has-warning');
+
+                        modalOpen('question__modal');
+
+                        if (json.error) {
+                            $('#save_comment_mess_ok').removeClass('access').addClass('error').html('<b>' + json.error + '</b>');
+                            $('#save_comment_mess_ok').show();
+                        }
+                        else if (json.id) {
+                            $('#save_comment_mess_ok').removeClass('error').addClass('access').html('<b>Спасибо! Ваш комментарий отправлен на модерацию</b>');
+                            $('#save_comment_mess_ok').show();
+                            form[0].reset();
+                        }
+                    });
+            }
+            else {
+                $('#user-email').addClass('has-warning');
+                $('#user-phone').addClass('has-warning');
+                $('#user-birthday').addClass('has-warning');
+                $('#user-gender').addClass('has-warning');
+                $('#question-text').addClass('has-warning');
+            }
+        });
+
+    </script>
+    <!-- end section -->
 @endsection
