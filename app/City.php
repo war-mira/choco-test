@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\District;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -43,6 +44,11 @@ class City extends Model
     public function children()
     {
         return $this->hasMany(City::class, 'parent_id', 'id');
+    }
+
+    public function districts()
+    {
+        return $this->hasMany(District::class, 'parent_id', 'id');
     }
 
     public function getChildIdsAttribute()

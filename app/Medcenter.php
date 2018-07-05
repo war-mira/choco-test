@@ -122,6 +122,11 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
         return $this->belongsTo(City::class, 'city_id', 'id');
     }
 
+    public function district()
+    {
+        return $this->belongsTo(\App\Models\District::class, '	district_id', 'id');
+    }
+
     public function getAvatarAttribute()
     {
         return $this->attributes['avatar'] ?? asset('images/no-userpic.gif');
@@ -236,10 +241,6 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
         });
     }
 
-    public function district()
-    {
-        return $this->belongsTo(District::class, 'disctict_id', 'id');
-    }
 
     public function getMetaTitle()
     {

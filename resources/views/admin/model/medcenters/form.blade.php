@@ -129,6 +129,18 @@
                             @slot('search',true)
                         @endcomponent
                     @endcomponent
+                        @component('components.bootstrap.column',['class'=>'col-md-3'])
+                        @component('components.form.select2.single')
+                            @slot('field','district_id')
+                            @slot('value',$seed['district_id'] ?? null)
+                            @slot('placeholder','Район')
+                            @slot('label','Район')
+                            @slot('options',\App\Models\District::orderBy('name')->get())
+                            @slot('idField','id')
+                            @slot('nameField','name')
+                            @slot('search',true)
+                        @endcomponent
+                    @endcomponent
                 @endcomponent
             @endcomponent
             @component('components.bootstrap.column',['class'=>'col-md-3'])

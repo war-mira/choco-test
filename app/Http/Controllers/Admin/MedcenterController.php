@@ -39,7 +39,7 @@ class MedcenterController extends Controller
         if ($id != null) {
             $result = Medcenter::find($id);
         } else {
-            $medcenters = Medcenter::query()->with(['city']);
+            $medcenters = Medcenter::query()->with(['city'])->with(['district']);
             $result = BootstrapTableHelper::processTableRequest($request, $medcenters, self::SEARCH_FIELDS);
         }
         return $result;
