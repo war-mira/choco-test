@@ -37,14 +37,14 @@ class  DoctorController extends Controller
         $query = $request->only([
             'q',
             'child',
-
             'ambulatory',
             'sort',
             'order',
             'exp_range',
             'price_range',
             'rate_range',
-            'page'
+            'page',
+            'district'
         ]);
         $filter = $query;
 
@@ -133,12 +133,15 @@ class  DoctorController extends Controller
         if (isset($filter['ambulatory']) && $filter['ambulatory']) {
             $doctors->where('ambulatory', $filter['ambulatory']);
         }
+        if(isset($filter['district']) && $filter['district']){
+            $doctors->leftJoin('medcenters', 'medcenters.id', '=', 'doctors.med_id')->where('medcenters.district_id', $filter['district']);
+        }
         if (isset($filter['q']) && $filter['q'] && trim($filter['q']) != '')
             SearchHelper::searchByFields($doctors, ['firstname', 'lastname', 'skills' => ['name']], $filter['q']);
 
         $order = [$filter['sort'] ?? 'rate', $filter['order'] ?? 'desc'];
         if ($order[0] == 'rate')
-            $doctors->orderBy('rate', $order[1]);
+            $doctors->orderBy('doctors.rate', $order[1]);
         else if ($order[0] == 'price')
             $doctors->orderBy('price', $order[1]);
         else if ($order[0] == 'exp')

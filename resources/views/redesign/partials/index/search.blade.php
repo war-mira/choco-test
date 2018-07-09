@@ -9,17 +9,18 @@
             </select>
         </div>
         <div class="search-bar__item search-bar__item_search">
-            <input id="searchform" name="q" value="{{$q ?? ""}}"  placeholder="Специализация или фамилия" class="js-search-input"  autocomplete="off">
-            <label for="searchform" class="input-block__icon"><img src="/img/icons/search-inactive.png" alt=""></label>
+            <input id="searchform" name="q" value="{{$q ?? ""}}"  placeholder="Введите ваш запрос" class="js-search-input"  autocomplete="off">
+            <label for="searchform" class="input-block__icon"><img src="{{asset('/img/icons/search-inactive.png')}}" alt=""></label>
             <div class="live-search">
                 <div class="live-search__inner" id="liveresults">
                 </div>
             </div>
         </div>
         <div class="search-bar__item search-bar__item_region">
-            <select name="region" placeholder="Алмалинский район" class="js-simple-select js-select-region">
-                <option value="region-1">Алмалинский район</option>
-                <option value="region-2">Бескарагайский район</option>
+            <select name="district" placeholder="Алмалинский район" class="js-simple-select js-select-region">
+                @foreach($districts as $district)
+                    <option value="{{ $district->id }}">{{ $district->name }}</option>
+                @endforeach
             </select>
         </div>
         <div class="search-bar__item search-bar__item_submit">

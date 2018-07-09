@@ -472,20 +472,7 @@ $(document).ready(function() {
         $(".live-search")
             .removeClass("live-search--fold");
     });
-
-    $('.js-type-select').on('change', function () {
-        let type = $(this).val();
-        let text = '';
-        if (type == 'doctor') {
-            text = 'Специализация или фамилия';
-        } else if(type == 'medcenter') {
-            text = 'Название медцентра';
-        }
-       $('#searchform').attr("placeholder", text);
-    });
 });
-
-
 
 //returns element markup
 jQuery.fn.outerHTML = function() {

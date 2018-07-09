@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Comment;
 use App\Doctor;
 use App\Helpers\SessionContext;
+use App\Models\District;
 use App\Order;
 use App\Post;
 use App\Skill;
@@ -93,6 +94,8 @@ class IndexController extends Controller
                 return compact('name', 'href', 'doctorsCount');
             });
 
+        $districts = District::all();
+
         //Комментарии
         $topPromotions = collect([]);
 
@@ -108,7 +111,8 @@ class IndexController extends Controller
                 'topPromotions',
                 'skillsList',
                 'stats',
-                'social')
+                'social',
+                'districts')
         );
     }
 

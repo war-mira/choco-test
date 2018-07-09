@@ -26,6 +26,19 @@ class SearchController extends Controller
         return view('search.liveresults_index_new', $groups);
     }
 
+    public function livesearch(Request $request)
+    {
+        $query = $request->query('q');
+        $is_child = $request->query('child');
+        $ambulatory = $request->query('ambulatory');
+        $groups = [
+            $this->searchSkills($query),
+            $this->searchDoctors($query, $is_child, $ambulatory),
+            $this->searchMedcenters($query)
+        ];
+        return view('search.liveresults', compact('groups'));
+    }
+
     private function searchSkills($query)
     {
         $skills = Skill::
@@ -99,7 +112,7 @@ class SearchController extends Controller
         return view('search.liveresults', compact('groups'));
     }
 
-    public function searchPage(Request $request, $primarySuffix = false, $secondarySuffix = false)
+    public function new_searchPage(Request $request, $primarySuffix = false, $secondarySuffix = false)
     {
         $type = $request->input('type', 'doctor');
         $sort = $request->input('sort', 'rate');
@@ -141,13 +154,21 @@ class SearchController extends Controller
         ));
     }
 
-    public function old_searchPage(Request $request)
+    public function searchPage(Request $request)
     {
-        $filters = $request->only(['q', 'child', 'ambulatory', 'medcenter', 'skill']);
+        $filter = $request->only(['q', 'page', 'type', 'order', 'sort', 'skill', 'medcenter', 'child', 'ambulatory']);
+        if (isset($filter['skill'])) {
+            $skill = Skill::query()->where('id', $filter['skill'])->firstOrFail()->alias;
+            return redirect()->route('doctors.list', compact('skill'));
+        } else {
+            $filter = array_merge(['skill' => null], $filter);
+            return redirect()->route('doctors.list', $filter);
+        }
+
         $city = SessionContext::city();
         $cityId = $city->id;
-        $doctorsCount = Doctor::query()->where('doctors.status', 1)
-            ->where('doctors.city_id', $cityId)->count();
+        $doctors = Doctor::query()->where('doctors.status', 1)
+            ->where('doctors.city_id', $cityId)->paginate(10)->appends($request->query());
 
 
         $skills = \App\Skill::query()->with('doctors')->withCount(['doctors' => function ($query) use ($cityId) {
@@ -156,10 +177,7 @@ class SearchController extends Controller
         }])->whereHas('doctors', function ($query) use ($cityId) {
             $query->where('doctors.status', 1)
                 ->where('city_id', $cityId);
-        })->orderBy('name')->get()->map(function ($skill) {
-            return ['id' => $skill['id'], 'name' => $skill['name'] . " (" . $skill['doctors_count'] . ")"];
-        });
-
+        })->orderBy('name')->get();
 
         $medcenters = \App\Medcenter::query()->with('doctors')->withCount(['doctors' => function ($query) use ($cityId) {
             $query->where('doctors.status', 1)
@@ -167,27 +185,11 @@ class SearchController extends Controller
         }])->whereHas('doctors', function ($query) use ($cityId) {
             $query->where('doctors.status', 1)
                 ->where('doctors.city_id', $cityId);
-        })->orderBy('name')->get()->map(function ($medcenter) {
-            return ['id' => $medcenter['id'], 'name' => $medcenter['name'] . " (" . $medcenter['doctors_count'] . ")"];
-        });
-
-        $title = 'Все врачи в городе: ' . \App\Helpers\SessionContext::city()->name;
-        $description = 'Врачи в городе ' . \App\Helpers\SessionContext::city()->name . ' поиск и вызов врача';
-        if (isset($filters['skill']) && is_numeric($filters['skill'])) {
-            $skill = Skill::findOrFail($filters['skill']);
-            $title = $skill->name . ' ' . $city->name . '.' . ($skill->seo_title ?? $skill->name) . " - отзывы, рейтинг и запись прием онлайн iDoctor.kz.";
-            $description = $skill->seo_description ?? $skill->description;
-            $keywords = $skill->seo_keywords ?? $skill->name;
-            $meta = compact('title', 'description', 'keywords');
-        } else {
-            $title = 'Все врачи в городе: ' . $city->name;
-            $description = 'Врачи в городе ' . $city->name . ' поиск и вызов врача';
-            $meta = compact('title', 'description');
-        }
+        })->orderBy('name')->get();
 
 
         return view('search.page',
-            compact('meta', 'doctorsCount', 'skills', 'medcenters', 'filters'));
+            compact('meta', 'doctors', 'skills', 'medcenters', 'filter'));
     }
 
     private function old_searchMedcenters($query)
