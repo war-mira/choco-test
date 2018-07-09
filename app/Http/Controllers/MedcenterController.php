@@ -27,7 +27,8 @@ class MedcenterController extends Controller
             'order',
             'price_range',
             'rate_range',
-            'page'
+            'page',
+            'district'
         ]);
         $filter = $query;
 
@@ -85,6 +86,9 @@ class MedcenterController extends Controller
 
         if (isset($filter['ambulatory']) && $filter['ambulatory']) {
             $medcenters->where('ambulatory', $filter['ambulatory']);
+        }
+        if (isset($filter['district']) && $filter['district']) {
+            $medcenters->where('district_id', $filter['district']);
         }
         if (isset($filter['q']) && $filter['q'] && trim($filter['q']) != '')
             SearchHelper::searchByFields($medcenters, ['name', 'content'], $filter['q']);
