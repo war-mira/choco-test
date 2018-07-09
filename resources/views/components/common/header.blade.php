@@ -106,7 +106,7 @@
 
         </div>
         <div class="mobile-menu-item">
-            <a class="text-center" href="{{route('doctors.searchPage')}}" target="">
+            <a class="text-center" href="{{route('doctors.list')}}" target="">
                 <div class="menu-item-content">
                     <div><img src="{{asset('images/icons/icon_expert.png')}}">Врачи</div>
                     <div class="color-light-green">{{\App\Doctor::localPublic()->count()}}</div>
@@ -114,7 +114,7 @@
             </a>
         </div>
         <div class="mobile-menu-item">
-            <a class="text-center" href="/medcenters" target="">
+            <a class="text-center" href="{{route('medcenters.list')}}" target="">
                 <div class="menu-item-content">
                     <div><img src="{{asset('images/icons/icon_building.png')}}">Медцентры</div>
                     <div class="color-light-green">{{\App\Medcenter::localPublic()->count()}}</div>
