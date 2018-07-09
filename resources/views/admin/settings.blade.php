@@ -8,7 +8,7 @@
         @component('components.bootstrap.column',['class'=>'col-md-8'])
             @foreach($items as $item)
                 @component('components.bootstrap.row')
-                    <h2>{{$item['class']}}</h2>
+                    <h2>{{$item['name']}}</h2>
                     @component('components.bootstrap.column',['class'=>'col-md-4'])
                         @component('components.form.textarea')
                             @slot('field',"settings[{$item["id"]}][title]")

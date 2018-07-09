@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Doctor;
+use App\Helpers\SeoMetadataHelper;
 use App\Helpers\SessionContext;
 use App\Models\District;
 use App\Order;
+use App\PageSeo;
 use App\Post;
 use App\Skill;
 use DB;
@@ -42,9 +44,12 @@ class IndexController extends Controller
         //Комментарии
         $lastComments = Comment::whereStatus(1)->orderByDesc('created_at')->take(20)->get();
 
-        $title = 'iDoctor.kz - Поиск врача в Алматы и Астане, бесплатная запись на прием';
-        $description = 'iDoctor.kz - Сервис для поиска врача и бесплатной записи на прием. Мы собрали базу врачей в Алматы и Астане с рейтингами и отзывами наших клиентов.';
-        $meta = compact('title', 'description');
+        $pageSeo = PageSeo::query()
+            ->where('class','Home')
+            ->where('action', 'index')
+            ->first();
+        $meta = SeoMetadataHelper::getMeta($pageSeo, SessionContext::city());
+
 
         return view('index')->with(
             compact(
@@ -99,9 +104,11 @@ class IndexController extends Controller
         //Комментарии
         $topPromotions = collect([]);
 
-        $title = 'iDoctor.kz - Поиск врача в Алматы и Астане, бесплатная запись на прием';
-        $description = 'iDoctor.kz - Сервис для поиска врача и бесплатной записи на прием. Мы собрали базу врачей в Алматы и Астане с рейтингами и отзывами наших клиентов.';
-        $meta = compact('title', 'description');
+        $pageSeo = PageSeo::query()
+            ->where('class','Home')
+            ->where('action', 'index')
+            ->first();
+        $meta = SeoMetadataHelper::getMeta($pageSeo, SessionContext::city());
 
         return view('redesign.index')->with(
             compact(
