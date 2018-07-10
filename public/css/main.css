@@ -2255,9 +2255,22 @@ a.link-gray {
     }
 
     .list-unstyled.list-unstyled--count a {
-        width: 75%;
+        width: 87%;
         display: inline-block;
         word-wrap: break-word;
+    }
+
+    .slick-logo__item img {
+        max-height: inherit;
+        width: 100%;
+    }
+
+    .slick-logo__item {
+        width: 48%;
+    }
+
+    .slick-logo {
+        margin: 0px !Important;
     }
 }
 
@@ -3122,9 +3135,11 @@ a.link-gray {
 }
 
 @media screen and (max-width:991px) {
-  .home-list .list-unstyled {
-    width: 50%
-  }
+    .home-list .list-unstyled {
+        width: 100%;
+        padding-bottom: 0px;
+        margin-bottom: 0px;
+    }
 }
 
 .news {
