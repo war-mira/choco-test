@@ -10,8 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('old', 'IndexController@home')->name('home');
-Route::get('/', 'IndexController@r_home')->name('home');
+Route::get('/', 'IndexController@home')->name('home');
+Route::get('main-new', 'IndexController@r_home')->name('home');
 
 Route::get('order/gotopay/{id}', 'OrderController@gotopay');
 Route::get('order/newFromSite', 'OrderController@newFromSite');

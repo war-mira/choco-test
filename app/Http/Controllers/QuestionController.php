@@ -17,9 +17,6 @@ class QuestionController extends Controller
         $dataUser = $request->input('user');
         $user = \Auth::user();
         if ($user) {
-            $dataUser['phone'] = $user->phone;
-            $dataUser['firstname'] = $user->name;
-            $dataUser['email'] = $user->email;
             $dataQuestion['user_id'] = $user->id;
         }
         $dataQuestion['text'] = strip_tags($dataQuestion['text'] ?? "");
