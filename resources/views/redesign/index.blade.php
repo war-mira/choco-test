@@ -15,6 +15,10 @@
                             <span class="index-nav-item__icon"><i class="icon-2 hover-icon"></i></span>
                             <span>Медцентры</span>
                         </a>
+                        <a href="{{url('posts')}}" class="index-nav__item index-nav-item">
+                        <span class="index-nav-item__icon"><i class="icon-4 hover-icon"></i></span>
+                        <span>Блоги</span>
+                        </a>
                         {{--<a href="#" class="index-nav__item index-nav-item">--}}
                         {{--<span class="index-nav-item__icon"><i class="icon-3 hover-icon"></i></span>--}}
                         {{--<span>Услуги</span>--}}
@@ -151,8 +155,7 @@
             </div>
             <div class="video-block">
                 <div class="video-block__videoframe">
-                    <iframe src="https://www.youtube.com/embed/OkHU9CY7sjA" frameborder="0"
-                            allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    <iframe src="https://drive.google.com/file/d/1UyUMN_E7BsqqwKjA9FIpKguI1N7FCjDk/preview" width="640" height="480"  frameborder="0" allow="autoplay; encrypted-media"></iframe>
                 </div>
             </div>
         </div>
