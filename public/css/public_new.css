@@ -549,3 +549,7 @@
 .index-nav-item__icon {
     font-size: 45px;
 }
+
+.modal-window #callback_mess_ok{
+    padding: 15px 0;
+}
