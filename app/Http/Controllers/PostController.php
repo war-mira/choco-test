@@ -18,6 +18,7 @@ class PostController extends Controller
         $post->content = str_replace(
             [
                 'href="http://',
+                'https://www.rstom.kz',
                 'href="https://plus.google.com',
                 'href="https://twitter.com',
                 'href="https://vk.com',
@@ -25,6 +26,7 @@ class PostController extends Controller
             ],
             [
                 'href="https://',
+                'http://www.rstom.kz',
                 'rel="nofollow" href="https://plus.google.com',
                 'rel="nofollow" href="https://twitter.com',
                 'rel="nofollow" href="https://vk.com',
