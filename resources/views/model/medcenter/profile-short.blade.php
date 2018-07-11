@@ -12,7 +12,7 @@
 <div class="profiles__right">
     <div class="profiles__header">
         <h3 class="profiles__title">
-            <a href="{{ route('medcenter.item',['medcenter'=>$medcenter->alias]) }}">{{$medcenter->name}}</a>
+            <a href="{{ route('medcenter.item',['medcenter'=>$medcenter->alias, 'city' => $medcenter->city->alias]) }}">{{$medcenter->name}}</a>
         </h3>
         <p class="profiles__short">
          <p class="text-black">Многопрофильное медицинское учреждение</p>

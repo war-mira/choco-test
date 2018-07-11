@@ -234,7 +234,7 @@
                                 @include('model.doctor.profile-short')
                             @endforeach
                         </div>
-                @endforeach
+                    @endforeach
                 <!-- end profiles -->
                 </div>
                 <!-- end sidebar -->
