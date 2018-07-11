@@ -10,8 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('old', 'IndexController@home')->name('home');
-Route::get('/', 'IndexController@r_home')->name('home');
+Route::get('/', 'IndexController@home')->name('home');
+Route::get('main-new', 'IndexController@r_home')->name('home');
 
 Route::get('order/gotopay/{id}', 'OrderController@gotopay');
 Route::get('order/newFromSite', 'OrderController@newFromSite');
@@ -139,6 +139,8 @@ Route::get('/feedback/order/{token}', 'OrderController@feedbackView')->name('fee
 Route::post('/feedback/order/{token}', 'OrderController@feedbackLeave')->name('feedback.order.create');
 
 Route::get('/{city}/specializacii/{skill}', 'SkillController@showSkillDoctors')->name('skill.doctors');
+
+Route::get('/load', 'ExcelController@loadDoctors')->name('load.doctors');
 
 
 // Telegram doctors bot

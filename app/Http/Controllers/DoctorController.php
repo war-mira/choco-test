@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\City;
 use App\Doctor;
+use App\Helpers\FormatHelper;
 use App\Helpers\SearchHelper;
 use App\Helpers\SeoMetadataHelper;
 use App\PageSeo;
@@ -47,12 +48,22 @@ class  DoctorController extends Controller
             'district'
         ]);
         $filter = $query;
+        $doctorsTop = null;
 
         if (isset($skill)) {
             $filter['skill'] = $skill->alias ?? null;
             $doctors = $doctors->whereHas('skills', function ($skillsQuery) use ($skill) {
                 $skillsQuery->where('skills.id', $skill->id);
             });
+            $top_doctors = FormatHelper::arrayToString($skill->top_doctors);
+            if($top_doctors && $skill->top_doctors){
+                $doctorsTop = Doctor::whereIn('id', $skill->top_doctors)->orderByRaw('FIELD(id,'.$top_doctors.')')->get();
+            }
+
+        }
+
+        if(isset($doctorsTop)){
+            $doctors = $doctors->whereNotIn('id', $skill->top_doctors);
         }
 
         if (isset($filter['page']) && $filter['page'] == 1){
@@ -75,11 +86,6 @@ class  DoctorController extends Controller
             $description = 'iDoctor.kz - Список врачей-специалистов по всему Казахстану. Поиск и бесплатная запись на прием к врачу любой специальности. У нас собрана большая база врачей различных специализаций по всему Казахстану';
             $meta = compact('title', 'description');
         }
-
-
-
-
-
         $doctors = $doctors->paginate(10)->appends($query);
 
         if ($doctors->lastPage() < ($filter['page'] ?? 1)){
@@ -108,9 +114,8 @@ class  DoctorController extends Controller
 //            $meta = SeoMetadataHelper::getMeta($pageSeo, $city);
         }
 
-
         return view('search.page',
-            compact('meta', 'doctors', 'skills', 'medcenters', 'filter', 'query', 'city'));
+            compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city'));
     }
 
     private function applyDoctorsFilter($doctors, $filter)

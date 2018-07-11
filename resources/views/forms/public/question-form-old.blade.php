@@ -4,17 +4,13 @@
     </div>
     <div class="form-group col-md-6">
         <label>Email *</label>
-        <input type="email" id="user-email" class="" name="user[email]" @if(Auth::user())
-        value="{{auth()->user()->email}}" @endif required>
+        <input type="email" id="user-email" class="" name="user[email]" required>
     </div>
     <div class="form-group col-md-6">
         <label>Телефон *</label>
         <input class="bfh-phone" data-format="+7 (ddd) ddd-dddd" required
                pattern="\+7 \(\d{3}\) \d{3}-\d{4}" name="user[phone]" id="user-phone"
-               type="text"
-               @if(Auth::user())
-               value="{{auth()->user()->phone}}"
-                @endif>
+               type="text">
     </div>
     <div class="form-group col-md-6">
         <label>Город</label>
@@ -28,7 +24,7 @@
             @endforeach
         </select>
     </div>
-    <div class="form-group col-md-6 desktop-ditetime" id="datetime-group">
+    <div class="form-group col-md-6" id="datetime-group">
         <label>Дата рождения *</label><br>
         <input class="datepicker"
                name="user[birthday]" id="user-birthday" type="text" required>

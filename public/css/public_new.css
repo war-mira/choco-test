@@ -540,3 +540,16 @@
     padding: 30px 0;
     color: #00a47c;
 }
+
+.index-nav{
+    max-width: 795px;
+    margin: auto;
+}
+
+.index-nav-item__icon {
+    font-size: 45px;
+}
+
+.modal-window #callback_mess_ok{
+    padding: 15px 0;
+}

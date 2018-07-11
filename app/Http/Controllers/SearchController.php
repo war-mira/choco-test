@@ -32,9 +32,9 @@ class SearchController extends Controller
         $is_child = $request->query('child');
         $ambulatory = $request->query('ambulatory');
         $groups = [
-            $this->searchSkills($query),
-            $this->searchDoctors($query, $is_child, $ambulatory),
-            $this->searchMedcenters($query)
+            $this->old_searchSkills($query),
+            $this->old_searchDoctors($query, $is_child, $ambulatory),
+            $this->old_searchMedcenters($query)
         ];
         return view('search.liveresults', compact('groups'));
     }
@@ -225,7 +225,6 @@ class SearchController extends Controller
             ->limit(20)
             ->get();
 
-
         return [
             'header' => 'Доктора',
             'results' => [
@@ -253,33 +252,10 @@ class SearchController extends Controller
         ];
     }
 
-    public function old_searchClients(Request $request)
-    {
-        $query = $request->input('q');
-        $users = User::whereRole(3)->orderBy('name', 'asc');
-        $words = explode(' ', $query);
-        foreach ($words as $word) {
-            if ($word != '')
-                $users = $users->where(function ($q) use ($word) {
-                    $q->where('name', 'like', "%$word%")
-                        ->orWhere('phone', 'like', "%$word%");
-                });
-        }
-        $users = $users->get();
-
-        $groups = [[
-            'results' => [
-                'view' => 'search.result.user',
-                'data' => $users
-            ]
-        ]];
-        return view('search.liveresults', compact('groups'));
-    }
-
     public function searchResults(Request $request)
     {
         $cityId = \App\Helpers\SessionContext::city()->id;
-        $doctors = \App\Models\Doctors\Doctor::query()->where('status', 1)->where('city_id', $cityId);
+        $doctors = \App\Doctor::query()->where('status', 1)->where('city_id', $cityId);
 
         $search = $request->input('q', null);
         $doctorsFilter = $request->input('filter', false);
@@ -338,26 +314,13 @@ class SearchController extends Controller
         $doctors = $doctors->paginate(10, ['*'], 'page', $page);
 
         $pagination = (string)$doctors->links('vendor.pagination.ajax');
+
+
         return [
             'doctorsCount' => $doctorsCount,
             'page'         => $page,
             'pagination'   => $pagination,
             'view'         => view('search.doctors-page', compact('doctors', 'highlightSkill'))->render()];
-    }
-
-    private function filterQuery($query, $columnFilters = [], $relationFilters = [])
-    {
-        foreach ($columnFilters as $column => $value) {
-            $query->where($column, $value);
-        }
-        foreach ($relationFilters as $relation => $value) {
-            $ids = is_array($value) ? $value : [$value];
-            $query->whereHas($relation, function ($relationQuery) use ($relation, $ids) {
-                $keyColumn = $relation . ".id";
-                $relationQuery->whereIn($keyColumn, $ids);
-            });
-        }
-        return $query;
     }
 
 }

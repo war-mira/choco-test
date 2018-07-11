@@ -143,6 +143,18 @@
                 </div>
             </div>
             @endif
+            @if($doctorsTop)
+                @foreach($doctorsTop as $doctorTop)
+                    <div class="results d-result" data-type="doctor" data-id="{{$doctorTop->id}}"
+                         id="doctor-result-{{$doctorTop->id}}"
+                         style="float: right">
+                        <div class="list-group-item{{(isset($doctorTop['is_top_doc']) && $doctorTop['is_top_doc']) ? " pretty_profile" : "" }}">
+                            @component('model.doctor.profile-short',['doctor'=>$doctorTop,'width'=>'250px','highlightSkill'=>$highlightSkill??null])
+                            @endcomponent
+                        </div>
+                    </div>
+                @endforeach
+            @endif
             @foreach($doctors as $doctor)
                 <div class="results d-result" data-type="doctor" data-id="{{$doctor->id}}"
                      id="doctor-result-{{$doctor->id}}"

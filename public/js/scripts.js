@@ -330,8 +330,8 @@ $(document).ready(function() {
         if ($accordion.hasClass("accordion_mobile") && window.innerWidth > 767.98) {
             return false;
         }
-        $(".accordion__body").not($accordion.find(".accordion__body")).slideUp();
-        $accordion.find(".accordion__body").slideDown();
+        // $(".accordion__body").not($accordion.find(".accordion__body")).slideToggle();
+         $accordion.find(".accordion__body").slideToggle();
 
     });
 

@@ -6,18 +6,13 @@
     <div class="form-row">
         <div class="form-group">
             <label>Email *</label>
-            <input type="email" id="user-email" class="" name="user[email]" @if(Auth::user())
-            value="{{auth()->user()->email}}" readonly="readonly" @endif required>
+            <input type="email" id="user-email" class="" name="user[email]" required>
         </div>
         <div class="form-group">
             <label>Телефон *</label>
-            <input class="bfh-phone" data-format="+7 (ddd) ddd-dddd" required
-                   pattern="\+7 \(\d{3}\) \d{3}-\d{4}" name="user[phone]" id="user-phone"
-                   type="text"
-                   @if(Auth::user())
-                   value="{{auth()->user()->phone}}"
-                   readonly="readonly"
-                    @endif>
+            <input class="bfh-phone" required
+                   name="user[phone]" id="user-phone"
+                   type="text" data-mask="+7 (999) 999-99-99">
         </div>
     </div>
     <div class="form-row">
