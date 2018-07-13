@@ -41,7 +41,6 @@
                         @endforeach
                     </h3>
                     <p>
-
                         @component('components.rating-stars',['rating' => $doctor->avg_rate])
                         @endcomponent
                         <?php if(!empty($doctor->publicComments()->count())){ ?>

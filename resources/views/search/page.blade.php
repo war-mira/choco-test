@@ -143,7 +143,7 @@
                 </div>
             </div>
             @endif
-            @if($doctorsTop)
+            @if($doctorsTop && !$currentPage || $currentPage == 1)
                 @foreach($doctorsTop as $doctorTop)
                     <div class="results d-result" data-type="doctor" data-id="{{$doctorTop->id}}"
                          id="doctor-result-{{$doctorTop->id}}"
