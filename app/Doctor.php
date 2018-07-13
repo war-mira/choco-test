@@ -4,7 +4,6 @@ namespace App;
 
 use App\Helpers\FormatHelper;
 use App\Helpers\MathHelper;
-use App\Helpers\SeoMetadataHelper;
 use App\Helpers\SessionContext;
 use App\Interfaces\IReferenceable;
 use App\Interfaces\ISeoMetadata;
@@ -40,7 +39,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int                                                          $updated_at_unix Дата изменения
  * @property int                                                          $views Колличество просмотров
  * @property int                                                          $user_id
- * @property int                                                          $phone
  * @property int                                                          $orders_count
  * @property int                                                          $status Опубликован?
  * @property int                                                          $on_top
@@ -178,7 +176,6 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         'preview_text',
         'timetable',
         'seo_text',
-
     ];
     protected $casts = [
         'child'   => 'int',
@@ -271,6 +268,11 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         return $this->hasMany(Order::class, 'doc_id', 'id');
     }
 
+    public function medname()
+    {
+        return $this->belongsToMany(Medcenter::class,'doctors','id','med_id');
+    }
+
     public function getMainSkillAttribute()
     {
         return $this->skills()->first();
@@ -324,6 +326,11 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
             'id', // Foreign key on posts table...
             'id', // Local key on countries table...
             'medcenter_id');
+    }
+
+    public function medc_map()
+    {
+        return $this->belongsTo(Medcenter::class,'med_id','id');
     }
 
     public function getExpFormattedAttribute()
@@ -390,25 +397,15 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
 
     public function getMetaTitle()
     {
-        $skills_result = [];
-        $skills = $this->skills()->get();
-        foreach($skills as $skill){
-            $skills_result[] = $skill->name;
-        }
         return empty($this->meta_title)
-            ? ($this->firstname . ' ' . $this->lastname . ' - ' . implode(", ", $skills_result) . ' - ' . $this->city->name)
+            ? ($this->firstname . ' ' . $this->lastname . ' - ' . $this->city->name)
             : $this->meta_title;
     }
 
     public function getMetaDescription()
     {
-        $skills_result = [];
-        $skills = $this->skills()->get();
-        foreach($skills as $skill){
-            $skills_result[] = $skill->name;
-        }
         return empty($this->meta_desc)
-            ? ($this->firstname . ' ' . $this->lastname . ' - ' . implode(", ", $skills_result)) . ". " . SeoMetadataHelper::DEFAULT_DESCRIPTION
+            ? (substr(strip_tags(str_replace('\r\n', '', $this->content)), 0, 256))
             : $this->meta_desc;
     }
 

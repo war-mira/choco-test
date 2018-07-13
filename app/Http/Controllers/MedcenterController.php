@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 
 use App\City;
-use App\Helpers\SearchHelper;
 use App\Medcenter;
 use App\Helpers\SeoMetadataHelper;
 use App\PageSeo;
@@ -13,32 +12,15 @@ use Illuminate\Http\Request;
 class MedcenterController extends Controller
 {
 
-    public function list(Request $request, City $city)
+    public function list(City $city)
     {
         $sort = \Request::get('sort', 'rate');
         $order = \Request::get('order', 'desc');
 
+
+        $filter = compact('sort', 'order');
         $medcenters = Medcenter::whereStatus(1);
-
-        $query = $request->only([
-            'q',
-            'ambulatory',
-            'sort',
-            'order',
-            'price_range',
-            'rate_range',
-            'page',
-            'district'
-        ]);
-        $filter = $query;
-
-        if (isset($filter['page']) && $filter['page'] == 1){
-            return redirect()->route(((empty($city->id) || $city->id == 1) ? "all.medcenters.list" : 'medcenters.list'), array_merge(['city' => $city->alias ?? null], array_except($filter, 'page')));
-        }
-
-        $this->applyMedcentersFilter($medcenters, $filter);
-
-        if (!empty($city->id)) {
+        if ($city) {
             $medcenters = $medcenters->whereCityId($city->id);
             $pageSeo = PageSeo::query()
                 ->where('class','Medcenter')
@@ -50,7 +32,6 @@ class MedcenterController extends Controller
             $description = 'iDoctor.kz - Медициские центры оказывающие услуги по всему Казахстану';
             $meta = compact('title', 'description');
         }
-
         $medcenters = $medcenters->paginate(10);
 
 
@@ -66,40 +47,12 @@ class MedcenterController extends Controller
                 'name' => 'по рейтингу'
             ]
         ];
-        return view("search.search-medcenters-page")
+        return view("medcenters.list")
             ->with('h1_title', $h1_title)
             ->with('meta', $meta)
             ->with('Medcenters', $medcenters)
             ->with('Pagination', $medcenters)
             ->with(compact('filter', 'sortOptions'));
-    }
-
-    private function applyMedcentersFilter($medcenters, $filter)
-    {
-        if (isset($filter['rate_range']) && $filter['rate_range']) {
-            $medcenters->whereBetween('rate', explode(',', $filter['rate_range']));
-        }
-
-        if (isset($filter['price_range']) && $filter['price_range']) {
-            $medcenters->whereBetween('price', explode(',', $filter['price_range']));
-        }
-
-        if (isset($filter['ambulatory']) && $filter['ambulatory']) {
-            $medcenters->where('ambulatory', $filter['ambulatory']);
-        }
-        if (isset($filter['district']) && $filter['district']) {
-            $medcenters->where('district_id', $filter['district']);
-        }
-        if (isset($filter['q']) && $filter['q'] && trim($filter['q']) != '')
-            SearchHelper::searchByFields($medcenters, ['name', 'content'], $filter['q']);
-
-        $order = [$filter['sort'] ?? 'rate', $filter['order'] ?? 'desc'];
-        if ($order[0] == 'rate')
-            $medcenters->orderBy('rate', $order[1]);
-        else if ($order[0] == 'price')
-            $medcenters->orderBy('price', $order[1]);
-        else if ($order[0] == 'comments_count')
-            $medcenters->withCount('publicComments')->orderBy('public_comments_count', $order[1]);
     }
 
     public function category_list($city_alias = 0)
@@ -132,7 +85,7 @@ class MedcenterController extends Controller
     public function item(City $city, Medcenter $medcenter)
     {
         if ($city->id !== $medcenter->city->id) {
-            return redirect()->route('medcenter.item', ['medcenter' => $medcenter->alias, 'city' => $medcenter->city->alias]);
+            return redirect()->route('medcenter.item', ['medcenter' => $medcenter->alias]);
         }
 
         $doctors = $medcenter->doctors()->where('doctors.status', 1)->get();
