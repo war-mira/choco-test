@@ -12,7 +12,7 @@
 <div class="profiles__right">
     <div class="profiles__header">
         <h3 class="profiles__title">
-            <a href="{{ route('doctor.item',['doctor'=>$doctor->alias]) }}">{{$doctor['name']}}</a>
+            <a href="{{ route('doctor.item',['doctor'=>$doctor->alias, 'city' => $doctor->city->alias]) }}">{{$doctor['name']}}</a>
         </h3>
         <p class="profiles__short">
             @if(isset($highlightSkill))
@@ -46,6 +46,6 @@
     </ul>
     <p class="profiles__price">Стоимость приема: <strong>{{$doctor['price']}} тг.</strong></p>
     <footer class="profiles__footer">
-        <a class="button" href="{{ route('doctor.item',['doctor'=>$doctor->alias]) }}">Записаться на прием</a>
+        <a class="button" href="{{ route('doctor.item',['doctor'=>$doctor->alias, 'city' => $doctor->city->alias]) }}">Записаться на прием</a>
     </footer>
 </div>
