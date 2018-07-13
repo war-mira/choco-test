@@ -129,6 +129,7 @@
                 <div class="pull-right">
 
                 </div>
+<<<<<<< HEAD
             </div-->
 
             <div class="search-result">
@@ -144,6 +145,35 @@
 
                             </div>
                         @endforeach
+=======
+            </div>
+            @if($doctors->links() != "")
+            <div class="results filter">
+                <div class="text-center search-pagination" id="topPagination">
+                    {!! $doctors->links() !!}
+                </div>
+            </div>
+            @endif
+            @if($doctorsTop && !$currentPage || $currentPage == 1)
+                @foreach($doctorsTop as $doctorTop)
+                    <div class="results d-result" data-type="doctor" data-id="{{$doctorTop->id}}"
+                         id="doctor-result-{{$doctorTop->id}}"
+                         style="float: right">
+                        <div class="list-group-item{{(isset($doctorTop['is_top_doc']) && $doctorTop['is_top_doc']) ? " pretty_profile" : "" }}">
+                            @component('model.doctor.profile-short',['doctor'=>$doctorTop,'width'=>'250px','highlightSkill'=>$highlightSkill??null])
+                            @endcomponent
+                        </div>
+                    </div>
+                @endforeach
+            @endif
+            @foreach($doctors as $doctor)
+                <div class="results d-result" data-type="doctor" data-id="{{$doctor->id}}"
+                     id="doctor-result-{{$doctor->id}}"
+                     style="float: right">
+                    <div class="list-group-item{{(isset($doctor['is_top_doc']) && $doctor['is_top_doc']) ? " pretty_profile" : "" }}">
+                        @component('model.doctor.profile-short',['doctor'=>$doctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null])
+                        @endcomponent
+>>>>>>> e93ed788b521504cfa5aac66c093dc5e97762d71
                     </div>
                 </div>
             </div>

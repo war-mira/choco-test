@@ -83,6 +83,7 @@ class Comment extends Model
         'user_email',
         'user_ip',
         'text',
+        'type',
         'created_at',
         'updated_at'
     ];
