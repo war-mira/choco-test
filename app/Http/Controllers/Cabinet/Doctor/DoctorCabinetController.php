@@ -6,20 +6,29 @@
  * Time: 15:45
  */
 
-namespace App\Http\Controllers\Cabinet;
+namespace App\Http\Controllers\Cabinet\Doctor;
 
 
 use App\Doctor;
+use App\Http\Controllers\Controller;
 use App\Order;
 use Illuminate\Http\Request;
 
-class DoctorCabinetController
+class DoctorCabinetController extends Controller
 {
-    public function index(Request $request)
-    {
-        $doctor = Doctor::where('account_id', \Auth::user()->id)->first();
-        $orders = $doctor->orders()->orderBy('id', 'desc')->take(20)->get();
-        return view('cabinet.doctor.index', compact('doctor', 'orders'));
+    protected $user;
+    protected $doctor;
+
+    function __construct() {
+
+        $this->middleware(function ($request, $next)
+        {
+            $this->user = \Auth::user();
+            $this->doctor = Doctor::where('user_id', \Auth::user()->id)->first();
+
+            return $next($request);
+        });
+
     }
 
     public function orderList(Request $request)

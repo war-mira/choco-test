@@ -119,7 +119,19 @@ Route::get('redirector', function (\Illuminate\Http\Request $request) {
 
 Route::group(['as' => 'cabinet.', 'prefix' => 'cabinet'], function () {
     Route::group(['as' => 'doctor.', 'prefix' => 'doctor'], function () {
-        Route::get('/', 'Cabinet\DoctorCabinetController@index');
+        Route::group(['as' => 'personal.', 'prefix' => 'personal'], function () {
+            Route::get('/index', 'Cabinet\Doctor\DoctorCabinetPersonalController@index')->name('index');
+            Route::get('/edit', 'Cabinet\Doctor\DoctorCabinetPersonalController@edit')->name('edit');
+            Route::post('/edit', 'Cabinet\Doctor\DoctorCabinetPersonalController@update')->name('update');
+            Route::post('/photo-upload', 'Cabinet\Doctor\DoctorCabinetPersonalController@photoUpload')->name('photo-upload');
+        });
+        Route::group(['as' => 'professional.', 'prefix' => 'professional'], function () {
+            Route::get('/index', 'Cabinet\Doctor\DoctorCabinetProfessionalController@index')->name('index');
+            Route::get('/edit', 'Cabinet\Doctor\DoctorCabinetProfessionalController@edit')->name('edit');
+            Route::post('/edit', 'Cabinet\Doctor\DoctorCabinetProfessionalController@update')->name('update');
+        });
+        Route::get('/', function (){
+        });
         Route::post('/orderList', 'Cabinet\DoctorCabinetController@orderList')->name('orderList');
         Route::get('/orderDetails/{id?}', 'Cabinet\DoctorCabinetController@orderDetails')->name('orderDetails');
     });

@@ -16,60 +16,61 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * App\Doctor
  *
- * @property int                                                          $id
- * @property string                                                       $firstname Имя
- * @property string                                                       $lastname Фамилия
- * @property string|null                                                  $qualification Фамилия
- * @property string                                                       $alias Фамилия
- * @property int|null                                                     $ambulatory Выезд на дом
- * @property int                                                          $ambulatory_price
- * @property int                                                          $child Детский
- * @property int                                                          $price Цена
- * @property string|null                                                  $discount
- * @property string|null                                                  $address
- * @property float                                                        $rate Рейтинг
- * @property int                                                          $city_id Город
- * @property int|null                                                     $med_id Больница
- * @property int                                                          $works_since_unix Опыт работы
- * @property string                                                       $content Описание
- * @property string                                                       $content_lite Краткое описание
- * @property string|null                                                  $meta_title
- * @property string|null                                                  $meta_key Ключевые слова
- * @property string|null                                                  $meta_desc Краткое описание
- * @property int                                                          $created_at_unix Дата публикации
- * @property int                                                          $updated_at_unix Дата изменения
- * @property int                                                          $views Колличество просмотров
- * @property int                                                          $user_id
- * @property int                                                          $phone
- * @property int                                                          $orders_count
- * @property int                                                          $status Опубликован?
- * @property int                                                          $on_top
- * @property int                                                          $money_balans
- * @property int                                                          $commission Комиссия Idoc
- * @property string|null                                                  $avatar
- * @property int                                                          $created_by
- * @property int                                                          $updated_by
- * @property \Carbon\Carbon|null                                          $created_at
- * @property \Carbon\Carbon|null                                          $updated_at
- * @property string|null                                                  $works_since
- * @property string|null                                                  $timetable
- * @property int|null                                                     $account_id
- * @property float                                                        $avg_rate
- * @property-read \App\City|null                                          $city
+ * @property int $id
+ * @property string $firstname Имя
+ * @property string $lastname Фамилия
+ * @property string|null $qualification Фамилия
+ * @property string $alias Фамилия
+ * @property int|null $ambulatory Выезд на дом
+ * @property int $ambulatory_price
+ * @property int $child Детский
+ * @property int $child_min_age Детский
+ * @property int $price Цена
+ * @property string|null $discount
+ * @property string|null $address
+ * @property float $rate Рейтинг
+ * @property int $city_id Город
+ * @property int|null $med_id Больница
+ * @property int $works_since_unix Опыт работы
+ * @property string $content Описание
+ * @property string $content_lite Краткое описание
+ * @property string|null $meta_title
+ * @property string|null $meta_key Ключевые слова
+ * @property string|null $meta_desc Краткое описание
+ * @property int $created_at_unix Дата публикации
+ * @property int $updated_at_unix Дата изменения
+ * @property int $views Колличество просмотров
+ * @property int $user_id
+ * @property int $phone
+ * @property int $orders_count
+ * @property int $status Опубликован?
+ * @property int $on_top
+ * @property int $money_balans
+ * @property int $commission Комиссия Idoc
+ * @property string|null $avatar
+ * @property int $created_by
+ * @property int $updated_by
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property string|null $works_since
+ * @property string|null $timetable
+ * @property int|null $account_id
+ * @property float $avg_rate
+ * @property-read \App\City|null $city
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Comment[] $comments
- * @property-read mixed                                                   $content_description
- * @property-read mixed                                                   $exp_formatted
- * @property-read mixed                                                   $href
- * @property-read mixed                                                   $main_skill
- * @property-read mixed                                                   $medcenters_assoc
- * @property-read mixed                                                   $name
- * @property-read mixed                                                   $status_name
- * @property-read mixed                                                   $type
- * @property mixed                                                        $works_since_year
- * @property \Illuminate\Database\Eloquent\Collection|\App\DoctorJob[]    $jobs
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Skill[]   $medcenters
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Order[]   $orders
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Skill[]   $skills
+ * @property-read mixed $content_description
+ * @property-read mixed $exp_formatted
+ * @property-read mixed $href
+ * @property-read mixed $main_skill
+ * @property-read mixed $medcenters_assoc
+ * @property-read mixed $name
+ * @property-read mixed $status_name
+ * @property-read mixed $type
+ * @property mixed $works_since_year
+ * @property \Illuminate\Database\Eloquent\Collection|\App\DoctorJob[] $jobs
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Skill[] $medcenters
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Order[] $orders
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Skill[] $skills
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Doctor inCities($city_id)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Doctor localPublic()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Doctor public ($status = true)
@@ -336,7 +337,8 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
             '/^(.*)(1[0-9])$/' => '\1\2 лет',
             '/^(.*)([1])$/'    => '\1\2 год',
             '/^(.*)([2-4])$/'  => '\1\2 года',
-            '/^(.*)([05-9])$/' => '\1\2 лет'];
+            '/^(.*)([05-9])$/' => '\1\2 лет'
+        ];
         foreach ($replaces as $pattern => $replace) {
             $exp = preg_replace($pattern, $replace, $exp);
         }
@@ -347,6 +349,28 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     public function getTypeAttribute()
     {
         return 'доктор';
+    }
+
+    public function getHumanAmbulatoryAttribute()
+    {
+        if ($this->ambulatory == 1){
+            $humanAmbulatory = 'Да';
+        } else {
+            $humanAmbulatory = 'Нет';
+        }
+
+        return $humanAmbulatory;
+    }
+
+    public function getHumanChildAttribute()
+    {
+        if ($this->child == 1){
+            $humanChild = 'Да';
+        } else {
+            $humanChild = 'Нет';
+        }
+
+        return $humanChild;
     }
 
     public function updateCommentRate()
@@ -380,11 +404,11 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     }
 
     const CONTENTS = [
-        'about_text' => 'О враче',
-        'treatment_text'=> 'Лечение заболеваний',
-        'exp_text'=>'Опыт работы',
-        'grad_text'=>'Образование',
-        'certs_text' => 'Дипломы и сертификаты',
+        'about_text'     => 'О враче',
+        'treatment_text' => 'Лечение заболеваний',
+        'exp_text'       => 'Опыт работы',
+        'grad_text'      => 'Образование',
+        'certs_text'     => 'Дипломы и сертификаты',
         'community_text' => 'Клубы и сообщества'
     ];
 
@@ -392,7 +416,7 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     {
         $skills_result = [];
         $skills = $this->skills()->get();
-        foreach($skills as $skill){
+        foreach ($skills as $skill) {
             $skills_result[] = $skill->name;
         }
         return empty($this->meta_title)
@@ -404,7 +428,7 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     {
         $skills_result = [];
         $skills = $this->skills()->get();
-        foreach($skills as $skill){
+        foreach ($skills as $skill) {
             $skills_result[] = $skill->name;
         }
         return empty($this->meta_desc)

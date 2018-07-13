@@ -243,22 +243,21 @@ $(document).ready(function() {
         var $container = $this.closest(".js-input-add-container");
         var $entityToClone = $container.find(".js-input-add-entity");
         var $entityClone = $($entityToClone.data("markup"));
-        var entityCount = $entityToClone.data("count");
-
+        console.log(entityCount);
         $entityClone.removeClass("js-input-add-entity");
 
         //increment input names
         $entityClone.find("select, input, textarea").each(function() {
             var $this = $(this);
             var attrName = $this.prop("name");
-            
-            $this.prop("name", attrName + "-" + entityCount);
+            var replacedName = attrName.replace(/skills\[0\]/g, "skills[" + entityCount + "]");
+            $this.prop("name", replacedName);
         });
 
         //add mask to inputs
         $entityClone.find("input[data-mask]").each(function() {
             var $this = $(this);
-            var mask = "" + $this.data("mask")
+            var mask = "" + $this.data("mask");
             $this.mask(mask);
         });
 
@@ -273,6 +272,7 @@ $(document).ready(function() {
 
     $(document).on("click", ".js-input-remove-btn", function() {
         $(this).parent().remove();
+        entityCount--;
     });
 
     $(".js-add-select-tag").click(function() {
@@ -472,6 +472,38 @@ $(document).ready(function() {
         $(".live-search")
             .removeClass("live-search--fold");
     });
+
+    $('.summernote').summernote({
+        height: '200px'
+    });
+
+    $('.upload-photo__upload-btn .not-ready-for-upload').on('click', function () {
+        $('input[type=file]').trigger('click');
+    });
+
+    $('.upload-photo__upload-btn .ready-for-upload').on('click', function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        let file_data = $("#upload-photo__input").prop("files")[0];
+        let form_data = new FormData();
+        form_data.append("file", file_data);
+        $.ajax({
+            url: "/cabinet/doctor/personal/photo-upload",
+            dataType: 'script',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,
+            type: 'post',
+            success: function(){
+                location.reload();
+            }
+        });
+    });
 });
 
 //returns element markup
@@ -517,4 +549,23 @@ function modalClose(modalId) {
         $(".modal-mask")
             .css("display", "none");
     }, 700);
+}
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#blah')
+                .attr('src', e.target.result)
+                .width(250)
+                .height(200)
+                .show();
+
+            $('.ready-for-upload').show();
+            $('.not-ready-for-upload').hide();
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
 }

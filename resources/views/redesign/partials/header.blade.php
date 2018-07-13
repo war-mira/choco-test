@@ -13,7 +13,8 @@
                     <span>Вход / Регистрация</span>
                 </a>
                 @else
-                    <a href="{{route('user.profile')}}" class="main-header__action-item header-link-btn header-login-btn">
+                    <a href="@if(Auth::user()->role == \App\User::ROLE_DOCTOR) {{route('cabinet.doctor.personal.index')}}
+                            @else {{route('user.profile')}} @endif" class="main-header__action-item header-link-btn header-login-btn">
                         <span class="header-link-btn__icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>
                         <span>Профиль</span>
                     </a>
