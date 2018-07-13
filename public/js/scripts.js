@@ -473,10 +473,6 @@ $(document).ready(function() {
             .removeClass("live-search--fold");
     });
 
-    $('.summernote').summernote({
-        height: '200px'
-    });
-
     $('.upload-photo__upload-btn .not-ready-for-upload').on('click', function () {
         $('input[type=file]').trigger('click');
     });

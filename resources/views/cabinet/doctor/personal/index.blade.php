@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="doc-personal-data__data-item account-data-item">
                                     <div class="account-data-item__name">E-mail</div>
-                                    <div class="account-data-item__val">{{$doctor->email ? $user->email:'' }}</div>
+                                    <div class="account-data-item__val">{{$doctor->email ? $doctor->email: $user->email }}</div>
                                 </div>
                             </div>
                         </div>
