@@ -50,11 +50,9 @@ class DoctorController extends Controller
             'page'
         ]);
         $filter = $query;
-<<<<<<< HEAD
-=======
+
         $doctorsTop = null;
         $currentPage = $request->input('page');
->>>>>>> e93ed788b521504cfa5aac66c093dc5e97762d71
 
         if(isset($skill))
         {
@@ -87,11 +85,11 @@ class DoctorController extends Controller
 
 
         return view('search.page',
-<<<<<<< HEAD
-            compact('meta', 'doctors', 'skills', 'medcenters', 'filter', 'query'));
-=======
+
+            //compact('meta', 'doctors', 'skills', 'medcenters', 'filter', 'query'));
+
             compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage'));
->>>>>>> e93ed788b521504cfa5aac66c093dc5e97762d71
+
     }
 
     private function applyDoctorsFilter($doctors, $filter)
