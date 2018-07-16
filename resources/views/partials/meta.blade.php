@@ -89,3 +89,5 @@
 @else
     <meta name="twitter:image" content="{{asset('images/idoctor_newyear.jpg')}}"/>
 @endif
+
+<meta name="csrf-token" content="{{ csrf_token() }}">

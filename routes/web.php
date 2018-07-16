@@ -16,6 +16,7 @@ Route::get('main-new', 'IndexController@r_home')->name('home');
 Route::get('order/gotopay/{id}', 'OrderController@gotopay');
 Route::get('order/newFromSite', 'OrderController@newFromSite');
 Route::get('order/update/', 'OrderController@update');
+Route::post('getdata', 'DoctorController@getall');
 
 Route::get('doctor/{doctor}', function (\App\Doctor $doctor) {
     return redirect()->route('doctor.item', ['doctor' => $doctor->alias]);

@@ -66,17 +66,32 @@ $(document).ready(function() {
             }
         }
         ]
-    })
+    });
 
-    $.ajax({
-        type: 'get',
-        url: 'http://antosoft.ru/idoctor/search-example-region-1.php',
-        dataType: 'json',
-        success: function(data) {
-            $(".js-search-select")[0].selectize.clearOptions();
-            
-            for (var i = 0; i < data.length; i++) {
-                $(".js-search-select")[0].selectize.addOption(data[i]);
+    $(".js-search-select").selectize({
+        render: {
+            option: function(data, escape) {
+                if (data.optgroup == "Специализации") {
+
+                    return '<div>' +
+                        '<span class="option-doc-spec">' +
+                            '<span class="option-text">' + data.text + '</span>' +
+                            '<span class="option-count">' + data.count + '</span>' +
+                        '</span>' +
+                    '</div>';
+
+                } else if (data.optgroup == "Врачи") {
+                    return '<div>' +
+                        '<span class="option-doc-item">' +
+                            '<span class="option-doc-img"><img src="' + data.img + '" alt=""></span>' +
+                            '<span class="option-doc-info">' +
+                                '<span class="option-doc-name">' + data.text + '</span>' +
+                                '<span class="option-doc-spec">' + data.spec + '</span>' +
+                            '</span>' +
+                        '</span>' +
+                    '</div>';
+                }
+                
             }
         }
     });
@@ -85,9 +100,9 @@ $(document).ready(function() {
         var regionVal = $(this).val();
 
         if (regionVal == "region-1") {
-            var ajaxUrl = 'http://antosoft.ru/idoctor/search-example-region-1.php';
+            var ajaxUrl = '/search-example-region-1.php';
         } else if (regionVal =="region-2") {
-            var ajaxUrl = 'http://antosoft.ru/idoctor/search-example-region-2.php';
+            var ajaxUrl = '/search-example-region-2.php';
         }
 
         $.ajax({

@@ -1760,6 +1760,7 @@ img {
   height:100%;
   max-height:200px;
   max-width:200px;
+  position: relative;
 }
 .result-control-bar__line {
   display: -webkit-box;

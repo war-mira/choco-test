@@ -157,34 +157,6 @@
         //$('.search-input-group select').selectpicker();
         $(function () {
 
-            $(".js-search-select").selectize({
-                render: {
-                    option: function(data, escape) {
-                        if (data.optgroup == "Специализации") {
-
-                            return '<div>' +
-                                '<span class="option-doc-spec">' +
-                                '<span class="option-text">' + data.text + '</span>' +
-                                '<span class="option-count">' + data.count + '</span>' +
-                                '</span>' +
-                                '</div>';
-
-                        } else if (data.optgroup == "Врачи") {
-                            return '<div>' +
-                                '<span class="option-doc-item">' +
-                                '<span class="option-doc-img"><img src="' + data.img + '" alt=""></span>' +
-                                '<span class="option-doc-info">' +
-                                '<span class="option-doc-name">' + data.text + '</span>' +
-                                '<span class="option-doc-spec">' + data.spec + '</span>' +
-                                '</span>' +
-                                '</span>' +
-                                '</div>';
-                        }
-
-                    }
-                }
-            });
-
             $('#filtersGroup .sort-line__item').click(
                 function () {
                     if ($(this).find('input[name=sort]').prop('checked')) {
@@ -194,12 +166,60 @@
                     }
             });
 
+            $('select[name="type"]').change(function () {
+                var tp = $(this).val();
+
+                $.ajax({
+                    type: 'post',
+                    url:"{{url('getdata')}}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data:{
+                        ttype:tp,
+                        query:$('.search-bar__item').find('input').val()
+                    },
+                    //dataType: 'json',
+                    success: function(data) {
+                        $(".js-search-select")[0].selectize.clearOptions();
+
+                        for (var i = 0; i < data.length; i++) {
+                            $(".js-search-select")[0].selectize.addOption(data[i]);
+                        }
+                    }
+                });
+            });
+
+            $('.search-bar__item').find('input').change(function () {
+                $.ajax({
+                    type: 'post',
+                    url:"{{url('getdata')}}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data:{
+                        ttype:tp,
+                        query:$('.search-bar__item').find('input').val()
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        $(".js-search-select")[0].selectize.clearOptions();
+
+                        for (var i = 0; i < data.length; i++) {
+                            $(".js-search-select")[0].selectize.addOption(data[i]);
+                        }
+                    }
+                });
+            });
+
             $('a.sort-line__item').click(function () {
                 $('a.sort-line__item').removeClass('btn_theme_radio_active');
                 $(this).addClass('btn_theme_radio_active');
                 var name = $(this).find('input').prop('name');
                 var value = $(this).find('input').prop('value');
                 $('input[name=' + name + ']').val([value]).trigger("change");
+                $('form.search-bar__line').find('input[name="sort"]').val(value);
+                $('form.search-bar__line').find('input[name="order"]').val($('input[name=order]:checked').val());
 
                 if($(this).find('i.fa').is('.fa-chevron-down'))
                 {
@@ -267,7 +287,8 @@
             });
 
             $searchForm.find('#filtersGroup input[name], #mainSearch input[name],#mainSearch select[name]').on('change', function () {
-                $searchForm.submit();
+                //$searchForm.submit();
+                $('form.search-bar__line').submit();
             });
 
             $skillSelect.on('change', function () {

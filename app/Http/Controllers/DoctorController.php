@@ -7,10 +7,12 @@ use App\Doctor;
 use App\Helpers\FormatHelper;
 use App\Helpers\SearchHelper;
 use App\Helpers\SeoMetadataHelper;
+use App\Medcenter;
 use App\PageSeo;
 use App\Skill;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DoctorController extends Controller
 {
@@ -250,6 +252,46 @@ class DoctorController extends Controller
             ->with('status_array', $status_array);
     }
 
+    public function getall(Request $request)
+    {
+        if($request->ajax())
+        {
+            $type = $request->post('ttype');
+            if($type == 'all')
+            {
+                $data = Doctor::where('firstname','like',$request->post('query'))
+                    ->Orwhere('lastname','like', $request->post('query'))
+                    ->Orwhere('patronymic','like',$request->post('query'))
+                    ->orderBy('firstname','ASC')->get();
+
+                foreach ($data as $o=>$dt)
+                {
+                    $doto[$o] = [
+                        'text'=>$dt->lastname.' '.$dt->firstname.' '.$dt->patronymic,
+                        'img' =>($dt->avatar ? $dt->avatar : URL::asset('images/no-userpic.gif')),
+                        'spec'=>$dt->getMainSkillAttribute()->name,
+                        'value'=>$dt->id,
+                        'optgroup'=>'Врачи'
+                    ];
+                }
+            }
+            else
+            {
+                $data = Skill::select('*')->orderBy('name','ASC')->get();
+
+                foreach ($data as $o=>$dt)
+                {
+                    $doto[$o] = [
+                        'text'=>$dt->name,
+                        'count' => $dt->doctors()->count(),
+                        'value'=>$dt->id,
+                        'optgroup'=>'Специализации'
+                    ];
+                }
+            }
+            return response()->json($doto);
+        }
+    }
 
     public function loadComments($city, $doctor, Request $request)
     {
