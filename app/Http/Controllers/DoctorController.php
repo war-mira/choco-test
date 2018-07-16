@@ -49,6 +49,7 @@ class DoctorController extends Controller
             'rate_range',
             'page'
         ]);
+
         $filter = $query;
 
         $doctorsTop = null;
@@ -89,7 +90,6 @@ class DoctorController extends Controller
             //compact('meta', 'doctors', 'skills', 'medcenters', 'filter', 'query'));
 
             compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage'));
-
     }
 
     private function applyDoctorsFilter($doctors, $filter)
@@ -120,6 +120,8 @@ class DoctorController extends Controller
             $doctors->orderBy('rate', $order[1]);
         else if ($order[0] == 'price')
             $doctors->orderBy('price', $order[1]);
+        else if ($order[0] == 'views')
+            $doctors->orderBy('views', $order[1]);
         else if ($order[0] == 'exp')
             $doctors->orderBy('works_since', $order[1] == 'asc' ? 'desc' : 'asc');
         else if ($order[0] == 'comments_count')

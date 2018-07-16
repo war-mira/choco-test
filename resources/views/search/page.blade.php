@@ -1,10 +1,10 @@
 @extends('new')
 @section('content')
     @include('search.search_box')
-    @include('search.filtr_panel')
 
     <div id="app" class="app">
         <form id="search-form">
+            @include('search.filtr_panel')
             <input type="hidden" name="page" value="{{$filter['page']??1}}">
             <!--div class="search-input-group" id="mainSearch">
                 <select data-style="search-type-input" id="typeSelect">
@@ -136,12 +136,9 @@
                     <div class="search-result__list">
                         @foreach($doctors as $doctor)
                             <div class="search-result__item entity-line doc-line" data-type="doctor" data-id="{{$doctor->id}}"
-                                 id="doctor-result-{{$doctor->id}}"
-                                 >
-
+                                 id="doctor-result-{{$doctor->id}}" >
                                     @component('model.doctor.prof_new',['doctor'=>$doctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null])
                                     @endcomponent
-
                             </div>
                         @endforeach
                     </div>
@@ -160,10 +157,9 @@
         //$('.search-input-group select').selectpicker();
         $(function () {
 
-
-            $('#filtersGroup .btn-radio').click(
+            $('#filtersGroup .sort-line__item').click(
                 function () {
-                    if ($(this).prev('input[name=sort]').prop('checked')) {
+                    if ($(this).find('input[name=sort]').prop('checked')) {
                         var order = $('input[name=order]:checked').val();
                         order = (order == 'asc') ? 'desc' : 'asc';
                         $('input[name=order]').val([order]).trigger("change");
@@ -176,11 +172,19 @@
                 var name = $(this).find('input').prop('name');
                 var value = $(this).find('input').prop('value');
                 $('input[name=' + name + ']').val([value]).trigger("change");
+
+                if($(this).find('i.fa').is('.fa-chevron-down'))
+                {
+                    $(this).find('i.fa').removeClass('fa-chevron-down').addClass('fa-chevron-up');
+                }
+                else{
+                    $(this).find('i.fa').addClass('fa-chevron-down').removeClass('fa-chevron-up');
+                }
+                //console.log(name + ' ' + value + ' ' + $('input[name=order]:checked').val());
             });
 
             var $searchForm = $('#search-form');
-
-
+            var $filteron = $('#filtersGroup');
             var $typeSelect = $('#typeSelect');
             var $skillSelect = $('#skillSelect');
             var $medcenterSelect = $('#medcenterSelect');
@@ -206,7 +210,7 @@
                     $(this).parent().addClass('full-select');
                 }
             });
-*/
+            */
 
             $typeSelect.val('{{isset($filter['skill']) ? 'skills' : 'all'}}').trigger('change');
             $skillSelect.val('{{$filter['skill'] ?? null}}').trigger('change');
@@ -225,7 +229,16 @@
                 }
             });
 
-            $searchForm.find('.result-control-bar input, #mainSearch input[name],#mainSearch select[name]').on('change', function () {
+            $filteron.on('change', function () {
+                var url = "{{route('doctors.list')}}";
+                var query = "{!!explode('?',url()->full())[1] ?? ""!!}";
+                if (query.length > 0)
+                    query = '?' + query;
+                var targetUrl = url + query;
+                //window.location.assign(targetUrl);
+            });
+
+            $searchForm.find('#filtersGroup input[name], #mainSearch input[name],#mainSearch select[name]').on('change', function () {
                 $searchForm.submit();
             });
 
