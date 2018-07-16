@@ -8,6 +8,7 @@
     @include('partials.meta')
     @include('partials.yandex-metrika')
     @include('partials.google-analytics')
+    @include('partials.google-experiment')
 
     <title>Главная - iDoctor</title>
     <!-- <link rel="shortcut icon" type="image/png" href="img/favicon.png"> -->

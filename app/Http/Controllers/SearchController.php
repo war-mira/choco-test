@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Doctor;
+use App\Models\Doctors\Doctor;
 use App\Helpers\SearchHelper;
 use App\Helpers\SessionContext;
 use App\Medcenter;
 use App\Skill;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
