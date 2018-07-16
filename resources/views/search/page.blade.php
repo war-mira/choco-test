@@ -143,19 +143,47 @@
                         @endforeach
                     </div>
                 </div>
+                @if($doctors->links() != "")
+                    <div class="results filter">
+                        <div class="text-center search-pagination" id="topPagination">
+                            {!! $doctors->links() !!}
+                        </div>
+                    </div>
+                @endif
             </div>
-            @if($doctors->links() != "")
-            <div class="results filter">
-                <div class="text-center search-pagination" id="topPagination">
-                    {!! $doctors->links() !!}
-                </div>
-            </div>
-            @endif
         </form>
     </div>
     <script>
         //$('.search-input-group select').selectpicker();
         $(function () {
+
+            $(".js-search-select").selectize({
+                render: {
+                    option: function(data, escape) {
+                        if (data.optgroup == "Специализации") {
+
+                            return '<div>' +
+                                '<span class="option-doc-spec">' +
+                                '<span class="option-text">' + data.text + '</span>' +
+                                '<span class="option-count">' + data.count + '</span>' +
+                                '</span>' +
+                                '</div>';
+
+                        } else if (data.optgroup == "Врачи") {
+                            return '<div>' +
+                                '<span class="option-doc-item">' +
+                                '<span class="option-doc-img"><img src="' + data.img + '" alt=""></span>' +
+                                '<span class="option-doc-info">' +
+                                '<span class="option-doc-name">' + data.text + '</span>' +
+                                '<span class="option-doc-spec">' + data.spec + '</span>' +
+                                '</span>' +
+                                '</span>' +
+                                '</div>';
+                        }
+
+                    }
+                }
+            });
 
             $('#filtersGroup .sort-line__item').click(
                 function () {
@@ -185,7 +213,7 @@
 
             var $searchForm = $('#search-form');
             var $filteron = $('#filtersGroup');
-            var $typeSelect = $('#typeSelect');
+            var $typeSelect = $('select[name="type"]');
             var $skillSelect = $('#skillSelect');
             var $medcenterSelect = $('#medcenterSelect');
             /*var doctorExpSlider = $("#doctor_exp").slider({tooltip: "always"}).data('slider');
@@ -225,7 +253,7 @@
                     if (query.length > 0)
                         query = '?' + query;
                     var targetUrl = url + query;
-                    window.location.assign(targetUrl);
+                    //window.location.assign(targetUrl);
                 }
             });
 

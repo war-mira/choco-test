@@ -41,34 +41,6 @@ $(document).ready(function() {
 
     $(".js-header-location").selectize();
 
-    $(".js-search-select").selectize({
-        render: {
-            option: function(data, escape) {
-                if (data.optgroup == "Специализации") {
-
-                    return '<div>' +
-                        '<span class="option-doc-spec">' +
-                            '<span class="option-text">' + data.text + '</span>' +
-                            '<span class="option-count">' + data.count + '</span>' +
-                        '</span>' +
-                    '</div>';
-
-                } else if (data.optgroup == "Врачи") {
-                    return '<div>' +
-                        '<span class="option-doc-item">' +
-                            '<span class="option-doc-img"><img src="' + data.img + '" alt=""></span>' +
-                            '<span class="option-doc-info">' +
-                                '<span class="option-doc-name">' + data.text + '</span>' +
-                                '<span class="option-doc-spec">' + data.spec + '</span>' +
-                            '</span>' +
-                        '</span>' +
-                    '</div>';
-                }
-                
-            }
-        }
-    });
-
     $(".entity-slider").slick({
         infinite: false,
         slidesToShow: 4,
