@@ -4,37 +4,40 @@ namespace App\Http\Controllers;
 
 use App\City;
 use App\Doctor;
-use App\Helpers\FormatHelper;
 use App\Helpers\SearchHelper;
 use App\Helpers\SeoMetadataHelper;
+use App\Medcenter;
 use App\PageSeo;
 use App\Skill;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class  DoctorController extends Controller
+class DoctorController extends Controller
 {
 
     public function item(City $city, Doctor $doctor)
     {
         if ($city->id !== $doctor->city->id) {
-            return redirect()->route('doctor.item', ['doctor' => $doctor->alias, 'city' => $doctor->city->alias]);
+            return redirect()->route('doctor.item', ['doctor' => $doctor->alias]);
         }
 
         $meta = SeoMetadataHelper::getMeta($doctor, $city);
 
+        $near_docs = Doctor::query()->where('doctors.status', 1)
+            ->where('doctors.city_id', $doctor->city->id)->limit(9)->get();
+
         return view('doctors.item')
             ->with('meta', $meta)
+            ->with('near', $near_docs)
             ->with('doctor', $doctor);
-    }
-
-    public function commonList(Skill $skill = null, Request $request){
-        return $this->list(City::find(1), $skill, $request);
     }
 
     public function list(City $city = null, Skill $skill = null, Request $request)
     {
-        $doctors = Doctor::query()->where('doctors.status', 1);
+        $cityId = $city->id;
+        $doctors = Doctor::query()->where('doctors.status', 1)
+            ->where('doctors.city_id', $cityId);
+
         $query = $request->only([
             'q',
             'child',
@@ -44,79 +47,49 @@ class  DoctorController extends Controller
             'exp_range',
             'price_range',
             'rate_range',
-            'page',
-            'district'
+            'page'
         ]);
         $filter = $query;
+
         $doctorsTop = null;
         $currentPage = $request->input('page');
 
-        if (isset($skill)) {
+        if(isset($skill))
+        {
             $filter['skill'] = $skill->alias ?? null;
             $doctors = $doctors->whereHas('skills', function ($skillsQuery) use ($skill) {
                 $skillsQuery->where('skills.id', $skill->id);
             });
-            $top_doctors = FormatHelper::arrayToString($skill->top_doctors);
-            if($top_doctors && $skill->top_doctors){
-                $doctorsTop = Doctor::whereIn('id', $skill->top_doctors)->orderByRaw('FIELD(id,'.$top_doctors.')')->get();
-            }
-
         }
-
-        if(isset($doctorsTop)){
-            $doctors = $doctors->whereNotIn('id', $skill->top_doctors);
-        }
-
-        if (isset($filter['page']) && $filter['page'] == 1){
-            return redirect()->route(((empty($city->id) || $city->id == 1) ? "all.doctors.list" : 'doctors.list'), array_merge(['city' => $city->alias ?? null, 'skill' => $skill->alias ?? null], array_except($filter, 'page')));
-        }
+        if(isset($filter['page']) && $filter['page'] == 1)
+            return redirect()->route('doctors.list', array_merge(['city' => $city->alias ?? null, 'skill' => $skill->alias ?? null], array_except($filter, 'page')));
 
         $this->applyDoctorsFilter($doctors, $filter);
 
+        $doctors = $doctors->paginate(10)->appends($query);
+        if($doctors->lastPage() < ($filter['page'] ?? 1))
+            return redirect($doctors->url(1));
 
-        if (!empty($city->id) && $city->id != 1) {
-            $doctors = $doctors->where('doctors.city_id', $city->id);
+        $skills = \App\Skill::havingDoctorsInCity($city)->orderBy('name')->get();
+        $medcenters = \App\Medcenter::havingDoctorsInCity($city)->orderBy('name')->get();
 
+        if (isset($skill)) {
+            $meta = SeoMetadataHelper::getMeta($skill, $city);
+        } else {
             $pageSeo = PageSeo::query()
                 ->where('class','Doctor')
                 ->where('action', 'list')
                 ->first();
             $meta = SeoMetadataHelper::getMeta($pageSeo, $city);
-        } else {
-            $title = 'iDoctor.kz - Врачи-специалисты. Список врачей-специалистов в Казахстане';
-            $description = 'iDoctor.kz - Список врачей-специалистов по всему Казахстану. Поиск и бесплатная запись на прием к врачу любой специальности. У нас собрана большая база врачей различных специализаций по всему Казахстану';
-            $meta = compact('title', 'description');
-        }
-        $doctors = $doctors->paginate(10)->appends($query);
-
-        if ($doctors->lastPage() < ($filter['page'] ?? 1)){
-            return redirect($doctors->url(1));
         }
 
-        $skills = \App\Skill::orderBy('name');
-        if (!empty($city->id)) {
-            $skills = $skills->havingDoctorsInCity($city);
-        }
-        $skills = $skills->get();
-
-        $medcenters = \App\Medcenter::orderBy('name');
-        if (!empty($city->id)) {
-            $medcenters = $medcenters->havingDoctorsInCity($city);
-        }
-        $medcenters = $medcenters->get();
-
-        if (isset($skill)) {
-            $meta = SeoMetadataHelper::getMeta($skill, $city);
-        } else {
-//            $pageSeo = PageSeo::query()
-//                ->where('class','Doctor')
-//                ->where('action', 'list')
-//                ->first();
-//            $meta = SeoMetadataHelper::getMeta($pageSeo, $city);
-        }
 
         return view('search.page',
+
+            //compact('meta', 'doctors', 'skills', 'medcenters', 'filter', 'query'));
+
             compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage'));
+
     }
 
     private function applyDoctorsFilter($doctors, $filter)
@@ -139,22 +112,18 @@ class  DoctorController extends Controller
         if (isset($filter['ambulatory']) && $filter['ambulatory']) {
             $doctors->where('ambulatory', $filter['ambulatory']);
         }
-        if(isset($filter['district']) && $filter['district']){
-            $doctors->leftJoin('medcenters', 'medcenters.id', '=', 'doctors.med_id')->where('medcenters.district_id', $filter['district']);
-        }
         if (isset($filter['q']) && $filter['q'] && trim($filter['q']) != '')
             SearchHelper::searchByFields($doctors, ['firstname', 'lastname', 'skills' => ['name']], $filter['q']);
 
         $order = [$filter['sort'] ?? 'rate', $filter['order'] ?? 'desc'];
         if ($order[0] == 'rate')
-            $doctors->orderBy('doctors.rate', $order[1]);
+            $doctors->orderBy('rate', $order[1]);
         else if ($order[0] == 'price')
             $doctors->orderBy('price', $order[1]);
         else if ($order[0] == 'exp')
             $doctors->orderBy('works_since', $order[1] == 'asc' ? 'desc' : 'asc');
         else if ($order[0] == 'comments_count')
             $doctors->withCount('publicComments')->orderBy('public_comments_count', $order[1]);
-
     }
 
     public function tourism_list()
@@ -236,6 +205,7 @@ class  DoctorController extends Controller
             ->with('status_array', $status_array);
     }
 
+
     public function loadComments($city, $doctor, Request $request)
     {
 
@@ -255,16 +225,6 @@ class  DoctorController extends Controller
         $left = $total - $offset;
         $left = $left < 0 ? 0 : $left;
         return compact('view', 'offset', 'left');
-    }
-
-    public function feedback(City $city, Doctor $doctor){
-        if ($city->id !== $doctor->city->id) {
-            return redirect()->route('doctor.item', ['doctor' => $doctor->alias]);
-        }
-
-        $meta = SeoMetadataHelper::getMeta($doctor, $city);
-
-        return view('doctors.feedback', compact('city', 'doctor', 'meta'));
     }
 
 
