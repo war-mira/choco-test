@@ -28,7 +28,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="control-label col-sm-4">Имя и Фамилия:</label>
+                            <label for="name" class="control-label col-sm-4">Имя:</label>
 
                             <div class="col-sm-8">
                                 <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}"
@@ -37,6 +37,20 @@
                                 @if ($errors->has('name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group{{ $errors->has('lastname') ? ' has-error' : '' }}">
+                            <label for="lastname" class="control-label col-sm-4">Фамилия:</label>
+
+                            <div class="col-sm-8">
+                                <input id="lastname" type="text" class="form-control" name="lastname" value="{{ old('lastname') }}"
+                                       required autofocus>
+
+                                @if ($errors->has('lastname'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('lastname') }}</strong>
                                     </span>
                                 @endif
                             </div>

@@ -4,6 +4,7 @@ namespace App;
 
 use App\Helpers\FormatHelper;
 use App\Helpers\MathHelper;
+use App\Helpers\SeoMetadataHelper;
 use App\Helpers\SessionContext;
 use App\Interfaces\IReferenceable;
 use App\Interfaces\ISeoMetadata;
@@ -127,6 +128,7 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     protected $fillable = [
         'firstname',
         'lastname',
+        'middlename',
         'avatar',
         'qualification',
         'alias',
@@ -288,6 +290,15 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
             ->withPivot(['weight']);
     }
 
+    public function qualifications()
+    {
+        return $this
+            ->belongsToMany(Qualification::class,
+                'doctors_qualifications',
+                'doctor_id',
+                'qualification_id');
+    }
+
     public function items()
     {
         return $this->morphMany(ServiceItem::class, 'vendor');
@@ -356,6 +367,28 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         return 'доктор';
     }
 
+    public function getHumanAmbulatoryAttribute()
+    {
+        if ($this->ambulatory == 1){
+            $humanAmbulatory = 'Да';
+        } else {
+            $humanAmbulatory = 'Нет';
+        }
+
+        return $humanAmbulatory;
+    }
+
+    public function getHumanChildAttribute()
+    {
+        if ($this->child == 1){
+            $humanChild = 'Да';
+        } else {
+            $humanChild = 'Нет';
+        }
+
+        return $humanChild;
+    }
+
     public function updateCommentRate()
     {
         $comments = $this->publicComments()->get();
@@ -397,6 +430,11 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
 
     public function getMetaTitle()
     {
+        $skills_result = [];
+        $skills = $this->skills()->get();
+        foreach ($skills as $skill) {
+            $skills_result[] = $skill->name;
+        }
         return empty($this->meta_title)
             ? ($this->firstname . ' ' . $this->lastname . ' - ' . $this->city->name)
             : $this->meta_title;
@@ -404,8 +442,13 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
 
     public function getMetaDescription()
     {
+        $skills_result = [];
+        $skills = $this->skills()->get();
+        foreach ($skills as $skill) {
+            $skills_result[] = $skill->name;
+        }
         return empty($this->meta_desc)
-            ? (substr(strip_tags(str_replace('\r\n', '', $this->content)), 0, 256))
+            ? ($this->firstname . ' ' . $this->lastname . ' - ' . implode(", ", $skills_result)) . ". " . SeoMetadataHelper::DEFAULT_DESCRIPTION
             : $this->meta_desc;
     }
 
@@ -422,5 +465,10 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     public function getSeoText()
     {
         return empty($this->seo_text) ? '' : $this->seo_text;
+    }
+
+    public function checkQualification($qualification)
+    {
+        return $this->qualifications->contains('id', $qualification->id);
     }
 }

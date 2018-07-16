@@ -553,3 +553,7 @@
 .modal-window #callback_mess_ok{
     padding: 15px 0;
 }
+
+.user-personal-data__item.account-data-item .error, .doc-prof-data__data-item .error{
+    color: red;
+}

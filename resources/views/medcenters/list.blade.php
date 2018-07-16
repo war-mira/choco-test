@@ -26,19 +26,19 @@
                 <p class="sort__text">Упорядочить:</p>
                 <ul class="sort__list  mbottom-10">
                     @foreach($sortOptions as $option)
-                        <li class="sort__item {{($filter['sort'] == $option['sort']) ? 'current' : ''}}"><a
-                                    href="{{
+                        <li class="sort__item {{$filter && $filter['sort'] == $option['sort'] ? 'current' : ''}}">
+                            <a href="{{
                                 Request::fullUrlWithQuery([
                                 'sort' => $option['sort'],
                                 'order' => (
-                                ($filter['sort'] == $option['sort'] && $filter['order'] == 'desc')
+                                ($filter && $filter['sort'] == $option['sort'] && $filter['order']  == 'desc')
                                 ?
                                 'asc'
                                 :
                                 'desc')
                                 ])}}">
                                 {{$option['name']}}
-                                @if($filter['sort'] == $option['sort'])
+                                @if($filter && $filter['sort'] == $option['sort'])
                                     <span class="glyphicon glyphicon-chevron-{{($filter['order']== 'asc') ? 'up' : 'down'}}"></span>
                                 @endif
                             </a>

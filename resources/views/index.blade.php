@@ -315,6 +315,12 @@
     </div>
     <!-- begin section -->
     <script type="text/javascript">
+        $('#search-bn').on('click', function () {
+            ga('send', 'event', {
+                eventCategory: 'poisk_glavnaya',
+                eventAction: 'click'
+            });
+        });
         $(function () {
             $('#user-birthday').datetimepicker({
                 format: 'yyyy-mm-dd',
