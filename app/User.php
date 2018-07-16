@@ -63,6 +63,7 @@ class User extends Authenticatable implements CanResetPassword
         396,//Жулдыз
         2322,//Виктория Казбековна
         10131,//Айгерим Халелова
+        11024,//Альбина Тилепберди
     ];
     /**
      * The attributes that are mass assignable.
@@ -70,7 +71,15 @@ class User extends Authenticatable implements CanResetPassword
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'phone', 'city_id', 'avatar', 'birthday', 'role'
+        'name',
+        'lastname',
+        'email',
+        'password',
+        'phone',
+        'city_id',
+        'avatar',
+        'birthday',
+        'role'
     ];
     protected $dates = [
         'birthday'

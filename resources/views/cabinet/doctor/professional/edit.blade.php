@@ -14,34 +14,25 @@
                                     <div class="js-input-lines">
                                         <div class="doc-prof-data__line  account-content__repeat-line repeat-data-line">
                                             <div class="doc-prof-data__line-items doc-prof-data__line-items_close">
-                                                <div class="doc-prof-data__data-item account-data-item account-data-item_select">
+                                                <div class="doc-prof-data__data-item account-data-item">
                                                     <div class="account-data-item__name">Квалификация</div>
                                                     <div class="account-data-item__val">
-                                                        <select name="qualification" placeholder="Выберите квалификацию" class="js-simple-select">
-                                                            @if($doctor->qualification)
-                                                                <option value="{{ $doctor->qualification }}">{{ $doctor->qualification }}</option>
-                                                            @else
-                                                                <option value="">Выберите квалификацию</option>
-                                                            @endif
-                                                            <option value="Врач">Врач</option>
-                                                            <option value="Врач высшей категории">Врач высшей категории</option>
-                                                            <option value="Кандидат медицинских наук">Кандидат медицинских наук</option>
-                                                            <option value="Психолог высшей категории">Психолог высшей категории</option>
-                                                            <option value="Врач терапевт высшей категории">Врач терапевт высшей категории</option>
-                                                            <option value="Врач высшей категории, КМН">Врач высшей категории, КМН</option>
-                                                            <option value="Врач второй категории">Врач второй категории</option>
-                                                            <option value="Врач первой категории">Врач первой категории</option>
-                                                            <option value="КМН, высшая категория">КМН, высшая категория</option>
-                                                            <option value="Отличник здравоохранения">Отличник здравоохранения</option>
-                                                            <option value="Магистр медицинских наук">Магистр медицинских наук</option>
-                                                            <option value="Доктор медицинских наук">Доктор медицинских наук</option>
-                                                        </select>
+                                                        @if($qualifications)
+                                                            @foreach($qualifications as $qualification)
+                                                                <label class="doc-prof-data__checkbox-line checkbox-line">
+                                                                    <input type="checkbox" name="qualifications[][id]" value="{{ $qualification->id }}"
+                                                                        {{ $doctor->checkQualification($qualification) == true ? 'checked':'' }}>
+                                                                    <span class="checkbox-line__checkbox"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                                    <span class="checkbox-line__text">{{ $qualification->name }}</span>
+                                                                </label>
+                                                            @endforeach
+                                                        @endif
                                                     </div>
+                                                    @if ($errors->has('qualifications'))<p class="error"> {{ $errors->first('qualifications') }} </p> @endif
                                                 </div>
                                                 <div class="doc-prof-data__data-item account-data-item">
                                                     <div class="account-data-item__name">Стаж работы</div>
-                                                    <div class="account-data-item__val">
-                                                        <input type="text" value="{{ $doctor->works_since_year }}" name="works_since_year" data-mask="9999" placeholder="Укажите год">
+                                                    <div class="account-data-item__val"><input type="text" value="{{ old('works_since_year') ? old('works_since_year'): $doctor->works_since_year }}" name="works_since_year" data-mask="С 9999" placeholder="Укажите год">
                                                     </div>
                                                 </div>
                                                 <div class="doc-prof-data__data-item account-data-item">
@@ -129,7 +120,7 @@
                                             <div class="doc-prof-data__data-item doc-prof-data__data-item_grow account-data-item">
                                                 <div class="account-data-item__name">Расскажите подробнее о себе</div>
                                                 <div class="account-data-item__val">
-                                                    <textarea name="about_text">{!! strip_tags($doctor->about_text)  !!}</textarea>
+                                                    <textarea name="about_text">{!! old('about_text') ? old('about_text'):strip_tags($doctor->about_text)  !!}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -144,7 +135,7 @@
                                             <div class="doc-prof-data__data-item doc-prof-data__data-item_grow account-data-item">
                                                 <div class="account-data-item__name">Расскажите подробнее о том, какие заболевания вы лечите</div>
                                                 <div class="account-data-item__val">
-                                                    <textarea name="treatment_text" class="">{!! strip_tags($doctor->treatment_text)  !!}</textarea>
+                                                    <textarea name="treatment_text" class="">{!! old('treatment_text') ? old('treatment_text'):strip_tags($doctor->treatment_text)  !!}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -159,7 +150,7 @@
                                             <div class="doc-prof-data__data-item doc-prof-data__data-item_grow account-data-item">
                                                 <div class="account-data-item__name">Расскажите подробнее о своем опыте</div>
                                                 <div class="account-data-item__val">
-                                                    <textarea name="exp_text">{!! strip_tags($doctor->exp_text)  !!}</textarea>
+                                                    <textarea name="exp_text">{!! old('exp_text') ? old('exp_text'):strip_tags($doctor->exp_text)  !!}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -174,7 +165,7 @@
                                             <div class="doc-prof-data__data-item doc-prof-data__data-item_grow account-data-item">
                                                 <div class="account-data-item__name">Расскажите подробнее о своем образовании</div>
                                                 <div class="account-data-item__val">
-                                                    <textarea name="grad_text">{!! strip_tags($doctor->grad_text) !!}</textarea>
+                                                    <textarea name="grad_text">{!! old('grad_text') ? old('grad_text'):strip_tags($doctor->grad_text) !!}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -189,7 +180,7 @@
                                             <div class="doc-prof-data__data-item doc-prof-data__data-item_grow account-data-item">
                                                 <div class="account-data-item__name">Если у вас имеются сертификаты, вы можете прикрепить их здесь</div>
                                                 <div class="account-data-item__val">
-                                                    <textarea name="certs_text">{!! strip_tags($doctor->certs_text) !!}</textarea>
+                                                    <textarea name="certs_text">{!! old('certs_text') ? old('certs_text'):strip_tags($doctor->certs_text) !!}</textarea>
                                                 </div>
                                             </div>
                                         </div>

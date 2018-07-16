@@ -130,6 +130,7 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     protected $fillable = [
         'firstname',
         'lastname',
+        'middlename',
         'avatar',
         'qualification',
         'alias',
@@ -285,6 +286,15 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
                 'doctor_id',
                 'skill_id')
             ->withPivot(['weight']);
+    }
+
+    public function qualifications()
+    {
+        return $this
+            ->belongsToMany(Qualification::class,
+                'doctors_qualifications',
+                'doctor_id',
+                'qualification_id');
     }
 
     public function items()
@@ -449,5 +459,10 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     public function getSeoText()
     {
         return empty($this->seo_text) ? '' : $this->seo_text;
+    }
+
+    public function checkQualification($qualification)
+    {
+        return $this->qualifications->contains('id', $qualification->id);
     }
 }

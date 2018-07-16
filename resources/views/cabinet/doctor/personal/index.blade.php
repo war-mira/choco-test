@@ -26,7 +26,7 @@
                             <div class="doc-personal-data__data-line">
                                 <div class="doc-personal-data__data-item account-data-item">
                                     <div class="account-data-item__name">Дата рождения</div>
-                                    <div class="account-data-item__val">{{ $user->birthday }}</div>
+                                    <div class="account-data-item__val">{{ date('Y-m-d', strtotime($user->birthday) )}}</div>
                                 </div>
                             </div>
                             <div class="doc-personal-data__data-line">

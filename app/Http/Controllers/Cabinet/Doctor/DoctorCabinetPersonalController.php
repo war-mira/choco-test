@@ -21,15 +21,31 @@ class DoctorCabinetPersonalController extends DoctorCabinetController
     }
 
     public function update(Request $request){
-        $doctor = $this->doctor;
-        $data = $request->all();
-        $doctor->fill($data);
-        $doctor->save();
 
-        $user = $this->user;
-        $user->email = $request->input('email');
-        $user->phone = $request->input('phone');
-        $user->save();
+        $validator = \Validator::make($request->all(), [
+            'firstname'        => 'required|max:255',
+            'lastname'         => 'required|max:255',
+            'middlename'         => 'required|max:255',
+            'email'         => 'email|required|max:255',
+            'phone'         => 'required|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }else{
+            $doctor = $this->doctor;
+            $data = $request->all();
+            $doctor->fill($data);
+            $doctor->save();
+
+            $user = $this->user;
+            $user->email = $request->input('email');
+            $user->phone = $request->input('phone');
+            $user->birthday = $request->input('birthday');
+            $user->save();
+        }
 
         return redirect()->back();
     }
