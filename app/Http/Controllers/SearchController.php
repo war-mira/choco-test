@@ -14,17 +14,67 @@ use Illuminate\Support\Facades\Session;
 
 class SearchController extends Controller
 {
+    public function livesearchIndex(Request $request)
+    {
+        $query = $request->query('q');
+        $groups = [
+            'skills'     => $this->searchSkills($query),
+            'doctors'    => $this->searchDoctors($query),
+            'medcenters' => $this->searchMedcenters($query)
+        ];
+        return view('search.liveresults_index_new', $groups);
+    }
+
     public function livesearch(Request $request)
     {
         $query = $request->query('q');
         $is_child = $request->query('child');
         $ambulatory = $request->query('ambulatory');
         $groups = [
-            $this->searchSkills($query),
-            $this->searchDoctors($query, $is_child, $ambulatory),
-            $this->searchMedcenters($query)
+            $this->old_searchSkills($query),
+            $this->old_searchDoctors($query, $is_child, $ambulatory),
+            $this->old_searchMedcenters($query)
         ];
         return view('search.liveresults', compact('groups'));
+    }
+
+    private function searchSkills($query)
+    {
+        $skills = Skill::
+        where('name', 'like', "%$query%")
+            ->with(['doctors' => function ($query) {
+                $query->where('status', 1)->where('city_id', SessionContext::cityId());
+            }])
+            ->withCount(['doctors' => function ($query) {
+                $query->where('status', 1)->where('city_id', SessionContext::cityId());
+            }])
+            ->whereHas('doctors', function ($query) {
+                $query->where('status', 1)->where('city_id', SessionContext::cityId());
+            })
+            ->orderBy('name')
+            ->limit(20)
+            ->get();
+
+        return $skills;
+    }
+
+    private function searchDoctors($query)
+    {
+        $doctors = Doctor::where('status', 1)->where('city_id', Session::get('cityid', 6));
+        $doctors = $doctors->
+        where(function (Builder $q) use ($query) {
+            $q->where('firstname', 'like', "%$query%")
+                ->orWhere('lastname', 'like', "%$query%")
+                ->orWhereHas('skills', function (Builder $skillsQuery) use ($query) {
+                    $skillsQuery->where('name', 'like', "%$query%");
+                });
+        })
+            ->orderBy('lastname', 'asc')
+            ->limit(20)
+            ->get();
+
+
+        return $doctors;
     }
 
     private function searchMedcenters($query)
@@ -35,94 +85,7 @@ class SearchController extends Controller
             ->limit(20)
             ->get();
 
-        return [
-            'header' => 'Медцентры',
-            'results' => [
-                'view' => 'search.result.medcenter',
-                'data' => $medcenters
-            ]
-        ];
-    }
-
-    private function searchMedcenterz($query)
-    {
-        $medcenters = Medcenter::whereStatus(1)
-            ->where('name', 'like', "%$query%")
-            ->orderBy('name', 'asc')
-            ->limit(20)
-            ->pluck('id','name');
-
         return $medcenters;
-    }
-
-    private function searchDoctorz($query, $is_child, $ambulatory)
-    {
-        $doctors = Doctor::where('status', 1)->where('city_id', Session::get('cityid', 6));
-        if ($is_child == 'true')
-            $doctors = $doctors->where('child', 1);
-        if ($ambulatory == 'true')
-            $doctors = $doctors->where('ambulatory', 1);
-        $doctors = $doctors->
-        where(function ($q) use ($query) {
-            $q->where('firstname', 'like', "%$query%")
-                ->orWhere('lastname', 'like', "%$query%");
-        })
-            ->orderBy('lastname', 'asc')
-            ->limit(20)
-            ->pluck('firstname','id');
-
-
-        return [
-            'header' => 'Доктора',
-            'results' => [
-                'view' => 'search.result.doctor',
-                'data' => $doctors
-            ]
-        ];
-    }
-
-    private function searchDoctors($query, $is_child, $ambulatory)
-    {
-        $doctors = Doctor::where('status', 1)->where('city_id', Session::get('cityid', 6));
-        if ($is_child == 'true')
-            $doctors = $doctors->where('child', 1);
-        if ($ambulatory == 'true')
-            $doctors = $doctors->where('ambulatory', 1);
-        $doctors = $doctors->
-        where(function ($q) use ($query) {
-            $q->where('firstname', 'like', "%$query%")
-                ->orWhere('lastname', 'like', "%$query%");
-        })
-            ->orderBy('lastname', 'asc')
-            ->limit(20)
-            ->get();
-
-
-        return [
-            'header' => 'Доктора',
-            'results' => [
-                'view' => 'search.result.doctor',
-                'data' => $doctors
-            ]
-        ];
-    }
-
-    private function searchSkills($query)
-    {
-
-        $skills = Skill::
-        where('name', 'like', "%$query%")
-            ->orderBy('name', 'asc')
-            ->limit(20)
-            ->get();
-
-        return [
-            'header' => 'Специализации',
-            'results' => [
-                'view' => 'search.result.skill',
-                'data' => $skills
-            ]
-        ];
     }
 
     public function searchClients(Request $request)
@@ -146,6 +109,48 @@ class SearchController extends Controller
             ]
         ]];
         return view('search.liveresults', compact('groups'));
+    }
+
+    public function new_searchPage(Request $request, $primarySuffix = false, $secondarySuffix = false)
+    {
+        $type = $request->input('type', 'doctor');
+        $sort = $request->input('sort', 'rate');
+        $order = $request->input('order', 'desc');
+        $q = $request->input('q', false);
+        $child = $request->input('child', null);
+        $ambulatory = $request->input('ambulatory', null);
+
+        $doctors = Doctor::query()
+            ->withCommentsCount()
+            ->where('status', 1)->where('city_id', Session::get('cityid', 6));
+        if ($q) {
+            $doctors = $doctors->
+            where(function (Builder $query) use ($q) {
+                $query->where('firstname', 'like', "%$q%")
+                    ->orWhere('lastname', 'like', "%$q%")
+                    ->orWhereHas('skills', function (Builder $skillsQuery) use ($q) {
+                        $skillsQuery->where('name', 'like', "%$q%");
+                    });
+            });
+        }
+        if (isset($child)) {
+            $doctors->where('child', $child);
+        }
+        if (isset($ambulatory)) {
+            $doctors->where('ambulatory', $ambulatory);
+        }
+        $doctors = $doctors->orderBy($sort, $order)->paginate(10);
+        $doctors = $doctors->appends($request->query());
+
+        return view('redesign.search.doctors', compact(
+            'doctors',
+            'sort',
+            'order',
+            'child',
+            'type',
+            'ambulatory',
+            'q'
+        ));
     }
 
     public function searchPage(Request $request)
@@ -184,6 +189,66 @@ class SearchController extends Controller
 
         return view('search.page',
             compact('meta', 'doctors', 'skills', 'medcenters', 'filter'));
+    }
+
+    private function old_searchMedcenters($query)
+    {
+        $medcenters = Medcenter::whereStatus(1)
+            ->where('name', 'like', "%$query%")
+            ->orderBy('name', 'asc')
+            ->limit(20)
+            ->get();
+
+        return [
+            'header' => 'Медцентры',
+            'results' => [
+                'view' => 'search.result.medcenter',
+                'data' => $medcenters
+            ]
+        ];
+    }
+
+    private function old_searchDoctors($query, $is_child, $ambulatory)
+    {
+        $doctors = Doctor::where('status', 1)->where('city_id', Session::get('cityid', 6));
+        if ($is_child == 'true')
+            $doctors = $doctors->where('child', 1);
+        if ($ambulatory == 'true')
+            $doctors = $doctors->where('ambulatory', 1);
+        $doctors = $doctors->
+        where(function ($q) use ($query) {
+            $q->where('firstname', 'like', "%$query%")
+                ->orWhere('lastname', 'like', "%$query%");
+        })
+            ->orderBy('lastname', 'asc')
+            ->limit(20)
+            ->get();
+
+        return [
+            'header' => 'Доктора',
+            'results' => [
+                'view' => 'search.result.doctor',
+                'data' => $doctors
+            ]
+        ];
+    }
+
+    private function old_searchSkills($query)
+    {
+
+        $skills = Skill::
+        where('name', 'like', "%$query%")
+            ->orderBy('name', 'asc')
+            ->limit(20)
+            ->get();
+
+        return [
+            'header' => 'Специализации',
+            'results' => [
+                'view' => 'search.result.skill',
+                'data' => $skills
+            ]
+        ];
     }
 
     public function searchResults(Request $request)

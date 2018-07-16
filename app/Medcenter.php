@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Helpers\SeoMetadataHelper;
 use App\Helpers\SessionContext;
 use App\Interfaces\IReferenceable;
 use App\Interfaces\ISeoMetadata;
@@ -121,6 +122,11 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
         return $this->belongsTo(City::class, 'city_id', 'id');
     }
 
+    public function district()
+    {
+        return $this->belongsTo(\App\Models\District::class, '	district_id', 'id');
+    }
+
     public function getAvatarAttribute()
     {
         return $this->attributes['avatar'] ?? asset('images/no-userpic.gif');
@@ -235,21 +241,19 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
         });
     }
 
-    public function district()
-    {
-        return $this->belongsTo(District::class, 'disctict_id', 'id');
-    }
 
     public function getMetaTitle()
     {
-        return empty($this->meta_title) ? ($this->name . ' - ' . $this->city->name) : $this->meta_title;
+        return empty($this->meta_title) ? ($this->name . ' - Сервис по поиску врачей iDoctor.kz') : $this->meta_title;
     }
 
     public function getMetaDescription()
     {
-        return empty($this->meta_desc)
-            ? (substr(strip_tags(str_replace('\r\n', '', $this->content)), 0, 256))
-            : $this->meta_desc;
+        $desc = "Многопрофильное медицинское учреждение - " . str_replace("Медицинский центр ", "", $this->name) . ". ". SeoMetadataHelper::DEFAULT_DESCRIPTION;
+        if(!empty($this->meta_desc)){
+            $desc = $this->meta_desc;
+        }
+        return $desc;
     }
 
     public function getMetaKeywords()
