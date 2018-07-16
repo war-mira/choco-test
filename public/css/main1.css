@@ -1761,6 +1761,10 @@ img {
   max-height:200px;
   max-width:200px;
 }
+.results.filter
+{
+  margin-bottom:25px;
+}
 .result-control-bar__line {
   display: -webkit-box;
   display: -webkit-flex;
