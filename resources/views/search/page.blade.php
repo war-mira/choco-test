@@ -164,7 +164,8 @@
                         order = (order == 'asc') ? 'desc' : 'asc';
                         $('input[name=order]').val([order]).trigger("change");
                     }
-            });
+                }
+            );
 
             if($('input[name="q"]').val().length)
             {
@@ -176,6 +177,11 @@
 
                 var tp = $(this).val();
 
+                if(tp == 'medcenters')
+                {
+                    $('div.search-bar__item_search').find('input').val('');
+                }
+
                 $.ajax({
                     type: 'post',
                     url:"{{url('getdata')}}",
@@ -186,7 +192,6 @@
                         ttype:tp,
                         query:$('.search-bar__item').find('input').val()
                     },
-                    //dataType: 'json',
                     success: function(data) {
                         $(".js-search-select")[0].selectize.clearOptions();
 
@@ -195,29 +200,6 @@
                         }
                     }
                 });
-            });
-
-            $('.search-bar__item').find('input').change(function () {
-                console.log($(this).val());
-                /*$.ajax({
-                    type: 'post',
-                    url:"{{url('getdata')}}",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data:{
-                        ttype:tp,
-                        query:$('.search-bar__item').find('input').val()
-                    },
-                    dataType: 'json',
-                    success: function(data) {
-                        $(".js-search-select")[0].selectize.clearOptions();
-
-                        for (var i = 0; i < data.length; i++) {
-                            $(".js-search-select")[0].selectize.addOption(data[i]);
-                        }
-                    }
-                });*/
             });
 
             $('div.search-bar__item_search').find('input').on('keyup',function (e) {
@@ -311,6 +293,7 @@
 
             if($('select[name="type"]').val() == null || $('select[name="type"]').val() == 'medcenters') {
                 $skillSelect.on('change', function () {
+                    $('input[name="q"]').val('');
                     var url = "{{route('doctors.list')}}";
                     var query = "{!!explode('?',url()->full())[1] ?? ""!!}";
                     if (query.length > 0)

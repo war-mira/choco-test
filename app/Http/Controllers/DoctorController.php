@@ -260,7 +260,7 @@ class DoctorController extends Controller
             $type = $request->post('ttype');
             if($type == 'all')
             {
-                if($request->post('query')) {
+                if($request->post('query') && !empty($request->post('query'))) {
                     $data = Doctor::where('firstname', 'like', $request->post('query'))
                         ->Orwhere('lastname', 'like', $request->post('query'))
                         ->Orwhere('patronymic', 'like', $request->post('query'))
@@ -277,7 +277,7 @@ class DoctorController extends Controller
                     }
                 }
                 else
-                {
+                {/*
                     $data = Doctor::where('')
                         ->orderBy('firstname', 'ASC')->get();
 
@@ -289,7 +289,7 @@ class DoctorController extends Controller
                             'value' => $dt->id,
                             'optgroup' => 'Врачи'
                         ];
-                    }
+                    }*/
                 }
             }
             else

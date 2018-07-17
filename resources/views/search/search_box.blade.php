@@ -4,7 +4,7 @@
             <form action="{{route('doctors.list')}}" class="search-bar__line index-search-bar__line">
                     <input type="hidden" name="sort" value="@if(isset($_GET['sort'])) {{$_GET['sort']}} @endif"/>
                     <input type="hidden" name="order" value="@if(isset($_GET['order'])) {{$_GET['order']}} @endif"/>
-                    <input type="hidden" name="q" value="@if(isset($_GET['q'])) {{$_GET['q']}} @endif"/>
+                    <input type="hidden" name="q" value="@if(isset($_GET['q'])){{$_GET['q']}}@endif"/>
                 <div class="search-bar__item search-bar__item_type">
                     <select name="type" placeholder="Поиск медцентра" class="js-simple-select">
                         <option value="all" @if(isset($_GET['type']) && $_GET['type'] == 'all' || !empty($_GET['q'])) selected="selected" @endif>Поиск врача</option>
