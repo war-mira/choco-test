@@ -168,8 +168,7 @@
 
             if($('input[name="q"]').val().length)
             {
-                console.log($('input[name="q"]').val());
-                $('.search-bar__item_search').find('input').val($('input[name="q"]').val());
+                $('.search-bar__item_search').find('input').val($('input[name="q"]').val().trim());
             }
 
             $('select[name="type"]').change(function () {
