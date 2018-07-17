@@ -8,7 +8,7 @@
                 <div class="search-bar__item search-bar__item_type">
                     <select name="type" placeholder="Поиск медцентра" class="js-simple-select">
                         <option value="all" @if(isset($_GET['type']) && $_GET['type'] == 'all' || !empty($_GET['q'])) selected="selected" @endif>Поиск врача</option>
-                        <option value="medcenters" @if((!isset($_GET['type']) || $_GET['type'] == 'medcenters') && (isset($_GET['q']) && empty($_GET['q']))) selected="selected" @endif>Поиск медцентра</option>
+                        <option value="medcenters" @if((!isset($_GET['type']) || $_GET['type'] == 'medcenters') && (!isset($_GET['q']) || empty($_GET['q']))) selected="selected" @endif>Поиск медцентра</option>
                     </select>
                 </div>
                 <div class="search-bar__item search-bar__item_search">
