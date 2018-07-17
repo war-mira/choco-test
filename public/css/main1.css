@@ -686,6 +686,7 @@ img {
     position: relative;
     z-index: 1; }
     .entity-thumb-img__img-wr:hover .entity-thumb-img__add-favorite,
+    .entity-line__img:hover .entity-thumb-img__add-favorite,
     .entity-thumb-img__img-wr:hover .entity-thumb-img__edit-img {
       display: block; }
   .entity-thumb-img__img {
@@ -1845,7 +1846,7 @@ img {
   .entity-line__img {
     -webkit-flex-shrink: 0;
         -ms-flex-negative: 0;
-            flex-shrink: 0; }
+            flex-shrink: 0; position: relative; }
 
 .entity-line__main {
   margin-left: 3.6036%;
