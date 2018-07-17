@@ -165,8 +165,8 @@ class DoctorController extends Controller
             $doctors->orderBy('rate', $order[1]);
         else if ($order[0] == 'price')
             $doctors->orderBy('price', $order[1]);
-        else if ($order[0] == 'views')
-            $doctors->orderBy('views', $order[1]);
+        else if ($order[0] == 'orders_count')
+            $doctors->orderBy('orders_count', $order[1]);
         else if ($order[0] == 'exp')
             $doctors->orderBy('works_since', $order[1] == 'asc' ? 'desc' : 'asc');
         else if ($order[0] == 'comments_count')
@@ -209,7 +209,6 @@ class DoctorController extends Controller
 
     public static function getSortOptions($sort, $order)
     {
-
         $sortOptions = [
             [
                 'sort' => 'price',
@@ -254,25 +253,43 @@ class DoctorController extends Controller
 
     public function getall(Request $request)
     {
+        $doto = [];
+
         if($request->ajax())
         {
             $type = $request->post('ttype');
             if($type == 'all')
             {
-                $data = Doctor::where('firstname','like',$request->post('query'))
-                    ->Orwhere('lastname','like', $request->post('query'))
-                    ->Orwhere('patronymic','like',$request->post('query'))
-                    ->orderBy('firstname','ASC')->get();
+                if($request->post('query')) {
+                    $data = Doctor::where('firstname', 'like', $request->post('query'))
+                        ->Orwhere('lastname', 'like', $request->post('query'))
+                        ->Orwhere('patronymic', 'like', $request->post('query'))
+                        ->orderBy('firstname', 'ASC')->get();
 
-                foreach ($data as $o=>$dt)
+                    foreach ($data as $o => $dt) {
+                        $doto[$o] = [
+                            'text' => $dt->lastname . ' ' . $dt->firstname . ' ' . $dt->patronymic,
+                            'img' => ($dt->avatar ? $dt->avatar : URL::asset('images/no-userpic.gif')),
+                            'spec' => $dt->getMainSkillAttribute()->name,
+                            'value' => $dt->id,
+                            'optgroup' => 'Врачи'
+                        ];
+                    }
+                }
+                else
                 {
-                    $doto[$o] = [
-                        'text'=>$dt->lastname.' '.$dt->firstname.' '.$dt->patronymic,
-                        'img' =>($dt->avatar ? $dt->avatar : URL::asset('images/no-userpic.gif')),
-                        'spec'=>$dt->getMainSkillAttribute()->name,
-                        'value'=>$dt->id,
-                        'optgroup'=>'Врачи'
-                    ];
+                    $data = Doctor::where('')
+                        ->orderBy('firstname', 'ASC')->get();
+
+                    foreach ($data as $o => $dt) {
+                        $doto[$o] = [
+                            'text' => $dt->lastname . ' ' . $dt->firstname . ' ' . $dt->patronymic,
+                            'img' => ($dt->avatar ? $dt->avatar : URL::asset('images/no-userpic.gif')),
+                            'spec' => $dt->getMainSkillAttribute()->name,
+                            'value' => $dt->id,
+                            'optgroup' => 'Врачи'
+                        ];
+                    }
                 }
             }
             else
@@ -284,7 +301,7 @@ class DoctorController extends Controller
                     $doto[$o] = [
                         'text'=>$dt->name,
                         'count' => $dt->doctors()->count(),
-                        'value'=>$dt->id,
+                        'value'=>$dt->alias,
                         'optgroup'=>'Специализации'
                     ];
                 }

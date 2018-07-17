@@ -2,8 +2,9 @@
     <div class="container">
         <div class="search-bar">
             <form action="{{route('doctors.list')}}" class="search-bar__line index-search-bar__line">
-                    <input type="hidden"  name="sort" value="@if(isset($_GET['sort'])) {{$_GET['sort']}} @endif">
-                    <input type="hidden"  name="order" value="@if(isset($_GET['order'])) {{$_GET['order']}} @endif">
+                    <input type="hidden" name="sort" value="@if(isset($_GET['sort'])) {{$_GET['sort']}} @endif"/>
+                    <input type="hidden" name="order" value="@if(isset($_GET['order'])) {{$_GET['order']}} @endif"/>
+                    <input type="hidden" name="q" value="@if(isset($_GET['q'])) {{$_GET['q']}} @endif"/>
                 <div class="search-bar__item search-bar__item_type">
                     <select name="type" placeholder="Поиск медцентра" class="js-simple-select">
                         <option value="all" @if(isset($_GET['type']) && $_GET['type'] == 'medcenters') selected="selected" @endif>Поиск врача</option>
@@ -11,7 +12,7 @@
                     </select>
                 </div>
                 <div class="search-bar__item search-bar__item_search">
-                    <select name="q" placeholder="Поисковый запрос" class="js-search-select">
+                    <select name="name_md" placeholder="Поисковый запрос" class="js-search-select">
                         <option value="">Название медцентра</option>
                         <optgroup data-type="medcenters" label="Специализации"></optgroup>
                         <optgroup data-type="all" label="Врачи"></optgroup>

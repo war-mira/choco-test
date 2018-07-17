@@ -32,10 +32,10 @@
                     <i class="fa @if(isset($_GET['sort']) && $_GET['sort'] == 'price' && $_GET['order'] == 'asc') fa-chevron-up @else fa-chevron-down @endif" aria-hidden="true"></i>
                     <input type="radio" style="display:none;" name="sort" value="price">
                 </a>
-                <a href="#" class="sort-line__item sort-line-btn btn btn_theme_radio @if(isset($_GET['sort']) && $_GET['sort'] == 'views') btn_theme_radio_active @endif">
+                <a href="#" class="sort-line__item sort-line-btn btn btn_theme_radio @if(isset($_GET['sort']) && $_GET['sort'] == 'orders_count') btn_theme_radio_active @endif">
                     <span class="sort-line-btn__text">Посещаемости</span>
-                    <i class="fa @if(isset($_GET['sort']) && $_GET['sort'] == 'views' && $_GET['order'] == 'asc') fa-chevron-up @else fa-chevron-down @endif" aria-hidden="true"></i>
-                    <input type="radio" style="display:none;" name="sort" value="views"/>
+                    <i class="fa @if(isset($_GET['sort']) && $_GET['sort'] == 'orders_count' && $_GET['order'] == 'asc') fa-chevron-up @else fa-chevron-down @endif" aria-hidden="true"></i>
+                    <input type="radio" style="display:none;" name="sort" value="orders_count"/>
                 </a>
             </div>
         </div>

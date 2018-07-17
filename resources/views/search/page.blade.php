@@ -166,7 +166,15 @@
                     }
             });
 
+            if($('input[name="q"]').val().length)
+            {
+                console.log($('input[name="q"]').val());
+                $('.search-bar__item_search').find('input').val($('input[name="q"]').val());
+            }
+
             $('select[name="type"]').change(function () {
+                $(".js-search-select")[0].selectize.clearOptions();
+
                 var tp = $(this).val();
 
                 $.ajax({
@@ -191,7 +199,8 @@
             });
 
             $('.search-bar__item').find('input').change(function () {
-                $.ajax({
+                console.log($(this).val());
+                /*$.ajax({
                     type: 'post',
                     url:"{{url('getdata')}}",
                     headers: {
@@ -209,7 +218,17 @@
                             $(".js-search-select")[0].selectize.addOption(data[i]);
                         }
                     }
-                });
+                });*/
+            });
+
+            $('div.search-bar__item_search').find('input').on('keyup',function (e) {
+               var serachv = $(this).val();
+
+                if(serachv.length >= 3)
+                {
+                    $('input[name="q"]').val(serachv);
+                    $('input[name="q"]').change();
+                }
             });
 
             $('a.sort-line__item').click(function () {
@@ -234,7 +253,7 @@
             var $searchForm = $('#search-form');
             var $filteron = $('#filtersGroup');
             var $typeSelect = $('select[name="type"]');
-            var $skillSelect = $('#skillSelect');
+            var $skillSelect = $('select[name="name_md"]');
             var $medcenterSelect = $('#medcenterSelect');
             /*var doctorExpSlider = $("#doctor_exp").slider({tooltip: "always"}).data('slider');
             var doctorPriceSlider = $("#doctor_price").slider({tooltip: "always"}).data('slider');
@@ -291,15 +310,16 @@
                 $('form.search-bar__line').submit();
             });
 
-            $skillSelect.on('change', function () {
-                var url = "{{route('doctors.list')}}";
-                var query = "{!!explode('?',url()->full())[1] ?? ""!!}";
-                if (query.length > 0)
-                    query = '?' + query;
-                var skillUrl = url + '/' + $(this).val() + query;
-                window.location.assign(skillUrl);
-            });
-
+            if($('select[name="type"]').val() == null || $('select[name="type"]').val() == 'medcenters') {
+                $skillSelect.on('change', function () {
+                    var url = "{{route('doctors.list')}}";
+                    var query = "{!!explode('?',url()->full())[1] ?? ""!!}";
+                    if (query.length > 0)
+                        query = '?' + query;
+                    var skillUrl = url + '/' + $(this).val() + query;
+                    window.location.assign(skillUrl);
+                });
+            }
         });
     </script>
 @endsection
