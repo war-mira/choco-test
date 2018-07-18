@@ -107,7 +107,7 @@
                                 </div>
                             </div>
                             @if(isset($doctor['timetable']) && $doctor['timetable'] != '')
-                                {{ $doctor['timetable'] }}
+                                {!!  $doctor['timetable'] !!}
                             @endif
                             <div class="appointment-book-small__time-list">
 
