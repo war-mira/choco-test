@@ -4,6 +4,8 @@
         <br/>
         <div class="leave-review__input-line">
             <input type="hidden" name="ga_cid" value="">
+            <input type="hidden" name="date" value="">
+            <input type="hidden" name="time" value="">
             @if(Auth::user())
                 <input type="hidden" name="client_id" value="{{auth()->user()->id}}">
             @endif
@@ -23,7 +25,7 @@
                        readonly="readonly"
                         @endif>
             </div>
-            <div class="leave-review__input-item">
+            <div class="leave-review__textarea-item">
                 <input class="form-control " placeholder="Email" name="client_email" id="client_email" type="text"
                        @if(Auth::user())
                        value="{{auth()->user()->email}}"
@@ -31,7 +33,7 @@
                         @endif>
             </div>
 
-            <div class="leave-review__input-item" id="datetime-group">
+            <div class="leave-review__input-item hidden" id="datetime-group">
                 <input class="form-control datepicker" readonly="readonly" placeholder="Время и дата приема" required="" name="client_datetime" id="client_datetime" type="text">
             </div>
 

@@ -1,5 +1,18 @@
 
+function checkblock(block)
+{
+    var $back = false;
+    if($(block).find('input[name="date"]:checked').length && $(block).find('input[name="time"]:checked').length){$back = true;}
+    return $back;
+}
+
 $(document).ready(function() {
+
+    var $receptionModalForm = $("#callback_form");
+    ga(function (tracker) {
+        var cid = tracker.get('clientId');
+        $receptionModalForm.find('[name="ga_cid"]').val(cid).trigger('change');
+    });
 
     $(".js-input-add-entity").each(function() {
         var $this = $(this);
@@ -70,87 +83,29 @@ $(document).ready(function() {
 
     $('input[name="client_phone"]').mask('+7 (999) 999-99-99');
 
-    $('a.popup-with-form').magnificPopup({
+    var popupDefaults = {
         type: 'inline',
+        fixedContentPos: false,
         focus: '#name',
+        fixedBgPos: true,
+        overflowY: 'auto',
+        closeBtnInside: true,
         callbacks: {
-          beforeOpen: function() {
-            $('form#callback_form').find('input[name="target_id"]').val(this.st.el.data('doc-id'));
-            $('form#callback_form').find('#doctor_name').val(this.st.el.data('dname'));
-            var dt = $(this.st.el).parent().parent().find('input[name="date"]:checked').val();
-            var today = new Date();
-            var dd = today.getDate();
-            var mm = today.getMonth()+1;
-            var yyyy = today.getFullYear();
+            beforeOpen: function() {
+                $('form#callback_form').find('input[name="target_id"]').val(this.st.el.data('doc-id'));
+                $('form#callback_form').find('#doctor_name').val(this.st.el.data('dname'));
+            }
+        }
+    }
 
-            console.log(dt);
-          },
-          elementParse: function(item) {
-            // Function will fire for each target element
-            // "item.el" is a target DOM element (if present)
-            // "item.src" is a source that you may modify
-        
-            //console.log('Parsing content. Item object that is being parsed:', item);
-          },
-          change: function() {
-
-          },
-          resize: function() {
-            //console.log('Popup resized');
-            // resize event triggers only when height is changed or layout forced
-          },
-          open: function() {
-            //console.log('Popup is opened');
-          },
-        
-          beforeClose: function() {
-            // Callback available since v0.9.0
-            //console.log('Popup close has been initiated');
-          },
-          close: function() {
-            //console.log('Popup removal initiated (after removalDelay timer finished)');
-          },
-          afterClose: function() {
-            //console.log('Popup is completely closed');
-          },
-        
-          markupParse: function(template, values, item) {
-            // Triggers each time when content of popup changes
-            // console.log('Parsing:', template, values, item);
-          },
-          updateStatus: function(data) {
-            //console.log('Status changed', data);
-            // "data" is an object that has two properties:
-            // "data.status" - current status type, can be "loading", "error", "ready"
-            // "data.text" - text that will be displayed (e.g. "Loading...")
-            // you may modify this properties to change current status or its text dynamically
-          },
-          imageLoadComplete: function() {
-            // fires when image in current popup finished loading
-            // avaiable since v0.9.0
-            //console.log('Image loaded');
-          },
-        
-        
-          // Only for ajax popup type
-          parseAjax: function(mfpResponse) {
-            // mfpResponse.data is a "data" object from ajax "success" callback
-            // for simple HTML file, it will be just String
-            // You may modify it to change contents of the popup
-            // For example, to show just #some-element:
-            // mfpResponse.data = $(mfpResponse.data).find('#some-element');
-        
-            // mfpResponse.data must be a String or a DOM (jQuery) element
-        
-            console.log('Ajax content loaded:', mfpResponse);
-          },
-          ajaxContentAdded: function() {
-            // Ajax content is loaded and appended to DOM
-            console.log(this.content);
-          }
+    $('a.popup-with-form').on("click", function(){
+        var block = $(this).closest('div.search-result__item');
+        var condition = checkblock(block);
+        if(condition){
+            $(this).magnificPopup(popupDefaults).magnificPopup('open');
         }
     });
-    
+
     $(".js-search-select").selectize({
         render: {
             option: function(data, escape) {
@@ -202,11 +157,11 @@ $(document).ready(function() {
         });
     });
 
-    $(".nav-toggle").click(function() {
+    $(".nav-toggle").click(function(){
         $(this).toggleClass("open");
 
-        $(".mobile-menu").slideToggle("fast", function() {
-            if (!$(".nav-toggle").hasClass("open")) {
+        $(".mobile-menu").slideToggle("fast", function(){
+            if(!$(".nav-toggle").hasClass("open")){
                 $(".mobile-menu").removeAttr("style");
             }
         });
