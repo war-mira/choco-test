@@ -63,6 +63,6 @@ class City extends Model
 
     public function getHrefAttribute()
     {
-        return "/doctors/" . $this->alias;
+        return route('doctors.list', ['city' => $this->alias]);
     }
 }
