@@ -2,7 +2,7 @@
 function checkblock(block)
 {
     var $back = false;
-    if($(block).find('input[name="date"]:checked').length && $(block).find('input[name="time"]:checked').length){$back = true;}
+    if(($(block).find('input[name="date"]:checked').length || $(block).find('input[name="date"]').val().length) && $(block).find('input[name="time"]:checked').length){$back = true;}
     return $back;
 }
 
@@ -108,11 +108,18 @@ $(document).ready(function() {
     }
 
     $('a.popup-with-form').on("click", function(){
-        var block = $(this).closest('div.search-result__item');
+        if($(this).closest('div.search-result__item').length) {
+            var block = $(this).closest('div.search-result__item');
+        }
+        else
+        {
+            var block = $(this).closest('div.appointment-book-small__line');
+        }
         var condition = checkblock(block);
         if(condition){
             $(this).magnificPopup(popupDefaults).magnificPopup('open');
         }
+
     });
 
     $(".js-search-select").selectize({
