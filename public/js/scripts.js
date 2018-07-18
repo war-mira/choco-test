@@ -94,6 +94,8 @@ $(document).ready(function() {
             beforeOpen: function() {
                 $('form#callback_form').find('input[name="target_id"]').val(this.st.el.data('doc-id'));
                 $('form#callback_form').find('#doctor_name').val(this.st.el.data('dname'));
+                $('form#callback_form').find('input[name="date"]').val($(this.st.el).parent().parent().find('input[name="date"]').val());
+                $('form#callback_form').find('input[name="time"]').val($(this.st.el).parent().parent().find('input[name="time"]').val());
             }
         }
     }
@@ -181,6 +183,7 @@ $(document).ready(function() {
         pickmeup($this[0], {
             format  : 'Y-m-d',
             locale : "ru",
+            minDate:new Date(),
             hide_on_select : true,
             position : function() {
                 return {
@@ -205,6 +208,7 @@ $(document).ready(function() {
         pickmeup($this[0], {
             format  : 'Y-m-d',
             locale : "ru",
+            minDate:new Date(),
             hide_on_select : true,
             position : function() {
                 return {
