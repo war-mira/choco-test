@@ -126,6 +126,7 @@
         var cid = tracker.get('clientId');
         $receptionModalForm.find('[name="ga_cid"]').val(cid).trigger('change');
     });
+
     function validateForm() {
         //Ga target
         ga('send', 'event', {
@@ -154,4 +155,6 @@
     }
 
     $("#сallback_save_r").click(validateForm);
+
+
 </script>

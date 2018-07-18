@@ -40,7 +40,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int                                                          $updated_at_unix Дата изменения
  * @property int                                                          $views Колличество просмотров
  * @property int                                                          $user_id
- * @property int                                                          $phone
  * @property int                                                          $orders_count
  * @property int                                                          $status Опубликован?
  * @property int                                                          $on_top
@@ -129,6 +128,7 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     protected $fillable = [
         'firstname',
         'lastname',
+        'middlename',
         'avatar',
         'qualification',
         'alias',
@@ -178,7 +178,6 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         'preview_text',
         'timetable',
         'seo_text',
-
     ];
     protected $casts = [
         'child'   => 'int',
@@ -271,6 +270,11 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         return $this->hasMany(Order::class, 'doc_id', 'id');
     }
 
+    public function medname()
+    {
+        return $this->belongsToMany(Medcenter::class,'doctors','id','med_id');
+    }
+
     public function getMainSkillAttribute()
     {
         return $this->skills()->first();
@@ -284,6 +288,15 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
                 'doctor_id',
                 'skill_id')
             ->withPivot(['weight']);
+    }
+
+    public function qualifications()
+    {
+        return $this
+            ->belongsToMany(Qualification::class,
+                'doctors_qualifications',
+                'doctor_id',
+                'qualification_id');
     }
 
     public function items()
@@ -326,6 +339,11 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
             'medcenter_id');
     }
 
+    public function medc_map()
+    {
+        return $this->belongsTo(Medcenter::class,'med_id','id');
+    }
+
     public function getExpFormattedAttribute()
     {
         if ($this->works_since == null)
@@ -347,6 +365,28 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     public function getTypeAttribute()
     {
         return 'доктор';
+    }
+
+    public function getHumanAmbulatoryAttribute()
+    {
+        if ($this->ambulatory == 1){
+            $humanAmbulatory = 'Да';
+        } else {
+            $humanAmbulatory = 'Нет';
+        }
+
+        return $humanAmbulatory;
+    }
+
+    public function getHumanChildAttribute()
+    {
+        if ($this->child == 1){
+            $humanChild = 'Да';
+        } else {
+            $humanChild = 'Нет';
+        }
+
+        return $humanChild;
     }
 
     public function updateCommentRate()
@@ -392,11 +432,11 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     {
         $skills_result = [];
         $skills = $this->skills()->get();
-        foreach($skills as $skill){
+        foreach ($skills as $skill) {
             $skills_result[] = $skill->name;
         }
         return empty($this->meta_title)
-            ? ($this->firstname . ' ' . $this->lastname . ' - ' . implode(", ", $skills_result) . ' - ' . $this->city->name)
+            ? ($this->firstname . ' ' . $this->lastname . ' - ' . $this->city->name)
             : $this->meta_title;
     }
 
@@ -404,7 +444,7 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     {
         $skills_result = [];
         $skills = $this->skills()->get();
-        foreach($skills as $skill){
+        foreach ($skills as $skill) {
             $skills_result[] = $skill->name;
         }
         return empty($this->meta_desc)
@@ -425,5 +465,10 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     public function getSeoText()
     {
         return empty($this->seo_text) ? '' : $this->seo_text;
+    }
+
+    public function checkQualification($qualification)
+    {
+        return $this->qualifications->contains('id', $qualification->id);
     }
 }

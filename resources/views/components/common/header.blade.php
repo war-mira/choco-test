@@ -63,7 +63,9 @@
                     </ul>
                 @else
                     <div class="header__login m-collapsing-hide desktop-visible">
-                        <a href="{{route('user.profile')}}" id="login-dropdown-toggle">Профиль
+                        <a href="
+                            @if(Auth::user()->role == \App\User::ROLE_DOCTOR) {{route('cabinet.doctor.personal.index')}}
+                            @else {{route('user.profile')}} @endif" id="login-dropdown-toggle">Профиль
                         </a>
                     </div>
                 @endif

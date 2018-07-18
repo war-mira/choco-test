@@ -56,7 +56,8 @@
             @component('components.bootstrap.row')
                 @component('components.bootstrap.column',['class'=>'col-md-4 col-md-offset-4'])
                     <div class="show-question-form">
-                        <button class="btn-block button">Задать вопрос врачу</button>
+                        {{--<button class="btn-block button">Задать вопрос врачу</button>--}}
+                        <h2 class="section-title">Задать вопрос врачу</h2>
                     </div>
                 @endcomponent
             @endcomponent
@@ -314,6 +315,12 @@
     </div>
     <!-- begin section -->
     <script type="text/javascript">
+        $('#search-bn').on('click', function () {
+            ga('send', 'event', {
+                eventCategory: 'poisk_glavnaya',
+                eventAction: 'click'
+            });
+        });
         $(function () {
             $('#user-birthday').datetimepicker({
                 format: 'yyyy-mm-dd',

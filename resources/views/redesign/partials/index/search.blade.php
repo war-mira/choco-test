@@ -22,7 +22,7 @@
             </select>
         </div>
         <div class="search-bar__item search-bar__item_submit">
-            <button class="btn">Найти</button>
+            <button class="btn search_event">Найти</button>
         </div>
     </form>
 </div>
@@ -59,5 +59,12 @@
             $form.attr('action', action);
         });
     });
+
+    $('.search_event').on('click', function () {
+        ga('send', 'event', {
+            eventCategory: 'poisk_glavnaya',
+            eventAction: 'click'
+        });
+    })
 
 </script>

@@ -73,6 +73,7 @@ class RegisterController extends Controller
     {
        $user = User::create([
             'name' => $data['name'],
+            'lastname' => $data['lastname'],
             'email' => $data['email'],
             'phone' => FormatHelper::phone($data['phone']),
             'city' => $data['city'],
@@ -123,6 +124,7 @@ class RegisterController extends Controller
     protected function createDoctor($user){
         $doctor = new Doctor();
         $doctor->firstname = $user->name;
+        $doctor->lastname = $user->lastname;
         $doctor->city_id = $user->city_id;
         $doctor->phone = $user->phone;
         $doctor->user_id = $user->id;

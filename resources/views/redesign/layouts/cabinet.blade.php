@@ -35,11 +35,13 @@
 </head>
 <body>
 <div class="main-wrap">
-
     @include('redesign.partials.header')
-    @yield('content')
+    <main class="account-wrapper pattern-bg">
+        <div class="container">
+            @yield('content')
+        </div>
+    </main>
     @include('redesign.partials.footer')
-
     <div class="modal-container">
         @include('redesign.partials.modals.modal-login')
         @include('redesign.partials.modals.quick-order')

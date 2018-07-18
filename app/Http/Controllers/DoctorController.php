@@ -7,24 +7,30 @@ use App\Doctor;
 use App\Helpers\FormatHelper;
 use App\Helpers\SearchHelper;
 use App\Helpers\SeoMetadataHelper;
+use App\Medcenter;
 use App\PageSeo;
 use App\Skill;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-class  DoctorController extends Controller
+class DoctorController extends Controller
 {
 
     public function item(City $city, Doctor $doctor)
     {
         if ($city->id !== $doctor->city->id) {
-            return redirect()->route('doctor.item', ['doctor' => $doctor->alias, 'city' => $doctor->city->alias]);
+            return redirect()->route('doctor.item', ['doctor' => $doctor->alias]);
         }
 
         $meta = SeoMetadataHelper::getMeta($doctor, $city);
 
+        $near_docs = Doctor::query()->where('doctors.status', 1)
+            ->where('doctors.city_id', $doctor->city->id)->limit(9)->get();
+
         return view('doctors.item')
             ->with('meta', $meta)
+            ->with('near', $near_docs)
             ->with('doctor', $doctor);
     }
 
@@ -34,7 +40,10 @@ class  DoctorController extends Controller
 
     public function list(City $city = null, Skill $skill = null, Request $request)
     {
-        $doctors = Doctor::query()->where('doctors.status', 1);
+        $cityId = $city->id;
+        $doctors = Doctor::query()->where('doctors.status', 1)
+            ->where('doctors.city_id', $cityId);
+
         $query = $request->only([
             'q',
             'child',
@@ -44,13 +53,16 @@ class  DoctorController extends Controller
             'exp_range',
             'price_range',
             'rate_range',
-            'page',
-            'district'
+            'page'
         ]);
-        $filter = $query;
-        $doctorsTop = null;
 
-        if (isset($skill)) {
+        $filter = $query;
+
+        $doctorsTop = null;
+        $currentPage = $request->input('page');
+
+        if(isset($skill))
+        {
             $filter['skill'] = $skill->alias ?? null;
             $doctors = $doctors->whereHas('skills', function ($skillsQuery) use ($skill) {
                 $skillsQuery->where('skills.id', $skill->id);
@@ -107,15 +119,19 @@ class  DoctorController extends Controller
         if (isset($skill)) {
             $meta = SeoMetadataHelper::getMeta($skill, $city);
         } else {
-//            $pageSeo = PageSeo::query()
-//                ->where('class','Doctor')
-//                ->where('action', 'list')
-//                ->first();
-//            $meta = SeoMetadataHelper::getMeta($pageSeo, $city);
+            $pageSeo = PageSeo::query()
+                ->where('class','Doctor')
+                ->where('action', 'list')
+                ->first();
+            $meta = SeoMetadataHelper::getMeta($pageSeo, $city);
         }
 
+
         return view('search.page',
-            compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city'));
+
+            //compact('meta', 'doctors', 'skills', 'medcenters', 'filter', 'query'));
+
+            compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage'));
     }
 
     private function applyDoctorsFilter($doctors, $filter)
@@ -146,14 +162,15 @@ class  DoctorController extends Controller
 
         $order = [$filter['sort'] ?? 'rate', $filter['order'] ?? 'desc'];
         if ($order[0] == 'rate')
-            $doctors->orderBy('doctors.rate', $order[1]);
+            $doctors->orderBy('rate', $order[1]);
         else if ($order[0] == 'price')
             $doctors->orderBy('price', $order[1]);
+        else if ($order[0] == 'orders_count')
+            $doctors->orderBy('orders_count', $order[1]);
         else if ($order[0] == 'exp')
             $doctors->orderBy('works_since', $order[1] == 'asc' ? 'desc' : 'asc');
         else if ($order[0] == 'comments_count')
             $doctors->withCount('publicComments')->orderBy('public_comments_count', $order[1]);
-
     }
 
     public function tourism_list()
@@ -192,7 +209,6 @@ class  DoctorController extends Controller
 
     public static function getSortOptions($sort, $order)
     {
-
         $sortOptions = [
             [
                 'sort' => 'price',
@@ -233,6 +249,65 @@ class  DoctorController extends Controller
         return view('admin.doctors.shedule')
             ->with('Doctor', $Doctor)
             ->with('status_array', $status_array);
+    }
+
+    public function getall(Request $request)
+    {
+        $doto = [];
+
+        if($request->ajax())
+        {
+            $type = $request->post('ttype');
+            if($type == 'all')
+            {
+                if($request->post('query') && !empty($request->post('query'))) {
+                    $data = Doctor::where('firstname', 'like', $request->post('query'))
+                        ->Orwhere('lastname', 'like', $request->post('query'))
+                        ->Orwhere('patronymic', 'like', $request->post('query'))
+                        ->orderBy('firstname', 'ASC')->get();
+
+                    foreach ($data as $o => $dt) {
+                        $doto[$o] = [
+                            'text' => $dt->lastname . ' ' . $dt->firstname . ' ' . $dt->patronymic,
+                            'img' => ($dt->avatar ? $dt->avatar : URL::asset('images/no-userpic.gif')),
+                            'spec' => $dt->getMainSkillAttribute()->name,
+                            'value' => $dt->id,
+                            'optgroup' => 'Врачи'
+                        ];
+                    }
+                }
+                else
+                {/*
+                    $data = Doctor::where('')
+                        ->orderBy('firstname', 'ASC')->get();
+
+                    foreach ($data as $o => $dt) {
+                        $doto[$o] = [
+                            'text' => $dt->lastname . ' ' . $dt->firstname . ' ' . $dt->patronymic,
+                            'img' => ($dt->avatar ? $dt->avatar : URL::asset('images/no-userpic.gif')),
+                            'spec' => $dt->getMainSkillAttribute()->name,
+                            'value' => $dt->id,
+                            'optgroup' => 'Врачи'
+                        ];
+                    }*/
+                }
+            }
+            else
+            {
+                $data = Skill::select('*')->orderBy('name','ASC')->get();
+
+                foreach ($data as $o=>$dt)
+                {
+                    $doto[$o] = [
+                        'text'=>$dt->name,
+                        'count' => $dt->doctors()->count(),
+                        'value'=>$dt->alias,
+                        'optgroup'=>'Специализации'
+                    ];
+                }
+            }
+            return response()->json($doto);
+        }
     }
 
     public function loadComments($city, $doctor, Request $request)

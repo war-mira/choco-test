@@ -66,7 +66,8 @@ class MedcenterController extends Controller
                 'name' => 'по рейтингу'
             ]
         ];
-        return view("search.search-medcenters-page")
+
+        return view("medcenters.list")
             ->with('h1_title', $h1_title)
             ->with('meta', $meta)
             ->with('Medcenters', $medcenters)

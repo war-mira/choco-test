@@ -14,11 +14,194 @@ $(document).ready(function() {
         var mask = "" + $this.data("mask")
         $this.mask(mask);
     });
+    
+	$('div.tabs a').click(function(e){
+	   e.preventDefault();
+		var tab_id = $(this).data('tab');
+
+		$('div.tabs a').removeClass('entity-about__tab-item_active');
+		$('.entity-about-article').removeClass('current');
+
+		$(this).addClass('entity-about__tab-item_active');
+		$("#"+tab_id).addClass('current');
+	});
+
+	$('div.tabz a').click(function(e){
+	   e.preventDefault();
+		var tab_id = $(this).data('tab');
+
+		$('div.tabz a').removeClass('btn_theme_radio_active');
+		$('.entity-about-articl').removeClass('current');
+
+		$(this).addClass('btn_theme_radio_active');
+		$("#"+tab_id).addClass('current');
+	});
 
     $(".js-simple-select").selectize();
 
     $(".js-header-location").selectize();
 
+    $(".entity-slider").slick({
+        infinite: false,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        dots: true,
+        responsive: [
+        {
+            breakpoint: 1199.98,
+            settings: {
+                slidesToShow: 3
+            }
+        },
+        {
+            breakpoint: 991.98,
+            settings: {
+                slidesToShow: 2
+            }
+        },
+        {
+            breakpoint: 767.98,
+            settings: {
+                slidesToShow: 1
+            }
+        }
+        ]
+    });
+    $('a.popup-with-form').magnificPopup({
+        type: 'inline',
+        focus: '#name',
+        callbacks: {
+          beforeOpen: function() {
+            $('form#callback_form').find('input[name="target_id"]').val(this.st.el.data('doc-id'));
+            $('form#callback_form').find('#doctor_name').val(this.st.el.data('dname'));
+            console.log(this.st.el.data('dname'));
+          },
+          elementParse: function(item) {
+            // Function will fire for each target element
+            // "item.el" is a target DOM element (if present)
+            // "item.src" is a source that you may modify
+        
+            //console.log('Parsing content. Item object that is being parsed:', item);
+          },
+          change: function() {
+
+          },
+          resize: function() {
+            //console.log('Popup resized');
+            // resize event triggers only when height is changed or layout forced
+          },
+          open: function() {
+            //console.log('Popup is opened');
+          },
+        
+          beforeClose: function() {
+            // Callback available since v0.9.0
+            //console.log('Popup close has been initiated');
+          },
+          close: function() {
+            //console.log('Popup removal initiated (after removalDelay timer finished)');
+          },
+          afterClose: function() {
+            //console.log('Popup is completely closed');
+          },
+        
+          markupParse: function(template, values, item) {
+            // Triggers each time when content of popup changes
+            // console.log('Parsing:', template, values, item);
+          },
+          updateStatus: function(data) {
+            //console.log('Status changed', data);
+            // "data" is an object that has two properties:
+            // "data.status" - current status type, can be "loading", "error", "ready"
+            // "data.text" - text that will be displayed (e.g. "Loading...")
+            // you may modify this properties to change current status or its text dynamically
+          },
+          imageLoadComplete: function() {
+            // fires when image in current popup finished loading
+            // avaiable since v0.9.0
+            //console.log('Image loaded');
+          },
+        
+        
+          // Only for ajax popup type
+          parseAjax: function(mfpResponse) {
+            // mfpResponse.data is a "data" object from ajax "success" callback
+            // for simple HTML file, it will be just String
+            // You may modify it to change contents of the popup
+            // For example, to show just #some-element:
+            // mfpResponse.data = $(mfpResponse.data).find('#some-element');
+        
+            // mfpResponse.data must be a String or a DOM (jQuery) element
+        
+            console.log('Ajax content loaded:', mfpResponse);
+          },
+          ajaxContentAdded: function() {
+            // Ajax content is loaded and appended to DOM
+            console.log(this.content);
+          }
+        }
+    });
+    /*
+    $("#order_doctor").iziModal({
+        title: 'Запись на прием',
+        subtitle: '',
+        headerColor: '#00A8FF',
+        background: '#ffffff',
+        theme: '',  // light
+        icon: null,
+        iconText: null,
+        iconColor: '',
+        rtl: false,
+        width: 600,
+        top: null,
+        bottom: null,
+        borderBottom: true,
+        padding: 20,
+        radius: 0,
+        zindex: 999,
+        iframe: false,
+        iframeHeight: 400,
+        iframeURL: null,
+        focusInput: true,
+        group: '',
+        loop: false,
+        arrowKeys: true,
+        navigateCaption: true,
+        navigateArrows: true, // Boolean, 'closeToModal', 'closeScreenEdge'
+        history: false,
+        restoreDefaultContent: false,
+        autoOpen: 0, // Boolean, Number
+        bodyOverflow: false,
+        fullscreen: false,
+        openFullscreen: false,
+        closeOnEscape: true,
+        closeButton: true,
+        appendTo: 'body', // or false
+        appendToOverlay: 'body', // or false
+        overlay: true,
+        overlayClose: true,
+        overlayColor: 'rgba(0, 0, 0, 0.4)',
+        timeout: false,
+        timeoutProgressbar: false,
+        pauseOnHover: false,
+        timeoutProgressbarColor: 'rgba(255,255,255,0.5)',
+        transitionIn: 'fadeInDown',   // comingIn, bounceInDown, bounceInUp, fadeInDown, fadeInUp, fadeInLeft, fadeInRight, flipInX
+        transitionOut: 'fadeOutUp', // comingOut, bounceOutDown, bounceOutUp, fadeOutDown, fadeOutUp, , fadeOutLeft, fadeOutRight, flipOutX
+        transitionInOverlay: 'fadeIn',
+        transitionOutOverlay: 'fadeOut',
+        onFullscreen: function(){},
+        onResize: function(){},
+        onOpening: function(){},
+        onOpened: function(){},
+        onClosing: function(){},
+        onClosed: function(){},
+        afterRender: function(){}
+    });
+
+    $('a.trigger-link').click(function(){
+      event.preventDefault();
+      $('#order_doctor').iziModal('open');
+    });*/
     $(".js-search-select").selectize({
         render: {
             option: function(data, escape) {
@@ -47,53 +230,13 @@ $(document).ready(function() {
         }
     });
 
-    $(".entity-slider").slick({
-        infinite: false,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        dots: true,
-        responsive: [
-        {
-            breakpoint: 1199.98,
-            settings: {
-                slidesToShow: 3
-            }
-        },
-        {
-            breakpoint: 991.98,
-            settings: {
-                slidesToShow: 2
-            }
-        },
-        {
-            breakpoint: 767.98,
-            settings: {
-                slidesToShow: 1
-            }
-        }
-        ]
-    })
-
-    $.ajax({
-        type: 'get',
-        url: 'http://antosoft.ru/idoctor/search-example-region-1.php',
-        dataType: 'json',
-        success: function(data) {
-            $(".js-search-select")[0].selectize.clearOptions();
-            
-            for (var i = 0; i < data.length; i++) {
-                $(".js-search-select")[0].selectize.addOption(data[i]);
-            }
-        }
-    });
-
     $(".js-select-region").change(function() {
         var regionVal = $(this).val();
 
         if (regionVal == "region-1") {
-            var ajaxUrl = 'http://antosoft.ru/idoctor/search-example-region-1.php';
+            var ajaxUrl = '/search-example-region-1.php';
         } else if (regionVal =="region-2") {
-            var ajaxUrl = 'http://antosoft.ru/idoctor/search-example-region-2.php';
+            var ajaxUrl = '/search-example-region-2.php';
         }
 
         $.ajax({
@@ -243,22 +386,21 @@ $(document).ready(function() {
         var $container = $this.closest(".js-input-add-container");
         var $entityToClone = $container.find(".js-input-add-entity");
         var $entityClone = $($entityToClone.data("markup"));
-        var entityCount = $entityToClone.data("count");
-
+        console.log(entityCount);
         $entityClone.removeClass("js-input-add-entity");
 
         //increment input names
         $entityClone.find("select, input, textarea").each(function() {
             var $this = $(this);
             var attrName = $this.prop("name");
-            
-            $this.prop("name", attrName + "-" + entityCount);
+            var replacedName = attrName.replace(/skills\[0\]/g, "skills[" + entityCount + "]");
+            $this.prop("name", replacedName);
         });
 
         //add mask to inputs
         $entityClone.find("input[data-mask]").each(function() {
             var $this = $(this);
-            var mask = "" + $this.data("mask")
+            var mask = "" + $this.data("mask");
             $this.mask(mask);
         });
 
@@ -273,6 +415,7 @@ $(document).ready(function() {
 
     $(document).on("click", ".js-input-remove-btn", function() {
         $(this).parent().remove();
+        entityCount--;
     });
 
     $(".js-add-select-tag").click(function() {
@@ -472,6 +615,34 @@ $(document).ready(function() {
         $(".live-search")
             .removeClass("live-search--fold");
     });
+
+    $('.upload-photo__upload-btn .not-ready-for-upload').on('click', function () {
+        $('input[type=file]').trigger('click');
+    });
+
+    $('.upload-photo__upload-btn .ready-for-upload').on('click', function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        let file_data = $("#upload-photo__input").prop("files")[0];
+        let form_data = new FormData();
+        form_data.append("file", file_data);
+        $.ajax({
+            url: "/cabinet/doctor/personal/photo-upload",
+            dataType: 'script',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,
+            type: 'post',
+            success: function(){
+                location.reload();
+            }
+        });
+    });
 });
 
 //returns element markup
@@ -517,4 +688,23 @@ function modalClose(modalId) {
         $(".modal-mask")
             .css("display", "none");
     }, 700);
+}
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#blah')
+                .attr('src', e.target.result)
+                .width(250)
+                .height(200)
+                .show();
+
+            $('.ready-for-upload').show();
+            $('.not-ready-for-upload').hide();
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
 }
