@@ -94,7 +94,14 @@ $(document).ready(function() {
             beforeOpen: function() {
                 $('form#callback_form').find('input[name="target_id"]').val(this.st.el.data('doc-id'));
                 $('form#callback_form').find('#doctor_name').val(this.st.el.data('dname'));
-                $('form#callback_form').find('input[name="date"]').val($(this.st.el).parent().parent().find('input[name="date"]').val());
+                if($(this.st.el).parent().parent().find('input[name="date"]:checked').val() != 'custom')
+                {
+                    $('form#callback_form').find('input[name="date"]').val($(this.st.el).parent().parent().find('input[name="date"]:checked').val());
+                }else
+                {
+                    $('form#callback_form').find('input[name="date"]').val($(this.st.el).parent().parent().find('input[name="custom-date"]').val());
+                }
+
                 $('form#callback_form').find('input[name="time"]').val($(this.st.el).parent().parent().find('input[name="time"]').val());
             }
         }

@@ -40,6 +40,7 @@
             <input type="hidden" name="target_type" value="Doctor">
             <input type="hidden" name="target_id" value="">
             <input type="hidden" name="source" value="doctor_page">
+            {{ csrf_field() }}
             <div class="leave-review__textarea-item tcentr">
                 <input class="form-control tcentr fbold" placeholder="Врач" id="doctor_name"
                        type="text"
@@ -56,4 +57,9 @@
             </div>
         </div>
     </form>
+</div>
+<div id="callback_mess_ok" class="white-popup mfp-hide">
+    <p>
+        <strong>Спасибо!</strong> Ваша заявка принята мы вам перезвоним!
+    </p>
 </div>
