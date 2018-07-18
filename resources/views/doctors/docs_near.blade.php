@@ -8,7 +8,7 @@
                         <div class="entity-thumb-img__img-wr">
                             @component('components.prof-img')
                                 @slot('src')
-                                    {{$doctor['avatar']}}
+                                    {{$doctor->avatar}}
                                 @endslot
                                 @slot('width')
                                     250px
