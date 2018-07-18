@@ -81,7 +81,7 @@
         </div>
     </div>
 </div>
-<div class="class="entity-line__additional"">
+<div class="class="entity-line__additional">
     <form action="#" class="appointment-book-big">
         <div class="appointment-book-big__heading">Записаться на прием</div>
         <div class="appointment-book-big__date-line">
@@ -208,7 +208,7 @@
                 <div class="appointment-book-big__price-text">Прием от:</div>
                 <div class="appointment-book-big__price-val">от {{$doctor['price']}} тг</div>
             </div>
-            <button class="appointment-book-big__book-btn btn btn_theme_usual">Записаться<span class="hidden-xl"> онлайн</span></button>
+            <a href="#order_doctor" data-doc-id="{{$doctor->id}}" data-dname="{{$doctor['name']}}" class="appointment-book-big__book-btn btn btn_theme_usual trigger-link popup-with-form">Записаться<span class="hidden-xl"> онлайн</span></a>
         </div>
     </form>
 </div>

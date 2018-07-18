@@ -141,6 +141,7 @@
                                     @endcomponent
                             </div>
                         @endforeach
+                            @include('forms.public.order_doc')
                     </div>
                 </div>
                 @if($doctors->links() != "")

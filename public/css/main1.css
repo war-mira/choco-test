@@ -540,8 +540,11 @@ img {
     line-height: 35px;
     padding: 0 17px;
     -webkit-border-radius: 18px;
-            border-radius: 18px; }
-
+            border-radius: 18px;
+            outline: none;
+  }
+  .fbold{font-weight:900;}
+.tcentr{text-align: center;}
 .search-bar__item_submit {
   text-align: center; }
   .search-bar__item_submit .btn {
