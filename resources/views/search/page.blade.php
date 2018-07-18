@@ -303,6 +303,29 @@
                     window.location.assign(skillUrl);
                 });
             }
+            var callbackForm = $('form#callback_form');
+
+            $("#save_order").click(function (e) {
+                e.preventDefault();
+                ga('send', 'event', {
+                    eventCategory: 'zapisatsya',
+                    eventAction: 'click'
+                });
+                //Ya goal
+                yaCounter47714344.reachGoal('registration');
+
+                if (callbackForm[0].checkValidity()) {
+
+                    var formData = getFormData(callbackForm[0]);
+                    formData.ga_cid =
+                        $.getJSON("/callback/newDoc", formData)
+                            .done(function (json) {
+                                $('#mess_ok').show();
+                                $("#reg_form").hide()
+                            });
+                }
+
+            });
         });
     </script>
 @endsection
