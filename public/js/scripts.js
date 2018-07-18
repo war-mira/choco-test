@@ -67,6 +67,9 @@ $(document).ready(function() {
         }
         ]
     });
+
+    $('input[name="client_phone"]').mask('+7 (999) 999-99-99');
+
     $('a.popup-with-form').magnificPopup({
         type: 'inline',
         focus: '#name',
@@ -74,7 +77,13 @@ $(document).ready(function() {
           beforeOpen: function() {
             $('form#callback_form').find('input[name="target_id"]').val(this.st.el.data('doc-id'));
             $('form#callback_form').find('#doctor_name').val(this.st.el.data('dname'));
-            console.log(this.st.el.data('dname'));
+            var dt = $(this.st.el).parent().parent().find('input[name="date"]:checked').val();
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1;
+            var yyyy = today.getFullYear();
+
+            console.log(dt);
           },
           elementParse: function(item) {
             // Function will fire for each target element
@@ -141,67 +150,7 @@ $(document).ready(function() {
           }
         }
     });
-    /*
-    $("#order_doctor").iziModal({
-        title: 'Запись на прием',
-        subtitle: '',
-        headerColor: '#00A8FF',
-        background: '#ffffff',
-        theme: '',  // light
-        icon: null,
-        iconText: null,
-        iconColor: '',
-        rtl: false,
-        width: 600,
-        top: null,
-        bottom: null,
-        borderBottom: true,
-        padding: 20,
-        radius: 0,
-        zindex: 999,
-        iframe: false,
-        iframeHeight: 400,
-        iframeURL: null,
-        focusInput: true,
-        group: '',
-        loop: false,
-        arrowKeys: true,
-        navigateCaption: true,
-        navigateArrows: true, // Boolean, 'closeToModal', 'closeScreenEdge'
-        history: false,
-        restoreDefaultContent: false,
-        autoOpen: 0, // Boolean, Number
-        bodyOverflow: false,
-        fullscreen: false,
-        openFullscreen: false,
-        closeOnEscape: true,
-        closeButton: true,
-        appendTo: 'body', // or false
-        appendToOverlay: 'body', // or false
-        overlay: true,
-        overlayClose: true,
-        overlayColor: 'rgba(0, 0, 0, 0.4)',
-        timeout: false,
-        timeoutProgressbar: false,
-        pauseOnHover: false,
-        timeoutProgressbarColor: 'rgba(255,255,255,0.5)',
-        transitionIn: 'fadeInDown',   // comingIn, bounceInDown, bounceInUp, fadeInDown, fadeInUp, fadeInLeft, fadeInRight, flipInX
-        transitionOut: 'fadeOutUp', // comingOut, bounceOutDown, bounceOutUp, fadeOutDown, fadeOutUp, , fadeOutLeft, fadeOutRight, flipOutX
-        transitionInOverlay: 'fadeIn',
-        transitionOutOverlay: 'fadeOut',
-        onFullscreen: function(){},
-        onResize: function(){},
-        onOpening: function(){},
-        onOpened: function(){},
-        onClosing: function(){},
-        onClosed: function(){},
-        afterRender: function(){}
-    });
-
-    $('a.trigger-link').click(function(){
-      event.preventDefault();
-      $('#order_doctor').iziModal('open');
-    });*/
+    
     $(".js-search-select").selectize({
         render: {
             option: function(data, escape) {
@@ -318,7 +267,8 @@ $(document).ready(function() {
 
     });
 
-    $(".date-radio input[type=\"radio\"]").change(function() {
+    $(".date-radio input[type=\"radio\"]").change(function()
+    {
         var $this = $(this);
 
         if ($this.is(":checked") && !($this.val() == "custom")) {

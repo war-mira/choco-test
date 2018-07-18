@@ -32,7 +32,7 @@
             </div>
 
             <div class="leave-review__input-item" id="datetime-group">
-                <input class="form-control datepicker" placeholder="*Время и дата приема" required="" name="client_datetime" id="client_datetime" type="text">
+                <input class="form-control datepicker" readonly="readonly" placeholder="Время и дата приема" required="" name="client_datetime" id="client_datetime" type="text">
             </div>
 
             <input type="hidden" name="target_type" value="Doctor">
