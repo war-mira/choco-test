@@ -12,6 +12,7 @@
 <div class="profiles__right">
     <div class="profiles__header">
         <h3 class="profiles__title">
+            {{$doctor->alias}}
             <a href="{{ route('doctor.item',['doctor'=>$doctor->alias, 'city' => $doctor->city->alias]) }}">{{$doctor['name']}}</a>
         </h3>
         <p class="profiles__short">

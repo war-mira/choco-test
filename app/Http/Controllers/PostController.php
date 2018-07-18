@@ -23,6 +23,7 @@ class PostController extends Controller
                 'href="https://twitter.com',
                 'href="https://vk.com',
                 'href="https://www.facebook.com',
+                'doctors/almaty',
             ],
             [
                 'href="https://',
@@ -31,6 +32,7 @@ class PostController extends Controller
                 'rel="nofollow" href="https://twitter.com',
                 'rel="nofollow" href="https://vk.com',
                 'rel="nofollow" href="https://www.facebook.com',
+                'almaty/doctors',
             ],
             str_replace(['rel="publisher"'], "", $post->content)
         );
