@@ -107,7 +107,7 @@
                                 </div>
                             </div>
                             @if(isset($doctor['timetable']) && $doctor['timetable'] != '')
-                                {{ $doctor['timetable'] }}
+
                             @endif
                             <div class="appointment-book-small__time-list">
 
@@ -163,7 +163,7 @@
                             </div>
                         </div>
                         <div class="appointment-book-small__action">
-                            <button class="appointment-book-small__book-btn btn btn_theme_usual">Записаться</button>
+                            <a data-doc-id="{{$doctor->id}}" data-dname="{{$doctor['name']}}" href="#order_doctor" class="appointment-book-small__book-btn btn btn_theme_usual popup-with-form">Записаться</a>
                             <div class="appointment-book-small__price">
                                 <div class="appointment-book-small__price-text">Стоимость приема</div>
                                 <div class="appointment-book-small__price-val">от {{$doctor['price']}} тг</div>
@@ -323,8 +323,7 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 </section>
+@include('forms.public.order_doc')

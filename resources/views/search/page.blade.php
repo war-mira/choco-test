@@ -1,10 +1,10 @@
 @extends('new')
 @section('content')
     @include('search.search_box')
-    @include('search.filtr_panel')
 
     <div id="app" class="app">
         <form id="search-form">
+            @include('search.filtr_panel')
             <input type="hidden" name="page" value="{{$filter['page']??1}}">
             <!--div class="search-input-group" id="mainSearch">
                 <select data-style="search-type-input" id="typeSelect">
@@ -136,38 +136,93 @@
                     <div class="search-result__list">
                         @foreach($doctors as $doctor)
                             <div class="search-result__item entity-line doc-line" data-type="doctor" data-id="{{$doctor->id}}"
-                                 id="doctor-result-{{$doctor->id}}"
-                                 >
-
+                                 id="doctor-result-{{$doctor->id}}" >
                                     @component('model.doctor.prof_new',['doctor'=>$doctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null])
                                     @endcomponent
-
                             </div>
                         @endforeach
+                            @include('forms.public.order_doc')
                     </div>
                 </div>
+                @if($doctors->links() != "")
+                    <div class="results filter">
+                        <div class="text-center search-pagination" id="topPagination">
+                            {!! $doctors->links() !!}
+                        </div>
+                    </div>
+                @endif
             </div>
-            @if($doctors->links() != "")
-            <div class="results filter">
-                <div class="text-center search-pagination" id="topPagination">
-                    {!! $doctors->links() !!}
-                </div>
-            </div>
-            @endif
         </form>
     </div>
     <script>
+
+        function getFormData($form) {
+            var unindexed_array = $form.serializeArray();
+            var indexed_array = {};
+
+            $.map(unindexed_array, function (n, i) {
+                indexed_array[n['name']] = n['value'];
+            });
+
+            return indexed_array;
+        }
+
         //$('.search-input-group select').selectpicker();
         $(function () {
 
-
-            $('#filtersGroup .btn-radio').click(
+            $('#filtersGroup .sort-line__item').click(
                 function () {
-                    if ($(this).prev('input[name=sort]').prop('checked')) {
+                    if ($(this).find('input[name=sort]').prop('checked')) {
                         var order = $('input[name=order]:checked').val();
                         order = (order == 'asc') ? 'desc' : 'asc';
                         $('input[name=order]').val([order]).trigger("change");
                     }
+                }
+            );
+
+            if($('input[name="q"]').val().length)
+            {
+                $('.search-bar__item_search').find('input').val($('input[name="q"]').val().trim());
+            }
+
+            $('select[name="type"]').change(function () {
+                $(".js-search-select")[0].selectize.clearOptions();
+
+                var tp = $(this).val();
+
+                if(tp == 'medcenters')
+                {
+                    $('div.search-bar__item_search').find('input').val('');
+                }
+
+                $.ajax({
+                    type: 'post',
+                    url:"{{url('getdata')}}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data:{
+                        ttype:tp,
+                        query:$('.search-bar__item').find('input').val()
+                    },
+                    success: function(data) {
+                        $(".js-search-select")[0].selectize.clearOptions();
+
+                        for (var i = 0; i < data.length; i++) {
+                            $(".js-search-select")[0].selectize.addOption(data[i]);
+                        }
+                    }
+                });
+            });
+
+            $('div.search-bar__item_search').find('input').on('keyup',function (e) {
+               var serachv = $(this).val();
+
+                if(serachv.length >= 3)
+                {
+                    $('input[name="q"]').val(serachv);
+                    $('input[name="q"]').change();
+                }
             });
 
             $('a.sort-line__item').click(function () {
@@ -176,13 +231,23 @@
                 var name = $(this).find('input').prop('name');
                 var value = $(this).find('input').prop('value');
                 $('input[name=' + name + ']').val([value]).trigger("change");
+                $('form.search-bar__line').find('input[name="sort"]').val(value);
+                $('form.search-bar__line').find('input[name="order"]').val($('input[name=order]:checked').val());
+
+                if($(this).find('i.fa').is('.fa-chevron-down'))
+                {
+                    $(this).find('i.fa').removeClass('fa-chevron-down').addClass('fa-chevron-up');
+                }
+                else{
+                    $(this).find('i.fa').addClass('fa-chevron-down').removeClass('fa-chevron-up');
+                }
+                //console.log(name + ' ' + value + ' ' + $('input[name=order]:checked').val());
             });
 
             var $searchForm = $('#search-form');
-
-
-            var $typeSelect = $('#typeSelect');
-            var $skillSelect = $('#skillSelect');
+            var $filteron = $('#filtersGroup');
+            var $typeSelect = $('select[name="type"]');
+            var $skillSelect = $('select[name="name_md"]');
             var $medcenterSelect = $('#medcenterSelect');
             /*var doctorExpSlider = $("#doctor_exp").slider({tooltip: "always"}).data('slider');
             var doctorPriceSlider = $("#doctor_price").slider({tooltip: "always"}).data('slider');
@@ -206,7 +271,7 @@
                     $(this).parent().addClass('full-select');
                 }
             });
-*/
+            */
 
             $typeSelect.val('{{isset($filter['skill']) ? 'skills' : 'all'}}').trigger('change');
             $skillSelect.val('{{$filter['skill'] ?? null}}').trigger('change');
@@ -221,23 +286,62 @@
                     if (query.length > 0)
                         query = '?' + query;
                     var targetUrl = url + query;
-                    window.location.assign(targetUrl);
+                    //window.location.assign(targetUrl);
                 }
             });
 
-            $searchForm.find('.result-control-bar input, #mainSearch input[name],#mainSearch select[name]').on('change', function () {
-                $searchForm.submit();
-            });
-
-            $skillSelect.on('change', function () {
+            $filteron.on('change', function () {
                 var url = "{{route('doctors.list')}}";
                 var query = "{!!explode('?',url()->full())[1] ?? ""!!}";
                 if (query.length > 0)
                     query = '?' + query;
-                var skillUrl = url + '/' + $(this).val() + query;
-                window.location.assign(skillUrl);
+                var targetUrl = url + query;
+                //window.location.assign(targetUrl);
             });
 
+            $searchForm.find('#filtersGroup input[name], #mainSearch input[name],#mainSearch select[name]').on('change', function () {
+                //$searchForm.submit();
+                $('form.search-bar__line').submit();
+            });
+
+            if($('select[name="type"]').val() == null || $('select[name="type"]').val() == 'medcenters') {
+                $skillSelect.on('change', function () {
+                    $('input[name="q"]').val('');
+                    var url = "{{route('doctors.list')}}";
+                    var query = "{!!explode('?',url()->full())[1] ?? ""!!}";
+                    if (query.length > 0)
+                        query = '?' + query;
+                    var skillUrl = url + '/' + $(this).val() + query;
+                    window.location.assign(skillUrl);
+                });
+            }
+            var callbackForm = $('form#callback_form');
+
+            $("#save_order").click(function (e) {
+                e.preventDefault();
+                ga('send', 'event', {
+                    eventCategory: 'zapisatsya',
+                    eventAction: 'click'
+                });
+                //Ya goal
+                yaCounter47714344.reachGoal('registration');
+
+                if (callbackForm[0].checkValidity()) {
+                    var formData = new FormData(callbackForm[0]);
+                    console.log(getFormData(callbackForm));
+                    formData.ga_cid =
+                        $.getJSON("{{route('callback.newDoc')}}", getFormData(callbackForm))
+                            .done(function (json) {
+                                $.magnificPopup.close();
+                                $.magnificPopup.open({
+                                    items: {
+                                        src: '#callback_mess_ok',
+                                        type: 'inline'
+                                    }
+                                });
+                            });
+                }
+            });
         });
     </script>
 @endsection

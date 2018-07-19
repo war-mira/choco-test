@@ -1,5 +1,18 @@
 
+function checkblock(block)
+{
+    var $back = false;
+    if(($(block).find('input[name="date"]:checked').length || $(block).find('input[name="date"]').val().length) && $(block).find('input[name="time"]:checked').length){$back = true;}
+    return $back;
+}
+
 $(document).ready(function() {
+
+    var $receptionModalForm = $("#callback_form");
+    ga(function (tracker) {
+        var cid = tracker.get('clientId');
+        $receptionModalForm.find('[name="ga_cid"]').val(cid).trigger('change');
+    });
 
     $(".js-input-add-entity").each(function() {
         var $this = $(this);
@@ -41,6 +54,74 @@ $(document).ready(function() {
 
     $(".js-header-location").selectize();
 
+    $(".entity-slider").slick({
+        infinite: false,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        dots: true,
+        responsive: [
+        {
+            breakpoint: 1199.98,
+            settings: {
+                slidesToShow: 3
+            }
+        },
+        {
+            breakpoint: 991.98,
+            settings: {
+                slidesToShow: 2
+            }
+        },
+        {
+            breakpoint: 767.98,
+            settings: {
+                slidesToShow: 1
+            }
+        }
+        ]
+    });
+
+    $('input[name="client_phone"]').mask('+7 (999) 999-9999');
+
+    var popupDefaults = {
+        type: 'inline',
+        fixedContentPos: false,
+        focus: '#name',
+        fixedBgPos: true,
+        overflowY: 'auto',
+        closeBtnInside: true,
+        callbacks: {
+            beforeOpen: function() {
+                $('form#callback_form').find('input[name="target_id"]').val(this.st.el.data('doc-id'));
+                $('form#callback_form').find('#doctor_name').val(this.st.el.data('dname'));
+                if($(this.st.el).parent().parent().find('input[name="date"]:checked').val() != 'custom')
+                {
+                    $('form#callback_form').find('input[name="date"]').val($(this.st.el).parent().parent().find('input[name="date"]:checked').val());
+                }else
+                {
+                    $('form#callback_form').find('input[name="date"]').val($(this.st.el).parent().parent().find('input[name="custom-date"]').val());
+                }
+
+                $('form#callback_form').find('input[name="time"]').val($(this.st.el).parent().parent().find('input[name="time"]').val());
+            }
+        }
+    }
+
+    $('a.popup-with-form').on("click", function(){
+        if($(this).closest('div.search-result__item').length) {
+            var block = $(this).closest('div.search-result__item');
+        }
+        else
+        {
+            var block = $(this).closest('div.appointment-book-small__line');
+        }
+        var condition = checkblock(block);
+        if(condition){
+            $(this).magnificPopup(popupDefaults).magnificPopup('open');
+        }
+
+    });
+
     $(".js-search-select").selectize({
         render: {
             option: function(data, escape) {
@@ -69,53 +150,13 @@ $(document).ready(function() {
         }
     });
 
-    $(".entity-slider").slick({
-        infinite: false,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        dots: true,
-        responsive: [
-        {
-            breakpoint: 1199.98,
-            settings: {
-                slidesToShow: 3
-            }
-        },
-        {
-            breakpoint: 991.98,
-            settings: {
-                slidesToShow: 2
-            }
-        },
-        {
-            breakpoint: 767.98,
-            settings: {
-                slidesToShow: 1
-            }
-        }
-        ]
-    })
-
-    $.ajax({
-        type: 'get',
-        url: 'http://antosoft.ru/idoctor/search-example-region-1.php',
-        dataType: 'json',
-        success: function(data) {
-            $(".js-search-select")[0].selectize.clearOptions();
-            
-            for (var i = 0; i < data.length; i++) {
-                $(".js-search-select")[0].selectize.addOption(data[i]);
-            }
-        }
-    });
-
     $(".js-select-region").change(function() {
         var regionVal = $(this).val();
 
         if (regionVal == "region-1") {
-            var ajaxUrl = 'http://antosoft.ru/idoctor/search-example-region-1.php';
+            var ajaxUrl = '/search-example-region-1.php';
         } else if (regionVal =="region-2") {
-            var ajaxUrl = 'http://antosoft.ru/idoctor/search-example-region-2.php';
+            var ajaxUrl = '/search-example-region-2.php';
         }
 
         $.ajax({
@@ -132,11 +173,11 @@ $(document).ready(function() {
         });
     });
 
-    $(".nav-toggle").click(function() {
+    $(".nav-toggle").click(function(){
         $(this).toggleClass("open");
 
-        $(".mobile-menu").slideToggle("fast", function() {
-            if (!$(".nav-toggle").hasClass("open")) {
+        $(".mobile-menu").slideToggle("fast", function(){
+            if(!$(".nav-toggle").hasClass("open")){
                 $(".mobile-menu").removeAttr("style");
             }
         });
@@ -156,6 +197,7 @@ $(document).ready(function() {
         pickmeup($this[0], {
             format  : 'Y-m-d',
             locale : "ru",
+            minDate:new Date(),
             hide_on_select : true,
             position : function() {
                 return {
@@ -180,6 +222,7 @@ $(document).ready(function() {
         pickmeup($this[0], {
             format  : 'Y-m-d',
             locale : "ru",
+            minDate:new Date(),
             hide_on_select : true,
             position : function() {
                 return {
@@ -197,7 +240,8 @@ $(document).ready(function() {
 
     });
 
-    $(".date-radio input[type=\"radio\"]").change(function() {
+    $(".date-radio input[type=\"radio\"]").change(function()
+    {
         var $this = $(this);
 
         if ($this.is(":checked") && !($this.val() == "custom")) {

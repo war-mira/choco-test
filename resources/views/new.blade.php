@@ -5,9 +5,6 @@
     @include('partials.yandex-metrika')
     @include('partials.google-analytics')
 
-    <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{URL::asset("css/bootstrap-datetimepicker.css")}}">
-    <link rel="stylesheet" href="{{URL::asset("bxslider/jquery.bxslider.min.css")}}"-->
     <link rel="stylesheet" href="{{asset("css/normalize.css")}}">
     <link rel="stylesheet" href="{{asset("css/slick.css")}}">
     <link rel="stylesheet" href="{{asset("css/lightbox.min.css")}}">

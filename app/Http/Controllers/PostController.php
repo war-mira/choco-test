@@ -18,17 +18,21 @@ class PostController extends Controller
         $post->content = str_replace(
             [
                 'href="http://',
+                'https://www.rstom.kz',
                 'href="https://plus.google.com',
                 'href="https://twitter.com',
                 'href="https://vk.com',
                 'href="https://www.facebook.com',
+                'doctors/almaty',
             ],
             [
                 'href="https://',
+                'http://www.rstom.kz',
                 'rel="nofollow" href="https://plus.google.com',
                 'rel="nofollow" href="https://twitter.com',
                 'rel="nofollow" href="https://vk.com',
                 'rel="nofollow" href="https://www.facebook.com',
+                'almaty/doctors',
             ],
             str_replace(['rel="publisher"'], "", $post->content)
         );

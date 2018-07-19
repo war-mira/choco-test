@@ -7,10 +7,12 @@ use App\Doctor;
 use App\Helpers\FormatHelper;
 use App\Helpers\SearchHelper;
 use App\Helpers\SeoMetadataHelper;
+use App\Medcenter;
 use App\PageSeo;
 use App\Skill;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DoctorController extends Controller
 {
@@ -53,6 +55,7 @@ class DoctorController extends Controller
             'rate_range',
             'page'
         ]);
+
         $filter = $query;
 
         $doctorsTop = null;
@@ -129,7 +132,6 @@ class DoctorController extends Controller
             //compact('meta', 'doctors', 'skills', 'medcenters', 'filter', 'query'));
 
             compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage'));
-
     }
 
     private function applyDoctorsFilter($doctors, $filter)
@@ -163,6 +165,8 @@ class DoctorController extends Controller
             $doctors->orderBy('rate', $order[1]);
         else if ($order[0] == 'price')
             $doctors->orderBy('price', $order[1]);
+        else if ($order[0] == 'orders_count')
+            $doctors->orderBy('orders_count', $order[1]);
         else if ($order[0] == 'exp')
             $doctors->orderBy('works_since', $order[1] == 'asc' ? 'desc' : 'asc');
         else if ($order[0] == 'comments_count')
@@ -205,7 +209,6 @@ class DoctorController extends Controller
 
     public static function getSortOptions($sort, $order)
     {
-
         $sortOptions = [
             [
                 'sort' => 'price',
@@ -248,6 +251,64 @@ class DoctorController extends Controller
             ->with('status_array', $status_array);
     }
 
+    public function getall(Request $request)
+    {
+        $doto = [];
+
+        if($request->ajax())
+        {
+            $type = $request->post('ttype');
+            if($type == 'all')
+            {
+                if($request->post('query') && !empty($request->post('query'))) {
+                    $data = Doctor::where('firstname', 'like', $request->post('query'))
+                        ->Orwhere('lastname', 'like', $request->post('query'))
+                        ->Orwhere('patronymic', 'like', $request->post('query'))
+                        ->orderBy('firstname', 'ASC')->get();
+
+                    foreach ($data as $o => $dt) {
+                        $doto[$o] = [
+                            'text' => $dt->lastname . ' ' . $dt->firstname . ' ' . $dt->patronymic,
+                            'img' => ($dt->avatar ? $dt->avatar : URL::asset('images/no-userpic.gif')),
+                            'spec' => $dt->getMainSkillAttribute()->name,
+                            'value' => $dt->id,
+                            'optgroup' => 'Врачи'
+                        ];
+                    }
+                }
+                else
+                {/*
+                    $data = Doctor::where('')
+                        ->orderBy('firstname', 'ASC')->get();
+
+                    foreach ($data as $o => $dt) {
+                        $doto[$o] = [
+                            'text' => $dt->lastname . ' ' . $dt->firstname . ' ' . $dt->patronymic,
+                            'img' => ($dt->avatar ? $dt->avatar : URL::asset('images/no-userpic.gif')),
+                            'spec' => $dt->getMainSkillAttribute()->name,
+                            'value' => $dt->id,
+                            'optgroup' => 'Врачи'
+                        ];
+                    }*/
+                }
+            }
+            else
+            {
+                $data = Skill::select('*')->orderBy('name','ASC')->get();
+
+                foreach ($data as $o=>$dt)
+                {
+                    $doto[$o] = [
+                        'text'=>$dt->name,
+                        'count' => $dt->doctors()->count(),
+                        'value'=>$dt->alias,
+                        'optgroup'=>'Специализации'
+                    ];
+                }
+            }
+            return response()->json($doto);
+        }
+    }
 
     public function loadComments($city, $doctor, Request $request)
     {

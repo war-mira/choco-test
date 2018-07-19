@@ -80,6 +80,7 @@ class Skill extends Model implements ISeoMetadata
     }
 
 
+
     public function noTopDoctors()
     {
         $allDoctors = $this->publicDoctors()->where('status', 1);

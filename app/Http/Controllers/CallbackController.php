@@ -17,13 +17,28 @@ class CallbackController extends Controller
 
     public function newDoc(\Illuminate\Http\Request $request)
     {
+        $day = '';
+        $time = '';
         $data = $request->all();
         $callback = new Callback();
-        if(isset($data['client_datetime_2'])){
-            $callback->client_datetime = Carbon::createFromFormat("Y-m-d\TH:i", $data['client_datetime_2']);
+
+        if($data['date'] != 'today' && $data['date'] != 'tomorrow')
+        {
+            (string)$day = date('Y-m-d', strtotime($data['date']));
         }else{
-            $callback->client_datetime = Carbon::createFromFormat("Y-m-d H:i", $data['client_datetime']);
+            if($data['date'] == 'today')
+            {
+                (string)$day = date('Y-m-d');
+            }
+            if($data['date'] == 'tomorrow')
+            {
+                (string)$day = date('Y-m-d',strtotime(date('Y-m-d').'+1 days'));
+            }
         }
+        $dat = strtotime($day.' '.$data['time']);
+        $callback->client_datetime = $dat;
+        $data['client_datetime'] = $dat;
+
         $callback->fill($data);
         $callback->save();
 
