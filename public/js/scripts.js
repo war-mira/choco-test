@@ -24,7 +24,7 @@ $(document).ready(function() {
 
     $("input[data-mask]").each(function() {
         var $this = $(this);
-        var mask = "" + $this.data("mask")
+        var mask = "" + $this.data("mask");
         $this.mask(mask);
     });
     
