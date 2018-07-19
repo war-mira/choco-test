@@ -30,7 +30,7 @@
                         </div>
                         <div class="account-content__page-name">Ответы других докторов</div>
                             @if(count($question->ExceptDoctor($doctor)))
-                                @foreach($question->ExceptDoctor($doctor) as $answer)
+                                @foreach($question->ExceptDoctor($doctor) as $answerExceptDoctor)
                                     @include('cabinet.components.doctor.question-answers')
                                 @endforeach
                             @else

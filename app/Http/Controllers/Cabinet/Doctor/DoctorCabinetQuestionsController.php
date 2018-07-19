@@ -24,7 +24,7 @@ class DoctorCabinetQuestionsController extends DoctorCabinetController
         if ($request->search) {
             $questions->where('questions.text', 'like', "%$request->search%");
         }
-        $questions = $questions->orderBy('questions.created_at')->paginate(10);
+        $questions = $questions->orderBy('questions.created_at', 'desc')->paginate(10);
 
         return view('cabinet.doctor.questions.index', ['doctor' => $this->doctor, 'user' => $this->user, 'questions' => $questions]);
     }
@@ -103,7 +103,7 @@ class DoctorCabinetQuestionsController extends DoctorCabinetController
             'answer' => $answer
         ];
 
-        Mail::send('mails.question', $data, function ($m) use($user, $subject) {
+        Mail::send('mail.question', $data, function ($m) use($user, $subject) {
             $m->to($user->email)->subject($subject);
         });
     }
