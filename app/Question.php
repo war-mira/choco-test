@@ -23,6 +23,10 @@ class Question extends Model
         2 => 'Закрытый'
     ];
 
+    const NOT_ANSWERED = 0;
+    const ANSWERED = 1;
+    const ANSWERED_BY_DOCTOR = 2;
+
     protected $table = 'questions';
     public $timestamps = true;
     protected $primaryKey = 'id';
@@ -47,6 +51,39 @@ class Question extends Model
     public function answers()
     {
         return $this->hasMany(QuestionAnswer::class, 'question_id', 'id');
+    }
+
+    public function exceptDoctor($doctor)
+    {
+        $answers = $this->answers()->where('doctor_id', '!=', $doctor->id)->get();
+
+        return $answers;
+    }
+
+    public function scopeNotAnswered($query)
+    {
+        $questions = $query->doesntHave('answers');
+
+        return $questions;
+    }
+
+    public function scopeAnsweredNotByDoctor($query, $doctor)
+    {
+        $questions = $query->whereHas('answers', function ($query) use($doctor) {
+            $query->where('doctor_id', '!=', $doctor->id);
+        });
+
+        return $questions;
+    }
+
+    public function scopeAnsweredByDoctor($query, $doctor)
+    {
+        $questions = $query
+            ->whereHas('answers', function ($query) use($doctor) {
+                $query->where('doctor_id', $doctor->id);
+            })  ;
+
+        return $questions;
     }
 
 }

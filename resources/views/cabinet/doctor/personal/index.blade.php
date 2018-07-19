@@ -20,7 +20,7 @@
                             <div class="doc-personal-data__data-line">
                                 <div class="doc-personal-data__data-item account-data-item">
                                     <div class="account-data-item__name">ФИО</div>
-                                    <div class="account-data-item__val">{{ $doctor->firstname }} {{ $doctor->lastname }}</div>
+                                    <div class="account-data-item__val">{{ $doctor->firstname }} {{ $doctor->lastname }} {{ $doctor->middlename }}</div>
                                 </div>
                             </div>
                             <div class="doc-personal-data__data-line">

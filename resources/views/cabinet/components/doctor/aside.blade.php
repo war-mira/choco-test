@@ -4,6 +4,10 @@
             <span class="account-nav__item-icon"><i class="fa fa-id-card-o" aria-hidden="true"></i></span>
             <span class="account-nav__item-text">Личные данные</span>
         </a>
+        <a href="{{route('cabinet.doctor.questions.index')}}" class="account-nav__item">
+            <span class="account-nav__item-icon"><i class="fa fa-comments-o" aria-hidden="true"></i></span>
+            <span class="account-nav__item-text">Вопросы</span>
+        </a>
         <a href="{{ url('/logout') }}" class="button account-nav__item"
            onclick="event.preventDefault();
                                  document.getElementById('logout-form').submit();">

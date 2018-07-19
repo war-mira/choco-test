@@ -57,4 +57,9 @@ class FormatHelper
 
       return $string;
     }
+
+    public static function userShothDate($date){
+
+        return date('Y-m-d', strtotime($date));
+    }
 }
