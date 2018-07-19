@@ -131,6 +131,13 @@ Route::group(['as' => 'cabinet.', 'prefix' => 'cabinet'], function () {
             Route::get('/edit', 'Cabinet\Doctor\DoctorCabinetProfessionalController@edit')->name('edit');
             Route::post('/edit', 'Cabinet\Doctor\DoctorCabinetProfessionalController@update')->name('update');
         });
+        Route::group(['as' => 'questions.', 'prefix' => 'questions'], function () {
+            Route::get('/index', 'Cabinet\Doctor\DoctorCabinetQuestionsController@index')->name('index');
+            Route::get('/view/{question}', 'Cabinet\Doctor\DoctorCabinetQuestionsController@viewQuestion')->name('view');
+            Route::post('/view/{question}', 'Cabinet\Doctor\DoctorCabinetQuestionsController@sendAnswer')->name('view');
+            Route::get('/view/{id}/edit', 'Cabinet\Doctor\DoctorCabinetQuestionsController@editAnswer')->name('edit');
+            Route::post('/view/{id}/edit', 'Cabinet\Doctor\DoctorCabinetQuestionsController@updateAnswer')->name('update');
+        });
         Route::get('/', function (){
         });
         Route::post('/orderList', 'Cabinet\DoctorCabinetController@orderList')->name('orderList');

@@ -155,6 +155,18 @@
         </form>
     </div>
     <script>
+
+        function getFormData($form) {
+            var unindexed_array = $form.serializeArray();
+            var indexed_array = {};
+
+            $.map(unindexed_array, function (n, i) {
+                indexed_array[n['name']] = n['value'];
+            });
+
+            return indexed_array;
+        }
+
         //$('.search-input-group select').selectpicker();
         $(function () {
 
@@ -303,6 +315,33 @@
                     window.location.assign(skillUrl);
                 });
             }
+            var callbackForm = $('form#callback_form');
+
+            $("#save_order").click(function (e) {
+                e.preventDefault();
+                ga('send', 'event', {
+                    eventCategory: 'zapisatsya',
+                    eventAction: 'click'
+                });
+                //Ya goal
+                yaCounter47714344.reachGoal('registration');
+
+                if (callbackForm[0].checkValidity()) {
+                    var formData = new FormData(callbackForm[0]);
+                    console.log(getFormData(callbackForm));
+                    formData.ga_cid =
+                        $.getJSON("{{route('callback.newDoc')}}", getFormData(callbackForm))
+                            .done(function (json) {
+                                $.magnificPopup.close();
+                                $.magnificPopup.open({
+                                    items: {
+                                        src: '#callback_mess_ok',
+                                        type: 'inline'
+                                    }
+                                });
+                            });
+                }
+            });
         });
     </script>
 @endsection

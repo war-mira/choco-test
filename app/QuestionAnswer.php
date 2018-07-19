@@ -34,7 +34,20 @@ class QuestionAnswer extends Model
 
    public function doctor()
    {
-       return $this->belongsTo(Doctor::class, 'id', 'doctor_id');
+       return $this->belongsTo(Doctor::class, 'doctor_id', 'id');
+   }
+
+   public function scopeByDoctorQuestion($query, $doctor, $question){
+       $answer = $query->where('doctor_id', $doctor->id)->where('question_id', $question->id);
+
+       return $answer;
+   }
+
+   public function exceptDoctor($query, $doctor, $question)
+   {
+       $answers = $query->where('question_id', $question->id)->where('doctor_id', '!=', $doctor->id)->get();
+
+       return $answers;
    }
 
 }

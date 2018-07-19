@@ -1,5 +1,18 @@
 
+function checkblock(block)
+{
+    var $back = false;
+    if(($(block).find('input[name="date"]:checked').length || $(block).find('input[name="date"]').val().length) && $(block).find('input[name="time"]:checked').length){$back = true;}
+    return $back;
+}
+
 $(document).ready(function() {
+
+    var $receptionModalForm = $("#callback_form");
+    ga(function (tracker) {
+        var cid = tracker.get('clientId');
+        $receptionModalForm.find('[name="ga_cid"]').val(cid).trigger('change');
+    });
 
     $(".js-input-add-entity").each(function() {
         var $this = $(this);
@@ -67,141 +80,48 @@ $(document).ready(function() {
         }
         ]
     });
-    $('a.popup-with-form').magnificPopup({
+
+    $('input[name="client_phone"]').mask('+7 (999) 999-9999');
+
+    var popupDefaults = {
         type: 'inline',
+        fixedContentPos: false,
         focus: '#name',
+        fixedBgPos: true,
+        overflowY: 'auto',
+        closeBtnInside: true,
         callbacks: {
-          beforeOpen: function() {
-            $('form#callback_form').find('input[name="target_id"]').val(this.st.el.data('doc-id'));
-            $('form#callback_form').find('#doctor_name').val(this.st.el.data('dname'));
-            console.log(this.st.el.data('dname'));
-          },
-          elementParse: function(item) {
-            // Function will fire for each target element
-            // "item.el" is a target DOM element (if present)
-            // "item.src" is a source that you may modify
-        
-            //console.log('Parsing content. Item object that is being parsed:', item);
-          },
-          change: function() {
+            beforeOpen: function() {
+                $('form#callback_form').find('input[name="target_id"]').val(this.st.el.data('doc-id'));
+                $('form#callback_form').find('#doctor_name').val(this.st.el.data('dname'));
+                if($(this.st.el).parent().parent().find('input[name="date"]:checked').val() != 'custom')
+                {
+                    $('form#callback_form').find('input[name="date"]').val($(this.st.el).parent().parent().find('input[name="date"]:checked').val());
+                }else
+                {
+                    $('form#callback_form').find('input[name="date"]').val($(this.st.el).parent().parent().find('input[name="custom-date"]').val());
+                }
 
-          },
-          resize: function() {
-            //console.log('Popup resized');
-            // resize event triggers only when height is changed or layout forced
-          },
-          open: function() {
-            //console.log('Popup is opened');
-          },
-        
-          beforeClose: function() {
-            // Callback available since v0.9.0
-            //console.log('Popup close has been initiated');
-          },
-          close: function() {
-            //console.log('Popup removal initiated (after removalDelay timer finished)');
-          },
-          afterClose: function() {
-            //console.log('Popup is completely closed');
-          },
-        
-          markupParse: function(template, values, item) {
-            // Triggers each time when content of popup changes
-            // console.log('Parsing:', template, values, item);
-          },
-          updateStatus: function(data) {
-            //console.log('Status changed', data);
-            // "data" is an object that has two properties:
-            // "data.status" - current status type, can be "loading", "error", "ready"
-            // "data.text" - text that will be displayed (e.g. "Loading...")
-            // you may modify this properties to change current status or its text dynamically
-          },
-          imageLoadComplete: function() {
-            // fires when image in current popup finished loading
-            // avaiable since v0.9.0
-            //console.log('Image loaded');
-          },
-        
-        
-          // Only for ajax popup type
-          parseAjax: function(mfpResponse) {
-            // mfpResponse.data is a "data" object from ajax "success" callback
-            // for simple HTML file, it will be just String
-            // You may modify it to change contents of the popup
-            // For example, to show just #some-element:
-            // mfpResponse.data = $(mfpResponse.data).find('#some-element');
-        
-            // mfpResponse.data must be a String or a DOM (jQuery) element
-        
-            console.log('Ajax content loaded:', mfpResponse);
-          },
-          ajaxContentAdded: function() {
-            // Ajax content is loaded and appended to DOM
-            console.log(this.content);
-          }
+                $('form#callback_form').find('input[name="time"]').val($(this.st.el).parent().parent().find('input[name="time"]').val());
+            }
         }
-    });
-    /*
-    $("#order_doctor").iziModal({
-        title: 'Запись на прием',
-        subtitle: '',
-        headerColor: '#00A8FF',
-        background: '#ffffff',
-        theme: '',  // light
-        icon: null,
-        iconText: null,
-        iconColor: '',
-        rtl: false,
-        width: 600,
-        top: null,
-        bottom: null,
-        borderBottom: true,
-        padding: 20,
-        radius: 0,
-        zindex: 999,
-        iframe: false,
-        iframeHeight: 400,
-        iframeURL: null,
-        focusInput: true,
-        group: '',
-        loop: false,
-        arrowKeys: true,
-        navigateCaption: true,
-        navigateArrows: true, // Boolean, 'closeToModal', 'closeScreenEdge'
-        history: false,
-        restoreDefaultContent: false,
-        autoOpen: 0, // Boolean, Number
-        bodyOverflow: false,
-        fullscreen: false,
-        openFullscreen: false,
-        closeOnEscape: true,
-        closeButton: true,
-        appendTo: 'body', // or false
-        appendToOverlay: 'body', // or false
-        overlay: true,
-        overlayClose: true,
-        overlayColor: 'rgba(0, 0, 0, 0.4)',
-        timeout: false,
-        timeoutProgressbar: false,
-        pauseOnHover: false,
-        timeoutProgressbarColor: 'rgba(255,255,255,0.5)',
-        transitionIn: 'fadeInDown',   // comingIn, bounceInDown, bounceInUp, fadeInDown, fadeInUp, fadeInLeft, fadeInRight, flipInX
-        transitionOut: 'fadeOutUp', // comingOut, bounceOutDown, bounceOutUp, fadeOutDown, fadeOutUp, , fadeOutLeft, fadeOutRight, flipOutX
-        transitionInOverlay: 'fadeIn',
-        transitionOutOverlay: 'fadeOut',
-        onFullscreen: function(){},
-        onResize: function(){},
-        onOpening: function(){},
-        onOpened: function(){},
-        onClosing: function(){},
-        onClosed: function(){},
-        afterRender: function(){}
+    }
+
+    $('a.popup-with-form').on("click", function(){
+        if($(this).closest('div.search-result__item').length) {
+            var block = $(this).closest('div.search-result__item');
+        }
+        else
+        {
+            var block = $(this).closest('div.appointment-book-small__line');
+        }
+        var condition = checkblock(block);
+        if(condition){
+            $(this).magnificPopup(popupDefaults).magnificPopup('open');
+        }
+
     });
 
-    $('a.trigger-link').click(function(){
-      event.preventDefault();
-      $('#order_doctor').iziModal('open');
-    });*/
     $(".js-search-select").selectize({
         render: {
             option: function(data, escape) {
@@ -253,11 +173,11 @@ $(document).ready(function() {
         });
     });
 
-    $(".nav-toggle").click(function() {
+    $(".nav-toggle").click(function(){
         $(this).toggleClass("open");
 
-        $(".mobile-menu").slideToggle("fast", function() {
-            if (!$(".nav-toggle").hasClass("open")) {
+        $(".mobile-menu").slideToggle("fast", function(){
+            if(!$(".nav-toggle").hasClass("open")){
                 $(".mobile-menu").removeAttr("style");
             }
         });
@@ -277,6 +197,7 @@ $(document).ready(function() {
         pickmeup($this[0], {
             format  : 'Y-m-d',
             locale : "ru",
+            minDate:new Date(),
             hide_on_select : true,
             position : function() {
                 return {
@@ -301,6 +222,7 @@ $(document).ready(function() {
         pickmeup($this[0], {
             format  : 'Y-m-d',
             locale : "ru",
+            minDate:new Date(),
             hide_on_select : true,
             position : function() {
                 return {
@@ -318,7 +240,8 @@ $(document).ready(function() {
 
     });
 
-    $(".date-radio input[type=\"radio\"]").change(function() {
+    $(".date-radio input[type=\"radio\"]").change(function()
+    {
         var $this = $(this);
 
         if ($this.is(":checked") && !($this.val() == "custom")) {

@@ -4,6 +4,8 @@
         <br/>
         <div class="leave-review__input-line">
             <input type="hidden" name="ga_cid" value="">
+            <input type="hidden" name="date" value="">
+            <input type="hidden" name="time" value="">
             @if(Auth::user())
                 <input type="hidden" name="client_id" value="{{auth()->user()->id}}">
             @endif
@@ -23,7 +25,7 @@
                        readonly="readonly"
                         @endif>
             </div>
-            <div class="leave-review__input-item">
+            <div class="leave-review__textarea-item">
                 <input class="form-control " placeholder="Email" name="client_email" id="client_email" type="text"
                        @if(Auth::user())
                        value="{{auth()->user()->email}}"
@@ -31,13 +33,14 @@
                         @endif>
             </div>
 
-            <div class="leave-review__input-item" id="datetime-group">
-                <input class="form-control datepicker" placeholder="*Время и дата приема" required="" name="client_datetime" id="client_datetime" type="text">
+            <div class="leave-review__input-item hidden" id="datetime-group">
+                <input class="form-control datepicker" readonly="readonly" placeholder="Время и дата приема" required="" name="client_datetime" id="client_datetime" type="text">
             </div>
 
             <input type="hidden" name="target_type" value="Doctor">
             <input type="hidden" name="target_id" value="">
             <input type="hidden" name="source" value="doctor_page">
+            {{ csrf_field() }}
             <div class="leave-review__textarea-item tcentr">
                 <input class="form-control tcentr fbold" placeholder="Врач" id="doctor_name"
                        type="text"
@@ -50,8 +53,13 @@
                 </div>
             </div>
             <div class="leave-review__submit">
-                <button type="submit" class="btn btn_theme_usual" id="save_order">Записаться</button>
+                <button type="submit" id="save_order" class="btn btn_theme_usual" id="save_order">Записаться</button>
             </div>
         </div>
     </form>
+</div>
+<div id="callback_mess_ok" class="white-popup mfp-hide">
+    <p>
+        <strong>Спасибо!</strong> Ваша заявка принята мы вам перезвоним!
+    </p>
 </div>
