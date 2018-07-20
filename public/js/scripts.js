@@ -94,21 +94,28 @@ $(document).ready(function() {
             beforeOpen: function() {
                 $('form#callback_form').find('input[name="target_id"]').val(this.st.el.data('doc-id'));
                 $('form#callback_form').find('#doctor_name').val(this.st.el.data('dname'));
-                if($(this.st.el).parent().parent().find('input[name="date"]:checked').val() != 'custom')
+                if($(this.st.el).parent().parent().find('input[name="date"]:checked').val() != 'custom' && $(this.st.el).parent().parent().find('input[name="date"]').is(':radio'))
                 {
+                    console.log('xyu');
                     $('form#callback_form').find('input[name="date"]').val($(this.st.el).parent().parent().find('input[name="date"]:checked').val());
-                }else
+                }else if($(this.st.el).parent().parent().find('input[name="custom-date"]').length)
                 {
                     $('form#callback_form').find('input[name="date"]').val($(this.st.el).parent().parent().find('input[name="custom-date"]').val());
                 }
+                else
+                {
+                    $('form#callback_form').find('input[name="date"]').val($(this.st.el).parent().parent().find('input.js-custom-date-val').val());
+                }
 
-                $('form#callback_form').find('input[name="time"]').val($(this.st.el).parent().parent().find('input[name="time"]').val());
+                $('form#callback_form').find('input[name="time"]').val($(this.st.el).parent().parent().find('input[name="time"]:checked').val());
             }
         }
     }
 
-    $('a.popup-with-form').on("click", function(){
-        if($(this).closest('div.search-result__item').length) {
+    $('a.popup-with-form').on("click", function()
+    {
+        if($(this).closest('div.search-result__item').length)
+        {
             var block = $(this).closest('div.search-result__item');
         }
         else
@@ -116,10 +123,10 @@ $(document).ready(function() {
             var block = $(this).closest('div.appointment-book-small__line');
         }
         var condition = checkblock(block);
-        if(condition){
+        if(condition)
+        {
             $(this).magnificPopup(popupDefaults).magnificPopup('open');
         }
-
     });
 
     $(".js-search-select").selectize({

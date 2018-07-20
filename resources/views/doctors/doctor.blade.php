@@ -114,50 +114,50 @@
                                 <div class="appointment-book-small__time-item time-radio">
                                     <label class="time-radio__item">
                                         <input type="radio" name="time" value="09:00">
-                                        <span class="time-radio__text btn btn_theme_radio">09:00</span>
+                                        <span class="time-radio__text btn btn_theme_radio noselect">09:00</span>
                                     </label>
                                 </div>
 
                                 <div class="appointment-book-small__time-item time-radio">
                                     <label class="time-radio__item">
-                                        <input type="radio" name="time" value="09:00">
-                                        <span class="time-radio__text btn btn_theme_radio">10:00</span>
+                                        <input type="radio" name="time" value="10:00">
+                                        <span class="time-radio__text btn btn_theme_radio noselect">10:00</span>
+                                    </label>
+                                </div>
+                                <div class="appointment-book-small__time-item time-radio noselect">
+                                    <label class="time-radio__item">
+                                        <input type="radio" name="time" value="11:00">
+                                        <span class="time-radio__text btn btn_theme_radio noselect">11:00</span>
                                     </label>
                                 </div>
                                 <div class="appointment-book-small__time-item time-radio">
                                     <label class="time-radio__item">
-                                        <input type="radio" name="time" value="09:00">
-                                        <span class="time-radio__text btn btn_theme_radio">11:00</span>
+                                        <input type="radio" name="time" value="12:00">
+                                        <span class="time-radio__text btn btn_theme_radio noselect">12:00</span>
                                     </label>
                                 </div>
                                 <div class="appointment-book-small__time-item time-radio">
                                     <label class="time-radio__item">
-                                        <input type="radio" name="time" value="09:00">
-                                        <span class="time-radio__text btn btn_theme_radio">12:00</span>
+                                        <input type="radio" name="time" value="14:00">
+                                        <span class="time-radio__text btn btn_theme_radio noselect">14:00</span>
                                     </label>
                                 </div>
                                 <div class="appointment-book-small__time-item time-radio">
                                     <label class="time-radio__item">
-                                        <input type="radio" name="time" value="09:00">
-                                        <span class="time-radio__text btn btn_theme_radio">14:00</span>
+                                        <input type="radio" name="time" value="15:00">
+                                        <span class="time-radio__text btn btn_theme_radio noselect">15:00</span>
                                     </label>
                                 </div>
                                 <div class="appointment-book-small__time-item time-radio">
                                     <label class="time-radio__item">
-                                        <input type="radio" name="time" value="09:00">
-                                        <span class="time-radio__text btn btn_theme_radio">15:00</span>
+                                        <input type="radio" name="time" value="16:00">
+                                        <span class="time-radio__text btn btn_theme_radio noselect">16:00</span>
                                     </label>
                                 </div>
                                 <div class="appointment-book-small__time-item time-radio">
                                     <label class="time-radio__item">
-                                        <input type="radio" name="time" value="09:00">
-                                        <span class="time-radio__text btn btn_theme_radio">16:00</span>
-                                    </label>
-                                </div>
-                                <div class="appointment-book-small__time-item time-radio">
-                                    <label class="time-radio__item">
-                                        <input type="radio" name="time" value="09:00">
-                                        <span class="time-radio__text btn btn_theme_radio">17:00</span>
+                                        <input type="radio" name="time" value="17:00">
+                                        <span class="time-radio__text btn btn_theme_radio noselect">17:00</span>
                                     </label>
                                 </div>
                             </div>
