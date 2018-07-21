@@ -141,7 +141,7 @@
                                     @endcomponent
                             </div>
                         @endforeach
-                            @include('forms.public.order_doc')
+                        @include('forms.public.order_doc')
                     </div>
                 </div>
                 @if($doctors->links() != "")
@@ -152,6 +152,7 @@
                     </div>
                 @endif
             </div>
+
         </form>
     </div>
     <script>

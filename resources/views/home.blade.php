@@ -44,7 +44,7 @@
                         {{ csrf_field() }}
                     </form>
                     @if(Auth::user()->role == 1)
-                        <a class="button" href="{{ route('admin.dashboard') }}">Панель управления</a>
+                        <a class="button" href="{{ url('admin.dashboard') }}">Панель управления</a>
                     @endif
                 </div>
 

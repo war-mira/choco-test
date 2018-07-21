@@ -93,11 +93,47 @@ class DoctorController extends Controller
         $redirectRoute = $request->query('redirect', null);
         $data = $this->processRequestData($request);
 
+        if($data['mond_from'] && $data['mond_to'])
+        {
+            $data['mond'] = serialize(array($data['mond_from'],$data['mond_to']));
+        }
+
+        if($data['tues_from'] && $data['tues_to'])
+        {
+            $data['tues'] = serialize(array($data['tues_from'],$data['tues_to']));
+        }
+
+        if($data['wedn_from'] && $data['wedn_to'])
+        {
+            $data['wedn'] = serialize(array($data['wedn_from'],$data['wedn_to']));
+        }
+
+        if($data['thur_from'] && $data['thur_to'])
+        {
+            $data['thur'] = serialize(array($data['thur_from'],$data['thur_to']));
+        }
+
+        if($data['frid_from'] && $data['frid_to'])
+        {
+            $data['frid'] = serialize(array($data['frid_from'],$data['frid_to']));
+        }
+
+        if($data['satu_from'] && $data['satu_to'])
+        {
+            $data['satu'] = serialize(array($data['satu_from'],$data['satu_to']));
+        }
+
+        if($data['sund_from'] && $data['sund_to'])
+        {
+            $data['sund'] = serialize(array($data['sund_from'],$data['sund_to']));
+        }
+
         $doctor = Doctor::find($id);
         $doctor->fill($data);
 
         $jobs = $data['jobs'] ?? false;
-        if ($jobs !== false) {
+        if($jobs !== false)
+        {
             $doctor->jobs = $jobs;
         }
 
@@ -118,13 +154,11 @@ class DoctorController extends Controller
             }, []);
             $doctor->items()->whereNotIn('id', $ids)->delete();
             foreach ($data['items'] as $itemData) {
-
                 $item = $doctor->items()->findOrNew($itemData['id'] ?? null);
                 $item->fill($itemData);
                 $doctor->items()->save($item);
             }
         }
-
 
         if ($redirectRoute != null) {
             $response = redirect(route($redirectRoute, ['id' => $doctor->id]));

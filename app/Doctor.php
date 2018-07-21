@@ -178,6 +178,13 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         'preview_text',
         'timetable',
         'seo_text',
+        'mond',
+        'tues',
+        'wedn',
+        'thur',
+        'frid',
+        'satu',
+        'sund'
     ];
     protected $casts = [
         'child'   => 'int',

@@ -98,9 +98,11 @@ class DoctorController extends Controller
             $description = 'iDoctor.kz - Список врачей-специалистов по всему Казахстану. Поиск и бесплатная запись на прием к врачу любой специальности. У нас собрана большая база врачей различных специализаций по всему Казахстану';
             $meta = compact('title', 'description');
         }
+
         $doctors = $doctors->paginate(10)->appends($query);
 
-        if ($doctors->lastPage() < ($filter['page'] ?? 1)){
+        if ($doctors->lastPage() < ($filter['page'] ?? 1))
+        {
             return redirect($doctors->url(1));
         }
 

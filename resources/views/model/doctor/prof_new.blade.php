@@ -106,96 +106,36 @@
             </div>
         </div>
         <div class="appointment-book-big__time-list">
-            <div class="appointment-book-big__time-item time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="09:00"/>
-                    <span class="time-radio__text btn btn_theme_radio noselect">09:00</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item appointment-book-big__time-item_additional time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="09:30"/>
-                    <span class="time-radio__text btn btn_theme_radio noselect">09:30</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="10:00"/>
-                    <span class="time-radio__text btn btn_theme_radio noselect">10:00</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item appointment-book-big__time-item_additional time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="10:30"/>
-                    <span class="time-radio__text btn btn_theme_radio noselect">10:30</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="11:00"/>
-                    <span class="time-radio__text btn btn_theme_radio noselect">11:00</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item appointment-book-big__time-item_additional time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="11:30"/>
-                    <span class="time-radio__text btn btn_theme_radio noselect">11:30</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="12:00"/>
-                    <span class="time-radio__text btn btn_theme_radio noselect">12:00</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item appointment-book-big__time-item_additional time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="12:30"/>
-                    <span class="time-radio__text btn btn_theme_radio noselect">12:30</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="14:00"/>
-                    <span class="time-radio__text btn btn_theme_radio noselect">14:00</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item appointment-book-big__time-item_additional time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="14:30"/>
-                    <span class="time-radio__text btn btn_theme_radio noselect">14:30</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="15:00"/>
-                    <span class="time-radio__text btn btn_theme_radio noselect">15:00</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item appointment-book-big__time-item_additional time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="15:30"/>
-                    <span class="time-radio__text btn btn_theme_radio noselect">15:30</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="16:00"/>
-                    <span class="time-radio__text btn btn_theme_radio noselect">16:00</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item appointment-book-big__time-item_additional time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="16:30"/>
-                    <span class="time-radio__text btn btn_theme_radio noselect">16:30</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="17:00"/>
-                    <span class="time-radio__text btn btn_theme_radio noselect">17:00</span>
-                </label>
-            </div>
+            @php
+            $today = date('n'); $st = 1;
+            $week = array(1=>'mond',2=>'tues',3=>'wedn',4=>'thur',5=>'frid',6=>'satu',7=>'sund');
+            if($doctor[$week[$today]])
+            {
+                $nic = unserialize($doctor[$week[$today]]);
+                $starttime = $nic[0];  // your start time
+                $endtime = $nic[1];  // End time
+                $duration = '30';  // split by 30 mins
+                $start_time    = strtotime ($starttime); //change to strtotime
+                $end_time      = strtotime ($endtime); //change to strtotime
+                $add_mins  = $duration * 60;
+            }
+
+            @endphp
+
+            @if(isset($nic) && $nic)
+            @while($start_time <= $end_time)
+                @if($st == 9)<div class="appointment-book-big__time-item_additional"> @endif
+                <div class="appointment-book-big__time-item time-radio">
+                    <label class="time-radio__item">
+                        <input type="radio" name="time" value="@php echo date('h:i',$start_time); @endphp"/>
+                        <span class="time-radio__text btn btn_theme_radio noselect">@php echo date('h:i',$start_time); @endphp</span>
+                    </label>
+                </div>
+                @if($start_time == $end_time)</div> @endif
+                @php $start_time += $add_mins; $st++; @endphp
+            @endwhile
+            @endif
+
         </div>
         <div class="appointment-book-big__custom-time custom-time-btn">
             <button class="custom-time-btn__btn">

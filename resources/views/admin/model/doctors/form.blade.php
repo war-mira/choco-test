@@ -391,9 +391,9 @@
                                                 @endcomponent
                                             @endcomponent
                                             @component('components.bootstrap.column',['class'=>'col-md-6'])
-                                                @component('components.form.summernote.textarea')
+                                                @component('components.form.summernote.time-table')
                                                     @slot('field','timetable')
-                                                    @slot('value',$seed['timetable'] ?? '')
+                                                    @slot('value',$seed ?? '')
                                                     @slot('required',false)
                                                     @slot('formId','edit-form')
                                                     @slot('placeholder','График работы')
