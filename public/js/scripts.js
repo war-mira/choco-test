@@ -248,7 +248,17 @@ $(document).ready(function() {
             $this.find(".js-custom-date-val").val(e.detail.formatted_date);
             var dt = e.detail.date.toString().split(' ');
             $this.find('input[name="dayweek"]').val(dt[0]);
-            get_times($this.closest('.search-result__item').data('id'),dt[0],'',$this.parent().parent().parent());
+            
+            console.log($this.closest('.search-result__item').length);
+            
+            if($this.closest('div.search-result__item').length)
+            {
+                get_times($this.closest('div.search-result__item').data('id'),dt[0],'',$this.parent().parent().parent());
+            }
+            else
+            {
+                get_times($this.closest('.search-result__item').data('id'),dt[0],'',$this.parent().parent().parent());   
+            }
         })
 
     });

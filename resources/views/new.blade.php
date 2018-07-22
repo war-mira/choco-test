@@ -64,7 +64,6 @@
         .done(function (json) {
             if(json)
             {
-                console.log($(fast));
 
                 if(!fast){
                     $(obj).parent().parent().parent().parent().find('div.appointment-book-big__time-list').html(json.times);
