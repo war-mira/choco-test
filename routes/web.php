@@ -17,6 +17,7 @@ Route::get('order/gotopay/{id}', 'OrderController@gotopay');
 Route::get('order/newFromSite', 'OrderController@newFromSite');
 Route::get('order/update/', 'OrderController@update');
 Route::post('getdata', 'DoctorController@getall');
+Route::get('get_doc_time', 'DoctorController@get_dt')->name('get_dt');
 
 Route::get('doctor/{doctor}', function (\App\Doctor $doctor) {
     return redirect()->route('doctor.item', ['doctor' => $doctor->alias]);

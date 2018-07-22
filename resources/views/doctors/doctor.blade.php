@@ -1,6 +1,6 @@
 <section class="entity-line-container">
     <div class="container">
-        <div class="search-result__item entity-line doc-line">
+        <div class="search-result__item entity-line doc-line" data-id="{{$doctor->id}}">
             <div class="entity-line__img">
                 <div class="entity-thumb-img">
                     <div class="entity-thumb-img__img-wr">
@@ -104,62 +104,38 @@
                                     <div class="appointment-book-small__date-text">Сегодня</div>
                                     <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
                                     <input type="text" name="date" value="today" class="js-custom-date-val">
+                                    <input type="hidden" name="dayweek" />
                                 </div>
                             </div>
-                            @if(isset($doctor['timetable']) && $doctor['timetable'] != '')
-
-                            @endif
                             <div class="appointment-book-small__time-list">
 
-                                <div class="appointment-book-small__time-item time-radio">
-                                    <label class="time-radio__item">
-                                        <input type="radio" name="time" value="09:00">
-                                        <span class="time-radio__text btn btn_theme_radio noselect">09:00</span>
-                                    </label>
-                                </div>
+                                @php
+                                    $today = date('n'); $st = 1;
+                                    $week = array(1=>'mond',2=>'tues',3=>'wedn',4=>'thur',5=>'frid',6=>'satu',7=>'sund');
+                                    if($doctor[$week[$today]])
+                                    {
+                                        $nic = unserialize($doctor[$week[$today]]);
+                                        $starttime = $nic[0];  // your start time
+                                        $endtime = $nic[1];  // End time
+                                        $duration = '30';  // split by 30 mins
+                                        $start_time    = strtotime ($starttime); //change to strtotime
+                                        $end_time      = strtotime ($endtime); //change to strtotime
+                                        $add_mins  = $duration * 60;
+                                    }
+                                @endphp
 
-                                <div class="appointment-book-small__time-item time-radio">
-                                    <label class="time-radio__item">
-                                        <input type="radio" name="time" value="10:00">
-                                        <span class="time-radio__text btn btn_theme_radio noselect">10:00</span>
-                                    </label>
-                                </div>
-                                <div class="appointment-book-small__time-item time-radio noselect">
-                                    <label class="time-radio__item">
-                                        <input type="radio" name="time" value="11:00">
-                                        <span class="time-radio__text btn btn_theme_radio noselect">11:00</span>
-                                    </label>
-                                </div>
-                                <div class="appointment-book-small__time-item time-radio">
-                                    <label class="time-radio__item">
-                                        <input type="radio" name="time" value="12:00">
-                                        <span class="time-radio__text btn btn_theme_radio noselect">12:00</span>
-                                    </label>
-                                </div>
-                                <div class="appointment-book-small__time-item time-radio">
-                                    <label class="time-radio__item">
-                                        <input type="radio" name="time" value="14:00">
-                                        <span class="time-radio__text btn btn_theme_radio noselect">14:00</span>
-                                    </label>
-                                </div>
-                                <div class="appointment-book-small__time-item time-radio">
-                                    <label class="time-radio__item">
-                                        <input type="radio" name="time" value="15:00">
-                                        <span class="time-radio__text btn btn_theme_radio noselect">15:00</span>
-                                    </label>
-                                </div>
-                                <div class="appointment-book-small__time-item time-radio">
-                                    <label class="time-radio__item">
-                                        <input type="radio" name="time" value="16:00">
-                                        <span class="time-radio__text btn btn_theme_radio noselect">16:00</span>
-                                    </label>
-                                </div>
-                                <div class="appointment-book-small__time-item time-radio">
-                                    <label class="time-radio__item">
-                                        <input type="radio" name="time" value="17:00">
-                                        <span class="time-radio__text btn btn_theme_radio noselect">17:00</span>
-                                    </label>
-                                </div>
+                                @if(isset($nic) && $nic)
+                                    @while($start_time <= $end_time)
+                                            <div class="appointment-book-small__time-item time-radio">
+                                                <label class="time-radio__item">
+                                                    <input type="radio" name="time" value="@php echo date('H:i',$start_time); @endphp"/>
+                                                    <span class="time-radio__text btn btn_theme_radio noselect">@php echo date('H:i',$start_time); @endphp</span>
+                                                </label>
+                                            </div>
+                                        @php $start_time += $add_mins; $st++; @endphp
+                                    @endwhile
+                                @endif
+
                             </div>
                         </div>
                         <div class="appointment-book-small__action">

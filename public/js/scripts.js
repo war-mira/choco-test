@@ -96,7 +96,6 @@ $(document).ready(function() {
                 $('form#callback_form').find('#doctor_name').val(this.st.el.data('dname'));
                 if($(this.st.el).parent().parent().find('input[name="date"]:checked').val() != 'custom' && $(this.st.el).parent().parent().find('input[name="date"]').is(':radio'))
                 {
-                    console.log('xyu');
                     $('form#callback_form').find('input[name="date"]').val($(this.st.el).parent().parent().find('input[name="date"]:checked').val());
                 }else if($(this.st.el).parent().parent().find('input[name="custom-date"]').length)
                 {
@@ -218,8 +217,12 @@ $(document).ready(function() {
         $this[0].addEventListener('pickmeup-change', function (e) {
             $this.find(".date-radio__text").html(e.detail.formatted_date);
             $this.find(".js-custom-date-val").val(e.detail.formatted_date);
-
+            var dt = e.detail.date.toString().split(' ');
+            $this.find('input[name="dayweek"]').val(dt[0]);
             $this.find("input[type=\"radio\"]").prop("checked", true);
+            
+            get_times($this.closest('.search-result__item').data('id'),dt[0],'',$this.parent().parent().parent());
+            
         })
     });
 
@@ -243,6 +246,9 @@ $(document).ready(function() {
         $this[0].addEventListener('pickmeup-change', function (e) {
             $this.find(".appointment-book-small__date-text").html(e.detail.formatted_date);
             $this.find(".js-custom-date-val").val(e.detail.formatted_date);
+            var dt = e.detail.date.toString().split(' ');
+            $this.find('input[name="dayweek"]').val(dt[0]);
+            get_times($this.closest('.search-result__item').data('id'),dt[0],'',$this.parent().parent().parent());
         })
 
     });
@@ -250,12 +256,17 @@ $(document).ready(function() {
     $(".date-radio input[type=\"radio\"]").change(function()
     {
         var $this = $(this);
-
+        get_times($(this).parent().parent().parent().parent().parent().parent().data('id'),$(this).val(),$this);
         if ($this.is(":checked") && !($this.val() == "custom")) {
             var $customDate = $this.closest(".date-radio").siblings(".js-custom-date").find(".date-radio__item");
             $customDate.find(".date-radio__text").html("Выбрать дату");
             $customDate.find(".js-custom-date-val").val("");
         }
+    });
+    
+    $("input[name='dayweek']").change(function()
+    {
+
     });
 
     $(".appointment-book-big__custom-time").click(function() {

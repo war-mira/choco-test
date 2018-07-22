@@ -56,6 +56,26 @@
 
 
 <script type="text/javascript">
+
+    function get_times(doc,day,obj,fast = '')
+    {
+        var $ret = '';
+        $.getJSON("{{route('get_dt')}}", {day:day,idc:doc})
+        .done(function (json) {
+            if(json)
+            {
+                console.log($(fast));
+
+                if(!fast){
+                    $(obj).parent().parent().parent().parent().find('div.appointment-book-big__time-list').html(json.times);
+                }
+                else {
+                    $(fast).find('.appointment-book-big__time-list,.appointment-book-small__time-list').html(json.times);
+                }
+            }
+        });
+    }
+
     $(function () {
         $("#setskill").click(function () {
             $("#search_input").val($("#setskill").text());
