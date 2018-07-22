@@ -212,6 +212,11 @@
                         for (var i = 0; i < data.length; i++) {
                             $(".js-search-select")[0].selectize.addOption(data[i]);
                         }
+                        if($('input[name="medc"]').val().length)
+                        {
+                            $(".js-search-select")[0].selectize.setValue($('input[name="medc"]').val(),false);
+                        }
+                        
                     }
                 });
             });
@@ -305,17 +310,25 @@
                 $('form.search-bar__line').submit();
             });
 
-            if($('select[name="type"]').val() == null || $('select[name="type"]').val() == 'medcenters') {
-                $skillSelect.on('change', function () {
+            $skillSelect.on('change', function () {
+                var $type = $('select[name="type"]').val();
+                console.log($type);
+                if($type == 'medcenters' || $('input[name="medc"]').val())
+                {
                     $('input[name="q"]').val('');
                     var url = "{{route('doctors.list')}}";
                     var query = "{!!explode('?',url()->full())[1] ?? ""!!}";
                     if (query.length > 0)
                         query = '?' + query;
                     var skillUrl = url + '/' + $(this).val() + query;
-                    window.location.assign(skillUrl);
-                });
-            }
+
+                    if($(this).val() != $('input[name="medc"]').val() || $('input[name="medc"]').val() == '')
+                    {
+                        window.location.assign(skillUrl);
+                    }
+                }
+            });
+
             var callbackForm = $('form#callback_form');
 
             $("#save_order").click(function (e) {

@@ -128,7 +128,7 @@ $(document).ready(function() {
         }
     });
 
-    $(".js-search-select").selectize({
+    var $select = $(".js-search-select").selectize({
         render: {
             option: function(data, escape) {
                 if (data.optgroup == "Специализации") {
@@ -151,7 +151,7 @@ $(document).ready(function() {
                         '</span>' +
                     '</div>';
                 }
-                
+
             }
         }
     });
@@ -272,11 +272,6 @@ $(document).ready(function() {
             $customDate.find(".date-radio__text").html("Выбрать дату");
             $customDate.find(".js-custom-date-val").val("");
         }
-    });
-    
-    $("input[name='dayweek']").change(function()
-    {
-
     });
 
     $(".appointment-book-big__custom-time").click(function() {
@@ -593,6 +588,21 @@ $(document).ready(function() {
                 location.reload();
             }
         });
+    });
+
+    $(".js-entity-type-search").change(function() {
+        var entityType = $(this).val();
+
+        if (entityType == "medcenters") {
+
+            $(".js-additional-search").show();
+            $(".index-search-bar").addClass("index-intro__search-bar_additional-search");
+
+        } else if (entityType =="all") {
+
+            $(".js-additional-search").hide();
+            $(".index-search-bar").removeClass("index-intro__search-bar_additional-search");
+        }
     });
 });
 

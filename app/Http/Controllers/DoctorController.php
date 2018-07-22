@@ -133,7 +133,7 @@ class DoctorController extends Controller
 
             //compact('meta', 'doctors', 'skills', 'medcenters', 'filter', 'query'));
 
-            compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage'));
+            compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage', 'skill'));
     }
 
     public function get_dt(Request $request)
