@@ -3,6 +3,9 @@
         @slot('src')
             {{$doctor['avatar']}}
         @endslot
+        @slot('on_top')
+             {{$doctor->on_top}}
+        @endslot
     @endcomponent<br>
 
     <div class="entity-thumb-img__rating-line rating-line">
@@ -26,7 +29,7 @@
     </div>
 </div>
 <div class="entity-line__main">
-    <div class="entity-line__name"><a href="{{ route('doctor.item',['doctor'=>$doctor->alias]) }}">{{$doctor['name']}}</a></div>
+    <h3 class="entity-line__name profiles__title"><a href="{{ route('doctor.item',['doctor'=>$doctor->alias]) }}">{{$doctor['name']}}</a></h3>
     @if($doctor['qualification'])<div class="entity-line__label">{{$doctor['qualification']}}</div>@endif
     <div class="entity-line__features">
         <div class="entity-line__feature entity-feature">
