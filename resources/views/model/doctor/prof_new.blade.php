@@ -71,9 +71,9 @@
             @if($doctor->medname)
                 @foreach($doctor->medname as $ff)
                     <div class="doc-line__address-item">
-                        <div class="doc-line__address-val">{{$ff->map}}</div>
+                        <div class="doc-line__address-val"><a href="#">{{$ff->city->name}}</a>, {{$ff->map}}</div>
                         <div class="doc-line__address-clinic-link">
-                            <a href="#">{{$ff->name}}</a>
+                            <a href="{{route('medcenter.item',['medcenter'=>$ff->alias])}}">{{$ff->name}}</a>
                         </div>
                     </div>
                 @endforeach

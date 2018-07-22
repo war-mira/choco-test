@@ -151,7 +151,7 @@
             <div class="entity-line__additional">
                 <div class="entity-line__map entity-map" id="entity-map">
                     <div class="entity-map__address">
-                        <div class="entity-map__address-name">{{$doctor->medc_map->map}}</div>
+                        <div class="entity-map__address-name">{{$doctor->city->name}}, {{$doctor->medc_map->map}}</div>
                         @if($doctor['address'])<div class="entity-map__address-descr">({{$doctor['address']}})</div>@endif
                     </div>
                 </div>
