@@ -60,6 +60,9 @@ class DoctorController extends Controller
 
         $doctorsTop = null;
         $currentPage = $request->input('page');
+        $comercial = null;
+
+        $comercial = Doctor::where('comercial','=',1)->orderBy('firstname','asc');
 
         if(isset($skill))
         {
@@ -76,6 +79,10 @@ class DoctorController extends Controller
 
         if(isset($doctorsTop)){
             $doctors = $doctors->whereNotIn('id', $skill->top_doctors);
+        }
+
+        if(isset($comercial)){
+            $doctors = $doctors->whereNotIn('id', $comercial->pluck('id')->toArray());
         }
 
         if (isset($filter['page']) && $filter['page'] == 1){
@@ -133,7 +140,7 @@ class DoctorController extends Controller
 
             //compact('meta', 'doctors', 'skills', 'medcenters', 'filter', 'query'));
 
-            compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage', 'skill'));
+            compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage', 'skill', 'comercial'));
     }
 
     public function get_dt(Request $request)

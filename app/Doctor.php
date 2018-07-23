@@ -184,7 +184,8 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         'thur',
         'frid',
         'satu',
-        'sund'
+        'sund',
+        'comercial'
     ];
     protected $casts = [
         'child'   => 'int',

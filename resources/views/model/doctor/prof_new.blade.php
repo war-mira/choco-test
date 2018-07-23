@@ -6,6 +6,16 @@
         @slot('on_top')
              {{$doctor->on_top}}
         @endslot
+        @if(isset($comercial))
+            @slot('comercial')
+                {{$comercial}}
+            @endslot
+        @endif
+        @if(isset($top5))
+            @slot('top5')
+                {{$top5}}
+            @endslot
+        @endif
     @endcomponent<br>
 
     <div class="entity-thumb-img__rating-line rating-line">
