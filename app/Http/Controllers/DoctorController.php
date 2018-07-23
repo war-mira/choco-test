@@ -98,9 +98,11 @@ class DoctorController extends Controller
             $description = 'iDoctor.kz - Список врачей-специалистов по всему Казахстану. Поиск и бесплатная запись на прием к врачу любой специальности. У нас собрана большая база врачей различных специализаций по всему Казахстану';
             $meta = compact('title', 'description');
         }
+
         $doctors = $doctors->paginate(10)->appends($query);
 
-        if ($doctors->lastPage() < ($filter['page'] ?? 1)){
+        if ($doctors->lastPage() < ($filter['page'] ?? 1))
+        {
             return redirect($doctors->url(1));
         }
 
@@ -131,7 +133,52 @@ class DoctorController extends Controller
 
             //compact('meta', 'doctors', 'skills', 'medcenters', 'filter', 'query'));
 
-            compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage'));
+            compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage', 'skill'));
+    }
+
+    public function get_dt(Request $request)
+    {
+        if($request->ajax())
+        {
+            $day = $request->get('day');
+
+            if($day == 'tomorrow')
+            {
+                $day = date('D',strtotime('+1 days'));
+            }
+
+            $array = [
+              'Mon'=> 1,'Tue'=>2,'Wed'=>3,'Thu'=>4,'Fri'=>5,'Sat'=>6,'Sun'=>7
+            ];
+
+            foreach ($array as $u=>$k)
+            {
+                if($day == $u)
+                {
+                    $day = $k;
+                }
+            }
+
+            if($day == 'today')
+            {
+                $day = date('n');
+            }
+
+            if($day == 'custom')
+            {
+                $day = $request->get('day');
+            }
+
+            $doc = Doctor::query()
+                ->where('doctors.id', $request->get('idc'))->first();
+
+            return response()->json([
+               'times'=>view('doctors.times')->with([
+                   'doctor'=>$doc,
+                   'day'=>$day
+               ])->render()
+            ]);
+        }
     }
 
     private function applyDoctorsFilter($doctors, $filter)

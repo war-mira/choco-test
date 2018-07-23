@@ -2105,7 +2105,8 @@ img {
   color: #00A8FF; }
   .pagination__item {
     margin: 0 13px;
-    position: relative; }
+    position: relative;
+    list-style: none; }
     .pagination__item_active {
       color: #454545; }
       .pagination__item_active:after {
@@ -2854,7 +2855,15 @@ textarea:-moz-placeholder {
   font-size: 18px;
   font-family: "ProximaNova-Semibold", sans-serif;
   margin-bottom: 20px; }
+.noselect {
+  -webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
 
+}
 .entity-profiles__list {
   display: -webkit-box;
   display: -webkit-flex;
@@ -3876,7 +3885,9 @@ span.tab-line__item {
 {
   display: none;
 }
-
+.search-bar__item_search-additional {
+    display: none;
+}
 .entity-about-article.current,
 .entity-about-articl.current
 {

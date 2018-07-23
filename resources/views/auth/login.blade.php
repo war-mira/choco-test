@@ -7,18 +7,16 @@
             <div class="panel-body wrap">
                 <form class="form" role="form" method="POST" action="{{ route('login') }}">
                     {{ csrf_field() }}
-
                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                         <label for="email">Логин:</label>
-
 
                         <input id="email" type="text" class="form-control" name="email" value="{{ old('email') }}"
                                required placeholder="Email или телефон">
 
                         @if ($errors->has('email'))
                             <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                                <strong>{{ $errors->first('email') }}</strong>
+                            </span>
                         @endif
 
                     </div>

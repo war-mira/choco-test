@@ -17,12 +17,13 @@ Route::get('order/gotopay/{id}', 'OrderController@gotopay');
 Route::get('order/newFromSite', 'OrderController@newFromSite');
 Route::get('order/update/', 'OrderController@update');
 Route::post('getdata', 'DoctorController@getall');
+Route::get('get_doc_time', 'DoctorController@get_dt')->name('get_dt');
 
 Route::get('doctor/{doctor}', function (\App\Doctor $doctor) {
     return redirect()->route('doctor.item', ['doctor' => $doctor->alias]);
 });
 
-Route::group(['prefix' => 'doctors', 'as' => 'all.doctors.'], function () {
+Route::group(['prefix' => 'doctors', 'as' => 'all.doctors.'], function () { //Добавил z - удалить
     Route::get('/{skill?}', 'DoctorController@commonList')->name('list');
 });
 Route::get('medcenters', 'MedcenterController@list')->name('all.medcenters.list');
@@ -33,13 +34,14 @@ Route::get('medcenters', 'MedcenterController@list')->name('all.medcenters.list'
 //Route::get('medcenters/{city?}', function (\App\City $city = null) {
 //    return redirect()->route('medcenters.list');
 //});
+
 Route::get('medcenter/{medcenter}', function (\App\Medcenter $medcenter) {
     return redirect()->route('medcenter.item', ['medcenter' => $medcenter->alias]);
 });
 
 Route::group(['prefix' => '{city}'], function () {
 
-    Route::group(['prefix' => 'doctors', 'as' => 'doctors.'], function () {
+    Route::group(['prefix' => 'doctors', 'as' => 'doctors.'], function () { //Добавил z - удалить
         Route::get('/{skill?}', 'DoctorController@list')->name('list');
     });
     Route::group(['prefix' => 'doctor', 'as' => 'doctor.'], function () {

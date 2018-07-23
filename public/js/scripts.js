@@ -24,7 +24,7 @@ $(document).ready(function() {
 
     $("input[data-mask]").each(function() {
         var $this = $(this);
-        var mask = "" + $this.data("mask")
+        var mask = "" + $this.data("mask");
         $this.mask(mask);
     });
     
@@ -94,21 +94,27 @@ $(document).ready(function() {
             beforeOpen: function() {
                 $('form#callback_form').find('input[name="target_id"]').val(this.st.el.data('doc-id'));
                 $('form#callback_form').find('#doctor_name').val(this.st.el.data('dname'));
-                if($(this.st.el).parent().parent().find('input[name="date"]:checked').val() != 'custom')
+                if($(this.st.el).parent().parent().find('input[name="date"]:checked').val() != 'custom' && $(this.st.el).parent().parent().find('input[name="date"]').is(':radio'))
                 {
                     $('form#callback_form').find('input[name="date"]').val($(this.st.el).parent().parent().find('input[name="date"]:checked').val());
-                }else
+                }else if($(this.st.el).parent().parent().find('input[name="custom-date"]').length)
                 {
                     $('form#callback_form').find('input[name="date"]').val($(this.st.el).parent().parent().find('input[name="custom-date"]').val());
                 }
+                else
+                {
+                    $('form#callback_form').find('input[name="date"]').val($(this.st.el).parent().parent().find('input.js-custom-date-val').val());
+                }
 
-                $('form#callback_form').find('input[name="time"]').val($(this.st.el).parent().parent().find('input[name="time"]').val());
+                $('form#callback_form').find('input[name="time"]').val($(this.st.el).parent().parent().find('input[name="time"]:checked').val());
             }
         }
     }
 
-    $('a.popup-with-form').on("click", function(){
-        if($(this).closest('div.search-result__item').length) {
+    $('a.popup-with-form').on("click", function()
+    {
+        if($(this).closest('div.search-result__item').length)
+        {
             var block = $(this).closest('div.search-result__item');
         }
         else
@@ -116,13 +122,13 @@ $(document).ready(function() {
             var block = $(this).closest('div.appointment-book-small__line');
         }
         var condition = checkblock(block);
-        if(condition){
+        if(condition)
+        {
             $(this).magnificPopup(popupDefaults).magnificPopup('open');
         }
-
     });
 
-    $(".js-search-select").selectize({
+    var $select = $(".js-search-select").selectize({
         render: {
             option: function(data, escape) {
                 if (data.optgroup == "Специализации") {
@@ -145,7 +151,7 @@ $(document).ready(function() {
                         '</span>' +
                     '</div>';
                 }
-                
+
             }
         }
     });
@@ -211,8 +217,12 @@ $(document).ready(function() {
         $this[0].addEventListener('pickmeup-change', function (e) {
             $this.find(".date-radio__text").html(e.detail.formatted_date);
             $this.find(".js-custom-date-val").val(e.detail.formatted_date);
-
+            var dt = e.detail.date.toString().split(' ');
+            $this.find('input[name="dayweek"]').val(dt[0]);
             $this.find("input[type=\"radio\"]").prop("checked", true);
+            
+            get_times($this.closest('.search-result__item').data('id'),dt[0],'',$this.parent().parent().parent());
+            
         })
     });
 
@@ -236,6 +246,19 @@ $(document).ready(function() {
         $this[0].addEventListener('pickmeup-change', function (e) {
             $this.find(".appointment-book-small__date-text").html(e.detail.formatted_date);
             $this.find(".js-custom-date-val").val(e.detail.formatted_date);
+            var dt = e.detail.date.toString().split(' ');
+            $this.find('input[name="dayweek"]').val(dt[0]);
+            
+            console.log($this.closest('.search-result__item').length);
+            
+            if($this.closest('div.search-result__item').length)
+            {
+                get_times($this.closest('div.search-result__item').data('id'),dt[0],'',$this.parent().parent().parent());
+            }
+            else
+            {
+                get_times($this.closest('.search-result__item').data('id'),dt[0],'',$this.parent().parent().parent());   
+            }
         })
 
     });
@@ -243,7 +266,7 @@ $(document).ready(function() {
     $(".date-radio input[type=\"radio\"]").change(function()
     {
         var $this = $(this);
-
+        get_times($(this).parent().parent().parent().parent().parent().parent().data('id'),$(this).val(),$this);
         if ($this.is(":checked") && !($this.val() == "custom")) {
             var $customDate = $this.closest(".date-radio").siblings(".js-custom-date").find(".date-radio__item");
             $customDate.find(".date-radio__text").html("Выбрать дату");
@@ -566,6 +589,21 @@ $(document).ready(function() {
                 location.reload();
             }
         });
+    });
+
+    $(".js-entity-type-search").change(function() {
+        var entityType = $(this).val();
+
+        if (entityType == "medcenters") {
+
+            $(".js-additional-search").show();
+            $(".index-search-bar").addClass("index-intro__search-bar_additional-search");
+
+        } else if (entityType =="all") {
+
+            $(".js-additional-search").hide();
+            $(".index-search-bar").removeClass("index-intro__search-bar_additional-search");
+        }
     });
 });
 

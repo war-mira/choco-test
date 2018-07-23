@@ -3,6 +3,9 @@
         @slot('src')
             {{$doctor['avatar']}}
         @endslot
+        @slot('on_top')
+             {{$doctor->on_top}}
+        @endslot
     @endcomponent<br>
 
     <div class="entity-thumb-img__rating-line rating-line">
@@ -26,7 +29,7 @@
     </div>
 </div>
 <div class="entity-line__main">
-    <div class="entity-line__name"><a href="{{ route('doctor.item',['doctor'=>$doctor->alias]) }}">{{$doctor['name']}}</a></div>
+    <h3 class="entity-line__name profiles__title"><a href="{{ route('doctor.item',['doctor'=>$doctor->alias]) }}">{{$doctor['name']}}</a></h3>
     @if($doctor['qualification'])<div class="entity-line__label">{{$doctor['qualification']}}</div>@endif
     <div class="entity-line__features">
         <div class="entity-line__feature entity-feature">
@@ -71,9 +74,9 @@
             @if($doctor->medname)
                 @foreach($doctor->medname as $ff)
                     <div class="doc-line__address-item">
-                        <div class="doc-line__address-val">{{$ff->map}}</div>
+                        <div class="doc-line__address-val"><a href="#">{{$ff->city->name}}</a>, {{$ff->map}}</div>
                         <div class="doc-line__address-clinic-link">
-                            <a href="#">{{$ff->name}}</a>
+                            <a href="{{route('medcenter.item',['medcenter'=>$ff->alias])}}">{{$ff->name}}</a>
                         </div>
                     </div>
                 @endforeach
@@ -81,7 +84,7 @@
         </div>
     </div>
 </div>
-<div class="class="entity-line__additional">
+<div class="entity-line__additional">
     <form action="#" class="appointment-book-big">
         <div class="appointment-book-big__heading">Записаться на прием</div>
         <div class="appointment-book-big__date-line">
@@ -100,102 +103,43 @@
             <div class="appointment-book-big__date-item date-radio js-custom-date">
                 <div class="date-radio__item">
                     <input type="radio" name="date" value="custom">
+                    <input type="hidden" name="dayweek" />
                     <span class="date-radio__text">Выбрать дату</span>
                     <input type="text" name="custom-date" class="js-custom-date-val">
                     <div class="pickmeup pmu-view-days pmu-hidden"><div class="pmu-instance"><nav><div class="pmu-prev pmu-button" style="visibility: visible;">◀</div><div class="pmu-month pmu-button">Июль, 2018</div><div class="pmu-next pmu-button" style="visibility: visible;">▶</div></nav><nav class="pmu-day-of-week"><div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div><div>Вс</div></nav><div class="pmu-years"><div class="pmu-button">2012</div><div class="pmu-button">2013</div><div class="pmu-button">2014</div><div class="pmu-button">2015</div><div class="pmu-button">2016</div><div class="pmu-button">2017</div><div class="pmu-selected pmu-button">2018</div><div class="pmu-button">2019</div><div class="pmu-button">2020</div><div class="pmu-button">2021</div><div class="pmu-button">2022</div><div class="pmu-button">2023</div></div><div class="pmu-months"><div class="pmu-button">Янв</div><div class="pmu-button">Фев</div><div class="pmu-button">Мар</div><div class="pmu-button">Апр</div><div class="pmu-button">Май</div><div class="pmu-button">Июн</div><div class="pmu-selected pmu-button">Июл</div><div class="pmu-button">Авг</div><div class="pmu-button">Сен</div><div class="pmu-button">Окт</div><div class="pmu-button">Ноя</div><div class="pmu-button">Дек</div></div><div class="pmu-days"><div class="pmu-not-in-month pmu-button">25</div><div class="pmu-not-in-month pmu-button">26</div><div class="pmu-not-in-month pmu-button">27</div><div class="pmu-not-in-month pmu-button">28</div><div class="pmu-not-in-month pmu-button">29</div><div class="pmu-not-in-month pmu-saturday pmu-button">30</div><div class="pmu-sunday pmu-button">1</div><div class="pmu-button">2</div><div class="pmu-button">3</div><div class="pmu-button">4</div><div class="pmu-button">5</div><div class="pmu-button">6</div><div class="pmu-saturday pmu-button">7</div><div class="pmu-sunday pmu-button">8</div><div class="pmu-button">9</div><div class="pmu-selected pmu-today pmu-button">10</div><div class="pmu-button">11</div><div class="pmu-button">12</div><div class="pmu-button">13</div><div class="pmu-saturday pmu-button">14</div><div class="pmu-sunday pmu-button">15</div><div class="pmu-button">16</div><div class="pmu-button">17</div><div class="pmu-button">18</div><div class="pmu-button">19</div><div class="pmu-button">20</div><div class="pmu-saturday pmu-button">21</div><div class="pmu-sunday pmu-button">22</div><div class="pmu-button">23</div><div class="pmu-button">24</div><div class="pmu-button">25</div><div class="pmu-button">26</div><div class="pmu-button">27</div><div class="pmu-saturday pmu-button">28</div><div class="pmu-sunday pmu-button">29</div><div class="pmu-button">30</div><div class="pmu-button">31</div><div class="pmu-not-in-month pmu-button">1</div><div class="pmu-not-in-month pmu-button">2</div><div class="pmu-not-in-month pmu-button">3</div><div class="pmu-not-in-month pmu-saturday pmu-button">4</div><div class="pmu-not-in-month pmu-sunday pmu-button">5</div></div></div></div></div>
             </div>
         </div>
         <div class="appointment-book-big__time-list">
-            <div class="appointment-book-big__time-item time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="09:00">
-                    <span class="time-radio__text btn btn_theme_radio">09:00</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item appointment-book-big__time-item_additional time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="09:00">
-                    <span class="time-radio__text btn btn_theme_radio">09:30</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="09:00">
-                    <span class="time-radio__text btn btn_theme_radio">10:00</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item appointment-book-big__time-item_additional time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="09:00">
-                    <span class="time-radio__text btn btn_theme_radio">10:30</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="09:00">
-                    <span class="time-radio__text btn btn_theme_radio">11:00</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item appointment-book-big__time-item_additional time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="09:00">
-                    <span class="time-radio__text btn btn_theme_radio">11:30</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="09:00">
-                    <span class="time-radio__text btn btn_theme_radio">12:00</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item appointment-book-big__time-item_additional time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="09:00">
-                    <span class="time-radio__text btn btn_theme_radio">12:30</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="09:00">
-                    <span class="time-radio__text btn btn_theme_radio">14:00</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item appointment-book-big__time-item_additional time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="09:00">
-                    <span class="time-radio__text btn btn_theme_radio">14:30</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="09:00">
-                    <span class="time-radio__text btn btn_theme_radio">15:00</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item appointment-book-big__time-item_additional time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="09:00">
-                    <span class="time-radio__text btn btn_theme_radio">15:30</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="09:00">
-                    <span class="time-radio__text btn btn_theme_radio">16:00</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item appointment-book-big__time-item_additional time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="09:00">
-                    <span class="time-radio__text btn btn_theme_radio">16:30</span>
-                </label>
-            </div>
-            <div class="appointment-book-big__time-item time-radio">
-                <label class="time-radio__item">
-                    <input type="radio" name="time" value="09:00">
-                    <span class="time-radio__text btn btn_theme_radio">17:00</span>
-                </label>
-            </div>
+            @php
+            $today = date('n'); $st = 1;
+            $week = array(1=>'mond',2=>'tues',3=>'wedn',4=>'thur',5=>'frid',6=>'satu',7=>'sund');
+            if($doctor[$week[$today]])
+            {
+                $nic = unserialize($doctor[$week[$today]]);
+                $starttime = $nic[0];  // your start time
+                $endtime = $nic[1];  // End time
+                $duration = '30';  // split by 30 mins
+                $start_time    = strtotime ($starttime); //change to strtotime
+                $end_time      = strtotime ($endtime); //change to strtotime
+                $add_mins  = $duration * 60;
+            }
+
+            @endphp
+
+            @if(isset($nic) && $nic)
+            @while($start_time <= $end_time)
+                @if($st == 9)<div class="appointment-book-big__time-item_additional"> @endif
+                <div class="appointment-book-big__time-item time-radio">
+                    <label class="time-radio__item">
+                        <input type="radio" name="time" value="@php echo date('H:i',$start_time); @endphp"/>
+                        <span class="time-radio__text btn btn_theme_radio noselect">@php echo date('H:i',$start_time); @endphp</span>
+                    </label>
+                </div>
+                @if($start_time == $end_time)</div> @endif
+                @php $start_time += $add_mins; $st++; @endphp
+            @endwhile
+            @endif
+
         </div>
         <div class="appointment-book-big__custom-time custom-time-btn">
             <button class="custom-time-btn__btn">
