@@ -4,7 +4,7 @@
         @if ($paginator->onFirstPage())
             <a class="pagination__item ">&laquo;</a>
         @else
-            <li class="pagination__item"><a href="{!! str_replace(['?page=1', '&page=1'], '', $paginator->previousPageUrl() ) !!}" rel="prev">&laquo;</a></li>
+            <li class="pagination__item"><a href="{!! preg_replace(["/\?page=1$/", "/\&page=1$/"], "", $paginator->previousPageUrl()) !!}" rel="prev">&laquo;</a></li>
         @endif
 
         {{-- Pagination Elements --}}
@@ -20,7 +20,7 @@
                     @if ($page == $paginator->currentPage())
                         <span class="pagination__item pagination__item_active">{{ $page }}</span>
                     @else
-                        <a class="pagination__item" href="{{ $url }}">{{ $page }}</a>
+                        <a class="pagination__item" href="{!! preg_replace(["/\?page=1$/", "/\&page=1$/"], "", $url) !!}">{{ $page }}</a>
                     @endif
                 @endforeach
             @endif
