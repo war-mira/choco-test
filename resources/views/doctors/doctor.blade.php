@@ -14,6 +14,9 @@
                             @slot('height')
                                 250px
                             @endslot
+                            @slot('on_top')
+                                {{$doctor->on_top}}
+                            @endslot
                         @endcomponent
                         <a href="#" class="entity-thumb-img__add-favorite"></a>
                     </div>
