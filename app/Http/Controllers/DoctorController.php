@@ -69,7 +69,7 @@ class DoctorController extends Controller
             });
             $top_doctors = FormatHelper::arrayToString($skill->top_doctors);
             if($top_doctors && $skill->top_doctors){
-                $doctorsTop = Doctor::whereIn('id', $skill->top_doctors)->orderByRaw('FIELD(id,'.$top_doctors.')')->get();
+                $doctorsTop = Doctor::whereIn('id', $skill->top_doctors)->orderByRaw('FIELD(id,'.$top_doctors.')')->where('status', 1)->get();
             }
 
         }
