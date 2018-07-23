@@ -131,6 +131,14 @@
         $("#search_input").val($("#setskill").text());
     });
 </script>
+<script type="text/javascript">
+    $('#search-bn').on('click', function () {
+        ga('send', 'event', {
+            eventCategory: 'poisk_glavnaya',
+            eventAction: 'click'
+        });
+    });
+</script>
 
 </body>
 </html>

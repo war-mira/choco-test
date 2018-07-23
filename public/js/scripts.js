@@ -309,7 +309,8 @@ $(document).ready(function() {
         var $container = $this.closest(".js-input-add-container");
         var $entityToClone = $container.find(".js-input-add-entity");
         var $entityClone = $($entityToClone.data("markup"));
-        console.log(entityCount);
+
+        $entityClone.removeClass("js-input-add-entity");
         $entityClone.removeClass("js-input-add-entity");
 
         //increment input names

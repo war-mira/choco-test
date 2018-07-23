@@ -17,7 +17,9 @@ class DoctorController extends Controller
         'ambulatory' => 0,
         'status'     => 0,
     ];
-    const SEARCH_FIELDS = ['firstname', 'lastname', 'medcenters' => ['name'], 'city' => ['name']];
+    const SEARCH_FIELDS = ['firstname', 'lastname',
+//        'medcenters' => ['name'], 'city' => ['name']
+    ];
 
     public function getTableView(Request $request)
     {

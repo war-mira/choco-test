@@ -565,3 +565,11 @@
 .search-text-input input{
     width: 85%;
 }
+
+.doc-prof-data__section{
+    padding-top: 35px;
+}
+
+.account-data-item__radio{
+    padding-top: 20px;
+}

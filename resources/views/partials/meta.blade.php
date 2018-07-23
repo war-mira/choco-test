@@ -33,7 +33,7 @@
 @if(!empty($meta['image']))
     <meta property="og:image" content="{{ url($meta['image']) }}"/>
 @else
-    <meta property="og:image" content="{{asset('images/idoctor_newyear.jpg')}}"/>
+    <meta property="og:image" content="{{asset('images/idoc_logo.png')}}"/>
 @endif
 
 @if(!empty($meta['description']))

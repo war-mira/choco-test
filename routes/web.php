@@ -118,7 +118,7 @@ Route::get('redirector', function (\Illuminate\Http\Request $request) {
     return response()->redirectTo($redirectUrl);
 });
 
-Route::group(['as' => 'cabinet.', 'prefix' => 'cabinet'], function () {
+Route::group(['as' => 'cabinet.', 'prefix' => 'cabinet', 'middleware' => 'auth'], function () {
     Route::group(['as' => 'doctor.', 'prefix' => 'doctor'], function () {
         Route::group(['as' => 'personal.', 'prefix' => 'personal'], function () {
             Route::get('/index', 'Cabinet\Doctor\DoctorCabinetPersonalController@index')->name('index');

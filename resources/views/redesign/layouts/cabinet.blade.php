@@ -30,7 +30,7 @@
     <script src="{{URL::asset("js/pickmeup.min.js")}}"></script>
     <script src="{{URL::asset("js/jquery.magnific-popup.min.js")}}"></script>
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
-    <script src="{{URL::asset("js/scripts.js")}}"></script>
+    <script src="{{URL::asset("js/scripts.js?hw34h")}}"></script>
     <script src="{{URL::asset("js/spaghetti.js")}}"></script>
 </head>
 <body>

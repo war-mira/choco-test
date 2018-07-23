@@ -62,7 +62,6 @@ class User extends Authenticatable implements CanResetPassword
         33,//Кесиди
         396,//Жулдыз
         2322,//Виктория Казбековна
-        10131,//Айгерим Халелова
         11024,//Альбина Тилепберди
     ];
     /**
