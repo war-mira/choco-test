@@ -84,7 +84,6 @@ class DoctorController extends Controller
 
         $this->applyDoctorsFilter($doctors, $filter);
 
-
         if (!empty($city->id) && $city->id != 1) {
             $doctors = $doctors->where('doctors.city_id', $city->id);
 
@@ -106,17 +105,12 @@ class DoctorController extends Controller
             return redirect($doctors->url(1));
         }
 
-        $skills = \App\Skill::orderBy('name');
-        if (!empty($city->id)) {
-            $skills = $skills->havingDoctorsInCity($city);
-        }
-        $skills = $skills->get();
-
-        $medcenters = \App\Medcenter::orderBy('name');
-        if (!empty($city->id)) {
-            $medcenters = $medcenters->havingDoctorsInCity($city);
-        }
-        $medcenters = $medcenters->get();
+//        $skills = \App\Skill::orderBy('name');
+//        if (!empty($city->id)) {
+//            $skills = $skills->havingDoctorsInCity($city);
+//        }
+//
+//        $skills = $skills->get();
 
         if (isset($skill)) {
             $meta = SeoMetadataHelper::getMeta($skill, $city);
@@ -133,7 +127,7 @@ class DoctorController extends Controller
 
             //compact('meta', 'doctors', 'skills', 'medcenters', 'filter', 'query'));
 
-            compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage', 'skill'));
+            compact('meta', 'doctors', 'doctorsTop', 'filter', 'query', 'city', 'currentPage', 'skill'));
     }
 
     public function get_dt(Request $request)

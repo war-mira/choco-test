@@ -163,6 +163,7 @@ Route::post('/feedback/order/{token}', 'OrderController@feedbackLeave')->name('f
 Route::get('/{city}/specializacii/{skill}', 'SkillController@showSkillDoctors')->name('skill.doctors');
 
 Route::get('/load', 'ExcelController@loadDoctors')->name('load.doctors');
+Route::get('/load-skills', 'ExcelController@loadSkills')->name('load.skills');
 
 
 // Telegram doctors bot

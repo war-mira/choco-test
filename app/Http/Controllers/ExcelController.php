@@ -11,8 +11,6 @@ class ExcelController extends Controller
 
     public function loadDoctors()
     {
-        ini_set('memory_limit', '-1');
-        ini_set('max_execution_time', 0);
         Excel::load('files/doctors.xlsx', function ($reader) {
             $reader->skipRows(1);
             $results = $reader->get();
@@ -68,6 +66,28 @@ class ExcelController extends Controller
                 }
             }
 
+        });
+    }
+
+    public function loadSkills()
+    {
+        Excel::load('files/skills3.xls', function ($reader) {
+            $results = $reader->toArray();
+
+            foreach ($results as $rows) {
+                foreach ($rows as $row){
+                    $alias = trim(preg_replace('|/|', '', $row[0]));
+                    $existSkill = Skill::where('alias', $alias)->first();
+                    if(!$existSkill){
+                        $skill = new Skill();
+                        $skill->alias = $alias;
+                        $skill->name = isset($row[1]) ? trim($row[1]):'';
+                        $skill->save();
+                    }
+                }
+            }
+
+            return 'ok';
         });
     }
 
