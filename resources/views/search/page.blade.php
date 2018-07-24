@@ -14,16 +14,24 @@
                 <select data-style="search-skill-select search-category-select"
                         data-live-search="true" id="skillSelect">
                     <option value="">Все</option>
-                    @foreach($skills as $skill)
-                        <option value="{{$skill->alias}}">{{$skill->name}}</option>
-                    @endforeach
+                    {{--@foreach($skills as $skill)--}}
+                        <option value="
+{{--{{$skill->alias}}--}}
+                ">
+{{--{{$skill->name}}--}}
+                </option>
+                    {{--@endforeach--}}
                 </select>
                 <select data-style="search-medcenter-select search-category-select"
                         data-live-search="true"
                         id="medcenterSelect">
-                    @foreach($medcenters as $medcenter)
-                        <option value="{{$medcenter->alias}}">{{$medcenter->name}}</option>
-                    @endforeach
+                    {{--@foreach($medcenters as $medcenter)--}}
+                        <option value="
+{{--{{$medcenter->alias}}--}}
+                ">
+{{--{{$medcenter->name}}--}}
+                </option>
+                    {{--@endforeach--}}
                 </select>
                 <input type="text" id="searchInput" name="q" class="search-box search-input"
                        placeholder="Поиск врачей..."
