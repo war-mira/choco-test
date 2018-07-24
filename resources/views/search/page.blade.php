@@ -142,6 +142,27 @@
             <div class="search-result">
                 <div class="container">
                     <div class="search-result__list">
+
+                        @if($comercial)
+                        @foreach($comercial->get() as $doctor)
+                            <div class="search-result__item entity-line doc-line" data-type="doctor" data-id="{{$doctor->id}}"
+                                 id="doctor-result-{{$doctor->id}}" >
+                                @component('model.doctor.prof_new',['doctor'=>$doctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'comercial'=>true])
+                                @endcomponent
+                            </div>
+                        @endforeach
+                        @endif
+
+                        @if($doctorsTop)
+                            @foreach($doctorsTop as $doctor)
+                                <div class="search-result__item entity-line doc-line" data-type="doctor" data-id="{{$doctor->id}}"
+                                     id="doctor-result-{{$doctor->id}}" >
+                                    @component('model.doctor.prof_new',['doctor'=>$doctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'top5'=>true])
+                                    @endcomponent
+                                </div>
+                            @endforeach
+                        @endif
+
                         @foreach($doctors as $doctor)
                             <div class="search-result__item entity-line doc-line" data-type="doctor" data-id="{{$doctor->id}}"
                                  id="doctor-result-{{$doctor->id}}" >

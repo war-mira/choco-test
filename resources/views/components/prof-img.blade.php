@@ -3,7 +3,10 @@
      src="{{ file_exists($src) ? URL::asset($src) :URL::asset('images/no-userpic.gif') }}"
      style="max-width:{{$width ?? '120px'}}; max-height:{{$height ?? '120px'}}" alt="" />
     <a href="#" class="entity-thumb-img__add-favorite"></a>
-    @if((isset($on_top) && $on_top != '0'))
+    @if((isset($top5)))
         <div class="entity-thumb-img__label entity-thumb-img__label_top">ТОП-5</div>
+    @endif
+    @if(isset($comercial))
+        <div class="entity-thumb-img__label entity-thumb-img__label_ad">Реклама</div>
     @endif
 </div>
