@@ -1,5 +1,6 @@
 <script>
-    var offset = {{$visible}};
+    //var offset = {{$visible}};
+    var offset = 0;
     var limit = 10;
     $('#loadMoreComments').click(function (e) {
         e.preventDefault();
