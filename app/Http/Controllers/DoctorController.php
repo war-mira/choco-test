@@ -366,23 +366,31 @@ class DoctorController extends Controller
 
     public function loadComments($city, $doctor, Request $request)
     {
+        if($request->ajax()) {
+            $offset = $request->query('offset', 0);
+            $limit = $request->query('limit', 10);
+            $comments = $doctor->comments()
+                ->where('comments.status', 1)
+                ->orderByDesc('updated_at');
+            $total = $comments->count();
 
-        $offset = $request->query('offset', 0);
-        $limit = $request->query('limit', 10);
-        $comments = $doctor->comments()
-            ->where('comments.status', 1)
-            ->orderByDesc('updated_at');
-        $total = $comments->count();
+            $comments = $comments->offset($offset)
+                ->limit($limit)
+                ->get();
 
-        $comments = $comments->offset($offset)
-            ->limit($limit)
-            ->get();
+            $comment = $comments;
 
-        $view = view('model.comments.ajax-list', compact('comments'))->render();
-        $offset = $offset + $limit;
-        $left = $total - $offset;
-        $left = $left < 0 ? 0 : $left;
-        return compact('view', 'offset', 'left');
+            $view = view('model.comments.ajax-list',['comments'=>$comments])->render();
+            $offset = $offset + $limit;
+            $left = $total - $offset;
+            $left = $left < 0 ? 0 : $left;
+            //return compact('view', 'offset', 'left');
+            return response()->json([
+                'offset' => $offset,
+                'left' => $left,
+                'view' => $view
+            ]);
+        }
     }
 
     public function feedback(City $city, Doctor $doctor){
