@@ -15,11 +15,11 @@
             @endforeach
             <div id="hidden-comments">
             </div>
-
-            <div class="entity-reviews__more">
-                <a href="{{$url ?? ""}}" id="loadMoreComments" class="btn btn_theme_more">Все отзывы</a>
-            </div>
-
+            @if(count($comments) > 5)
+                <div class="entity-reviews__more">
+                    <a href="{{$url ?? ""}}" id="loadMoreComments" class="btn btn_theme_more">Все отзывы</a>
+                </div>
+            @endif
             <!--p class="reviews__more">
                 <button class="button button--light show-hidden-comments-btn"
                         type="button" id="loadMoreComments" data-url="{{$url ?? ""}}">Еще <span id="commentsLeftText">...</span>
