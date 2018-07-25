@@ -33,7 +33,8 @@
 </script>
 @if(isset($owner))
 <script>
-    $("#save_comment").click(function () {
+    $("#save_comment").click(function (e) {
+        e.preventDefault();
         if ($("#comment_form")[0].checkValidity()) {
             $.getJSON("{{url('/comment/new')}}", {
                 owner_id: $('#owner_id').val(),
