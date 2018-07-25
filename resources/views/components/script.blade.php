@@ -43,7 +43,8 @@
                 user_name: $('#user_name').val(),
                 text: $('#comment_text').val(),
                 user_rate: $('input[name=user_rate]:checked').val(),
-                date_event: $('#date_event').val()
+                date_event: $('#date_event').val(),
+                type:1
             })
                 .done(function (json) {
                     $('#user_email').removeClass('has-warning');

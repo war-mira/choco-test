@@ -699,6 +699,10 @@ img {
     width: 100%;
     height:100%;
   }
+  #save_comment_mess_ok{
+    text-align: center;
+  }
+
     .entity-thumb-img__img_shadow {
       -webkit-box-shadow: 0px 5px 18px 0px rgba(0, 0, 0, 0.06);
               box-shadow: 0px 5px 18px 0px rgba(0, 0, 0, 0.06); }
