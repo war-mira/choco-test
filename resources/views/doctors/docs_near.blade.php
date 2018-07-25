@@ -8,7 +8,7 @@
                         <div class="entity-thumb-img__img-wr">
                             @component('components.prof-img')
                                 @slot('src')
-                                    {{$doctor->avatar}}
+                                    {{$tt->avatar}}
                                 @endslot
                                 @slot('width')
                                     250px
@@ -24,7 +24,7 @@
                     <a href="{{Route('doctor.item', ['doctor' => $tt->alias])}}" class="docs-slider__item-link">
                         <div class="docs-slider__item-name">{{$tt->name}}</div>
                         <div class="docs-slider__item-spec">
-                            @foreach ($tt['skills'] as $i=>$skill)<a href="{{$skill->href}}" style="text-decoration: none">{{$skill->name }}</a>
+                            @foreach ($tt['skills'] as $i=>$skill)<a href="{{$skill->href}}" style="text-decoration: none">{{$skill->name}}</a>
                             @if(count($tt['skills']) > 1 && $i!=(count($tt['skills'])-1)) / @endif  @endforeach
                         </div>
                     </a>

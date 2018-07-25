@@ -697,6 +697,7 @@ img {
     position: absolute;
     top: 0;
     width: 100%;
+    height:100%;
   }
     .entity-thumb-img__img_shadow {
       -webkit-box-shadow: 0px 5px 18px 0px rgba(0, 0, 0, 0.06);
