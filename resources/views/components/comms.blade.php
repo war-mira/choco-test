@@ -17,8 +17,7 @@
             </div>
             @if(count($comments) > 5)
                 <div class="entity-reviews__more">
-                    <a href="{{$url ?? ""}}" id="loadMoreComments" data-url="{{$url ?? ""}}" class="btn btn_theme_more">Все <span id="commentsLeftText">...</span>
-                        отзывы</a>
+                    <a href="{{$url ?? ""}}" id="loadMoreComments" data-url="{{$url ?? ""}}" class="btn btn_theme_more">Все отзывы</a>
                 </div>
             @endif
             <!--p class="reviews__more">
