@@ -10,6 +10,8 @@
                 {{ csrf_field() }}
                 <input type="hidden" id="owner_type" value="{{$owner['type']}}">
                 <input type="hidden" id="owner_id" value="{{$owner['id']}}">
+                <input type="hidden" id="type" value="0">
+
                 <div class="leave-review__input-line">
                     @if(Auth::guest())
                     <div class="leave-review__input-item">
@@ -48,7 +50,7 @@
                         </div>
                     </div>
                     <div class="leave-review__submit">
-                        <button class="btn btn_theme_usual button button--light" id="save_comment">Оставить отзыв</button>
+                        <a class="btn btn_theme_usual button button--light" id="save_comment">Оставить отзыв</a>
                     </div>
                 </div>
             </form>

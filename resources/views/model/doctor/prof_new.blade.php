@@ -6,6 +6,16 @@
         @slot('on_top')
              {{$doctor->on_top}}
         @endslot
+        @if(isset($comercial))
+            @slot('comercial')
+                {{$comercial}}
+            @endslot
+        @endif
+        @if(isset($top5))
+            @slot('top5')
+                {{$top5}}
+            @endslot
+        @endif
     @endcomponent<br>
 
     <div class="entity-thumb-img__rating-line rating-line">
@@ -18,11 +28,11 @@
         <a href="#" class="entity-thumb-img__reviews">{{$doctor->publicComments()->count()}} отзывов</a>
         <div class="entity-thumb-img__thumb-control thumb-control">
             <button class="thumb-control__item">
-                <span class="thumb-control__val">0</span>
+                <span class="thumb-control__val">{{$doctor->publicComments()->where('user_rate','>=',5)->count() ?? 0}}</span>
                 <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
             </button>
             <button class="thumb-control__item">
-                <span class="thumb-control__val">0</span>
+                <span class="thumb-control__val">{{$doctor->publicComments()->where('user_rate','<=',5)->count() ?? 0}}</span>
                 <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
             </button>
         </div>

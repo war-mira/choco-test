@@ -265,6 +265,18 @@
                                                     @slot('label','С возраста')
                                                 @endcomponent
                                             @endcomponent
+
+                                            @component('components.bootstrap.column',['class'=>'col-md-6'])
+                                                    @component('components.form.checkbox')
+                                                        @slot('field','comercial')
+                                                        @slot('value',$seed['comercial'] ?? null)
+                                                        @slot('label','Реклама')
+                                                    @endcomponent
+                                            @endcomponent
+
+                                            @component('components.bootstrap.column',['class'=>'clearfix'])
+                                            @endcomponent
+
                                             @component('components.bootstrap.column',['class'=>'col-md-6'])
                                                 @component('components.form.number')
                                                     @slot('field','works_since_year')
