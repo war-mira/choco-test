@@ -20,7 +20,7 @@ class DoctorController extends Controller
     public function item(City $city, Doctor $doctor)
     {
         if ($city->id !== $doctor->city->id) {
-            return redirect()->route('doctor.item', ['doctor' => $doctor->alias]);
+           // return redirect()->route('doctor.item', ['doctor' => $doctor->alias], 301);
         }
 
         $meta = SeoMetadataHelper::getMeta($doctor, $city);

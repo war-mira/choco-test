@@ -20,7 +20,7 @@ Route::post('getdata', 'DoctorController@getall');
 Route::get('get_doc_time', 'DoctorController@get_dt')->name('get_dt');
 
 Route::get('doctor/{doctor}', function (\App\Doctor $doctor) {
-    return redirect()->route('doctor.item', ['doctor' => $doctor->alias]);
+    return redirect()->route('doctor.item', ['doctor' => $doctor->alias], 301);
 });
 
 Route::group(['prefix' => 'doctors', 'as' => 'all.doctors.'], function () { //Добавил z - удалить
