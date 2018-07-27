@@ -278,6 +278,12 @@
                                 @endcomponent
                             </div>
                         </div>
+
+                        @component('components.script',['owner'=>['type'=>'Doctor','id'=>$doctor->id]])
+                            @slot('title') @endslot
+                            @slot('visible',5)
+                            @slot('url',route('doctor.comments',['doctor'=>$doctor->alias]))
+                        @endcomponent
                     </div>
 
                 </div>

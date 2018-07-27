@@ -1,6 +1,5 @@
 <div class="comment-container">
 
-
     <div class="comment-header">
         <span class="comment-author-info">
             <span>

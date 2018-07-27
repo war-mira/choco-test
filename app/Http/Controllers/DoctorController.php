@@ -20,7 +20,7 @@ class DoctorController extends Controller
     public function item(City $city, Doctor $doctor)
     {
         if ($city->id !== $doctor->city->id) {
-            return redirect()->route('doctor.item', ['doctor' => $doctor->alias]);
+           // return redirect()->route('doctor.item', ['doctor' => $doctor->alias], 301);
         }
 
         $meta = SeoMetadataHelper::getMeta($doctor, $city);
@@ -358,9 +358,37 @@ class DoctorController extends Controller
         }
     }
 
+    public function loadComs($city, $doctor, Request $request)
+    {
+        if($request->ajax()) {
+            $offset = $request->query('offset', 0);
+            $limit = $request->query('limit', 10);
+            $comments = $doctor->comments()
+                ->where('comments.status', 1)
+                ->orderByDesc('updated_at');
+            $total = $comments->count();
+
+            $comments = $comments->offset($offset)
+                ->limit($limit)
+                ->get();
+
+            $comment = $comments;
+
+            $view = view('model.comments.ajax-list',['comments'=>$comments])->render();
+            $offset = $offset + $limit;
+            $left = $total - $offset;
+            $left = $left < 0 ? 0 : $left;
+            //return compact('view', 'offset', 'left');
+            return response()->json([
+                'offset' => $offset,
+                'left' => $left,
+                'view' => $view
+            ]);
+        }
+    }
+
     public function loadComments($city, $doctor, Request $request)
     {
-
         $offset = $request->query('offset', 0);
         $limit = $request->query('limit', 10);
         $comments = $doctor->comments()
@@ -368,15 +396,34 @@ class DoctorController extends Controller
             ->orderByDesc('updated_at');
         $total = $comments->count();
 
-        $comments = $comments->offset($offset)
-            ->limit($limit)
-            ->get();
+        if($offset == 0)
+        {
+            $comments = $comments//->offset($offset)
+                //->limit($limit)
+                ->get();
+        }
+        else{
+            $comments = $comments->offset($offset)
+                ->limit($limit)
+                ->get();
+        }
 
-        $view = view('model.comments.ajax-list', compact('comments'))->render();
+        $comment = $comments;
+        $view = view('model.comments.ajax-list',['comments'=>$comments])->render();
         $offset = $offset + $limit;
         $left = $total - $offset;
         $left = $left < 0 ? 0 : $left;
-        return compact('view', 'offset', 'left');
+        if($offset == 0)
+        {
+            return response()->json([
+                'offset' => $offset,
+                'left' => $left,
+                'view' => $view
+            ]);
+        }
+        else{
+            return compact('view', 'offset', 'left');
+        }
     }
 
     public function feedback(City $city, Doctor $doctor){

@@ -1,4 +1,4 @@
 @foreach($comments as $comment)
-    @component('model.comments.item',compact('comment'))
+    @component('model.comm',compact('comment'))
     @endcomponent
 @endforeach
