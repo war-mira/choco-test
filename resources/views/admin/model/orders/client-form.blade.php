@@ -112,13 +112,13 @@
     $("#order-client-form *[name={{$field}}]").addClass("is-invalid");
     $("#order-client-form *[name={{$field}}]").after("<div class=\"invalid-feedback\">{{$errors->first($field)}}</div>");
     @endforeach
-    document.addEventListener("DOMContentLoaded", function () {
-        $('#order-client-loading').hide();
-        $("#save-client-btn").click(postOrderClient);
-        $("#new-client-btn").click(loadOrderClient);
-        $("#edit-client-btn").click(loadOrderClient);
-
-    });
+    // document.addEventListener("DOMContentLoaded", function () {
+    //     $('#order-client-loading').hide();
+    //     $("#save-client-btn").click(postOrderClient);
+    //     $("#new-client-btn").click(loadOrderClient);
+    //     $("#edit-client-btn").click(loadOrderClient);
+    //
+    // });
     $('#order-client-loading').hide();
     $("#save-client-btn").click(postOrderClient);
     $("#new-client-btn").click(loadOrderClient);

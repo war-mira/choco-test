@@ -144,7 +144,7 @@
                         <a href="#"><i class="fa fa-ambulance fa-fw"></i> Медицинская библиотека<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="{{route('admin.illnesses-groups.table')}}"><i class="fa fa-stethoscop fa-fw"></i> Группы заболеваний</a>
+                                <a href="{{route('admin.illnesses-groups.table')}}"><i class="fa fa-stethoscope fa-fw"></i> Группы заболеваний</a>
                             </li>
                             <li>
                                 <a href="{{route('admin.illnesses.table')}}"><i class="fa fa-heartbeat fa-fw"></i> Заболевания</a>

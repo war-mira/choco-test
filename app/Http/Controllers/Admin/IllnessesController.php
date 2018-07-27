@@ -100,7 +100,7 @@ class IllnessesController extends Controller
         return $data;
     }
 
-    private function postProcessIllnesses($illnesses)
+    private function postProcessIllnessesGroup($illnesses)
     {
         $titleTrans = \Slug::make($illnesses->name);
         $words = preg_split("/[^A-Za-z0-9]/", $titleTrans);
@@ -112,7 +112,7 @@ class IllnessesController extends Controller
             $index++;
         }
         $illnesses->alias = $alias;
-        $illnessesG->save();
+        $illnesses->save();
     }
 
 }
