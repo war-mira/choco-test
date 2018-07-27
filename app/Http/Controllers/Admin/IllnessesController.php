@@ -51,7 +51,7 @@ class IllnessesController extends Controller
         $data = $this->processRequestData($request);
         $illness = Illness::create($data);
 
-        $this->postProcessIllnessesGroup($illness);
+        $this->postProcessIllnesses($illness);
 
         if ($redirectRoute != null) {
             $response = redirect(route($redirectRoute, ['id' => $illness->id]));
@@ -70,7 +70,7 @@ class IllnessesController extends Controller
         $illness->fill($data);
         $illness->save();
 
-        $this->postProcessIllnessesGroup($illness);
+        $this->postProcessIllnesses($illness);
 
             if ($redirectRoute != null) {
                 $response = redirect(route($redirectRoute, ['id' => $illness->id]));
@@ -82,7 +82,7 @@ class IllnessesController extends Controller
 
     public function delete(Request $request, $id)
     {
-        IllnessesGroup::find($id)->delete();
+        Illness::find($id)->delete();
         if ($request->input('back', 0) == 1)
             return back()->withInput();
     }
@@ -112,7 +112,7 @@ class IllnessesController extends Controller
             $index++;
         }
         $illnesses->alias = $alias;
-        $illnessesG->save();
+        $illnesses->save();
     }
 
 }
