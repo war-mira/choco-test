@@ -697,6 +697,7 @@ img {
     position: absolute;
     top: 0;
     width: 100%;
+    min-height:200px;
   }
   #save_comment_mess_ok{
     text-align: center;
