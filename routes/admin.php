@@ -104,6 +104,40 @@ Route::group(['as' => 'posts.'], function () {
         Route::delete('posts/{id}', 'Admin\PostController@delete')->name('delete');
     });
 });
+
+Route::group(['as' => 'illnesses-groups.'], function () {
+    Route::get('illnesses-groups/form/{id?}', 'Admin\IllnessesGroupController@getFormView')->name('form');
+    Route::get('illnesses-groups/table', 'Admin\IllnessesGroupController@getTableView')->name('table');
+    Route::group(['as' => 'crud.', 'prefix' => 'crud'], function () {
+        Route::get('illnesses-groups/{id?}', 'Admin\IllnessesGroupController@get')->name('get');
+        Route::post('illnesses-groups', 'Admin\IllnessesGroupController@create')->name('create');
+        Route::post('illnesses-groups/{id}', 'Admin\IllnessesGroupController@update')->name('update');
+        Route::delete('illnesses-groups/{id}', 'Admin\IllnessesGroupController@delete')->name('delete');
+    });
+});
+
+Route::group(['as' => 'illnesses.'], function () {
+    Route::get('illnesses/form/{id?}', 'Admin\IllnessesController@getFormView')->name('form');
+    Route::get('illnesses/table', 'Admin\IllnessesController@getTableView')->name('table');
+    Route::group(['as' => 'crud.', 'prefix' => 'crud'], function () {
+        Route::get('illnesses/{id?}', 'Admin\IllnessesController@get')->name('get');
+        Route::post('illnesses', 'Admin\IllnessesController@create')->name('create');
+        Route::post('illnesses/{id}', 'Admin\IllnessesController@update')->name('update');
+        Route::delete('illnesses/{id}', 'Admin\IllnessesController@delete')->name('delete');
+    });
+});
+
+Route::group(['as' => 'illnesses-articles.'], function () {
+    Route::get('illnesses-articles/form/{id?}', 'Admin\IllnessesGroupArticlesController@getFormView')->name('form');
+    Route::get('illnesses-articles/table', 'Admin\IllnessesGroupArticlesController@getTableView')->name('table');
+    Route::group(['as' => 'crud.', 'prefix' => 'crud'], function () {
+        Route::get('illnesses-articles/{id?}', 'Admin\IllnessesGroupArticlesController@get')->name('get');
+        Route::post('illnesses-articles', 'Admin\IllnessesGroupArticlesController@create')->name('create');
+        Route::post('illnesses-articles/{id}', 'Admin\IllnessesGroupArticlesController@update')->name('update');
+        Route::delete('illnesses-articles/{id}', 'Admin\IllnessesGroupArticlesController@delete')->name('delete');
+    });
+});
+
 Route::group(['as' => 'callbacks.'], function () {
     Route::get('callbacks/form/{id?}', 'Admin\CallbackController@getFormView')->name('form');
     Route::get('callbacks/table', 'Admin\CallbackController@getTableView')->name('table');

@@ -29,6 +29,8 @@ class SmsNotificationsAddSendAtColumn extends Migration
     {
         Schema::table('sms_notifications', function (Blueprint $table) {
             $table->dropColumn(['send_at']);
+            $table->dropColumn(['confirm_status']);
+            $table->dropColumn(['send_status']);
         });
     }
 }

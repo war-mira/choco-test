@@ -35,7 +35,7 @@ class DoctorController extends Controller
         $seed = Doctor::with(['skills'])->findOrNew($id);
         $seed->load(['skills' => function ($query) {
             $query->orderBy('pivot_weight', 'desc');
-        }]);
+        }])->load('illnesses');
         $params = [];
         if ($id != null)
             $params['id'] = $id;
@@ -80,6 +80,11 @@ class DoctorController extends Controller
         $skills = $data['skills'] ?? false;
         if ($skills !== false) {
             $doctor->skills()->sync($skills);
+        }
+
+        $illnesses = $data['illnesses'] ?? false;
+        if ($illnesses !== false) {
+            $doctor->illnesses()->sync($illnesses);
         }
 
         if ($redirectRoute != null) {
@@ -146,6 +151,11 @@ class DoctorController extends Controller
                 return [$skill['id'] => ['weight' => $skill['weight']]];
             });
             $doctor->skills()->sync($skills);
+        }
+
+        $illnesses = $data['illnesses'] ?? false;
+        if ($illnesses !== false) {
+            $doctor->illnesses()->sync($illnesses);
         }
 
         if (isset($data['items'])) {

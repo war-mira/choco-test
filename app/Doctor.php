@@ -9,6 +9,7 @@ use App\Helpers\SessionContext;
 use App\Interfaces\IReferenceable;
 use App\Interfaces\ISeoMetadata;
 use App\Model\ServiceItem;
+use App\Models\Library\Illness;
 use App\Traits\Eloquent\FilterScopes;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -296,6 +297,15 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
                 'doctor_id',
                 'skill_id')
             ->withPivot(['weight']);
+    }
+
+    public function illnesses()
+    {
+        return $this
+            ->belongsToMany(Illness::class,
+                'doctors_illnesses',
+                'doctor_id',
+                'illness_id');
     }
 
     public function qualifications()

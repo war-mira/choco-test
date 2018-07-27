@@ -2,6 +2,7 @@ User-agent: *
 Disallow: /*&
 Disallow: /login
 Disallow: /setcity/
+Disallow: /main-new/
 Allow: */uploads
 Allow: /*/*.js
 Allow: /*/*.css

@@ -141,6 +141,20 @@
                         </ul>
                     </li>
                     <li>
+                        <a href="#"><i class="fa fa-ambulance fa-fw"></i> Медицинская библиотека<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="{{route('admin.illnesses-groups.table')}}"><i class="fa fa-stethoscop fa-fw"></i> Группы заболеваний</a>
+                            </li>
+                            <li>
+                                <a href="{{route('admin.illnesses.table')}}"><i class="fa fa-heartbeat fa-fw"></i> Заболевания</a>
+                            </li>
+                            <li>
+                                <a href="{{route('admin.illnesses-articles.table')}}"><i class="fa fa-medkit fa-fw"></i> Статьи</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
                         <a href="#"><i class="fa fa-th-list fa-fw"></i> Баннера<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>

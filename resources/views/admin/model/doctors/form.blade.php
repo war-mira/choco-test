@@ -383,6 +383,17 @@
                                                     @slot('nameField','name_with_status')
                                                 @endcomponent
                                             @endcomponent
+                                            @component('components.bootstrap.column',['class'=>'col-md-12'])
+                                                @component('components.form.multiselect')
+                                                    @slot('field','illnesses')
+                                                    @slot('value',array_pluck($seed['illnesses'] ?? [],'id'))
+                                                    @slot('placeholder','Болезни')
+                                                    @slot('label','Болезни')
+                                                    @slot('options',\App\Models\Library\Illness::orderBy('name')->get())
+                                                    @slot('idField','id')
+                                                    @slot('nameField','name')
+                                                @endcomponent
+                                            @endcomponent
                                         @endcomponent
                                     </div>
                                 </div>
