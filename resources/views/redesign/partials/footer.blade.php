@@ -76,4 +76,9 @@
         <div class="main-footer__footer-text">iDoctor — сервис, при помощи которого поиск доктора в Алматы, вызов его на дом или запись на прием, консультации стали невероятно простыми задачами. Теперь записаться к доктору в Алматы легко и быстро. На сайте представлен поиск врачей онлайн с большим числом клиник. Здесь можно оформить запись к врачу через интернет в Алматы, а также прочитать отзывы наших посетителей.</div>
         <div class="main-footer__footer-copyright">2013 - 2017 &copy; iDoctor.kz</div>
     </div>
+    <div class="make_order_fixed">
+        <div class="footer-contacts__appointment">
+            <a href="#quick-order-modal" rel="modal-link" class="btn">Записаться на прием</a>
+        </div>
+    </div>
 </footer>

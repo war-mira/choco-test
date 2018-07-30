@@ -77,7 +77,7 @@ class IndexController extends Controller
 
         $topDoctors = Doctor::where('on_top', '=', 1)->where('status', '=', 1)->get();
 
-        $topPosts = Post::where('is_top', 1)->where('status', 1)->orderBy('date_create', 'desc')->limit(3)->get();
+        $topPosts = Post::where('is_top', 1)->where('status', 1)->orderBy('created_at', 'desc')->limit(3)->get();
 
         //Специальности по количесвам врачей
         $skillsList = Skill::query()

@@ -103,7 +103,14 @@ img {
 
 .main-header {
   padding: 15px 0;
-  font-size: 14px; }
+  font-size: 14px;
+  position: fixed;
+  top: 0;
+  height: 90px;
+  background: #fff;
+  z-index: 50;
+  width: 100%;
+}
 
 .main-header__container {
   max-width: 1280px;
@@ -1501,6 +1508,9 @@ img {
       text-align: center;
       -webkit-border-radius: 22px;
               border-radius: 22px; }
+    .make_order_fixed{
+      display: none;
+    }
 
 .social-btn {
   width: 33px;
@@ -2542,16 +2552,28 @@ textarea {
     border-color: #00A8FF; }
 
 input[type="text"]::-webkit-input-placeholder {
-  color: #454545; }
+  color: #454545;}
 
 input[type="text"]::-moz-placeholder {
-  color: #454545; }
+  color: #454545;;}
 
 input[type="text"]:-ms-input-placeholder {
-  color: #454545; }
+  color: #454545;}
 
 input[type="text"]:-moz-placeholder {
-  color: #454545; }
+  color: #454545;}
+
+#searchform::-webkit-input-placeholder {
+  color: #cfcfcf; font-weight: normal; font-family: "ProximaNova-Regular", sans-serif; }
+
+#searchform[type="text"]::-moz-placeholder {
+  color: #cfcfcf; font-weight: normal; font-family: "ProximaNova-Regular", sans-serif;}
+
+#searchform[type="text"]:-ms-input-placeholder {
+  color: #cfcfcf; font-weight: normal; font-family: "ProximaNova-Regular", sans-serif;}
+
+#searchform[type="text"]:-moz-placeholder {
+  color: #cfcfcf; font-weight: normal; font-family: "ProximaNova-Regular", sans-serif;}
 
 input[type="tel"]::-webkit-input-placeholder {
   color: #454545; }
@@ -4166,9 +4188,32 @@ span.tab-line__item {
   .appointment-content__aside {
     width: 100%;
     padding: 0;
-    margin-top: -20px; } }
+    margin-top: -20px; }
+  .make_order_fixed{
+    display: block;
+    position: fixed;
+    bottom: 0;
+    z-index: 50;
+    background: rgba(0,0,0,.6);
+    width: 100%;
+    padding: 10px 0;
+  }
+  .make_order_fixed .footer-contacts__appointment{
+    margin: 0 auto;
+    width: 160px;
+  }
+}
 
 @media (max-width: 575.98px) {
+  .index-intro__stat-item {
+    margin: 20px 30px;}
+  .index-intro__stat-img {
+    width: 45px;}
+  .index-intro__stat-val{
+    font-size: 22px;}
+  .index-intro__stat-text{
+    width: 115px;
+    text-align: center;}
   .index-intro__heading > div:first-child {
     font-size: 28px; }
   .index-intro__heading > div:last-child {
@@ -4274,6 +4319,16 @@ span.tab-line__item {
     right: auto; } }
 
 @media (max-width: 374.98px) {
+  .index-intro__stat-item {
+    margin: 20px 20px;}
+  .index-intro__stat-img {
+    width: 40px;}
+  .index-intro__stat-val {
+    font-size: 20px;}
+  .index-intro__stat-text {
+    width: 85px;
+    text-align: center;
+    font-size: 11px;}
   .entity-review__line {
     -webkit-flex-wrap: wrap;
         -ms-flex-wrap: wrap;

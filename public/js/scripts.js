@@ -605,6 +605,17 @@ $(document).ready(function() {
             $(".index-search-bar").removeClass("index-intro__search-bar_additional-search");
         }
     });
+
+    $('.search-bar__line .js-type-select').on('change', function () {
+        var input = $(this).parents('.search-bar__line').find('.js-search-input');
+        var placeholder = '';
+        if($(this).val() == 'doctor'){
+            placeholder = 'Введите специальность или фамилию врача';
+        }else if($(this).val() == 'medcenter') {
+            placeholder = 'Введите название клиник';
+        }
+        input.attr("placeholder", placeholder);
+    });
 });
 
 //returns element markup

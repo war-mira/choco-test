@@ -7,8 +7,13 @@
     z-index: 0;
 }
 
+.index-search-bar__line .js-search-input{
+    border-bottom: 1px solid #00A8FF !important;
+}
+
 .index-intro.pattern-bg{
     position: relative;
+    margin-top: 90px;
 }
 
 .index-intro__heading, .search-bar{

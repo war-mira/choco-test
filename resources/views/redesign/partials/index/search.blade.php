@@ -7,7 +7,7 @@
             </select>
         </div>
         <div class="search-bar__item search-bar__item_search">
-            <input id="searchform" name="q" value="{{$q ?? ""}}"  placeholder="Введите ваш запрос" class="js-search-input"  autocomplete="off">
+            <input id="searchform" name="q" value="{{$q ?? ""}}"  placeholder="Введите специальность или фамилию врача" class="js-search-input"  autocomplete="off">
             <label for="searchform" class="input-block__icon"><img src="{{asset('/img/icons/search-inactive.png')}}" alt=""></label>
             <div class="live-search">
                 <div class="live-search__inner" id="liveresults">
