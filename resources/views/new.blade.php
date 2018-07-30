@@ -74,7 +74,20 @@
         });
     }
 
+
+
     $(function () {
+        $('.thumb-control button').click(function (e) {
+            e.preventDefault();
+            var btn = $(this);
+            var $doc = $(this).closest('.search-result__item').data('id'),
+                type = $(this).data('type');
+
+            $.getJSON("{{route('rates')}}", {likenot:type,doc:$doc})
+                .done(function (json) {
+                    btn.closest('.thumb-control').html(json.rates);
+                });
+        });
         $("#setskill").click(function () {
             $("#search_input").val($("#setskill").text());
         });
