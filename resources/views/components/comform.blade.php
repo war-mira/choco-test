@@ -25,6 +25,9 @@
                         <textarea class="styler" id="comment_text" required name="text" placeholder="Отзыв о враче" rows="6"></textarea>
                     </div>
                         @else
+                        <div class="leave-review__textarea-item">
+                            <textarea class="styler" id="comment_text" required name="text" placeholder="Отзыв о враче" rows="6"></textarea>
+                        </div>
                     @endif
                 </div>
                 <div class="leave-review__review-recommend review-recommend">

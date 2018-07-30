@@ -51,7 +51,7 @@ class IllnessesController extends Controller
         $data = $this->processRequestData($request);
         $illness = Illness::create($data);
 
-        $this->postProcessIllnesses($illness);
+        $this->postProcessIllnessesGroup($illness);
 
         if ($redirectRoute != null) {
             $response = redirect(route($redirectRoute, ['id' => $illness->id]));
@@ -70,7 +70,7 @@ class IllnessesController extends Controller
         $illness->fill($data);
         $illness->save();
 
-        $this->postProcessIllnesses($illness);
+        $this->postProcessIllnessesGroup($illness);
 
             if ($redirectRoute != null) {
                 $response = redirect(route($redirectRoute, ['id' => $illness->id]));
@@ -82,7 +82,7 @@ class IllnessesController extends Controller
 
     public function delete(Request $request, $id)
     {
-        Illness::find($id)->delete();
+        IllnessesGroup::find($id)->delete();
         if ($request->input('back', 0) == 1)
             return back()->withInput();
     }
@@ -100,7 +100,7 @@ class IllnessesController extends Controller
         return $data;
     }
 
-    private function postProcessIllnesses($illnesses)
+    private function postProcessIllnessesGroup($illnesses)
     {
         $titleTrans = \Slug::make($illnesses->name);
         $words = preg_split("/[^A-Za-z0-9]/", $titleTrans);

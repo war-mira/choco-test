@@ -171,7 +171,8 @@ class DoctorController extends Controller
             }
 
             $doc = Doctor::query()
-                ->where('doctors.id', $request->get('idc'))->first();
+                ->where('doctors.id', $request->get('idc'))
+                ->first();
 
             return response()->json([
                'times'=>view('doctors.times')->with([

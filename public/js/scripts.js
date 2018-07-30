@@ -220,10 +220,9 @@ $(document).ready(function() {
             var dt = e.detail.date.toString().split(' ');
             $this.find('input[name="dayweek"]').val(dt[0]);
             $this.find("input[type=\"radio\"]").prop("checked", true);
+            get_times($this.closest('div.doc-line').data('id'),dt[0],'',$this.parent().parent().parent());
             
-            get_times($this.closest('.search-result__item').data('id'),dt[0],'',$this.parent().parent().parent());
-            
-        })
+        });
     });
 
     $(".js-appointment-book-date").each(function() {
@@ -257,7 +256,7 @@ $(document).ready(function() {
             }
             else
             {
-                get_times($this.closest('.search-result__item').data('id'),dt[0],'',$this.parent().parent().parent());   
+                get_times($this.closest('.search-result__item').data('id'),dt[0],'',$this.parent().parent().parent());
             }
         })
 
@@ -266,7 +265,7 @@ $(document).ready(function() {
     $(".date-radio input[type=\"radio\"]").change(function()
     {
         var $this = $(this);
-        get_times($(this).parent().parent().parent().parent().parent().parent().data('id'),$(this).val(),$this);
+        get_times($(this).closest('.search-result__item').data('id'),$(this).val(),$this);
         if ($this.is(":checked") && !($this.val() == "custom")) {
             var $customDate = $this.closest(".date-radio").siblings(".js-custom-date").find(".date-radio__item");
             $customDate.find(".date-radio__text").html("Выбрать дату");
