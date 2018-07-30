@@ -81,16 +81,14 @@
     <div class="doc-line__address">
         <div class="doc-line__address-heading">Прием по адресу:</div>
         <div class="doc-line__address-list">
-            @if($doctor->medname)
-                @foreach($doctor->medname as $ff)
-                    <div class="doc-line__address-item">
-                        <div class="doc-line__address-val"><a href="#">{{$ff->city->name}}</a>, {{$ff->map}}</div>
-                        <div class="doc-line__address-clinic-link">
-                            <a href="{{route('medcenter.item',['medcenter'=>$ff->alias])}}">{{$ff->name}}</a>
-                        </div>
-                    </div>
-                @endforeach
-            @endif
+
+            <div class="doc-line__address-item">
+                <div class="doc-line__address-val"><a href="{{$doctor['city']->alias}}">{{$doctor['city']->name}}</a>, {{\App\Medcenter::where('id',$doctor->med_id)->first()->sms_address}}</div>
+                <div class="doc-line__address-clinic-link">
+                    <a href="{{\App\Medcenter::where('id',$doctor->med_id)->first()->alias}}">{{\App\Medcenter::where('id',$doctor->med_id)->first()->name}}</a>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
