@@ -154,17 +154,16 @@
             <div class="entity-line__additional">
                 <div class="entity-line__map entity-map" id="entity-map">
                     <div class="entity-map__address">
-                        <div class="entity-map__address-name">{{$doctor->city->name}}</div>
+                        <div class="entity-map__address-name">{{$doctor->city->name}}, {{\App\Medcenter::where('id',$doctor->med_id)->first()->sms_address}}</div>
                         @if($doctor['address'])<div class="entity-map__address-descr">({{$doctor['address']}})</div>@endif
                     </div>
                 </div>
 
                 <script type="text/javascript">
-
                     ymaps.ready(function () {
 
-                        //адрес в виде строки $doctor->medc_map->map
-                        var myGeocoder = ymaps.geocode("{{($doctor['address'])}}");
+                        //адрес в виде строки $doctor->medc_map->map $doctor['address']
+                        var myGeocoder = ymaps.geocode("{{\App\Medcenter::where('id',$doctor->med_id)->first()->sms_address}}");
 
                         myGeocoder.then( function (res) {
                                 var coords = res.geoObjects.get(0).geometry.getCoordinates();
