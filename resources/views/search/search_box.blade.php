@@ -12,14 +12,14 @@
                         <option value="medcenters" @if((isset($_GET['type']) && $_GET['type'] == 'medcenters') && (!isset($_GET['q']) || empty($_GET['q'])) || isset($skill->alias)) selected="selected" @endif>Поиск медцентра</option>
                     </select>
                 </div>
-                <div class="search-bar__item search-bar__item_search">
-                    <select name="name_md" placeholder="Поисковый запрос" class="js-search-select">
+                <div class="search-bar__item search-bar__item_search js-additional-search">
+                    <select name="name_md" placeholder="Название медцентра" class="js-search-select">
                         <option value="">Название медцентра</option>
                         <optgroup label="Специализации"></optgroup>
                         <optgroup label="Врачи"></optgroup>
                     </select>
                 </div>
-                <div class="search-bar__item search-bar__item_search js-additional-search">
+                <div class="search-bar__item search-bar__item_search">
                     <select name="entity" placeholder="Поисковый запрос" class="js-search-select">
                         <option value="">Название врача</option>
                         <optgroup label="Специализации"></optgroup>
