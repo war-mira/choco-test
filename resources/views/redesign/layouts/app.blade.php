@@ -8,7 +8,6 @@
     @include('partials.meta')
     @include('partials.yandex-metrika')
     @include('partials.google-analytics')
-    @include('partials.google-experiment')
 
     <title>Главная - iDoctor</title>
     <!-- <link rel="shortcut icon" type="image/png" href="img/favicon.png"> -->
@@ -39,12 +38,19 @@
     @include('redesign.partials.header')
     @yield('content')
     @include('redesign.partials.footer')
-
     <div class="modal-container">
         @include('redesign.partials.modals.modal-login')
         @include('redesign.partials.modals.quick-order')
         @include('redesign.partials.modals.feedback-callback')
     </div>
 </div>
+<script type="text/javascript">
+    $('.search_event').on('click', function () {
+        ga('send', 'event', {
+            eventCategory: 'poisk_glavnaya',
+            eventAction: 'click'
+        });
+    });
+</script>
 </body>
 </html>

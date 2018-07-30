@@ -179,14 +179,14 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         'preview_text',
         'timetable',
         'seo_text',
-        'mond',
-        'tues',
-        'wedn',
-        'thur',
-        'frid',
-        'satu',
-        'sund',
-        'comercial'
+//        'mond',
+//        'tues',
+//        'wedn',
+//        'thur',
+//        'frid',
+//        'satu',
+//        'sund',
+//        'comercial'
     ];
     protected $casts = [
         'child'   => 'int',
@@ -279,10 +279,10 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         return $this->hasMany(Order::class, 'doc_id', 'id');
     }
 
-    public function medname()
-    {
-        return $this->belongsToMany(Medcenter::class,'doctors','id','med_id');
-    }
+//    public function medname()
+//    {
+//        return $this->belongsToMany(Medcenter::class,'doctors','id','med_id');
+//    }
 
     public function getMainSkillAttribute()
     {
@@ -357,10 +357,10 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
             'medcenter_id');
     }
 
-    public function medc_map()
-    {
-        return $this->belongsTo(Medcenter::class,'med_id','id');
-    }
+//    public function medc_map()
+//    {
+//        return $this->belongsTo(Medcenter::class,'med_id','id');
+//    }
 
     public function getExpFormattedAttribute()
     {
