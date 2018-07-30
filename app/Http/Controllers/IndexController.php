@@ -11,6 +11,8 @@ use App\Order;
 use App\PageSeo;
 use App\Post;
 use App\Skill;
+use App\Uniqueip;
+use Illuminate\Http\Request;
 use DB;
 
 class IndexController extends Controller
@@ -59,6 +61,37 @@ class IndexController extends Controller
                 'skillLinks',
                 'lastComments')
         );
+    }
+
+    public function ratings(Request $request)
+    {
+        $like = $request->get('likenot');
+        $doc = $request->get('doc');
+        $ip = $request->ip();
+        $status = null;
+
+        if(!Uniqueip::where('ip','=',$ip)->where('doctor','=',$doc)->count())
+        {
+            $cf = new Uniqueip();
+            $cf->doctor = $doc;
+            $cf->ip = $ip;
+            $cf->like_dis = $like;
+            $cf->save();
+
+            $doctor = Doctor::where('id','=',$doc)->first();
+            if($like == 1)
+            {
+                $doctor->like += 1;
+            }else{
+                $doctor->dislike += 1;
+            }
+            $doctor->save();
+        }
+
+        return response()->json([
+            'status'=>$status,
+            'rates'=>view('components.ratemini',['doctor'=>$doctor])->render()
+        ]);
     }
 
     public function r_home()
