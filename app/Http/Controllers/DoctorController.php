@@ -23,7 +23,7 @@ class DoctorController extends Controller
         if ($city->id !== $doctor->city->id) {
            // return redirect()->route('doctor.item', ['doctor' => $doctor->alias], 301);
         }
-
+        $districts = District::all();
         $meta = SeoMetadataHelper::getMeta($doctor, $city);
 
         $near_docs = Doctor::query()->where('doctors.status', 1)
@@ -31,6 +31,7 @@ class DoctorController extends Controller
 
         return view('doctors.item')
             ->with('meta', $meta)
+            ->with('districts',$districts)
             ->with('near', $near_docs)
             ->with('doctor', $doctor);
     }
