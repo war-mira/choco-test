@@ -34,12 +34,12 @@
                             &nbsp;&nbsp;<a href="#comments">Нет отзывов</a>
                             <?php } ?>
                         <div class="entity-thumb-img__thumb-control thumb-control">
-                            <button class="thumb-control__item">
-                                <span class="thumb-control__val">0</span>
+                            <button class="thumb-control__item" data-type="1">
+                                <span class="thumb-control__val">{{$doctor->like ? $doctor->like : 0}}</span>
                                 <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
                             </button>
-                            <button class="thumb-control__item">
-                                <span class="thumb-control__val">0</span>
+                            <button class="thumb-control__item down" data-type="2">
+                                <span class="thumb-control__val">{{$doctor->dislike ? $doctor->dislike : 0}}</span>
                                 <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
                             </button>
                         </div>
@@ -154,17 +154,16 @@
             <div class="entity-line__additional">
                 <div class="entity-line__map entity-map" id="entity-map">
                     <div class="entity-map__address">
-                        <div class="entity-map__address-name">{{$doctor->city->name}}, {{$doctor->medc_map->map}}</div>
+                        <div class="entity-map__address-name">{{$doctor->city->name}}, {{\App\Medcenter::where('id',$doctor->med_id)->first()->sms_address}}</div>
                         @if($doctor['address'])<div class="entity-map__address-descr">({{$doctor['address']}})</div>@endif
                     </div>
                 </div>
 
                 <script type="text/javascript">
-
                     ymaps.ready(function () {
 
-                        //адрес в виде строки
-                        var myGeocoder = ymaps.geocode("{{($doctor->medc_map->map ? $doctor->medc_map->map : $doctor['address'])}}");
+                        //адрес в виде строки $doctor->medc_map->map $doctor['address']
+                        var myGeocoder = ymaps.geocode("{{\App\Medcenter::where('id',$doctor->med_id)->first()->sms_address}}");
 
                         myGeocoder.then( function (res) {
                                 var coords = res.geoObjects.get(0).geometry.getCoordinates();

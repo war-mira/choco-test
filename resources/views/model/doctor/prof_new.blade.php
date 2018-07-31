@@ -27,12 +27,12 @@
     <div class="entity-thumb-img__bot-line">
         <a href="#" class="entity-thumb-img__reviews">{{$doctor->publicComments()->count()}} отзывов</a>
         <div class="entity-thumb-img__thumb-control thumb-control">
-            <button class="thumb-control__item">
-                <span class="thumb-control__val">{{$doctor->publicComments()->where('user_rate','>=',5)->count() ?? 0}}</span>
+            <button class="thumb-control__item" data-type="1">
+                <span class="thumb-control__val">{{$doctor->like ? $doctor->like : 0}}</span>
                 <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
             </button>
-            <button class="thumb-control__item">
-                <span class="thumb-control__val">{{$doctor->publicComments()->where('user_rate','<=',5)->count() ?? 0}}</span>
+            <button class="thumb-control__item down" data-type="2">
+                <span class="thumb-control__val">{{$doctor->dislike ? $doctor->dislike : 0}}</span>
                 <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
             </button>
         </div>
@@ -81,16 +81,14 @@
     <div class="doc-line__address">
         <div class="doc-line__address-heading">Прием по адресу:</div>
         <div class="doc-line__address-list">
-            @if($doctor->medname)
-                @foreach($doctor->medname as $ff)
-                    <div class="doc-line__address-item">
-                        <div class="doc-line__address-val"><a href="#">{{$ff->city->name}}</a>, {{$ff->map}}</div>
-                        <div class="doc-line__address-clinic-link">
-                            <a href="{{route('medcenter.item',['medcenter'=>$ff->alias])}}">{{$ff->name}}</a>
-                        </div>
-                    </div>
-                @endforeach
-            @endif
+
+            <div class="doc-line__address-item">
+                <div class="doc-line__address-val"><a href="{{$doctor['city']->alias}}">{{$doctor['city']->name}}</a>, {{\App\Medcenter::where('id',$doctor->med_id)->first()->sms_address}}</div>
+                <div class="doc-line__address-clinic-link">
+                    <a href="{{\App\Medcenter::where('id',$doctor->med_id)->first()->alias}}">{{\App\Medcenter::where('id',$doctor->med_id)->first()->name}}</a>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
