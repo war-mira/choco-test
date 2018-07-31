@@ -4345,4 +4345,15 @@ span.tab-line__item {
     top: 55px;
     font-size: 12px;
     width: 129px;
-  }}
+  }
+    #searchform::-webkit-input-placeholder {
+        color: #cfcfcf; font-weight: normal; font-family: "ProximaNova-Regular", sans-serif; font-size: 12px; }
+
+    #searchform[type="text"]::-moz-placeholder {
+        color: #cfcfcf; font-weight: normal; font-family: "ProximaNova-Regular", sans-serif;font-size: 12px;}
+
+    #searchform[type="text"]:-ms-input-placeholder {
+        color: #cfcfcf; font-weight: normal; font-family: "ProximaNova-Regular", sans-serif;font-size: 12px;}
+
+    #searchform[type="text"]:-moz-placeholder {
+        color: #cfcfcf; font-weight: normal; font-family: "ProximaNova-Regular", sans-serif;font-size: 12px;}}

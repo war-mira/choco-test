@@ -158,6 +158,6 @@ class Comment extends Model
 
     public function scopeLocalPublic($query)
     {
-        return $query->where('status', 1);
+        return $query;
     }
 }

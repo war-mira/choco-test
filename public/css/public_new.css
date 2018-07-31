@@ -110,7 +110,7 @@
     position: absolute;
     width: 24px;
     height: 2px;
-    background: #fff;
+    background: #00A8FF;
     -webkit-transform: rotate(-45deg);
     -ms-transform: rotate(-45deg);
     -o-transform: rotate(-45deg);
@@ -125,7 +125,7 @@
     position: absolute;
     width: 24px;
     height: 2px;
-    background: #fff;
+    background: #00A8FF;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     -o-transform: rotate(45deg);
