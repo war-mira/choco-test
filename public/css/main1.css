@@ -4032,6 +4032,11 @@ span.tab-line__item {
     bottom: -3px; } }
 
 @media (max-width: 767.98px) {
+  .entity-about-article.current,
+  .entity-about-articl.current
+  {
+    display: block;
+  }
   .container {
     width: 100%;
     -webkit-box-sizing: border-box;
