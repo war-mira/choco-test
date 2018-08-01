@@ -16,7 +16,7 @@
         </div>
         <div class="search-bar__item search-bar__item_region">
             <select name="district" placeholder="Алмалинский район" class="js-simple-select js-select-region">
-                @foreach($districts as $district)
+                @foreach(\App\Models\District::all() as $district)
                     <option value="{{ $district->id }}">{{ $district->name }}</option>
                 @endforeach
             </select>

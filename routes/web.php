@@ -42,7 +42,6 @@ Route::get('medcenter/{medcenter}', function (\App\Medcenter $medcenter) {
 });
 
 Route::group(['prefix' => '{city}'], function () {
-
     Route::group(['prefix' => 'doctors', 'as' => 'doctors.'], function () { //Добавил z - удалить
         Route::get('/{skill?}', 'DoctorController@list')->name('list');
     });
@@ -51,7 +50,6 @@ Route::group(['prefix' => '{city}'], function () {
         Route::get('/{doctor}/feedback', 'DoctorController@feedback')->name('feedback');
         Route::get('/{doctor}/comments', 'DoctorController@loadComments')->name('comments');
     });
-
     Route::group(['prefix' => 'medcenters', 'as' => 'medcenters.'], function () {
         Route::get('/', 'MedcenterController@list')->name('list');
     });
@@ -59,7 +57,11 @@ Route::group(['prefix' => '{city}'], function () {
         Route::get('/{medcenter}', 'MedcenterController@item')->name('item');
         Route::get('/{medcenter}/comments', 'MedcenterController@loadComments')->name('comments');
     });
-
+    Route::group(['prefix' => 'library', 'as' => 'library.'], function () {
+        Route::get('/', 'LibraryController@index')->name('index');
+        Route::get('/{illnesses_group}', 'LibraryController@groupArticles')->name('group');
+        Route::get('/{illnesses_group}/{article}', 'LibraryController@article')->name('article');
+    });
 });
 
 //Drugs **********************************************
@@ -144,8 +146,8 @@ Route::group(['as' => 'cabinet.', 'prefix' => 'cabinet', 'middleware' => 'auth']
         });
         Route::get('/', function (){
         });
-        Route::post('/orderList', 'Cabinet\DoctorCabinetController@orderList')->name('orderList');
-        Route::get('/orderDetails/{id?}', 'Cabinet\DoctorCabinetController@orderDetails')->name('orderDetails');
+        Route::post('/orderList', 'Cabinet\Doctor\DoctorCabinetController@orderList')->name('orderList');
+        Route::get('/orderDetails/{id?}', 'Cabinet\Doctor\DoctorCabinetController@orderDetails')->name('orderDetails');
     });
 });
 
