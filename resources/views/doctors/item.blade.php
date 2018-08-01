@@ -1,6 +1,9 @@
 @extends('new')
 @section('content')
-    @include('search.search_box')
+    <div class="container">
+        @include('redesign.partials.index.search')
+    </div>
+
     <!-- begin section -->
     @include('doctors.doctor')
     @include('doctors.docs_near')

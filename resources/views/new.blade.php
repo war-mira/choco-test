@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{asset("css/pickmeup.css")}}">
     <link rel="stylesheet" href="{{asset("css/magnific-popup.css")}}">
     <link rel="stylesheet" href="{{URL::asset('css/main1.css')}}">
+    <link rel="stylesheet" href="{{URL::asset('css/public_new.css')}}">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="{{asset('js/jquery-masked-input.js')}}"></script>

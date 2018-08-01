@@ -10,6 +10,7 @@ use App\Helpers\SeoMetadataHelper;
 use App\Medcenter;
 use App\PageSeo;
 use App\Skill;
+use App\Models\District;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +23,7 @@ class DoctorController extends Controller
         if ($city->id !== $doctor->city->id) {
            // return redirect()->route('doctor.item', ['doctor' => $doctor->alias], 301);
         }
-
+        $districts = District::all();
         $meta = SeoMetadataHelper::getMeta($doctor, $city);
 
         $near_docs = Doctor::query()->where('doctors.status', 1)
@@ -30,6 +31,7 @@ class DoctorController extends Controller
 
         return view('doctors.item')
             ->with('meta', $meta)
+            ->with('districts',$districts)
             ->with('near', $near_docs)
             ->with('doctor', $doctor);
     }
@@ -40,6 +42,7 @@ class DoctorController extends Controller
 
     public function list(City $city = null, Skill $skill = null, Request $request)
     {
+        $districts = District::all();
         $cityId = $city->id;
         $doctors = Doctor::query()->where('doctors.status', 1)
             ->where('doctors.city_id', $cityId);
@@ -134,7 +137,7 @@ class DoctorController extends Controller
 
             //compact('meta', 'doctors', 'skills', 'medcenters', 'filter', 'query'));
 
-            compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage', 'skill', 'comercial'));
+            compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage', 'skill', 'comercial','districts'));
     }
 
     public function get_dt(Request $request)
