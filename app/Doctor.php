@@ -6,6 +6,7 @@ use App\Helpers\FormatHelper;
 use App\Helpers\MathHelper;
 use App\Helpers\SeoMetadataHelper;
 use App\Helpers\SessionContext;
+use App\Http\Requests\Filter;
 use App\Interfaces\IReferenceable;
 use App\Interfaces\ISeoMetadata;
 use App\Model\ServiceItem;
@@ -347,6 +348,11 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         return $this->medcenters()->get()->mapWithKeys(function ($medcenter) {
             return [$medcenter->id => $medcenter->name_with_status];
         });
+    }
+
+    public function scopeFilter($query, Filter $filters)
+    {
+        return $filters->apply($query);
     }
 
     public function medcenters()

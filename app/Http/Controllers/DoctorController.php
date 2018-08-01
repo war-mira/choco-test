@@ -7,6 +7,7 @@ use App\Doctor;
 use App\Helpers\FormatHelper;
 use App\Helpers\SearchHelper;
 use App\Helpers\SeoMetadataHelper;
+use App\Http\Requests\Doctor\DoctorFilters;
 use App\Medcenter;
 use App\PageSeo;
 use App\Skill;
@@ -38,13 +39,16 @@ class DoctorController extends Controller
         return $this->list(City::find(1), $skill, $request);
     }
 
-    public function list(City $city = null, Skill $skill = null, Request $request)
+    public function list(City $city = null, Skill $skill = null, DoctorFilters $filters)
     {
-        $cityId = $city->id;
-        $doctors = Doctor::query()->where('doctors.status', 1)
-            ->where('doctors.city_id', $cityId);
 
-        $query = $request->only([
+
+        $cityId = $city->id;
+        $doctors = Doctor::where('doctors.status', 1)
+                         ->where('doctors.city_id', $cityId)
+                         ->filter($filters->add(['price'=>8000]));
+
+        $query = request()->only([
             'q',
             'child',
             'ambulatory',
@@ -58,12 +62,19 @@ class DoctorController extends Controller
 
         $filter = $query;
 
-        $doctorsTop = null;
-        $currentPage = $request->input('page');
-        $comercial = null;
 
+        if (isset($filter['page']) && $filter['page'] == 1){
+            return redirect()->route(((empty($city->id) || $city->id == 1) ? "all.doctors.list" : 'doctors.list'), array_merge(['city' => $city->alias ?? null, 'skill' => $skill->alias ?? null], array_except($filter, 'page')));
+        }
+
+        // TODO: cache
+        $comercial = null;
         $comercial = Doctor::where('comercial','=',1)->orderBy('firstname','asc');
 
+        $doctorsTop = null;
+
+
+        // TODO: multiple skills
         if(isset($skill))
         {
             $filter['skill'] = $skill->alias ?? null;
@@ -74,8 +85,8 @@ class DoctorController extends Controller
             if($top_doctors && $skill->top_doctors){
                 $doctorsTop = Doctor::whereIn('id', $skill->top_doctors)->orderByRaw('FIELD(id,'.$top_doctors.')')->where('status', 1)->get();
             }
-
         }
+
 
         if(isset($doctorsTop)){
             $doctors = $doctors->whereNotIn('id', $skill->top_doctors);
@@ -85,11 +96,15 @@ class DoctorController extends Controller
             $doctors = $doctors->whereNotIn('id', $comercial->pluck('id')->toArray());
         }
 
-        if (isset($filter['page']) && $filter['page'] == 1){
-            return redirect()->route(((empty($city->id) || $city->id == 1) ? "all.doctors.list" : 'doctors.list'), array_merge(['city' => $city->alias ?? null, 'skill' => $skill->alias ?? null], array_except($filter, 'page')));
-        }
+
+
+
 
         $this->applyDoctorsFilter($doctors, $filter);
+
+
+
+
 
         if (!empty($city->id) && $city->id != 1) {
             $doctors = $doctors->where('doctors.city_id', $city->id);
@@ -112,12 +127,6 @@ class DoctorController extends Controller
             return redirect($doctors->url(1));
         }
 
-//        $skills = \App\Skill::orderBy('name');
-//        if (!empty($city->id)) {
-//            $skills = $skills->havingDoctorsInCity($city);
-//        }
-//
-//        $skills = $skills->get();
 
         if (isset($skill)) {
             $meta = SeoMetadataHelper::getMeta($skill, $city);
@@ -131,11 +140,9 @@ class DoctorController extends Controller
 
 
         return view('search.page',
-
-            //compact('meta', 'doctors', 'skills', 'medcenters', 'filter', 'query'));
-
-            compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage', 'skill', 'comercial'));
+            compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'skill', 'comercial'));
     }
+
 
     public function get_dt(Request $request)
     {
@@ -185,6 +192,9 @@ class DoctorController extends Controller
 
     private function applyDoctorsFilter($doctors, $filter)
     {
+
+
+
         if (isset($filter['rate_range']) && $filter['rate_range']) {
             $doctors = $doctors->whereBetween('rate', explode(',', $filter['rate_range']));
         }
