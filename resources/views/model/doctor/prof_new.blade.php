@@ -119,19 +119,18 @@
         </div>
         <div class="appointment-book-big__time-list">
             @php
-            $today = date('n'); $st = 1;
-            $week = array(1=>'mond',2=>'tues',3=>'wedn',4=>'thur',5=>'frid',6=>'satu',7=>'sund');
-            if($doctor[$week[$today]])
-            {
-                $nic = unserialize($doctor[$week[$today]]);
-                $starttime = $nic[0];  // your start time
-                $endtime = $nic[1];  // End time
-                $duration = '30';  // split by 30 mins
-                $start_time    = strtotime ($starttime); //change to strtotime
-                $end_time      = strtotime ($endtime); //change to strtotime
-                $add_mins  = $duration * 60;
-            }
-
+                $today = date('w'); $st = 1;
+                $week = array(1=>'mond',2=>'tues',3=>'wedn',4=>'thur',5=>'frid',6=>'satu',7=>'sund');
+                if($doctor[$week[$today]])
+                {
+                    $nic = unserialize($doctor[$week[$today]]);
+                    $starttime = $nic[0];  // your start time
+                    $endtime = $nic[1];  // End time
+                    $duration = '30';  // split by 30 mins
+                    $start_time    = strtotime ($starttime); //change to strtotime
+                    $end_time      = strtotime ($endtime); //change to strtotime
+                    $add_mins  = $duration * 60;
+                }
             @endphp
 
             @if(isset($nic) && $nic)
