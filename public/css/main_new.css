@@ -4202,11 +4202,14 @@ span.tab-line__item {
     margin: 0 auto;
     width: 160px;
   }
+  .index-intro__stats, .doc-letter-search__result, .work-flow__steps, .partners__list{
+     margin: 0;
+  }
 }
 
 @media (max-width: 575.98px) {
   .index-intro__stat-item {
-    margin: 20px 30px;}
+    margin: 20px 10px;}
   .index-intro__stat-img {
     width: 45px;}
   .index-intro__stat-val{
@@ -4320,7 +4323,7 @@ span.tab-line__item {
 
 @media (max-width: 374.98px) {
   .index-intro__stat-item {
-    margin: 20px 20px;}
+    margin: 20px 5px;}
   .index-intro__stat-img {
     width: 40px;}
   .index-intro__stat-val {

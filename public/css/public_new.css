@@ -578,3 +578,9 @@
 .account-data-item__radio{
     padding-top: 20px;
 }
+
+@media (max-width: 767.98px) {
+    .modal-window{
+        width: 100%;
+    }
+}
