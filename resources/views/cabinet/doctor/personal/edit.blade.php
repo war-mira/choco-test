@@ -35,7 +35,7 @@
                                 <div class="user-personal-data__item account-data-item">
                                     <div class="account-data-item__name">Отчество</div>
                                     <div class="account-data-item__val">
-                                        <input type="text" name="middlename" placeholder="Введите вашу отчество"
+                                        <input type="text" name="middlename" placeholder="Введите ваше отчество"
                                                value="{{ old('middlename') ? old('middlename'): $doctor->middlename}}">
                                         @if ($errors->has('middlename')) <p class="error">Поле обязательно для заполнения </p>@endif
                                     </div>
