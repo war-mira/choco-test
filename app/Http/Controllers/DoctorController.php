@@ -56,7 +56,7 @@ class DoctorController extends Controller
         $doctors = Doctor::where('doctors.status', 1)
                          ->filter($filters->add([
                              'city'=>$city->id,
-                             'skills'=>$skill->alias
+                             'skills'=>$skill->alias??null
                          ]));
 
 
@@ -427,6 +427,8 @@ class DoctorController extends Controller
         if ($city->id !== $doctor->city->id) {
             return redirect()->route('doctor.item', ['doctor' => $doctor->alias]);
         }
+
+//        if(request()->has('uid'))
 
         $meta = SeoMetadataHelper::getMeta($doctor, $city);
 

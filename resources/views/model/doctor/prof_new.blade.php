@@ -119,7 +119,11 @@
         </div>
         <div class="appointment-book-big__time-list">
             @php
+
             try{
+
+
+                $today = date('w'); $st = 1;
 
                 $week = array(1=>'mond',2=>'tues',3=>'wedn',4=>'thur',5=>'frid',6=>'satu',7=>'sund');
                 if($doctor[$week[$today]])
@@ -132,10 +136,12 @@
                     $end_time      = strtotime ($endtime); //change to strtotime
                     $add_mins  = $duration * 60;
                 }
+
             }
             catch (Exception $exception){
 
             }
+
             @endphp
 
             @if(isset($nic) && $nic)

@@ -58,7 +58,7 @@ class DoctorFilters extends Filter{
 
     public function price($price)
     {
-        return $this->builder->where('price',$price);
+        return $this->builder->where('price',$price); 
     }
 
 
