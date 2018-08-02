@@ -40,9 +40,11 @@ class MedcenterController extends Controller
 
         if (!empty($city->id)) {
             $medcenters = $medcenters->whereCityId($city->id);
+
+            $actionKey = $city->id != 1 ? 'list' : 'list_all';
             $pageSeo = PageSeo::query()
                 ->where('class','Medcenter')
-                ->where('action', 'list')
+                ->where('action', $actionKey)
                 ->first();
             $meta = SeoMetadataHelper::getMeta($pageSeo, $city);
         } else {
@@ -66,8 +68,7 @@ class MedcenterController extends Controller
                 'name' => 'по рейтингу'
             ]
         ];
-
-        return view("medcenters.list")
+        return view("search.search-medcenters-page")
             ->with('h1_title', $h1_title)
             ->with('meta', $meta)
             ->with('Medcenters', $medcenters)

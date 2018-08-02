@@ -7,6 +7,7 @@ use App\Doctor;
 use App\Helpers\FormatHelper;
 use App\Helpers\SearchHelper;
 use App\Helpers\SeoMetadataHelper;
+use App\Http\Requests\Doctor\DoctorFilters;
 use App\Medcenter;
 use App\PageSeo;
 use App\Skill;
@@ -40,14 +41,26 @@ class DoctorController extends Controller
         return $this->list(City::find(1), $skill, $request);
     }
 
-    public function list(City $city = null, Skill $skill = null, Request $request)
-    {
-        $districts = District::all();
-        $cityId = $city->id;
-        $doctors = Doctor::query()->where('doctors.status', 1)
-            ->where('doctors.city_id', $cityId);
 
-        $query = $request->only([
+    /**
+     * Search doctors
+     * TODO: unify search methods for admin and front
+     *
+     * @param City|null $city
+     * @param Skill|null $skill
+     * @param DoctorFilters $filters
+     * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View|mixed|void
+     */
+    public function list(City $city = null, Skill $skill = null, DoctorFilters $filters)
+    {
+        $doctors = Doctor::where('doctors.status', 1)
+                         ->filter($filters->add([
+                             'city'=>$city->id,
+                             'skills'=>$skill->alias
+                         ]));
+
+
+        $query = request()->only([
             'q',
             'child',
             'ambulatory',
@@ -58,87 +71,64 @@ class DoctorController extends Controller
             'rate_range',
             'page'
         ]);
-
         $filter = $query;
 
-        $doctorsTop = null;
-        $currentPage = $request->input('page');
-        $comercial = null;
 
-        $comercial = Doctor::where('comercial','=',1)->orderBy('firstname','asc');
-
-        if(isset($skill))
-        {
-            $filter['skill'] = $skill->alias ?? null;
-            $doctors = $doctors->whereHas('skills', function ($skillsQuery) use ($skill) {
-                $skillsQuery->where('skills.id', $skill->id);
-            });
-            $top_doctors = FormatHelper::arrayToString($skill->top_doctors);
-            if($top_doctors && $skill->top_doctors){
-                $doctorsTop = Doctor::whereIn('id', $skill->top_doctors)->orderByRaw('FIELD(id,'.$top_doctors.')')->where('status', 1)->get();
-            }
-
-        }
-
-        if(isset($doctorsTop)){
-            $doctors = $doctors->whereNotIn('id', $skill->top_doctors);
-        }
-
-        if(isset($comercial)){
-            $doctors = $doctors->whereNotIn('id', $comercial->pluck('id')->toArray());
-        }
-
+        // remove ?page=1 from url
         if (isset($filter['page']) && $filter['page'] == 1){
             return redirect()->route(((empty($city->id) || $city->id == 1) ? "all.doctors.list" : 'doctors.list'), array_merge(['city' => $city->alias ?? null, 'skill' => $skill->alias ?? null], array_except($filter, 'page')));
         }
 
+        // TODO: cache
+        $doctorsTop = null;
+        $comercial = Doctor::where('comercial',1)->orderBy('firstname','asc');
+        $districts = District::all();
+
+
+        // TODO: multiple skills
+        if(isset($skill))
+        {
+            $top_doctors = FormatHelper::arrayToString($skill->top_doctors);
+            if($top_doctors && $skill->top_doctors){
+                $doctorsTop = Doctor::whereIn('id', $skill->top_doctors)->orderByRaw('FIELD(id,'.$top_doctors.')')->where('status', 1)->get();
+            }
+        }
+
+
+        if(isset($doctorsTop))
+            $doctors = $doctors->whereNotIn('id', $skill->top_doctors);
+
+
+        if(isset($comercial))
+            $doctors = $doctors->whereNotIn('id', $comercial->pluck('id')->toArray());
+
+
+
         $this->applyDoctorsFilter($doctors, $filter);
 
-        if (!empty($city->id) && $city->id != 1) {
-            $doctors = $doctors->where('doctors.city_id', $city->id);
 
-            $pageSeo = PageSeo::query()
-                ->where('class','Doctor')
-                ->where('action', 'list')
-                ->first();
-            $meta = SeoMetadataHelper::getMeta($pageSeo, $city);
-        } else {
-            $title = 'iDoctor.kz - Врачи-специалисты. Список врачей-специалистов в Казахстане';
-            $description = 'iDoctor.kz - Список врачей-специалистов по всему Казахстану. Поиск и бесплатная запись на прием к врачу любой специальности. У нас собрана большая база врачей различных специализаций по всему Казахстану';
-            $meta = compact('title', 'description');
-        }
+
+
+
+
+
 
         $doctors = $doctors->paginate(10)->appends($query);
 
-        if ($doctors->lastPage() < ($filter['page'] ?? 1))
-        {
+        if($doctors->lastPage() < ($filter['page'] ?? 1))
             return redirect($doctors->url(1));
-        }
 
-//        $skills = \App\Skill::orderBy('name');
-//        if (!empty($city->id)) {
-//            $skills = $skills->havingDoctorsInCity($city);
-//        }
-//
-//        $skills = $skills->get();
+        if(!isset($skill))
+            $pageSeo = PageSeo::where(['class'=>'Doctor','action'=>'list'])->first();
 
-        if (isset($skill)) {
-            $meta = SeoMetadataHelper::getMeta($skill, $city);
-        } else {
-            $pageSeo = PageSeo::query()
-                ->where('class','Doctor')
-                ->where('action', 'list')
-                ->first();
-            $meta = SeoMetadataHelper::getMeta($pageSeo, $city);
-        }
+        $meta = SeoMetadataHelper::getMeta($skill??$pageSeo, $city);
 
 
         return view('search.page',
-
-            //compact('meta', 'doctors', 'skills', 'medcenters', 'filter', 'query'));
-
             compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage', 'skill', 'comercial','districts'));
+
     }
+
 
     public function get_dt(Request $request)
     {
@@ -188,6 +178,9 @@ class DoctorController extends Controller
 
     private function applyDoctorsFilter($doctors, $filter)
     {
+
+
+
         if (isset($filter['rate_range']) && $filter['rate_range']) {
             $doctors = $doctors->whereBetween('rate', explode(',', $filter['rate_range']));
         }
@@ -210,7 +203,7 @@ class DoctorController extends Controller
             $doctors->leftJoin('medcenters', 'medcenters.id', '=', 'doctors.med_id')->where('medcenters.district_id', $filter['district']);
         }
         if (isset($filter['q']) && $filter['q'] && trim($filter['q']) != '')
-            SearchHelper::searchByFields($doctors, ['firstname', 'lastname', 'skills' => ['name']], $filter['q']);
+            SearchHelper::searchByFields($doctors, ['firstname', 'lastname','patronymic', 'skills' => ['name']], $filter['q']);
 
         $order = [$filter['sort'] ?? 'rate', $filter['order'] ?? 'desc'];
         if ($order[0] == 'rate')
@@ -438,6 +431,133 @@ class DoctorController extends Controller
         $meta = SeoMetadataHelper::getMeta($doctor, $city);
 
         return view('doctors.feedback', compact('city', 'doctor', 'meta'));
+    }
+
+
+    protected function getFilterforSeo($skill, $flag)
+    {
+        $rules = [
+            'v-voskresenye'=>[''],
+            'bez-vyhodnykh'=>['work_days'=>'all'],
+            'kruglosutochno',
+
+            'na-dom'=>['ambulatory'=>1],
+            'na-domu'=>['ambulatory'=>1],
+            'dlya-detey'=>['child'=>1],
+            'dlya-vzroslykh'=>['child'=>0],
+            'na-kazakhskom',
+
+
+            'auezovskiy-rayon'=>['district'=>3],
+            'turksibkiy-rayon'=>['district'=>8],
+            'almalinkiy-rayon'=>['district'=>2],
+            'almalinskiy-rayon'=>['district'=>2],
+            'bostandykskiy-rayon'=>['district'=>4],
+            'medeuskiy-rayon'=>['district'=>6],
+            'levyi-bereg',
+
+            'zaikanie',
+            'posle-insulta',
+            'dlya-autista',
+
+
+
+
+            'akusher-ginekolog-reproduktolog',
+            'akusher-ginekolog-khirurg',
+
+            'detskyi-akusher-ginekolog',
+            'detskyi-gastroenterolog',
+            'detskyi-endokrinolog',
+            'detskyi-androlog',
+            'detskyi-anesteziolog',
+            'detskyi-khirurg',
+            'detskyi-khirurg-ortoped',
+            'detskyi-khirurg-urolog',
+            'detskyi-lor-otolaringolog',
+            'detskyi-urolog',
+            'detskyi-dermatolog',
+            'detskyi-urolog',
+            'detskiy-allergolog',
+            'detskyi-stomatolog',
+
+            'dermatolog-onkolog',
+            'dermatolog-urolog',
+            'dermatolog-khirurg',
+            'dermatolog-ginekolog',
+
+            'ginekolog-khirurg',
+            'ginekolog-urolog',
+            'ginekolog-onkolog',
+            'ginekolog-infekcionist',
+            'ginekolog-reproduktolog',
+
+            'venerolog-ginekolog',
+            'venerolog-urolog',
+
+            'gastroenterolog-khirurg',
+            'gastroenterolog-endoskopist',
+
+            'lor-otorinolaringolog-onkolog',
+            'lor-otorinolaringolog-surdolog',
+            'lor-otorinolaringolog-reflektolog',
+            'lor-otorinolaringolog-khirurg',
+
+            'logoped-psikholog',
+            'logoped-reabilitolog',
+
+            'pediatr-neonatolog',
+            'pediatr-pulmonolog',
+            'pediatr-infekcionist',
+            'pediatr-gomeopat',
+
+            'kardiolog-endokrinolog',
+            'kardiolog-revmatolog',
+            'kardiolog-terapevt',
+
+            'androlog-endokrinolog',
+            'androlog-reproduktolog',
+            'androlog-khirurg',
+
+            'anesteziolog-reanimatolog',
+
+            'endokrinolog-khirurg',
+
+            'khirurg-ortoped',
+            'khirurg-endoskopist',
+            'khirurg-gepatolog',
+            'khirurg-angiolog',
+            'khirurg-oftalmolog',
+            'khirurg-neonatolog',
+            'khirurg-terapevt',
+            'khirurg-mammolog',
+            'khirurg-endokrinolo',
+            'khirurg-proktolog',
+
+
+            'stomatolog-restavrator',
+            'stomatolog-protezist',
+            'stomatolog-ortodont',
+            'stomatolog-terapevt',
+            'stomatolog-khirurg',
+
+            'urolog-khirurg',
+            'urolog-androlog',
+            'urolog-nefrolog',
+            'urolog-reproduktolog',
+            'urolog-androlog',
+
+            'zhenskiy-urolog',
+            'allergolog-immunolog',
+            'torakalnyi-khirurg',
+
+
+            'logoped-defektolog',
+            'logoped-psikholog',
+            'logoped-afaziolog',
+
+        ];
+
     }
 
 

@@ -17,7 +17,7 @@ class DoctorController extends Controller
         'ambulatory' => 0,
         'status'     => 0,
     ];
-    const SEARCH_FIELDS = ['firstname', 'lastname',
+    const SEARCH_FIELDS = ['firstname', 'lastname','patronymic'
 //        'medcenters' => ['name'], 'city' => ['name']
     ];
 
