@@ -578,3 +578,21 @@
 .account-data-item__radio{
     padding-top: 20px;
 }
+
+.index-intro.library .index-intro__search-bar{
+    margin: 50px;
+}
+
+.library-list_heading{
+    width: 100%;
+}
+.library-list_heading .section-heading__text{
+    font-family: "ProximaNova-Regular";
+}
+
+
+@media (max-width: 767.98px) {
+    .modal-window{
+        width: 100%;
+    }
+}

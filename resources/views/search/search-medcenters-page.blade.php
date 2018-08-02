@@ -10,7 +10,6 @@
         <form id="search-form">
             <input type="hidden" name="page" value="{{$filter['page']??1}}">
             <div class="search-input-group" id="mainSearch">
-
                 <input type="text" id="searchInput" name="q" style="margin-left: 0" class="search-box search-input"
                        placeholder="Поиск медцентров ..."
                        value="{{$filter['q']??''}}">

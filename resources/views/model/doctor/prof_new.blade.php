@@ -121,7 +121,6 @@
             @php
             try{
 
-                $today = date('n'); $st = 1;
                 $week = array(1=>'mond',2=>'tues',3=>'wedn',4=>'thur',5=>'frid',6=>'satu',7=>'sund');
                 if($doctor[$week[$today]])
                 {

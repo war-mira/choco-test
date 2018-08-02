@@ -50,7 +50,9 @@ $(document).ready(function() {
 		$("#"+tab_id).addClass('current');
 	});
 
-    $(".js-simple-select").selectize();
+    $(".js-simple-select").selectize({
+        openOnFocus: false
+    });
 
     $(".js-header-location").selectize();
 
