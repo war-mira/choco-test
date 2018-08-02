@@ -52,7 +52,7 @@
                     @endif
                     @if($questions->links() != "")
                         <div class="reviews-list__pagination pagination">
-                            {!! $questions->links() !!}
+                            {!! $questions->appends(request()->query())->links() !!}
                         </div>
                     @endif
                 </div>

@@ -13,18 +13,20 @@ class DoctorCabinetQuestionsController extends DoctorCabinetController
     public function index(Request $request)
     {
         $questions = Question::query();
-
-        if ($request->answered && $request->answered == Question::ANSWERED) {
-            $questions = $questions->answeredNotByDoctor($this->doctor);
-        } else if ($request->answered && $request->answered == Question::ANSWERED_BY_DOCTOR) {
-            $questions = $questions->answeredByDoctor($this->doctor);
-        } else {
-            $questions = $questions->notAnswered();
-        }
         if ($request->search) {
-            $questions->where('questions.text', 'like', "%$request->search%");
+            $questions->where('text', 'like', "%$request->search%");
         }
-        $questions = $questions->orderBy('questions.created_at', 'desc')->paginate(10);
+        if($request->answered ){
+            if ($request->answered == Question::ANSWERED) {
+                $questions = $questions->answeredNotByDoctor($this->doctor);
+            } else if ($request->answered == Question::ANSWERED_BY_DOCTOR) {
+                $questions = $questions->answeredByDoctor($this->doctor);
+            } else {
+                $questions = $questions->notAnswered();
+            }
+        }
+
+        $questions = $questions->orderBy('created_at', 'desc')->paginate(10);
 
         return view('cabinet.doctor.questions.index', ['doctor' => $this->doctor, 'user' => $this->user, 'questions' => $questions]);
     }
