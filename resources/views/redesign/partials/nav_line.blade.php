@@ -10,17 +10,13 @@
                         <span class="index-nav-item__icon"><i class="icon-2 hover-icon"></i></span>
                         <span>Медцентры</span>
                     </a>
-                    <a href="{{url('posts')}}" class="index-nav__item index-nav-item">
+                    <a href="{{route('library.index')}}" class="index-nav__item index-nav-item">
                         <span class="index-nav-item__icon"><i class="icon-4 hover-icon"></i></span>
-                        <span>Блоги</span>
+                        <span>Медицинская библиотека</span>
                     </a>
                     {{--<a href="#" class="index-nav__item index-nav-item">--}}
                     {{--<span class="index-nav-item__icon"><i class="icon-3 hover-icon"></i></span>--}}
                     {{--<span>Услуги</span>--}}
-                    {{--</a>--}}
-                    {{--<a href="#" class="index-nav__item index-nav-item">--}}
-                    {{--<span class="index-nav-item__icon"><i class="icon-4 hover-icon"></i></span>--}}
-                    {{--<span>Библиотека</span>--}}
                     {{--</a>--}}
                     {{--<a href="#" class="index-nav__item index-nav-item">--}}
                     {{--<span class="index-nav-item__icon"><i class="icon-5 hover-icon"></i></span>--}}

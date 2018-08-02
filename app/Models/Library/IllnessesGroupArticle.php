@@ -18,11 +18,12 @@ class IllnessesGroupArticle extends Model
       'meta_key',
       'meta_desc',
       'created_at',
-      'updated_at'
+      'updated_at',
+      'image'
     ];
 
-    public function ilnessesGroup()
+    public function illnessesGroup()
     {
-        return $this->hasMany('App\Models\Library\IllnessesGroup', 'illnesses_group_id', 'id');
+        return $this->belongsTo('App\Models\Library\IllnessesGroup', 'illnesses_group_id', 'id');
     }
 }

@@ -189,7 +189,8 @@ return [
         \App\Providers\SmsServiceProvider::class,
         \App\Providers\EmailServiceProvider::class,
         App\Providers\GoogleDriveServiceProvider::class,
-        BenSampo\Enum\EnumServiceProvider::class
+        BenSampo\Enum\EnumServiceProvider::class,
+        DaveJamesMiller\Breadcrumbs\BreadcrumbsServiceProvider::class
 
     ],
 
@@ -248,6 +249,7 @@ return [
         'SmsService' => \App\Facades\SmsService::class,
         'EmailService' => \App\Facades\EmailService::class,
         'Slug' => Alexusmai\Ruslug\RuslugFacade::class,
+        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs::class
     ],
 
 ];

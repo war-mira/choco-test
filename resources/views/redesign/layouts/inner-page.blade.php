@@ -40,6 +40,8 @@
         @include('redesign.partials.nav_line')
         @include('redesign.partials.index.search')
     </section>
+    @yield('navigation')
+    @yield('breadcrumbs')
     @yield('content')
     @include('redesign.partials.footer')
     <div class="modal-container">

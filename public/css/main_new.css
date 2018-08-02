@@ -3865,7 +3865,7 @@ span.tab-line__item {
     .hours-appointment-select__btn_selected {
       color: #fff;
       background: #00A8FF; }
-  .hours-appointment-select label $__btn {
+  .hours-appointment-select label .btn {
     cursor: pointer; }
 
 .user-personal-data__inner {
@@ -3920,10 +3920,82 @@ span.tab-line__item {
 .transaction-list__item {
   padding: 15px 0;
   border-bottom: 1px solid #f7f7f7; }
-
 .transaction-list__pagination {
   margin-top: 20px; }
-
+.library.blog-list{
+  background: none}
+.library-group__articles-list{
+  padding: 40px 0;}
+.library-list_heading.blog-list__heading{
+  text-align: center;
+  padding-bottom: 20px;}
+.library-group__articles-list .blog-list__list{
+  margin-top: 0;}
+.library-group__articles-list:nth-child(even){
+  background: #f1f1f1;}
+.library__tab-line{
+  padding-bottom: 50px;}
+.library__tab-line .tab-line{
+  justify-content: center;}
+.library__tab-line .tab-line .tab-line__item .tab-line__item-text{
+  color: #454545;}
+.illnesses-letter__search{
+  padding-bottom: 50px;}
+.illnesses-letter__search .doc-letter-search__nav .doc-letter-search__nav-item.active{
+  text-decoration: underline;}
+.illnesses-letter__search .doc-letter-search__nav .doc-letter-search__nav-item.no-active{
+  color:#8f8f8f;
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;}
+.breadcrumb{
+  display: flex;}
+.breadcrumb .separator{
+  color: #d5d5d5;
+  margin-left: 10px}
+.breadcrumb li{
+  list-style: none;
+  margin-right: 15px;}
+.section-article__content{
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;}
+.article-content__main{
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;}
+.article-content__aside{
+  padding-left: 15px;
+  flex-shrink: 0;}
+.article-nav__block{
+  padding: 20px;
+box-shadow: 0px 1px 4px #e7e7e7; margin-bottom: 30px;}
+.article-nav__title{
+  text-align: center;
+  font-family: "ProximaNova-Bold";
+  margin-bottom: 15px}
+.article-nav__list ul li{
+  list-style: none;
+  border-bottom: 1px solid #e7e7e7;
+  padding-bottom: 15px;
+  padding-top: 10px}
+.article-nav__list ul li.last{
+  border: none;}
+.article-nav__list ul li::before{
+  display: none;}
+.article-content__main{
+  margin-bottom: 40px;}
+.article-content__main p{
+  font-family: "ProximaNova-Regular"}
+.article-content__main h2{
+  font-family: "ProximaNova-Semibold" !important;
+}
 @media (max-width: 1199.98px) {
   .container {
     width: 940px; }

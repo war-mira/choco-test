@@ -17,8 +17,10 @@ class Illness extends Model
         'meta_key',
         'meta_desc',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'image'
     ];
+
     protected $table = 'illnesses';
 
     public function group()
@@ -29,6 +31,13 @@ class Illness extends Model
     public function doctors()
     {
         return $this->belongsToMany(Doctor::class, 'doctors_illnesses', 'illness_id', 'doctor_id');
+    }
+
+    public function scopeGetByLetter($query, $letter)
+    {
+      $illnesses = $query->where('active', 1)->where('name', 'like', $letter.'%');
+
+      return $illnesses;
     }
 
 }

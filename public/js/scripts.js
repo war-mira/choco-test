@@ -617,6 +617,14 @@ $(document).ready(function() {
         }
         input.attr("placeholder", placeholder);
     });
+
+    $('.js-anchor-link').on('click', function () {
+       var anchor = $(this).text();
+       var target = $('.article-content__main').find('h2:contains('+ anchor + ')');
+        $('html, body').animate({
+            scrollTop: target.offset().top
+        }, 1000);
+    });
 });
 
 //returns element markup

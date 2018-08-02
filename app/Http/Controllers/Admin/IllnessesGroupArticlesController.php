@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 class IllnessesGroupArticlesController extends Controller
 {
+    const FILE_FIELDS = ['image'];
     const DEFAULT_FIELDS = [];
     const SEARCH_FIELDS = [
         'name',
@@ -90,7 +91,12 @@ class IllnessesGroupArticlesController extends Controller
     {
         $data = $request->all();
         $data['alias'] = \Slug::make($data['name']);
-
+        foreach (self::FILE_FIELDS as $fileField) {
+            if ($request->hasFile($fileField))
+                $data[$fileField] = $request->file($fileField)->store('uploads/illnesses');
+            else
+                unset($data[$fileField]);
+        }
         foreach (self::DEFAULT_FIELDS as $deafaultField => $deafaultValue) {
             if (!$request->has($deafaultField))
                 $data[$deafaultField] = $deafaultValue;
