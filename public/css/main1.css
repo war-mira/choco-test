@@ -472,7 +472,7 @@ img {
     width: 250px; }
   .index-intro__search-bar .search-bar__item_region {
     width: 245px; }
-  .index-intro__search-bar:before {
+ .index-intro__container .index-intro__search-bar:before {
     content: " ";
     position: absolute;
     width: 625px;
@@ -4032,6 +4032,11 @@ span.tab-line__item {
     bottom: -3px; } }
 
 @media (max-width: 767.98px) {
+  .entity-about-article.current,
+  .entity-about-articl.current
+  {
+    display: block;
+  }
   .container {
     width: 100%;
     -webkit-box-sizing: border-box;
@@ -4240,7 +4245,12 @@ span.tab-line__item {
     width: 500px;
     height: 283.2px;
     left: 50px;
-    bottom: 154px; } }
+    bottom: 154px; }
+  .index-intro__search-bar:before
+{
+
+  }
+}
 
 @media (max-width: 575.98px) {
   .index-intro__heading > div:first-child {

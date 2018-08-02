@@ -1,6 +1,8 @@
 @extends('new')
 @section('content')
-    @include('search.search_box')
+    <div class="container">
+        @include('redesign.partials.index.search')
+    </div>
 
     <div id="app" class="app">
         <form id="search-form">
@@ -397,7 +399,44 @@
                     btn.closest('.thumb-control').html(json.rates);
                 });
             });
+            var liveSearchXHR = null;
 
+            function livesearch() {
+                var input = $("#searchform").val();
+
+                if (liveSearchXHR !== null)
+                    liveSearchXHR.abort();
+
+                setTimeout(function () {
+                    var url = "{{url("/ajax/index_search")}}?q=" + input;
+                    liveSearchXHR = $.get(url, function (data, textStatus) {
+                        $("#liveresults").html(data);
+                    });
+                }, 300);
+            }
+
+            $("#searchform").on('input', livesearch);
+
+            $('form').each(function () {
+                var $form = $(this);
+                $form.on('change', 'select[data-select="action"]',  function () {
+                    var type = $form.find('option:selected').val();
+                    var action = '';
+                    if (type == 'doctor'){
+                        action = "{!!route('doctors.list')!!}";
+                    }else {
+                        action = "{!! route('medcenters.list') !!}";
+                    }
+                    $form.attr('action', action);
+                });
+            });
+
+            $('.search_event').on('click', function () {
+                ga('send', 'event', {
+                    eventCategory: 'poisk_glavnaya',
+                    eventAction: 'click'
+                });
+            })
         });
     </script>
 @endsection

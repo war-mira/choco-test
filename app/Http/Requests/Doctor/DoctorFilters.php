@@ -62,8 +62,20 @@ class DoctorFilters extends Filter{
     }
 
 
+    public function city($city=null)
+    {
+        if (!$city || $city==1)
+            return $this->builder;
+
+        return $this->builder->where('doctors.city_id',$city);
+    }
+
+
     public function skills($skills = [])
     {
+        if (!$skills)
+            return $this->builder;
+
         return $this->builder->whereHas('skills',function ($query) use ($skills){
             return $query->{is_array($skills)?'whereIn':'where'}('alias',$skills);
         });
@@ -75,7 +87,6 @@ class DoctorFilters extends Filter{
             return $this->builder;
 
         $skill = is_array($skill)?$skill:[$skill];
-
         $tops = Skill::find($skill)->pluck('top_doctors')->flatten();
 
         return $this->builder->whereIn('doctors.id',$tops);
