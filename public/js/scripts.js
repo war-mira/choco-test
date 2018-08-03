@@ -366,6 +366,22 @@ $(document).ready(function() {
         entityCount--;
     });
 
+    $('#filtersGroup .btn-radio').click(
+        function () {
+            if ($(this).prev('input[name=sort]').prop('checked')) {
+                var order = $('input[name=order]:checked').val();
+                order = (order == 'asc') ? 'desc' : 'asc';
+                $('input[name=order]').val([order]).trigger("change");
+            }
+        });
+    $('.btn-radio').click(function () {
+        var name = $(this).prev().prop('name');
+        var value = $(this).prev().prop('value');
+
+        $('input[name=' + name + ']').val([value]).trigger("change");
+    });
+
+
     $(".js-add-select-tag").click(function() {
         var $this = $(this);
         var $container = $this.closest(".js-add-select-tags");
