@@ -64,9 +64,9 @@ class CommentController extends Controller
         }
         $data['text'] = strip_tags($data['text'] ?? "");
         $comment = Comment::create($data);
-        $comment->created_at = Carbon::now()->timestamp;
-        $comment->updated_at = Carbon::now()->timestamp;
-        $comment->save();
+//        $comment->created_at = Carbon::now()->timestamp;
+//        $comment->updated_at = Carbon::now()->timestamp;
+//        $comment->save();
         return $comment;
     }
 

@@ -7,6 +7,7 @@ use App\Doctor;
 use App\Helpers\FormatHelper;
 use App\Helpers\SearchHelper;
 use App\Helpers\SeoMetadataHelper;
+use App\Helpers\SessionContext;
 use App\Http\Requests\Doctor\DoctorFilters;
 use App\Medcenter;
 use App\PageSeo;
@@ -14,7 +15,9 @@ use App\Skill;
 use App\Models\District;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class DoctorController extends Controller
 {
@@ -428,11 +431,22 @@ class DoctorController extends Controller
             return redirect()->route('doctor.item', ['doctor' => $doctor->alias]);
         }
 
-//        if(request()->has('uid'))
 
+        $hash = Cookie::get('uid');
         $meta = SeoMetadataHelper::getMeta($doctor, $city);
 
-        return view('doctors.feedback', compact('city', 'doctor', 'meta'));
+        if(request()->has('uid'))
+            if(request()->get('uid') == $hash)
+                return view('doctors.feedback', compact('city', 'doctor', 'meta'));
+            else
+               return redirect()->route('doctor.item',['city'=>$city->alias,'doctor'=>$doctor->alias]);
+
+
+        $hash = md5(str_random());
+        Cookie::queue('uid', $hash, 120);
+
+
+        return redirect()->route('doctor.feedback',['city'=>$city->alias,'doctor'=>$doctor->alias,'uid'=>$hash]);
     }
 
 
