@@ -125,6 +125,8 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         3  => 'Статичный',
         4  => 'Системный'
     ];
+    const PARTNER = 1;
+    const NOT_PARTNER = 0;
     public $timestamps = true;
     protected $table = 'doctors';
     protected $fillable = [
@@ -180,6 +182,7 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         'preview_text',
         'timetable',
         'seo_text',
+        'partner'
 //        'mond',
 //        'tues',
 //        'wedn',

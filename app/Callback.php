@@ -65,7 +65,8 @@ class Callback extends Model
         2 => 'Отвечена',
         3 => 'Повтор',
         4 => 'Отказ',
-        5 => 'Ошибка'
+        5 => 'Ошибка',
+        6 => 'Не партнер'
     ];
 
     protected $table = 'callbacks';

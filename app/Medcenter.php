@@ -78,6 +78,8 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
         3  => 'Статичный',
         4  => 'Системный'
     ];
+    const PARTNER = 1;
+    const NOT_PARTNER = 0;
     public $timestamps = false;
     protected $table = 'medcenters';
     protected $fillable = [
@@ -103,7 +105,8 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
         'geo_lon',
         'avatar',
         'email',
-        'seo_text'
+        'seo_text',
+        'partner'
     ];
 
     protected $attributes = [

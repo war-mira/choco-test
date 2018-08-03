@@ -95,6 +95,7 @@ $(document).ready(function() {
         callbacks: {
             beforeOpen: function() {
                 $('form#callback_form').find('input[name="target_id"]').val(this.st.el.data('doc-id'));
+                $('form#callback_form').find('input[name="status"]').val(this.st.el.data('status'));
                 $('form#callback_form').find('#doctor_name').val(this.st.el.data('dname'));
                 if($(this.st.el).parent().parent().find('input[name="date"]:checked').val() != 'custom' && $(this.st.el).parent().parent().find('input[name="date"]').is(':radio'))
                 {
@@ -123,7 +124,14 @@ $(document).ready(function() {
         {
             var block = $(this).closest('div.appointment-book-small__line');
         }
-        var condition = checkblock(block);
+
+        var condition = false;
+
+        if($(this).data('status') == 6){
+            condition = true;
+        }else{
+            condition = checkblock(block);
+        }
         if(condition)
         {
             $(this).magnificPopup(popupDefaults).magnificPopup('open');
@@ -705,4 +713,15 @@ function readURL(input) {
 
         reader.readAsDataURL(input.files[0]);
     }
+}
+
+function getFormData($form) {
+    var unindexed_array = $form.serializeArray();
+    var indexed_array = {};
+
+    $.map(unindexed_array, function (n, i) {
+        indexed_array[n['name']] = n['value'];
+    });
+
+    return indexed_array;
 }

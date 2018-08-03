@@ -6,7 +6,8 @@
 @section('content')
     <section class="section library blog-list">
         @foreach($illnessesGroups as $group)
-            <div class="library-group__articles-list">
+            @if($group->limitedArticles()->count())
+                <div class="library-group__articles-list">
                 <div class="container">
                     <div class="blog-list__list">
                         <div class="library-list_heading blog-list__heading">
@@ -19,6 +20,7 @@
                     <div class="library-list__load-more"><a class="library-list__btn btn transparent" href="{{route('library.illnesses-group-articles', $group->alias)}}">Все статьи по теме</a></div>
                 </div>
             </div>
+            @endif
         @endforeach
     </section>
 @endsection
