@@ -232,7 +232,9 @@ class Order extends Model
             'pay_status',
             'from_internet',
             'notify_before',
-            'callback_id'
+            'callback_id',
+            'service',
+            'service_price'
         ];
     protected $appends = ['client_info', 'operator_info', 'status_tag', 'status_description'];
     protected $with = ['doctor', 'medcenter'];
