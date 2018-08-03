@@ -40,6 +40,7 @@
             <input type="hidden" name="target_type" value="Doctor">
             <input type="hidden" name="target_id" value="">
             <input type="hidden" name="source" value="doctor_page">
+            <input type="hidden" name="status" value="">
             {{ csrf_field() }}
             <div class="leave-review__textarea-item tcentr">
                 <input class="form-control tcentr fbold" placeholder="Врач" id="doctor_name"

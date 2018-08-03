@@ -45,6 +45,21 @@ class CallbackController extends Controller
         return $callback;
     }
 
+    public function oldDoc(\Illuminate\Http\Request $request)
+    {
+        $data = $request->all();
+        $callback = new Callback();
+        if(isset($data['client_datetime_2'])){
+            $callback->client_datetime = Carbon::createFromFormat("Y-m-d\TH:i", $data['client_datetime_2']);
+        }elseif(isset($data['client_datetime_1'])){
+            $callback->client_datetime = Carbon::createFromFormat("Y-m-d H:i", $data['client_datetime']);
+        }
+        $callback->fill($data);
+        $callback->save();
+
+        return $callback;
+    }
+
     public function update()
     {
         $Input = Request::all();
