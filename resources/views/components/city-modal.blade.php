@@ -9,10 +9,11 @@
                 <div class="row text-center">
                     <div class="col-sm-12">
                         <ul class="list-unstyled">
-
-                            <li><a href="{{ URL::asset('setcity/7') }}" rel="nofollow">Астана</a></li>
-                            <li><a href="{{ URL::asset('setcity/6') }}" rel="nofollow">Алматы</a></li>
-
+                            @if(\App\City::active())
+                                @foreach(\App\City::active() as $city)
+                                    <li><a href="{{ route('setcity', $city->id) }}" rel="nofollow">{{ $city->name }}</a></li>
+                                @endforeach
+                            @endif
                         </ul>
                     </div>
                 </div>

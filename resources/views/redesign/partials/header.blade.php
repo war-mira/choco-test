@@ -21,9 +21,11 @@
                 @endif
                 <div class="main-header__action-item main-header-location">
                     <select name="location" class="js-header-location" placeholder="{{\App\Helpers\SessionContext::city()->name}}">
-                        <option value="6" {{\App\Helpers\SessionContext::cityId() == 6 ? 'selected':''}}>Алматы</option>
-                        <option value="7" {{\App\Helpers\SessionContext::cityId() == 7 ? 'selected':''}}>Астана</option>
-                        {{--<option value="city-3">Усть-Каменогорск</option>--}}
+                        @if(\App\City::active())
+                            @foreach(\App\City::active() as $city)
+                                <option value="{{ $city->id }}" {{\App\Helpers\SessionContext::cityId() == $city->id ? 'selected':''}}>{{ $city->name }}</option>
+                            @endforeach
+                        @endif
                     </select>
                 </div>
                 <a href="tel:+77272222200" class="main-header__action-item main-header-phone">+7 (727) 222-22-00</a>

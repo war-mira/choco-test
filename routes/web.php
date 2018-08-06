@@ -10,8 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'IndexController@home')->name('home');
-Route::get('main-new', 'IndexController@r_home')->name('home');
+Route::get('/', 'IndexController@r_home')->name('home');
+//Route::get('main-new', 'IndexController@r_home')->name('home');
 
 Route::get('likes','IndexController@ratings')->name('rates');
 
@@ -104,7 +104,7 @@ Route::get('/illness/almaty/all/', function () {
 });
 //*********for pay*************
 
-Route::get('setcity/{cityid}', 'BaseController@setcity');
+Route::get('setcity/{cityid}', 'BaseController@setcity')->name('setcity');
 
 Auth::routes();
 Route::get('/login', 'Auth\LoginController@getLoginForm')->name('login');

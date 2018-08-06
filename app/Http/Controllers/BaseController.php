@@ -18,21 +18,19 @@ class BaseController extends Controller
         ];
 
         $occurrence = false;
+        $old_alias = '';
         foreach($city_aliases as $city_alias){
             if(stristr($referer, $city_alias) !== false){
                 $occurrence = true;
+                $old_alias = $city_alias;
                 break;
             }
         }
+        $city = City::find($cytyid);
+        $city_alias = $city->alias;
 
-        $city_alias = $cytyid == 7 ? "astana" : "almaty";
-
-        if($occurrence){
-            if ($cytyid == 7) {
-                $url_to = str_replace('almaty', 'astana', $referer);
-            } else {
-                $url_to = str_replace('astana', 'almaty', $referer);
-            }
+        if($occurrence && $old_alias){
+            $url_to = str_replace($old_alias, $city_alias, $referer);
         }else{
             $url_to = str_replace(["/doctors", "/medcenters"], ["/{$city_alias}/doctors", "/{$city_alias}/medcenters"], $referer);
         }

@@ -36,6 +36,8 @@ class City extends Model
 
     protected $appends = ['href'];
 
+    const ACTIVE = 1;
+
     public function parent()
     {
         return $this->belongsTo(City::class, 'parent_id', 'id');
@@ -64,5 +66,10 @@ class City extends Model
     public function getHrefAttribute()
     {
         return route('doctors.list', ['city' => $this->alias]);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', self::ACTIVE)->get();
     }
 }
