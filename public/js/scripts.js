@@ -539,8 +539,8 @@ $(document).ready(function() {
     $('.js-header-location').on('change', function () {
         var city = $(this).val();
         $.get('/setcity/'+ city, function (data) {
-           if(data == 'success'){
-               location.reload();
+           if(data['message'] == 'success'){
+               window.location.replace(data['url']);
            }
         });
     });

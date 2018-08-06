@@ -19,15 +19,7 @@
                         <span>Профиль</span>
                     </a>
                 @endif
-                <div class="main-header__action-item main-header-location">
-                    <select name="location" class="js-header-location" placeholder="{{\App\Helpers\SessionContext::city()->name}}">
-                        @if(\App\City::active())
-                            @foreach(\App\City::active() as $city)
-                                <option value="{{ $city->id }}" {{\App\Helpers\SessionContext::cityId() == $city->id ? 'selected':''}}>{{ $city->name }}</option>
-                            @endforeach
-                        @endif
-                    </select>
-                </div>
+                @include('redesign.partials.cities_select')
                 <a href="tel:+77272222200" class="main-header__action-item main-header-phone">+7 (727) 222-22-00</a>
                 <div class="nav-toggle main-header__action-item">
                     <span></span>

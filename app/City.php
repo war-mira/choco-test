@@ -70,6 +70,6 @@ class City extends Model
 
     public function scopeActive($query)
     {
-        return $query->where('status', self::ACTIVE)->get();
+        return $query->where('status', self::ACTIVE);
     }
 }

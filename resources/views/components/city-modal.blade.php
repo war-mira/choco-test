@@ -9,8 +9,8 @@
                 <div class="row text-center">
                     <div class="col-sm-12">
                         <ul class="list-unstyled">
-                            @if(\App\City::active())
-                                @foreach(\App\City::active() as $city)
+                            @if(\App\City::active()->get())
+                                @foreach(\App\City::active()->get() as $city)
                                     <li><a href="{{ route('setcity', $city->id) }}" rel="nofollow">{{ $city->name }}</a></li>
                                 @endforeach
                             @endif
