@@ -1,4 +1,5 @@
 <div class="modal-window" id="quick-order-modal">
+    <div class="moodal-close-bg"></div>
     <div class="modal-close"></div>
     <div class="modal__content">
         <div class="modal__title">
