@@ -450,6 +450,8 @@ class DoctorController extends Controller
     }
 
 
+
+
     protected function getFilterforSeo($skill, $flag)
     {
         $rules = [

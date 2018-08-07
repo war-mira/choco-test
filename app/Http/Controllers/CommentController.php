@@ -70,6 +70,18 @@ class CommentController extends Controller
         return $comment;
     }
 
+
+    public function requestPhoneCode(Request $request)
+    {
+        return ['status'=>'sent'];
+    }
+
+
+    public function confirmPhone(Request $request)
+    {
+        return ['status'=>str_random(6)];
+    }
+
     private function authorizeComment($data)
     {
         $phone = $data['user_email'];
