@@ -18,7 +18,6 @@
                                 {{$doctor->on_top}}
                             @endslot
                         @endcomponent
-                        <a href="#" class="entity-thumb-img__add-favorite"></a>
                     </div>
                     <div class="entity-thumb-img__rating-line rating-line">
                         <div class="rating-line__val">{{$doctor->avg_rate}}</div>

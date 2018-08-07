@@ -2,7 +2,9 @@
     <div class="article__title">
         <h1>{{ $content->name }}</h1>
     </div>
-    <img src="{{ URL::asset($content->image) }}">
+    @if(!empty($content->image))
+        <img src="{{ URL::asset($content->image) }}">
+    @endif
 </div>
 <div class="section section-article__content">
     <div class="article-content__main">{!! $content->description !!}</div>

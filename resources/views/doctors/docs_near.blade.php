@@ -17,7 +17,6 @@
                                     250px
                                 @endslot
                             @endcomponent
-                            <a href="#" class="entity-thumb-img__add-favorite"></a>
                             <div class="entity-thumb-img__rating">{{$tt->avg_rate}}</div>
                         </div>
                     </div>
