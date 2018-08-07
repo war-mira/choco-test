@@ -16,14 +16,12 @@ class DoctorCabinetQuestionsController extends DoctorCabinetController
         if ($request->search) {
             $questions->where('text', 'like', "%$request->search%");
         }
-        if($request->answered ){
-            if ($request->answered == Question::ANSWERED) {
-                $questions = $questions->answeredNotByDoctor($this->doctor);
-            } else if ($request->answered == Question::ANSWERED_BY_DOCTOR) {
-                $questions = $questions->answeredByDoctor($this->doctor);
-            } else {
-                $questions = $questions->notAnswered();
-            }
+        if ($request->answered && $request->answered == Question::ANSWERED) {
+            $questions = $questions->answeredNotByDoctor($this->doctor);
+        } else if ($request->answered && $request->answered == Question::ANSWERED_BY_DOCTOR) {
+            $questions = $questions->answeredByDoctor($this->doctor);
+        } else {
+            $questions = $questions->notAnswered();
         }
 
         $questions = $questions->orderBy('created_at', 'desc')->paginate(10);
