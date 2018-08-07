@@ -16,7 +16,8 @@ class IllnessesGroup extends Model
       'meta_key',
       'meta_desc',
       'created_at',
-      'updated_at'
+      'updated_at',
+      'active'
     ];
 
     protected $table = 'illnesses_groups';

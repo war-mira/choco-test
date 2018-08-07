@@ -5,7 +5,7 @@
 @section('form')
     <form action="{{$action}}" id="edit-form" method="post" enctype="multipart/form-data">
         {{csrf_field()}}
-        @component('components.bootstrap.column',['class'=>'col-md-8'])
+        @component('components.bootstrap.column',['class'=>'col-md-12'])
             @component('components.bootstrap.row')
                 @component('components.bootstrap.column',['class'=>'col-md-2'])
                     @component('components.form.text')
@@ -16,7 +16,7 @@
                         @slot('readonly',true)
                     @endcomponent
                 @endcomponent
-                @component('components.bootstrap.column',['class'=>'col-md-5'])
+                @component('components.bootstrap.column',['class'=>'col-md-4'])
                     @component('components.form.text')
                         @slot('field','name')
                         @slot('value',$seed['name'] ?? null)
@@ -25,13 +25,20 @@
                         @slot('required',true)
                     @endcomponent
                 @endcomponent
-                @component('components.bootstrap.column',['class'=>'col-md-5'])
+                @component('components.bootstrap.column',['class'=>'col-md-4'])
                     @component('components.form.text')
                         @slot('field','alias')
                         @slot('value',$seed['alias'] ?? null)
                         @slot('placeholder','Транслит')
                         @slot('label','Транслит')
                         @slot('readonly',true)
+                    @endcomponent
+                @endcomponent
+                @component('components.bootstrap.column',['class'=>'col-md-2'])
+                    @component('components.form.checkbox')
+                        @slot('field','active')
+                        @slot('value',$seed['active'] ?? null)
+                        @slot('label','Опубликовано')
                     @endcomponent
                 @endcomponent
             @endcomponent
@@ -44,7 +51,7 @@
                     @slot('placeholder','Краткое описание')
                     @slot('formId','edit-form')
                     @slot('label','Краткое описание')
-                    @slot('required',true)
+                    @slot('required',false)
                 @endcomponent
             @endcomponent
         @endcomponent
@@ -68,7 +75,7 @@
                     @slot('placeholder','SEO заголовок')
                     @slot('formId','edit-form')
                     @slot('label','SEO заголовок')
-                    @slot('required',true)
+                    @slot('required',false)
                 @endcomponent
             @endcomponent
         @endcomponent
@@ -80,7 +87,7 @@
                     @slot('placeholder','SEO ключевые слова')
                     @slot('formId','edit-form')
                     @slot('label','SEO ключевые слова')
-                    @slot('required',true)
+                    @slot('required',false)
                 @endcomponent
             @endcomponent
         @endcomponent
@@ -92,7 +99,7 @@
                     @slot('value',$seed['meta_desc'] ?? null)
                     @slot('placeholder','SEO описание')
                     @slot('label','SEO описание')
-                    @slot('required',true)
+                    @slot('required',false)
                 @endcomponent
             @endcomponent
         @endcomponent
