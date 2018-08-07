@@ -16,8 +16,7 @@
                         <div class="entity-slider__item">
                         <div class="entity-slider__item-img entity-thumb-img">
                             <div class="entity-thumb-img__img-wr">
-                                <img src="{{ url($doctor->avatar) }}" alt="" class="entity-thumb-img__img">
-                                <a href="#" class="entity-thumb-img__add-favorite"></a>
+                                <img src="{{ url($doctor->avatar) }}" alt="" class="entity-thumb-img__img profiles__img profiles__img--circle">
                                 <div class="entity-thumb-img__rating">{{ $doctor->avg_rate }}</div>
                             </div>
                         </div>

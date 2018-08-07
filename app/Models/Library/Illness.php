@@ -18,7 +18,8 @@ class Illness extends Model
         'meta_desc',
         'created_at',
         'updated_at',
-        'image'
+        'image',
+        'active'
     ];
 
     protected $table = 'illnesses';

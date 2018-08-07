@@ -53,8 +53,11 @@ $(document).ready(function() {
     $(".js-simple-select").selectize({
         openOnFocus: false
     });
+    $('.selectize-input').find('input').prop('disabled', 'disabled');
 
-    $(".js-header-location").selectize();
+    $(".js-header-location").selectize({
+        openOnFocus: false
+    });
 
     $(".entity-slider").slick({
         infinite: false,
@@ -95,6 +98,7 @@ $(document).ready(function() {
         callbacks: {
             beforeOpen: function() {
                 $('form#callback_form').find('input[name="target_id"]').val(this.st.el.data('doc-id'));
+                $('form#callback_form').find('input[name="status"]').val(this.st.el.data('status'));
                 $('form#callback_form').find('#doctor_name').val(this.st.el.data('dname'));
                 if($(this.st.el).parent().parent().find('input[name="date"]:checked').val() != 'custom' && $(this.st.el).parent().parent().find('input[name="date"]').is(':radio'))
                 {
@@ -123,7 +127,14 @@ $(document).ready(function() {
         {
             var block = $(this).closest('div.appointment-book-small__line');
         }
-        var condition = checkblock(block);
+
+        var condition = false;
+
+        if($(this).data('status') == 6){
+            condition = true;
+        }else{
+            condition = checkblock(block);
+        }
         if(condition)
         {
             $(this).magnificPopup(popupDefaults).magnificPopup('open');
@@ -366,6 +377,22 @@ $(document).ready(function() {
         entityCount--;
     });
 
+    $('#filtersGroup .btn-radio').click(
+        function () {
+            if ($(this).prev('input[name=sort]').prop('checked')) {
+                var order = $('input[name=order]:checked').val();
+                order = (order == 'asc') ? 'desc' : 'asc';
+                $('input[name=order]').val([order]).trigger("change");
+            }
+        });
+    $('.btn-radio').click(function () {
+        var name = $(this).prev().prop('name');
+        var value = $(this).prev().prop('value');
+
+        $('input[name=' + name + ']').val([value]).trigger("change");
+    });
+
+
     $(".js-add-select-tag").click(function() {
         var $this = $(this);
         var $container = $this.closest(".js-add-select-tags");
@@ -515,8 +542,8 @@ $(document).ready(function() {
     $('.js-header-location').on('change', function () {
         var city = $(this).val();
         $.get('/setcity/'+ city, function (data) {
-           if(data == 'success'){
-               location.reload();
+           if(data['message'] == 'success'){
+               window.location.replace(data['url']);
            }
         });
     });
@@ -689,4 +716,15 @@ function readURL(input) {
 
         reader.readAsDataURL(input.files[0]);
     }
+}
+
+function getFormData($form) {
+    var unindexed_array = $form.serializeArray();
+    var indexed_array = {};
+
+    $.map(unindexed_array, function (n, i) {
+        indexed_array[n['name']] = n['value'];
+    });
+
+    return indexed_array;
 }

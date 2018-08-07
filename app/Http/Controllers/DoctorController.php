@@ -40,6 +40,24 @@ class DoctorController extends Controller
             ->with('doctor', $doctor);
     }
 
+    public function itemOld(City $city, Doctor $doctor)
+    {
+        if ($city->id !== $doctor->city->id) {
+           // return redirect()->route('doctor.item', ['doctor' => $doctor->alias], 301);
+        }
+        $districts = District::all();
+        $meta = SeoMetadataHelper::getMeta($doctor, $city);
+
+        $near_docs = Doctor::query()->where('doctors.status', 1)
+            ->where('doctors.city_id', $doctor->city->id)->limit(9)->get();
+
+        return view('doctors.item_old')
+            ->with('meta', $meta)
+            ->with('districts',$districts)
+            ->with('near', $near_docs)
+            ->with('doctor', $doctor);
+    }
+
     public function commonList(Skill $skill = null, Request $request){
         return $this->list(City::find(1), $skill, $request);
     }
@@ -132,6 +150,86 @@ class DoctorController extends Controller
 
     }
 
+    public function listOld(City $city = null, Skill $skill = null, Request $request)
+    {
+        $doctors = Doctor::query()->where('doctors.status', 1);
+        $query = $request->only([
+            'q',
+            'child',
+            'ambulatory',
+            'sort',
+            'order',
+            'exp_range',
+            'price_range',
+            'rate_range',
+            'page',
+            'district'
+        ]);
+        $filter = $query;
+        $doctorsTop = null;
+        $currentPage = $request->input('page');
+
+        if (isset($skill)) {
+            $filter['skill'] = $skill->alias ?? null;
+            $doctors = $doctors->whereHas('skills', function ($skillsQuery) use ($skill) {
+                $skillsQuery->where('skills.id', $skill->id);
+            });
+            $top_doctors = FormatHelper::arrayToString($skill->top_doctors);
+            if($top_doctors && $skill->top_doctors){
+                $doctorsTop = Doctor::whereIn('id', $skill->top_doctors)->orderByRaw('FIELD(id,'.$top_doctors.')')->where('status', 1)->get();
+            }
+
+        }
+
+        if(isset($doctorsTop)){
+            $doctors = $doctors->whereNotIn('id', $skill->top_doctors);
+        }
+
+        if (isset($filter['page']) && $filter['page'] == 1){
+            return redirect()->route(((empty($city->id) || $city->id == 1) ? "all.doctors.list" : 'doctors.list'), array_merge(['city' => $city->alias ?? null, 'skill' => $skill->alias ?? null], array_except($filter, 'page')));
+        }
+
+        $this->applyDoctorsFilter($doctors, $filter);
+
+
+        if (!empty($city->id)) {
+            $doctors = $doctors->where('doctors.city_id', $city->id);
+            $actionKey = $city->id != 1 ? 'list' : 'list_all';
+            $pageSeo = PageSeo::query()
+                ->where('class','Doctor')
+                ->where('action', $actionKey)
+                ->first();
+            $meta = SeoMetadataHelper::getMeta($pageSeo, $city);
+        } else {
+            $title = 'iDoctor.kz - Врачи-специалисты. Список врачей-специалистов в Казахстане';
+            $description = 'iDoctor.kz - Список врачей-специалистов по всему Казахстану. Поиск и бесплатная запись на прием к врачу любой специальности. У нас собрана большая база врачей различных специализаций по всему Казахстану';
+            $meta = compact('title', 'description');
+        }
+        $doctors = $doctors->paginate(10)->appends($query);
+
+        if ($doctors->lastPage() < ($filter['page'] ?? 1)){
+            return redirect($doctors->url(1));
+        }
+
+        $skills = \App\Skill::orderBy('name');
+        if (!empty($city->id)) {
+            $skills = $skills->havingDoctorsInCity($city);
+        }
+        $skills = $skills->get();
+
+        $medcenters = \App\Medcenter::orderBy('name');
+        if (!empty($city->id)) {
+            $medcenters = $medcenters->havingDoctorsInCity($city);
+        }
+        $medcenters = $medcenters->get();
+
+        if (isset($skill)) {
+            $meta = SeoMetadataHelper::getMeta($skill, $city);
+        }
+
+        return view('search.page_old',
+            compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage'));
+    }
 
     public function get_dt(Request $request)
     {

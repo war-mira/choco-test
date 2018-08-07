@@ -31,7 +31,7 @@
                                             <div class="col-xs-2">
                                                 <h3>{{old('id',$seed['id'])}}</h3>
                                             </div>
-                                            <div class="col-xs-6">
+                                            <div class="col-xs-5">
                                                 @component('components.form.select')
                                                     @slot('field','status')
                                                     @slot('value',$seed['status'] ?? 0)
@@ -40,7 +40,7 @@
                                                     @slot('options',\App\Doctor::STATUS)
                                                 @endcomponent
                                             </div>
-                                            <div class="col-xs-4">
+                                            <div class="col-xs-5">
                                                 @component('components.form.select')
                                                     @slot('field','on_top')
                                                     @slot('value',$seed['on_top'] ?? 0)
@@ -62,6 +62,13 @@
                                         @endcomponent
                                         @component('components.bootstrap.column',['class'=>'col-md-12'])
                                             @component('components.bootstrap.row')
+                                                @component('components.bootstrap.column',['class'=>'col-md-12'])
+                                                        @component('components.form.checkbox')
+                                                            @slot('field','partner')
+                                                            @slot('value',$seed['partner'] ?? null)
+                                                            @slot('label','Наш партнер')
+                                                        @endcomponent
+                                                @endcomponent
                                                 @component('components.bootstrap.column',['class'=>'col-md-12'])
                                                     @component('components.form.text')
                                                         @slot('field','firstname')
@@ -403,7 +410,7 @@
                                     </div>
                                     <div class="panel-body">
                                         @component('components.bootstrap.row')
-                                            @component('components.bootstrap.column',['class'=>'col-md-6'])
+                                            @component('components.bootstrap.column',['class'=>'col-md-12'])
                                                 @component('components.form.summernote.textarea')
                                                     @slot('field','preview_text')
                                                     @slot('value',$seed['preview_text'] ?? '')

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Doctor;
 use App\Helpers\BootstrapTableHelper;
 use App\Http\Controllers\Controller;
 use App\Medcenter;
@@ -72,6 +73,10 @@ class MedcenterController extends Controller
         $medcenter->fill($data);
         $medcenter->save();
 
+        if($medcenter->partner == Medcenter::PARTNER){
+            $this->updateDoctors($medcenter);
+        }
+
         if ($redirectRoute != null) {
             $response = redirect(route($redirectRoute, ['id' => $medcenter->id]));
         } else
@@ -115,6 +120,15 @@ class MedcenterController extends Controller
         }
 
         return $data;
+    }
+
+    private function updateDoctors(Medcenter $medcenter)
+    {
+        $doctors = $medcenter->doctors;
+        foreach ($doctors as $doctor){
+            $doctor->partner = Doctor::PARTNER;
+            $doctor->save();
+        }
     }
 
 }

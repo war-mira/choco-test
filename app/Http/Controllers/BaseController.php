@@ -12,31 +12,24 @@ class BaseController extends Controller
     public function setcity(Request $request, $cytyid)
     {
         $referer = $request->headers->get('referer');
-        $city_aliases = [
-            "almaty",
-            "astana",
-        ];
+        $city_aliases = City::active()->select('alias')->get()->toArray();
 
         $occurrence = false;
+        $old_alias = '';
         foreach($city_aliases as $city_alias){
-            if(stristr($referer, $city_alias) !== false){
+            if(stristr($referer, $city_alias['alias']) !== false){
                 $occurrence = true;
+                $old_alias = $city_alias;
                 break;
             }
         }
-
-        $city_alias = $cytyid == 7 ? "astana" : "almaty";
-
-        if($occurrence){
-            if ($cytyid == 7) {
-                $url_to = str_replace('almaty', 'astana', $referer);
-            } else {
-                $url_to = str_replace('astana', 'almaty', $referer);
-            }
+        $city = City::find($cytyid);
+        $city_alias = $city->alias;
+        if($occurrence && $old_alias){
+            $url_to = str_replace($old_alias['alias'], $city_alias, $referer);
         }else{
             $url_to = str_replace(["/doctors", "/medcenters"], ["/{$city_alias}/doctors", "/{$city_alias}/medcenters"], $referer);
         }
-
 
         if (City::query()->find($cytyid) != null) {
             $request->session()->put('cityid', $cytyid);
@@ -47,7 +40,7 @@ class BaseController extends Controller
         $request->session()->save();
 
         if($request->ajax())
-            return 'success';
+            return ['message' => 'success', 'url' => $url_to];
         return \Redirect::to($url_to, 302);
     }
 

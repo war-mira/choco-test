@@ -27,7 +27,10 @@
             <td>{{$order->event_date}}</td>
             <td>{{$order->doctor['name'] ?? '-'}}</td>
             <td>{{$order->medcenter['name'] ?? '-'}}</td>
-            <td>{{\App\Order::STATUS[$order->status]['name']}}</td>
+            @php
+                $array_key = array_search($order->status, array_column(\App\Order::STATUS, 'id'));
+            @endphp
+            <td>{{\App\Order::STATUS[$array_key]['name']}}</td>
         </tr>
     @endforeach
     </tbody>

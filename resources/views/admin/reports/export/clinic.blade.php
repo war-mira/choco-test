@@ -23,6 +23,8 @@
         <th style="border:  1px solid #000000;"><b>№</b></th>
         <th align="center" valign="bottom" style="border:  1px solid #000000;"><b>Дата записи</b></th>
         <th align="center" valign="bottom" style="border:  1px solid #000000;"><b>ФИО пациента</b></th>
+        <th align="center" valign="bottom" style="border:  1px solid #000000;"><b>Услуга</b></th>
+        <th align="center" valign="bottom" style="border:  1px solid #000000;"><b>Стоимость манипуляции</b></th>
         <th align="center" valign="bottom" style="border:  1px solid #000000;"><b>Время записи</b></th>
         <th align="center" valign="bottom" style="border:  1px solid #000000;"><b>Контактные данные пациента</b></th>
         <th align="center" valign="bottom" style="border:  1px solid #000000;"><b>ФИО врача</b></th>
@@ -36,6 +38,8 @@
             <td align="left" valign="bottom" style="border:  1px solid #000000;">{{$Order->created_at}}</td>
             <td align="left" valign="bottom"
                 style="border:  1px solid #000000;">{{$Order['client_info']['name'] ?? '-'}}</td>
+            <td align="left" valign="bottom" style="border:  1px solid #000000;">{{$Order['service'] ?? '-'}}</td>
+            <td align="left" valign="bottom" style="border:  1px solid #000000;">{{$Order['service_price'] ?? '-'}} тенге</td>
             <td align="left" valign="bottom" style="border:  1px solid #000000;">{{$Order->event_date}}</td>
             <td align="left" valign="bottom"
                 style="border:  1px solid #000000;">{{$Order['client_info']['phone'] ??'-'}}</td>

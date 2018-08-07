@@ -10,8 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'IndexController@home')->name('home');
-Route::get('main-new', 'IndexController@r_home')->name('home');
+Route::get('/', 'IndexController@r_home')->name('home');
+//Route::get('main-new', 'IndexController@r_home')->name('home');
 
 Route::get('likes','IndexController@ratings')->name('rates');
 
@@ -45,10 +45,18 @@ Route::group(['prefix' => '{city}'], function () {
     Route::group(['prefix' => 'doctors', 'as' => 'doctors.'], function () { //Добавил z - удалить
         Route::get('/{skill?}', 'DoctorController@list')->name('list');
     });
+    Route::group(['prefix' => 'doctors_old', 'as' => 'doctors_old.'], function () { //Добавил z - удалить
+        Route::get('/{skill?}', 'DoctorController@listOld')->name('list');
+    });
     Route::group(['prefix' => 'doctor', 'as' => 'doctor.'], function () {
         Route::get('/{doctor}', 'DoctorController@item')->name('item');
         Route::get('/{doctor}/feedback', 'DoctorController@feedback')->name('feedback');
         Route::get('/{doctor}/comments', 'DoctorController@loadComments')->name('comments');
+    });
+    Route::group(['prefix' => 'doctor_old', 'as' => 'doctor_old.'], function () {
+        Route::get('/{doctor}', 'DoctorController@itemOld')->name('item_old');
+        Route::get('/{doctor}/feedback', 'DoctorController@feedback')->name('feedback_old');
+        Route::get('/{doctor}/comments', 'DoctorController@loadComments')->name('comments_old');
     });
     Route::group(['prefix' => 'medcenters', 'as' => 'medcenters.'], function () {
         Route::get('/', 'MedcenterController@list')->name('list');
@@ -74,6 +82,7 @@ Route::get('drug/{id}', 'DrugsController@item');
 //callback **********************************************
 Route::get('callback/new/', 'CallbackController@newQuick');
 Route::get('callback/newDoc/', 'CallbackController@newDoc')->name('callback.newDoc');
+Route::get('callback/oldDoc/', 'CallbackController@oldDoc')->name('callback.oldDoc');
 //***comments
 
 Route::get('comment/new', 'CommentController@new');
@@ -95,7 +104,7 @@ Route::get('/illness/almaty/all/', function () {
 });
 //*********for pay*************
 
-Route::get('setcity/{cityid}', 'BaseController@setcity');
+Route::get('setcity/{cityid}', 'BaseController@setcity')->name('setcity');
 
 Auth::routes();
 Route::get('/login', 'Auth\LoginController@getLoginForm')->name('login');

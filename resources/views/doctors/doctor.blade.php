@@ -18,7 +18,6 @@
                                 {{$doctor->on_top}}
                             @endslot
                         @endcomponent
-                        <a href="#" class="entity-thumb-img__add-favorite"></a>
                     </div>
                     <div class="entity-thumb-img__rating-line rating-line">
                         <div class="rating-line__val">{{$doctor->avg_rate}}</div>
@@ -98,6 +97,7 @@
                         <a href="#">Подробнее</a>
                     </div>
                 </div>
+                @if($doctor->partner == \App\Doctor::PARTNER)
                 <form action="#" class="entity-line__appointment-book-small appointment-book-small">
                     <div class="appointment-book-small__line">
                         <div class="appointment-book-small__when">
@@ -135,6 +135,15 @@
                         </div>
                     </div>
                 </form>
+                @else
+                    <div class="appointment-book-big__bot-line">
+                        <div class="appointment-book-big__price">
+                            <div class="appointment-book-big__price-text">Прием от:</div>
+                            <div class="appointment-book-big__price-val">от {{$doctor['price']}} тг</div>
+                        </div>
+                        <a href="#order_doctor" data-doc-id="{{$doctor->id}}" data-dname="{{$doctor['name']}}" data-status="6" class="appointment-book-big__book-btn btn btn_theme_usual trigger-link popup-with-form">Хочу записаться</a>
+                    </div>
+                @endif
             </div>
             <div class="entity-line__additional">
                 <div class="entity-line__map entity-map" id="entity-map">
@@ -296,3 +305,33 @@
     </div>
 </section>
 @include('forms.public.order_doc')
+<script type="text/javascript">
+
+    var callbackForm = $('form#callback_form');
+
+    $("#save_order").click(function (e) {
+        e.preventDefault();
+        ga('send', 'event', {
+            eventCategory: 'zapisatsya',
+            eventAction: 'click'
+        });
+        //Ya goal
+        yaCounter47714344.reachGoal('registration');
+
+        if (callbackForm[0].checkValidity()) {
+            var formData = new FormData(callbackForm[0]);
+            console.log(getFormData(callbackForm));
+            formData.ga_cid =
+                $.getJSON("{{route('callback.newDoc')}}", getFormData(callbackForm))
+                    .done(function (json) {
+                        $.magnificPopup.close();
+                        $.magnificPopup.open({
+                            items: {
+                                src: '#callback_mess_ok',
+                                type: 'inline'
+                            }
+                        });
+                    });
+        }
+    });
+</script>

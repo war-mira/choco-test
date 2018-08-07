@@ -81,19 +81,22 @@
     <div class="doc-line__address">
         <div class="doc-line__address-heading">Прием по адресу:</div>
         <div class="doc-line__address-list">
-
-            <div class="doc-line__address-item">
-                <div class="doc-line__address-val"><a href="{{$doctor['city']->alias}}">{{$doctor['city']->name}}</a>, {{\App\Medcenter::where('id',$doctor->med_id)->first()->sms_address}}</div>
-                <div class="doc-line__address-clinic-link">
-                    <a href="{{\App\Medcenter::where('id',$doctor->med_id)->first()->alias}}">{{\App\Medcenter::where('id',$doctor->med_id)->first()->name}}</a>
-                </div>
-            </div>
-
+            @if($doctor->jobs)
+                @foreach($doctor->jobs as $job)
+                    <div class="doc-line__address-item">
+                        <div class="doc-line__address-val"><a href="{{ route('doctor.item', $doctor->alias) }}">{{$doctor['city']->name}}</a>, {{$job->medcenter ? $job->medcenter->sms_address: ''}}</div>
+                        <div class="doc-line__address-clinic-link">
+                            <a href="{{$job->medcenter ? route('medcenter.item', $job->medcenter->alias):'#'}}">{{$job->medcenter ? $job->medcenter->name:''}}</a>
+                        </div>
+                    </div>
+                @endforeach
+            @endif
         </div>
     </div>
 </div>
 <div class="entity-line__additional">
-    <form action="#" class="appointment-book-big">
+    @if($doctor->partner == \App\Doctor::PARTNER)
+        <form action="#" class="appointment-book-big">
         <div class="appointment-book-big__heading">Записаться на прием</div>
         <div class="appointment-book-big__date-line">
             <div class="appointment-book-big__date-item date-radio">
@@ -173,6 +176,15 @@
             <a href="#order_doctor" data-doc-id="{{$doctor->id}}" data-dname="{{$doctor['name']}}" class="appointment-book-big__book-btn btn btn_theme_usual trigger-link popup-with-form">Записаться<span class="hidden-xl"> онлайн</span></a>
         </div>
     </form>
+    @else
+        <div class="appointment-book-big__bot-line">
+            <div class="appointment-book-big__price">
+                <div class="appointment-book-big__price-text">Прием от:</div>
+                <div class="appointment-book-big__price-val">от {{$doctor['price']}} тг</div>
+            </div>
+            <a href="#order_doctor" data-doc-id="{{$doctor->id}}" data-dname="{{$doctor['name']}}" data-status="6" class="appointment-book-big__book-btn btn btn_theme_usual trigger-link popup-with-form">Хочу записаться</a>
+        </div>
+    @endif
 </div>
 <!--div class="profiles__right">
     <div class="profiles__header">

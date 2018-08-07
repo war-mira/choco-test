@@ -19,13 +19,7 @@
                         <span>Профиль</span>
                     </a>
                 @endif
-                <div class="main-header__action-item main-header-location">
-                    <select name="location" class="js-header-location" placeholder="{{\App\Helpers\SessionContext::city()->name}}">
-                        <option value="6" {{\App\Helpers\SessionContext::cityId() == 6 ? 'selected':''}}>Алматы</option>
-                        <option value="7" {{\App\Helpers\SessionContext::cityId() == 7 ? 'selected':''}}>Астана</option>
-                        {{--<option value="city-3">Усть-Каменогорск</option>--}}
-                    </select>
-                </div>
+                @include('redesign.partials.cities_select')
                 <a href="tel:+77272222200" class="main-header__action-item main-header-phone">+7 (727) 222-22-00</a>
                 <div class="nav-toggle main-header__action-item">
                     <span></span>

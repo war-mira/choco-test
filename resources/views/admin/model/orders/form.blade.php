@@ -112,14 +112,28 @@
                                                     @endcomponent
                                                 @endcomponent
                                             @endcomponent
-                                            @component('components.bootstrap.row')
-                                                @component('components.bootstrap.column',['class'=>'col-md-12'])
-                                                    @component('components.form.number')
-                                                        @slot('field','notify_before_minutes')
-                                                        @slot('value',$seed['notify_before_minutes'] ?? 180)
-                                                        @slot('label','Напомнить за(мин)')
-                                                    @endcomponent
-                                                @endcomponent
+                                        @endcomponent
+                                    @endcomponent
+                                    @component('components.bootstrap.row')
+                                        @component('components.bootstrap.column',['class'=>'col-md-4'])
+                                            @component('components.form.text')
+                                                @slot('field','service')
+                                                @slot('value',$seed['service'] ?? '')
+                                                @slot('label','Услуга(Процедура)')
+                                            @endcomponent
+                                        @endcomponent
+                                        @component('components.bootstrap.column',['class'=>'col-md-4'])
+                                            @component('components.form.number')
+                                                @slot('field','service_price')
+                                                @slot('value',$seed['service_price'] ?? 0)
+                                                @slot('label','Стоимость манипуляции')
+                                            @endcomponent
+                                        @endcomponent
+                                        @component('components.bootstrap.column',['class'=>'col-md-4'])
+                                            @component('components.form.number')
+                                                @slot('field','notify_before_minutes')
+                                                @slot('value',$seed['notify_before_minutes'] ?? 180)
+                                                @slot('label','Напомнить за(мин)')
                                             @endcomponent
                                         @endcomponent
                                     @endcomponent

@@ -15,13 +15,7 @@
                          <a href="{{route('user.profile')}}" id="login-dropdown-toggle">Профиль</a>
                     @endif
                 </div>
-                <div class="main-header__action-item main-header-location">
-                    <select name="location" class="js-header-location" placeholder="Алматы">
-                        <option value="6">Алматы</option>
-                        <option value="2">Астана</option>
-                        <option value="3">Усть-Каменогорск</option>
-                    </select>
-                </div>
+                @include('redesign.partials.cities_select')
                 <a href="tel:+77272222200" class="main-header__action-item main-header-phone">+7 (727) 222-22-00</a>
                 <div class="nav-toggle main-header__action-item">
                     <span></span>
