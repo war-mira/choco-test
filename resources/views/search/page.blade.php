@@ -205,8 +205,6 @@
             }
 
             $('select[name="type"]').change(function () {
-                $(".js-search-select")[0].selectize.clearOptions();
-
                 var tp = $(this).val();
 
                 if(tp == 'medcenters')
@@ -223,18 +221,6 @@
                     data:{
                         ttype:tp,
                         query:$('.search-bar__item').find('input').val()
-                    },
-                    success: function(data) {
-                        $(".js-search-select")[0].selectize.clearOptions();
-
-                        for (var i = 0; i < data.length; i++) {
-                            $(".js-search-select")[0].selectize.addOption(data[i]);
-                        }
-                        if($('input[name="medc"]').val().length)
-                        {
-                            $(".js-search-select")[0].selectize.setValue($('input[name="medc"]').val(),false);
-                        }
-                        
                     }
                 });
             });

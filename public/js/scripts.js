@@ -1,21 +1,21 @@
 
 function checkblock(block)
 {
-    var $back = false;
+    let $back = false;
     if(($(block).find('input[name="date"]:checked').length || $(block).find('input[name="date"]').val().length) && $(block).find('input[name="time"]:checked').length){$back = true;}
     return $back;
 }
 
 $(document).ready(function() {
 
-    var $receptionModalForm = $("#callback_form");
+    let $receptionModalForm = $("#callback_form");
     ga(function (tracker) {
-        var cid = tracker.get('clientId');
+        let cid = tracker.get('clientId');
         $receptionModalForm.find('[name="ga_cid"]').val(cid).trigger('change');
     });
 
     $(".js-input-add-entity").each(function() {
-        var $this = $(this);
+        let $this = $(this);
         $this.data("count", 1);
         $this.data("markup", $this.outerHTML());
     });
@@ -23,14 +23,14 @@ $(document).ready(function() {
     // $("input[name=\"phone\"]").mask("+7 (999) 999-9999");
 
     $("input[data-mask]").each(function() {
-        var $this = $(this);
-        var mask = "" + $this.data("mask");
+        let $this = $(this);
+        let mask = "" + $this.data("mask");
         $this.mask(mask);
     });
     
 	$('div.tabs a').click(function(e){
 	   e.preventDefault();
-		var tab_id = $(this).data('tab');
+		let tab_id = $(this).data('tab');
 
 		$('div.tabs a').removeClass('entity-about__tab-item_active');
 		$('.entity-about-article').removeClass('current');
@@ -41,7 +41,7 @@ $(document).ready(function() {
 
 	$('div.tabz a').click(function(e){
 	   e.preventDefault();
-		var tab_id = $(this).data('tab');
+		let tab_id = $(this).data('tab');
 
 		$('div.tabz a').removeClass('btn_theme_radio_active');
 		$('.entity-about-articl').removeClass('current');
@@ -88,7 +88,7 @@ $(document).ready(function() {
 
     $('input[name="client_phone"]').mask('+7 (999) 999-9999');
 
-    var popupDefaults = {
+    let popupDefaults = {
         type: 'inline',
         fixedContentPos: false,
         focus: '#name',
@@ -121,14 +121,14 @@ $(document).ready(function() {
     {
         if($(this).closest('div.search-result__item').length)
         {
-            var block = $(this).closest('div.search-result__item');
+            let block = $(this).closest('div.search-result__item');
         }
         else
         {
-            var block = $(this).closest('div.appointment-book-small__line');
+            let block = $(this).closest('div.appointment-book-small__line');
         }
 
-        var condition = false;
+        let condition = false;
 
         if($(this).data('status') == 6){
             condition = true;
@@ -141,7 +141,7 @@ $(document).ready(function() {
         }
     });
 
-    var $select = $(".js-search-select").selectize({
+    let $select = $(".js-search-select").selectize({
         render: {
             option: function(data, escape) {
                 if (data.optgroup == "Специализации") {
@@ -170,12 +170,12 @@ $(document).ready(function() {
     });
 
     $(".js-select-region").change(function() {
-        var regionVal = $(this).val();
+        let regionVal = $(this).val();
 
         if (regionVal == "region-1") {
-            var ajaxUrl = '/search-example-region-1.php';
+            let ajaxUrl = '/search-example-region-1.php';
         } else if (regionVal =="region-2") {
-            var ajaxUrl = '/search-example-region-2.php';
+            let ajaxUrl = '/search-example-region-2.php';
         }
 
         $.ajax({
@@ -185,7 +185,7 @@ $(document).ready(function() {
             success: function(data) {
                 $(".js-search-select")[0].selectize.clearOptions();
                 
-                for (var i = 0; i < data.length; i++) {
+                for (let i = 0; i < data.length; i++) {
                     $(".js-search-select")[0].selectize.addOption(data[i]);
                 }
             }
@@ -211,7 +211,7 @@ $(document).ready(function() {
     };
 
     $(".js-custom-date .date-radio__item").each(function() {
-        var $this = $(this);
+        let $this = $(this);
 
         pickmeup($this[0], {
             format  : 'Y-m-d',
@@ -230,7 +230,7 @@ $(document).ready(function() {
         $this[0].addEventListener('pickmeup-change', function (e) {
             $this.find(".date-radio__text").html(e.detail.formatted_date);
             $this.find(".js-custom-date-val").val(e.detail.formatted_date);
-            var dt = e.detail.date.toString().split(' ');
+            let dt = e.detail.date.toString().split(' ');
             $this.find('input[name="dayweek"]').val(dt[0]);
             $this.find("input[type=\"radio\"]").prop("checked", true);
             get_times($this.closest('div.doc-line').data('id'),dt[0],'',$this.parent().parent().parent());
@@ -239,7 +239,7 @@ $(document).ready(function() {
     });
 
     $(".js-appointment-book-date").each(function() {
-        var $this = $(this);
+        let $this = $(this);
 
         pickmeup($this[0], {
             format  : 'Y-m-d',
@@ -258,7 +258,7 @@ $(document).ready(function() {
         $this[0].addEventListener('pickmeup-change', function (e) {
             $this.find(".appointment-book-small__date-text").html(e.detail.formatted_date);
             $this.find(".js-custom-date-val").val(e.detail.formatted_date);
-            var dt = e.detail.date.toString().split(' ');
+            let dt = e.detail.date.toString().split(' ');
             $this.find('input[name="dayweek"]').val(dt[0]);
             
             console.log($this.closest('.search-result__item').length);
@@ -277,17 +277,17 @@ $(document).ready(function() {
 
     $(".date-radio input[type=\"radio\"]").change(function()
     {
-        var $this = $(this);
+        let $this = $(this);
         get_times($(this).closest('.search-result__item').data('id'),$(this).val(),$this);
         if ($this.is(":checked") && !($this.val() == "custom")) {
-            var $customDate = $this.closest(".date-radio").siblings(".js-custom-date").find(".date-radio__item");
+            let $customDate = $this.closest(".date-radio").siblings(".js-custom-date").find(".date-radio__item");
             $customDate.find(".date-radio__text").html("Выбрать дату");
             $customDate.find(".js-custom-date-val").val("");
         }
     });
 
     $(".appointment-book-big__custom-time").click(function() {
-        var $this = $(this);
+        let $this = $(this);
 
         $this.closest(".appointment-book-big").find(".appointment-book-big__time-item_additional").show();
 
@@ -304,10 +304,10 @@ $(document).ready(function() {
 
     }).click(function() {
 
-        var $this = $(this);
-        var $container = $(this).closest(".set-rating");
-        var $input = $this.closest(".set-rating").find("input");
-        var rating = $this.data("rating");
+        let $this = $(this);
+        let $container = $(this).closest(".set-rating");
+        let $input = $this.closest(".set-rating").find("input");
+        let rating = $this.data("rating");
 
 
         $container.find(".set-rating__btn").removeClass("set-rating__btn_chosen");
@@ -340,26 +340,26 @@ $(document).ready(function() {
     });
 
     $(".js-input-add-btn").click(function() {
-        var $this = $(this);
-        var $container = $this.closest(".js-input-add-container");
-        var $entityToClone = $container.find(".js-input-add-entity");
-        var $entityClone = $($entityToClone.data("markup"));
+        let $this = $(this);
+        let $container = $this.closest(".js-input-add-container");
+        let $entityToClone = $container.find(".js-input-add-entity");
+        let $entityClone = $($entityToClone.data("markup"));
 
         $entityClone.removeClass("js-input-add-entity");
         $entityClone.removeClass("js-input-add-entity");
 
         //increment input names
         $entityClone.find("select, input, textarea").each(function() {
-            var $this = $(this);
-            var attrName = $this.prop("name");
-            var replacedName = attrName.replace(/skills\[0\]/g, "skills[" + entityCount + "]");
+            let $this = $(this);
+            let attrName = $this.prop("name");
+            let replacedName = attrName.replace(/skills\[0\]/g, "skills[" + entityCount + "]");
             $this.prop("name", replacedName);
         });
 
         //add mask to inputs
         $entityClone.find("input[data-mask]").each(function() {
-            var $this = $(this);
-            var mask = "" + $this.data("mask");
+            let $this = $(this);
+            let mask = "" + $this.data("mask");
             $this.mask(mask);
         });
 
@@ -380,34 +380,34 @@ $(document).ready(function() {
     $('#filtersGroup .btn-radio').click(
         function () {
             if ($(this).prev('input[name=sort]').prop('checked')) {
-                var order = $('input[name=order]:checked').val();
+                let order = $('input[name=order]:checked').val();
                 order = (order == 'asc') ? 'desc' : 'asc';
                 $('input[name=order]').val([order]).trigger("change");
             }
         });
     $('.btn-radio').click(function () {
-        var name = $(this).prev().prop('name');
-        var value = $(this).prev().prop('value');
+        let name = $(this).prev().prop('name');
+        let value = $(this).prev().prop('value');
 
         $('input[name=' + name + ']').val([value]).trigger("change");
     });
 
 
     $(".js-add-select-tag").click(function() {
-        var $this = $(this);
-        var $container = $this.closest(".js-add-select-tags");
-        var $inputTagsList = $container.find(".js-tags-list");
-        var $chosenOption = $container.find(".js-simple-select option[selected]");
-        var optionName = $chosenOption.html();
-        var optionVal = $chosenOption.prop("value");
+        let $this = $(this);
+        let $container = $this.closest(".js-add-select-tags");
+        let $inputTagsList = $container.find(".js-tags-list");
+        let $chosenOption = $container.find(".js-simple-select option[selected]");
+        let optionName = $chosenOption.html();
+        let optionVal = $chosenOption.prop("value");
 
-        var $tagsLine = $container.find(".js-tags-line");
+        let $tagsLine = $container.find(".js-tags-line");
 
-        var tagExists = false;
+        let tagExists = false;
 
         $tagsLine.find(".js-tag").each(function() {
-            var $this = $(this);
-            var tagVal = $this.data("value");
+            let $this = $(this);
+            let tagVal = $this.data("value");
 
             if (tagVal == optionVal) {
                 tagExists = true;
@@ -417,7 +417,7 @@ $(document).ready(function() {
 
         if (tagExists) return false;
 
-        var markup = '<div class="tags-line__item js-tag" data-value="'+optionVal+'">' +
+        let markup = '<div class="tags-line__item js-tag" data-value="'+optionVal+'">' +
                         '<span class="tags-line__item-text">'+optionName+'</span>' +
                         '<button class="js-remove-tag tags-line__item-remove"><i class="fa fa-times" aria-hidden="true"></i></button>' +
                       '</div>'; 
@@ -429,12 +429,12 @@ $(document).ready(function() {
     });
 
     $(document).on("click", ".js-remove-tag", function() {
-        var $this = $(this);
-        var $container = $this.closest(".js-add-select-tags");
-        var $inputTagsList = $container.find(".js-tags-list");
-        var tagValue = $this.closest(".js-tag").data("value");
+        let $this = $(this);
+        let $container = $this.closest(".js-add-select-tags");
+        let $inputTagsList = $container.find(".js-tags-list");
+        let tagValue = $this.closest(".js-tag").data("value");
 
-        var newInputValue = $inputTagsList.val().replace(tagValue,'');
+        let newInputValue = $inputTagsList.val().replace(tagValue,'');
 
         $inputTagsList.val(newInputValue);
             
@@ -442,8 +442,8 @@ $(document).ready(function() {
     });
 
     $(".accordion__title").click(function() {
-        var $this = $(this);
-        var $accordion = $this.closest(".accordion");
+        let $this = $(this);
+        let $accordion = $this.closest(".accordion");
 
         if ($accordion.hasClass("accordion_mobile") && window.innerWidth > 767.98) {
             return false;
@@ -454,7 +454,7 @@ $(document).ready(function() {
     });
 
     $(".date-text-input input").each(function() {
-        var $this = $(this);
+        let $this = $(this);
 
         if ($this.is("[data-pmu-date]")) {
 
@@ -489,11 +489,11 @@ $(document).ready(function() {
     });
 
     $(".file-upload__btn input[type=\"file\"]").change(function() {
-        // var $this = $(this);
-        // var $fileList = $this.closest(".js-file-upload").find(".file-upload__file-list");
+        // let $this = $(this);
+        // let $fileList = $this.closest(".js-file-upload").find(".file-upload__file-list");
         // $fileList.find("span.file-upload__file").remove();
 
-        // for (var i = 0; i < $this[0].files.length; ++i) {
+        // for (let i = 0; i < $this[0].files.length; ++i) {
         //     $fileList.append('<span class="file-upload__file">' +
         //         $this[0].files[i].name + 
         //         '<button class="file-upload__file-remove js-remove-file-btn" data-filename="' + $this[0].files[i].name + '">' +
@@ -505,13 +505,13 @@ $(document).ready(function() {
     });
 
     // $(document).on("click", ".js-remove-file-btn", function() {
-    //     var $this = $(this);
-    //     var $container = $this.closest(".js-file-upload");
-    //     var fileName = $this.data("filename");
-    //     var $fileInput = $container.find("input[type=\"file\"]");
-    //     var files = $fileInput[0].files;
+    //     let $this = $(this);
+    //     let $container = $this.closest(".js-file-upload");
+    //     let fileName = $this.data("filename");
+    //     let $fileInput = $container.find("input[type=\"file\"]");
+    //     let files = $fileInput[0].files;
 
-    //     for (var i = 0; i < files.length; ++i) {
+    //     for (let i = 0; i < files.length; ++i) {
 
     //         if (files[i].name == fileName) {
     //             delete files[i];
@@ -523,11 +523,11 @@ $(document).ready(function() {
     // });
 
     $(".hours-appointment-select").each(function() {
-        var $this = $(this);
-        var $container = $this.find(".hours-appointment-select__inner");
-        var hourBtnWidth = $this.find(".hours-appointment-select__item").width();
-        var leftOffset = $this.find(".hours-appointment-select__item:first-child").offset().left;
-        var rightOffset = $this.find(".hours-appointment-select__item:last-child").offset().left + hourBtnWidth;
+        let $this = $(this);
+        let $container = $this.find(".hours-appointment-select__inner");
+        let hourBtnWidth = $this.find(".hours-appointment-select__item").width();
+        let leftOffset = $this.find(".hours-appointment-select__item:first-child").offset().left;
+        let rightOffset = $this.find(".hours-appointment-select__item:last-child").offset().left + hourBtnWidth;
         
         $container.css("width", rightOffset-leftOffset+2+"px");
 
@@ -540,7 +540,7 @@ $(document).ready(function() {
     }
 
     $('.js-header-location').on('change', function () {
-        var city = $(this).val();
+        let city = $(this).val();
         $.get('/setcity/'+ city, function (data) {
            if(data['message'] == 'success'){
                window.location.replace(data['url']);
@@ -568,6 +568,8 @@ $(document).ready(function() {
         });
 
     $('#searchform').on("input", function (e) {
+
+        livesearch();
         let checkInput = $(this)
             .val();
 
@@ -620,7 +622,7 @@ $(document).ready(function() {
     });
 
     $(".js-entity-type-search").change(function() {
-        var entityType = $(this).val();
+        let entityType = $(this).val();
 
         if (entityType == "medcenters") {
 
@@ -635,8 +637,9 @@ $(document).ready(function() {
     });
 
     $('.search-bar__line .js-type-select').on('change', function () {
-        var input = $(this).parents('.search-bar__line').find('.js-search-input');
-        var placeholder = '';
+        let input = $(this).parents('form').find('.js-search-input');
+        input.val('');
+        let placeholder;
         if($(this).val() == 'doctor'){
             placeholder = 'Введите специальность или фамилию врача';
         }else if($(this).val() == 'medcenter') {
@@ -646,11 +649,24 @@ $(document).ready(function() {
     });
 
     $('.js-anchor-link').on('click', function () {
-       var anchor = $(this).text();
-       var target = $('.article-content__main').find('h2:contains('+ anchor + ')');
+       let anchor = $(this).text();
+       let target = $('.article-content__main').find('h2:contains('+ anchor + ')');
         $('html, body').animate({
             scrollTop: target.offset().top
         }, 1000);
+    });
+
+    $('.entity-line__about-text-more').on('click', function () {
+        let text = $(this).parents('.entity-line__about-block').find('.entity-line__about-text');
+        if (text.hasClass('open')){
+                text.animate({
+                    height: "100px"
+                }, 100).removeClass('open');
+        }else{
+            text.animate({
+                height: "100%"
+            }, 100).addClass('open');
+        }
     });
 });
 
@@ -658,6 +674,26 @@ $(document).ready(function() {
 jQuery.fn.outerHTML = function() {
     return $($('<div></div>').html(this.clone())).html();
 };
+
+let liveSearchXHR = null;
+
+function livesearch() {
+    let input = $("#searchform");
+    let query = input.val();
+    let type = input.parents('form').find('.js-type-select').val();
+
+    console.log(type);
+
+    if (liveSearchXHR !== null)
+        liveSearchXHR.abort();
+
+    setTimeout(function () {
+        let url = "/ajax/index_search" ;
+        liveSearchXHR = $.get(url, {q:query, type:type}, function (data, textStatus) {
+            $("#liveresults").html(data);
+        });
+    }, 300);
+}
 
 function modalOpen(modalId) {
     $(".modal-window")
@@ -701,7 +737,7 @@ function modalClose(modalId) {
 
 function readURL(input) {
     if (input.files && input.files[0]) {
-        var reader = new FileReader();
+        let reader = new FileReader();
 
         reader.onload = function (e) {
             $('#blah')
@@ -719,8 +755,8 @@ function readURL(input) {
 }
 
 function getFormData($form) {
-    var unindexed_array = $form.serializeArray();
-    var indexed_array = {};
+    let unindexed_array = $form.serializeArray();
+    let indexed_array = {};
 
     $.map(unindexed_array, function (n, i) {
         indexed_array[n['name']] = n['value'];

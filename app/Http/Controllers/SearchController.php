@@ -18,12 +18,25 @@ class SearchController extends Controller
     public function livesearchIndex(Request $request)
     {
         $query = $request->query('q');
-        $groups = [
-            'skills'     => $this->searchSkills($query),
-            'doctors'    => $this->searchDoctors($query),
-            'medcenters' => $this->searchMedcenters($query)
-        ];
-        return view('search.liveresults_index_new', $groups);
+        $type = $request->query('type');
+
+        switch ($type){
+            case 'doctor': default:
+                $groups = [
+                    'skills'     => $this->searchSkills($query),
+                    'doctors'    => $this->searchDoctors($query),
+                ];
+                $view = 'search.result.liveresults_index_new';
+                break;
+            case 'medcenter':
+                $groups = [
+                    'medcenters' => $this->searchMedcenters($query)
+                ];
+                $view = 'search.result.medcenters';
+                break;
+        }
+
+        return view($view, $groups);
     }
 
     public function livesearch(Request $request)
@@ -80,7 +93,7 @@ class SearchController extends Controller
 
     private function searchMedcenters($query)
     {
-        $medcenters = Medcenter::whereStatus(1)
+        $medcenters = Medcenter::where('status',1)
             ->where('name', 'like', "%$query%")
             ->orderBy('name', 'asc')
             ->limit(20)
@@ -194,7 +207,7 @@ class SearchController extends Controller
 
     private function old_searchMedcenters($query)
     {
-        $medcenters = Medcenter::whereStatus(1)
+        $medcenters = Medcenter::where('status',1)
             ->where('name', 'like', "%$query%")
             ->orderBy('name', 'asc')
             ->limit(20)

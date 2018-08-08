@@ -30,24 +30,6 @@
 </div>
 
 <script>
-    var liveSearchXHR = null;
-
-    function livesearch() {
-        var input = $("#searchform").val();
-
-        if (liveSearchXHR !== null)
-            liveSearchXHR.abort();
-
-        setTimeout(function () {
-            var url = "{{url("/ajax/index_search")}}?q=" + input;
-            liveSearchXHR = $.get(url, function (data, textStatus) {
-                $("#liveresults").html(data);
-            });
-        }, 300);
-    }
-
-    $("#searchform").on('input', livesearch);
-
     $('form').each(function () {
         var $form = $(this);
         $form.on('change', 'select[data-select="action"]',  function () {
