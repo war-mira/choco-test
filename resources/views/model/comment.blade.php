@@ -36,5 +36,5 @@
                class="comment-user-rate-down glyphicon glyphicon-thumbs-down">{{$comment->rates()->down()->count()}}</a>
         </span>
     </div>
-</div
+</div>
     @endif

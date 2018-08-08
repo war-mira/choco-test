@@ -87,15 +87,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="entity-line__about-text">
-                    @foreach(App\Doctor::CONTENTS as $field=>$title)
-                        @if(!empty(trim($doctor[$field])) && $doctor[$field] != '0' && strlen($doctor[$field])>10 && $field == 'about_text')
-                            <div>{!! str_replace('\r\n', '<br />', $doctor[$field]) !!}</div>
+                <div class="entity-line__about-block">
+                    @if(!empty(trim($doctor->about_text)) && trim($doctor->about_text) != '0')
+                        <div class="entity-line__about-text">
+                                <div>{!! str_replace('\r\n', '<br />', $doctor->about_text) !!}</div>
+                        </div>
+                        @if(strlen($doctor->about_text) > 465)
+                            <div class="entity-line__about-text-more">
+                                <a href="#">Подробнее</a>
+                            </div>
                         @endif
-                    @endforeach
-                    <div class="entity-line__about-text-more">
-                        <a href="#">Подробнее</a>
-                    </div>
+                    @endif
                 </div>
                 @if($doctor->partner == \App\Doctor::PARTNER)
                 <form action="#" class="entity-line__appointment-book-small appointment-book-small">
@@ -145,7 +147,17 @@
                     </div>
                 @endif
             </div>
+
             <div class="entity-line__additional">
+                @if(count($doctor->medcenters) >1)
+                    <div class="entity-line__address-select">
+                        <select name="district" placeholder="Алмалинский район" class="js-simple-select js-select-region">
+                            @foreach($doctor->medcenters as $medcenter)
+                                <option value="{{ $medcenter->sms_address }}">{{ $medcenter->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                @endif
                 <div class="entity-line__map entity-map" id="entity-map">
                     <div class="entity-map__address">
                         <div class="entity-map__address-name">{{$doctor->city->name}}, {{\App\Medcenter::where('id',$doctor->med_id)->first()->sms_address}}</div>
