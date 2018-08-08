@@ -18,8 +18,12 @@
             </div>
 
             <div class="entity-review__main">
-                <div class="entity-review__top-line"><div class="entity-review__heading"><?php print str_replace('\r\n', '<br />', $comment['text']) ?></div>
+                <div class="entity-review__top-line">
+                    <!-- <div class="entity-review__heading">
+                        <?php //print str_replace('\r\n', '<br />', $comment['text']) ?>
+                    </div> -->
                     <div class="entity-review__date">{{$comment->created_at}}</div>
+                    @if($comment['type']==1) <span style="font-size: small; color: #ff9933; font-weight: bold">Был на приеме</span>@endif
                 </div>
                 <div class="entity-review__text">
                     <?php print str_replace('\r\n', '<br />', $comment['text']) ?>

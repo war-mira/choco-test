@@ -72,7 +72,41 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    @if(Auth::guest())
+                    <div class="row with-padding">
+                        <div class="form-group col-md-12 center">
+
+                            <div>
+                                <label>Номер телефона</label>
+                                <input id="user_phone" type="text">
+
+                                <p class="tip small">
+                                    На Ваш номер придет СМС с кодом для подтверждения
+                                </p>
+
+                                <button type="button" id="request_code">Оставить свой голос</button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row with-padding">
+                        <div class="form-group col-md-12 center">
+
+                            <div>
+                                <label>Код из СМС</label>
+                                <input id="phone_code" type="text">
+
+                                <p class="tip small">
+                                    Введите код из СМС и нажмите подтвердить запрос
+                                </p>
+
+                                <button type="button" id="confirm_code">Подтвердить номер</button>
+                            </div>
+
+                        </div>
+                    </div>
+                    @endif
+                    <div class="row with-padding">
                         <div class="form-group col-md-12 center">
                             <button type="button" id="save_comment">Оставить свой голос</button>
                         </div>
@@ -103,6 +137,38 @@
     </div>
 
     <script>
+
+
+
+        $("#request_code").click(function () {
+            if ( $('#user_phone').val()) {
+                $.post("{{url('/comment/requestCode')}}", {
+                    phone: $('#user_phone').val(),
+                })
+                .done(function (json) {
+                    console.log(json)
+                })
+            }
+            else {
+                $('#user_phone').addClass('has-warning');
+            }
+        });
+
+
+        $("#confirm_code").click(function () {
+            if ( $('#phone_code').val()) {
+                $.post("{{url('/comment/confirmCode')}}", {
+                    phone: $('#phone_code').val(),
+                })
+                .done(function (json) {
+                    console.log(json)
+                })
+            }
+            else {
+                $('#user_phone').addClass('has-warning');
+            }
+        });
+
         $("#save_comment").click(function () {
             if ($("#feedback__form")[0].checkValidity()) {
                 $.getJSON("{{url('/comment/new')}}", {
@@ -148,6 +214,19 @@
         $('.close').on('click', function () {
             $('#feedback__modal').removeClass('in').hide();
         });
+
+
+
+        function isPhoneNumber(inputtxt) {
+            var phoneno = /^((\+7|7|8)+([0-9]){10})$/;
+            if(inputtxt.match(phoneno)) {
+                return true;
+            }
+            else {
+                //alert("message");
+                return false;
+            }
+        }
 
     </script>
 @endsection

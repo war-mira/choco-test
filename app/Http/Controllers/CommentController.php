@@ -64,10 +64,22 @@ class CommentController extends Controller
         }
         $data['text'] = strip_tags($data['text'] ?? "");
         $comment = Comment::create($data);
-        $comment->created_at = Carbon::now()->timestamp;
-        $comment->updated_at = Carbon::now()->timestamp;
-        $comment->save();
+//        $comment->created_at = Carbon::now()->timestamp;
+//        $comment->updated_at = Carbon::now()->timestamp;
+//        $comment->save();
         return $comment;
+    }
+
+
+    public function requestPhoneCode(Request $request)
+    {
+        return ['status'=>'sent'];
+    }
+
+
+    public function confirmPhone(Request $request)
+    {
+        return ['status'=>str_random(6)];
     }
 
     private function authorizeComment($data)
