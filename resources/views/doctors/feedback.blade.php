@@ -72,6 +72,7 @@
                             </div>
                         </div>
                     </div>
+                    @if(Auth::guest())
                     <div class="row with-padding">
                         <div class="form-group col-md-12 center">
 
@@ -104,6 +105,7 @@
 
                         </div>
                     </div>
+                    @endif
                     <div class="row with-padding">
                         <div class="form-group col-md-12 center">
                             <button type="button" id="save_comment">Оставить свой голос</button>
