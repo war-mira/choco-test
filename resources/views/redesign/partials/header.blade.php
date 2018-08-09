@@ -2,6 +2,40 @@
     <div class="main-header__container">
         <div class="main-header__line">
             <a href="{{route('home')}}" class="main-header__logo"><img src="{{asset('img/header-logo.png')}}" alt="iDoctor.kz" title="iDoctor.kz"></a>
+            <div class="main-header__partners">
+                <ul>
+                    <li>
+                        <a href="https://chocolife.me/?utm_source=idoctor.kz&utm_medium=plashka" rel="nofollow" target="_blank">
+                            <div class="main-header__partners-item main-header__partners-chocolife"></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://chocomart.kz/?utm_source=idoctor.kz&utm_medium=plashka" rel="nofollow" target="_blank">
+                            <div class="main-header__partners-item main-header__partners-chocomart"></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://chocotravel.com/?utm_source=idoctor.kz&utm_medium=plashka" rel="nofollow" target="_blank">
+                            <div class="main-header__partners-item main-header__partners-chocotravel"></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://lensmark.kz/?utm_source=idoctor.kz&utm_medium=plashka" rel="nofollow" target="_blank">
+                            <div class="main-header__partners-item main-header__partners-lensmark"></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://chocofood.kz/?utm_source=idoctor.kz&utm_medium=plashka" rel="nofollow" target="_blank">
+                            <div class="main-header__partners-item main-header__partners-chocofood"></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://idoctor.kz/?utm_source=idoctor.kz&utm_medium=plashka">
+                            <div class="main-header__partners-item main-header__partners-idoctor"></div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
             <div class="main-header__actions">
                 {{--<a href="#" class="main-header__action-item header-link-btn header-link-btn_highlight">--}}
                     {{--<span class="header-link-btn__icon"><i class="icon-6 hover-icon"></i></span>--}}
