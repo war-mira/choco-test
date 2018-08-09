@@ -156,6 +156,12 @@ class Comment extends Model
         return $this->hasMany(CommentRate::class, 'comment_id', 'id');
     }
 
+    public function orders()
+    {
+        //TODO: check on search scopes - can load multiple queries
+        return $this->hasMany(Order::class,'phone','user_email')->where('doc_id',$this->owner_id)->whereNotIn('phone',['70000000000','','NULL']);
+    }
+
     public function scopeLocalPublic($query)
     {
         return $query;

@@ -8,6 +8,7 @@ use App\Order;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class CommentController extends Controller
 {
@@ -45,15 +46,65 @@ class CommentController extends Controller
             $data['user_email'] = $user->phone;
             $data['user_name'] = $user->name;
             $data['author_id'] = $user->id;
+        }else{
+            $code = random_int(1000,9999);
+            $hash = md5($code);
+            $phone = FormatHelper::phone($data['user_email']);
+            Redis::set('doctor-vote:'.$code.':'.$hash.':dump-form',json_encode($data));
+            Redis::expire('doctor-vote:'.$code.':'.$hash.':dump-form',120);
+
+            // TODO send sms code
+            Redis::publish('debug-sms',$code);
+
+            //TODO: throttle sms delivery for 1 min for number
+            $sms = \SmsService::send([
+                'recipient' => $phone,
+                'text'      => 'iDoctor код - ' . $code
+            ]);
+            if (!$sms)
+                return ['error'=>'На указанный номер не удалось отправить СМС!'];
+
+            return ['code'=>$hash];
         }
+
+        return $this->publishNewComment($data);
+    }
+
+
+    public function confirmPhone(Request $request)
+    {
+        if(!$request->has('code'))
+            return ['error'=>'Введите код из СМС!'];
+
+        $key = Redis::keys('doctor-vote:'.$request->code.':*:dump-form');
+
+        if(count($key)>0)
+            $data = (array) json_decode(Redis::get($key[0]));
+
+        if(isset($data))
+            return $this->publishNewComment($data);
+
+        return ['error'=>'Введен не действительный код'];
+    }
+
+
+    public function requestPhoneCode(Request $request)
+    {
+        return ['status'=>'sent'];
+    }
+
+
+    public function publishNewComment($data)
+    {
         $data['user_email'] = isset($data['user_email']) ? FormatHelper::phone($data['user_email']):'';
         $authorize = $this->authorizeComment($data);
         $ip = $this->getUserIp();
-        $existCommentsCount = 0;
+
         if($ip){
             $data['user_ip'] = ip2long($ip);
-            $existCommentsCount = $this->existCommentsFromIp($data['user_ip'], $data['owner_id']);
         }
+        $existCommentsCount = $this->existCommentsFromPhone($data['user_email'], $data['owner_id']);
+
         if($existCommentsCount > 0)
             return ['error' => 'Вы уже оставляли отзыв этому врачу.'];
 
@@ -71,16 +122,10 @@ class CommentController extends Controller
     }
 
 
-    public function requestPhoneCode(Request $request)
-    {
-        return ['status'=>'sent'];
-    }
 
 
-    public function confirmPhone(Request $request)
-    {
-        return ['status'=>str_random(6)];
-    }
+
+
 
     private function authorizeComment($data)
     {
@@ -114,6 +159,11 @@ class CommentController extends Controller
 
     private function existCommentsFromIp($ip, $doctorId){
         $comments = Comment::where('owner_id', $doctorId)->where('user_ip', $ip)->count();
+
+        return$comments;
+    }
+    private function existCommentsFromPhone($phone, $doctorId){
+        $comments = Comment::where('owner_id', $doctorId)->where('user_email', $phone)->count();
 
         return$comments;
     }
