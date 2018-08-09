@@ -7,29 +7,24 @@
                 <input type="hidden" name="medc" value="@if(isset($skill)){{$skill->alias}}@endif" />
                 <input type="hidden" name="q" value="@if(isset($_GET['q'])){{$_GET['q']}}@endif" />
                 <div class="search-bar__item search-bar__item_type">
-                    <select name="type" placeholder="Поиск медцентра" class="js-simple-select js-entity-type-search">
-                        <option value="all" @if((!isset($_GET['type']) || ($_GET['type'] == 'all')) && !isset($skill->alias)) selected="selected" @endif>Поиск врача</option>
-                        <option value="medcenters" @if((isset($_GET['type']) && $_GET['type'] == 'medcenters') && (!isset($_GET['q']) || empty($_GET['q'])) || isset($skill->alias)) selected="selected" @endif>Поиск медцентра</option>
-                    </select>
-                </div>
-                <div class="search-bar__item search-bar__item_search js-additional-search">
-                    <select name="name_md" placeholder="Название медцентра" class="js-search-select">
-                        <option value="">Название медцентра</option>
-                        <optgroup label="Специализации"></optgroup>
-                        <optgroup label="Врачи"></optgroup>
+                    <select name="type" placeholder="Поиск медцентра" class="js-simple-select js-type-select" data-select="action">
+                        <option value="doctor" @if((!isset($_GET['type']) || ($_GET['type'] == 'doctor')) && !isset($skill->alias)) selected="selected" @endif>Поиск врача</option>
+                        <option value="medcenter" @if((isset($_GET['type']) && $_GET['type'] == 'medcenters') && (!isset($_GET['q']) || empty($_GET['q'])) || isset($skill->alias)) selected="selected" @endif>Поиск медцентра</option>
                     </select>
                 </div>
                 <div class="search-bar__item search-bar__item_search">
-                    <select name="entity" placeholder="Поисковый запрос" class="js-search-select">
-                        <option value="">Название врача</option>
-                        <optgroup label="Специализации"></optgroup>
-                        <optgroup label="Врачи"></optgroup>
-                    </select>
+                    <input id="searchform" name="q" value="{{$q ?? ""}}"  placeholder="Введите специальность или фамилию врача" class="js-search-input"  autocomplete="off">
+                    <label for="searchform" class="input-block__icon"><img src="{{asset('/img/icons/search-inactive.png')}}" alt=""></label>
+                    <div class="live-search">
+                        <div class="live-search__inner" id="liveresults">
+                        </div>
+                    </div>
                 </div>
                 <div class="search-bar__item search-bar__item_region">
-                    <select name="region" placeholder="Алмалинский район" class="js-simple-select js-select-region">
-                        <option value="region-1">Алмалинский район</option>
-                        <option value="region-2">Бескарагайский район</option>
+                    <select name="district" placeholder="Алмалинский район" class="js-simple-select js-select-region">
+                        @foreach(\App\Models\District::all() as $district)
+                            <option value="{{ $district->id }}">{{ $district->name }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="search-bar__item search-bar__item_checkbox">

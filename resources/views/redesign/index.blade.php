@@ -61,17 +61,6 @@
                 </div>
             </div>
             <div class="doc-letter-search__search">
-                {{--<div class="doc-letter-search__nav">--}}
-                {{--<a href="#" class="doc-letter-search__nav-item">Г</a>--}}
-                {{--<a href="#" class="doc-letter-search__nav-item">К</a>--}}
-                {{--<a href="#" class="doc-letter-search__nav-item">И</a>--}}
-                {{--<a href="#" class="doc-letter-search__nav-item">В</a>--}}
-                {{--<a href="#" class="doc-letter-search__nav-item">Д</a>--}}
-                {{--<a href="#" class="doc-letter-search__nav-item">Л</a>--}}
-                {{--<a href="#" class="doc-letter-search__nav-item">А</a>--}}
-                {{--<a href="#" class="doc-letter-search__nav-item">М</a>--}}
-                {{--<a href="#" class="doc-letter-search__nav-item">Н</a>--}}
-                {{--</div>--}}
                 <div class="doc-letter-search__result" id="doc-letter-search__result">
                     @foreach($skillsList->chunk(ceil($skillsList->count()/3)) as $skillLinksColumn)
                         <div class="doc-letter-search__result-column">
@@ -129,97 +118,6 @@
         </div>
     </section>
     <!-- section work-flow end -->
-
-    <!-- section special-offer-list start // service not launched yet -->
-    {{--<section class="special-offer-list section">--}}
-    {{--<div class="container">--}}
-    {{--<div class="section-heading special-offer-list__heading">--}}
-    {{--<div class="section-heading__text">Акции и скидки</div>--}}
-    {{--</div>--}}
-    {{--<div class="special-offer-list__list">--}}
-    {{--<div class="special-offer-list__list-item special-offer-item toning" style="background-image: url('img/special-offer/p1.jpg');">--}}
-    {{--<div class="special-offer-item__discount">-50%</div>--}}
-    {{--<div class="special-offer-item__name">Консультация хирурга</div>--}}
-    {{--<div class="special-offer-item__descr">Пройдите обследование со скидкой 20%</div>--}}
-    {{--<div class="special-offer-item__bot-line">--}}
-    {{--<div class="special-offer-item__price">--}}
-    {{--<div class="special-offer-item__old-price">10 000 тг.</div>--}}
-    {{--<div class="special-offer-item__new-price">5 000 тг.</div>--}}
-    {{--</div>--}}
-    {{--<a href="#" class="special-offer-item__link btn">Подробнее</a>--}}
-    {{--</div>--}}
-    {{--</div>--}}
-    {{--<div class="special-offer-list__list-item special-offer-item toning" style="background-image: url('img/special-offer/p2.jpg');">--}}
-    {{--<div class="special-offer-item__discount">-50%</div>--}}
-    {{--<div class="special-offer-item__name">Прием окулиста</div>--}}
-    {{--<div class="special-offer-item__descr">Пройдите обследование со скидкой 20%</div>--}}
-    {{--<div class="special-offer-item__bot-line">--}}
-    {{--<div class="special-offer-item__price">--}}
-    {{--<div class="special-offer-item__old-price">10 000 тг.</div>--}}
-    {{--<div class="special-offer-item__new-price">5 000 тг.</div>--}}
-    {{--</div>--}}
-    {{--<a href="#" class="special-offer-item__link btn">Подробнее</a>--}}
-    {{--</div>--}}
-    {{--</div>--}}
-    {{--<div class="special-offer-list__list-item special-offer-item toning" style="background-image: url('img/special-offer/p3.jpg');">--}}
-    {{--<div class="special-offer-item__discount">-50%</div>--}}
-    {{--<div class="special-offer-item__name">Обследование у кардиохирурга</div>--}}
-    {{--<div class="special-offer-item__descr">Пройдите обследование со скидкой 20%</div>--}}
-    {{--<div class="special-offer-item__bot-line">--}}
-    {{--<div class="special-offer-item__price">--}}
-    {{--<div class="special-offer-item__old-price">10 000 тг.</div>--}}
-    {{--<div class="special-offer-item__new-price">5 000 тг.</div>--}}
-    {{--</div>--}}
-    {{--<a href="#" class="special-offer-item__link btn">Подробнее</a>--}}
-    {{--</div>--}}
-    {{--</div>--}}
-    {{--<div class="special-offer-list__list-item special-offer-item toning" style="background-image: url('img/special-offer/p4.jpg');">--}}
-    {{--<div class="special-offer-item__discount">-50%</div>--}}
-    {{--<div class="special-offer-item__name">Курс массажа</div>--}}
-    {{--<div class="special-offer-item__descr">Пройдите обследование со скидкой 20%</div>--}}
-    {{--<div class="special-offer-item__bot-line">--}}
-    {{--<div class="special-offer-item__price">--}}
-    {{--<div class="special-offer-item__old-price">10 000 тг.</div>--}}
-    {{--<div class="special-offer-item__new-price">5 000 тг.</div>--}}
-    {{--</div>--}}
-    {{--<a href="#" class="special-offer-item__link btn">Подробнее</a>--}}
-    {{--</div>--}}
-    {{--</div>--}}
-    {{--<div class="special-offer-list__list-item special-offer-item toning" style="background-image: url('img/special-offer/p5.jpg');">--}}
-    {{--<div class="special-offer-item__discount">-50%</div>--}}
-    {{--<div class="special-offer-item__name">Ароматерапия</div>--}}
-    {{--<div class="special-offer-item__descr">Пройдите ароматерапию</div>--}}
-    {{--<div class="special-offer-item__bot-line">--}}
-    {{--<div class="special-offer-item__price">--}}
-    {{--<div class="special-offer-item__old-price">10 000 тг.</div>--}}
-    {{--<div class="special-offer-item__new-price">БЕСПЛАТНО</div>--}}
-    {{--</div>--}}
-    {{--<a href="#" class="special-offer-item__link btn">Подробнее</a>--}}
-    {{--</div>--}}
-    {{--</div>--}}
-    {{--<div class="special-offer-list__list-item special-offer-item toning" style="background-image: url('img/special-offer/p6.jpg');">--}}
-    {{--<div class="special-offer-item__discount">-50%</div>--}}
-    {{--<div class="special-offer-item__name">Консультация хирурга</div>--}}
-    {{--<div class="special-offer-item__descr">Пройдите обследование со скидкой 20%</div>--}}
-    {{--<div class="special-offer-item__bot-line">--}}
-    {{--<div class="special-offer-item__price">--}}
-    {{--<div class="special-offer-item__old-price">10 000 тг.</div>--}}
-    {{--<div class="special-offer-item__new-price">5 000 тг.</div>--}}
-    {{--</div>--}}
-    {{--<a href="#" class="special-offer-item__link btn">Подробнее</a>--}}
-    {{--</div>--}}
-    {{--</div>--}}
-    {{--<div class="special-offer-list__list-item special-offer-list__list-item_promo promo-block pattern-bg">--}}
-    {{--<div class="promo-block__img"><img src="img/glasess.png" alt=""></div>--}}
-    {{--<div class="promo-block__text">--}}
-    {{--<div>Рекламное место</div>--}}
-    {{--<div>эффективно & эффектно</div>--}}
-    {{--</div>--}}
-    {{--</div>--}}
-    {{--</div>--}}
-    {{--</div>--}}
-    {{--</section>--}}
-    <!-- section special-offer-list end -->
 
     <!-- section blog-list start -->
     <section class="section blog-list">

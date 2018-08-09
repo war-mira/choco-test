@@ -259,13 +259,18 @@
     position: relative;
 }
 
-.index-intro__search-bar .input-block__icon {
+.index-intro__search-bar .input-block__icon, .search-bar-container .input-block__icon{
     width: 16px;
     height: 16px;
     display: block;
     position: absolute;
     margin-right: 5px;
+}
+.index-intro__search-bar .input-block__icon{
     top: 10px;
+}
+.search-bar-container .input-block__icon{
+    top: 34px;
 }
 
 .search-bar__item_search i{
@@ -273,7 +278,7 @@
     top: 10px;
 }
 
-.index-intro__search-bar .js-search-input {
+.index-intro__search-bar .js-search-input, .search-bar-container .js-search-input{
     border: none;
     outline: none;
     width: 100%;

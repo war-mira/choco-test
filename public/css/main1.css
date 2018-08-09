@@ -2155,7 +2155,9 @@ img {
 
 .entity-line__about-text {
   font-size: 14px;
-  margin-top: 10px; }
+  margin-top: 10px;
+  height: 100px;
+  overflow: hidden;}
 
 .entity-line__about-text-more {
   color: #00A8FF;
