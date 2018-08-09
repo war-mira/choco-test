@@ -30,6 +30,10 @@ Route::group(['prefix' => 'doctors', 'as' => 'all.doctors.'], function () { //Д
 });
 Route::get('medcenters', 'MedcenterController@list')->name('all.medcenters.list');
 
+Route::get('agreement', function (){
+    return view('redesign.agreement');
+})->name('agreement');
+
 //Route::get('doctors/{city?}/{skill?}', function (\App\City $city, \App\Skill $skill = null) {
 //    return redirect()->route('doctors.list', ['skill' => $skill->alias ?? null]);
 //});
@@ -93,7 +97,7 @@ Route::get('comment/{id}/rate/{rate}', 'CommentController@rateComment')->name('r
 Route::post('question/add', 'QuestionController@add');
 //******Posts***************************
 Route::get('post/{alias}', 'PostController@item');
-Route::get('posts', 'PostController@list');
+Route::get('posts', 'PostController@list')->name('posts');
 //******redirects*****************
 Route::get('/promos/almaty', function () {
     return Redirect::to('/', 302);
