@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class FeedbackController extends Controller
 {
+
+
+
     public function create(Request $request)
     {
         $data = $request->only([

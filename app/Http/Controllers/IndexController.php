@@ -14,20 +14,21 @@ use App\Skill;
 use App\Uniqueip;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Cache;
 
 class IndexController extends Controller
 {
     public function home()
     {
-        $topDoctors = Doctor::where('on_top', '=', 1)->where('status', '=', 1)->get();
+//        $topDoctors = Doctor::where('on_top', '=', 1)->where('status', '=', 1)->get();
 
         $topPosts = Post::where('is_top', 1)->where('status', 1)->orderBy('created_at', 'desc')->limit(3)->get();
 
         //Специальности по количесвам врачей
         $skillLinks = Skill::query()
-            ->with(['doctors' => function ($query) {
-                $query->where('status', 1)->where('city_id', SessionContext::cityId());
-            }])
+//            ->with(['doctors' => function ($query) {
+//                $query->where('status', 1)->where('city_id', SessionContext::cityId());
+//            }])
             ->withCount(['doctors' => function ($query) {
                 $query->where('status', 1)->where('city_id', SessionContext::cityId());
             }])
@@ -35,13 +36,14 @@ class IndexController extends Controller
                 $query->where('status', 1)->where('city_id', SessionContext::cityId());
             })
             ->orderBy('name')
-            ->get()
-            ->map(function ($skill) {
-                $name = $skill->name;
-                $doctorsCount = $skill->doctors_count;
-                $href = $skill->href;
-                return compact('name', 'href', 'doctorsCount');
-            });
+            ->get(['name','href','doctors_count'])
+//            ->map(function ($skill) {
+//                $name = $skill->name;
+//                $doctorsCount = $skill->doctors_count;
+//                $href = $skill->href;
+//                return compact('name', 'href', 'doctorsCount');
+//            })
+        ;
 
         //Комментарии
         $lastComments = Comment::whereStatus(1)->orderByDesc('created_at')->take(20)->get();
@@ -102,35 +104,47 @@ class IndexController extends Controller
             'comments_count' => Comment::count()
         ];
 
+
+        if(Cache::has('index:skills'))
+            $stats = Cache::get('index:stats');
+        else{
+            $stats = [
+                'doctors_count'  => Doctor::localPublic()->count(),
+                'orders_count'   => Order::whereIn('status', [1, 2])->count(),
+                'comments_count' => Comment::count()
+            ];
+
+            Cache::set('index:stats',$stats,30);
+        }
+
+
         $social = [
             'fb'    => 'https://www.facebook.com/kz.idoctor',
             'insta' => 'https://www.instagram.com/idoctor_kz/',
             'vk'    => 'https://vk.com/idoctorkz1',
         ];
 
-        $topDoctors = Doctor::where('on_top', '=', 1)->where('status', '=', 1)->get();
+//        $topDoctors = Doctor::where('on_top', '=', 1)->where('status', '=', 1)->get();
 
         $topPosts = Post::where('is_top', 1)->where('status', 1)->orderBy('created_at', 'desc')->limit(3)->get();
 
         //Специальности по количесвам врачей
-        $skillsList = Skill::query()
-            ->with(['doctors' => function ($query) {
-                $query->where('status', 1)->where('city_id', SessionContext::cityId());
-            }])
-            ->withCount(['doctors' => function ($query) {
-                $query->where('status', 1)->where('city_id', SessionContext::cityId());
-            }])
-            ->whereHas('doctors', function ($query) {
-                $query->where('status', 1)->where('city_id', SessionContext::cityId());
-            })
-            ->orderBy('name')
-            ->get()
-            ->map(function ($skill) {
-                $name = $skill->name;
-                $doctorsCount = $skill->doctors_count;
-                $href = route('doctors.searchPage', ['skill' => $skill->id]);
-                return compact('name', 'href', 'doctorsCount');
-            });
+        if(Cache::has('index:skills'))
+            $skillsList = Cache::get('index:skills');
+        else{
+            $skillsList = Skill::query()
+                ->withCount(['doctors as doctorsCount' => function ($query) {
+                    $query->where('status', 1)->where('city_id', SessionContext::cityId());
+                }])
+                ->whereHas('doctors', function ($query) {
+                    $query->where('status', 1)->where('city_id', SessionContext::cityId());
+                })
+                ->orderBy('name')
+                ->get(['name','href','doctorsCount']);
+
+            Cache::set('index:skills',$skillsList,120);
+        }
+
 
         $districts = District::all();
 
