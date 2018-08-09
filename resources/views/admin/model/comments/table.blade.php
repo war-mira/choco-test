@@ -36,6 +36,7 @@
     <th data-field="created_at" data-sortable="true">Дата создания</th>
     <th data-field="status" data-sortable="true" data-events="statusEvents" data-formatter="statusFormatter">Статус</th>
     <th data-field="user_rate" data-sortable="true">Оценка(из 10)</th>
+    <th data-formatter="deleteFormatter" data-events="updateRecordEvents"></th>
 @endsection
 
 @section('scripts')
@@ -95,6 +96,33 @@
                 "</div>";
         }
 
+        function deleteFormatter(val, row) {
+
+            return `
+                <div>
+                    <button
+                        class='btn btn-primary'
+                        data-toggle="collapse"
+                        href="#update_${row.id}"
+                    >Изменить</button>
+
+                    <button
+                        class='btn btn-danger comment-delete'
+                        data-id='${row.id}'
+                    >Удалить</button>
+
+                    <div id='update_${row.id}' data-toggle="collapse" class="collapse">
+                        <textarea cols="30" style="display:block">${row.text}</textarea>
+                        <button
+                            class='btn btn-primary comment-save'
+                            data-id='${row.id}'
+                        >Сохранить</button>
+                    </div>
+                </div>
+            `;
+
+        }
+
         var datepicker = $('#dateRangeFilter').daterangepicker(
             {
                 locale: {
@@ -144,6 +172,28 @@
                     $table.bootstrapTable('refresh');
                 });
             }
+        };
+
+        window.updateRecordEvents = {
+            'click .comment-save': function (e, value, row) {
+                var id = $(this).data('id');
+                var url = '{{route('admin.comments.crud.create')}}/'+id;
+                var text = $(this).prev('textarea').val();
+
+                console.log('update', text);
+
+                $.post(url, {text: text, _token: '{{csrf_token()}}'}, function () {
+                    $table.bootstrapTable('refresh');
+                });
+            },
+            'click .comment-delete': function (e, value, row) {
+                var id = $(this).data('id');
+                var url = '{{route('admin.comments.crud.create')}}/'+id;
+                $.post(url, {_method: 'delete', _token: '{{csrf_token()}}'}, function () {
+                    $table.bootstrapTable('refresh');
+                });
+            },
+
         };
 
         addFilterCallback(function () {
