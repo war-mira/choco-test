@@ -13,7 +13,16 @@
                             {{--<a href="#">О рейтинге</a>--}}
                         {{--</div>--}}
                         <div class="footer-nav-column__item">
-                            <a href="{{url('posts')}}">Блог</a>
+                            <a href="{{ route('library.index') }}">Медицинская библиотека</a>
+                        </div>
+                        <div class="footer-nav-column__item">
+                            <a href="{{ route('illnesses.index') }}">Справочник заболеваний</a>
+                        </div>
+                        <div class="footer-nav-column__item">
+                            <a href="{{route('posts')}}">Блог</a>
+                        </div>
+                        <div class="footer-nav-column__item">
+                            <a href="{{route('agreement')}}">Правовая информация</a>
                         </div>
                         {{--<div class="footer-nav-column__item">--}}
                             {{--<a href="#">Партнерам</a>--}}
@@ -40,9 +49,6 @@
                         </div>
                         {{--<div class="footer-nav-column__item">--}}
                             {{--<a href="#">Акции</a>--}}
-                        {{--</div>--}}
-                        {{--<div class="footer-nav-column__item">--}}
-                            {{--<a href="#">Справочник заболеваний</a>--}}
                         {{--</div>--}}
                     </div>
                 </div>
