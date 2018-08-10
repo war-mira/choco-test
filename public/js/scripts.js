@@ -51,8 +51,13 @@ $(document).ready(function() {
 	});
 
     $(".js-simple-select").selectize({
-        openOnFocus: false
+        render: {
+            item: function (data, escape) {
+                return "<div data-address='" + data.address + "'>" + data.text + "</div>"
+            }
+        }
     });
+
     $('.selectize-input').find('input').prop('disabled', 'disabled');
 
     $(".js-header-location").selectize({

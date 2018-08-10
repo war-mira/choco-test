@@ -9,6 +9,7 @@ use App\Interfaces\ISeoMetadata;
 use App\Model\Location\District;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Ixudra\Curl\Facades\Curl;
 
 /**
  * App\Medcenters
@@ -187,6 +188,27 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
     public function getNameWithStatusAttribute()
     {
         return $this->name . " (" . $this->status_name . ")";
+    }
+
+    public function getCoordinatesAttribute()
+    {
+        $latitude = $this->geo_lat;
+        $longitude = $this->geo_lon;
+
+//        if(isset($latitude) && $latitude!= 0 && isset($longitude) && $longitude!=0){
+//            return  $latitude.','.$longitude;
+//        }
+            $city = City::find($this->city_id);
+            $address = $city->name.' '.$this->sms_address;
+            $response = Curl::to('https://geocode-maps.yandex.ru/1.x/?format=json&geocode='.$address.'')
+                ->get();
+            $response = json_decode($response, true);
+            $firstObject = array_shift($response['response']['GeoObjectCollection']['featureMember']);
+            $points = $firstObject['GeoObject']['Point']['pos'];
+            $points = str_replace(' ', ', ', $points);
+            $points = implode(', ', array_reverse(explode(', ', $points)));;
+
+            return $points;
     }
 
     public function orders()
