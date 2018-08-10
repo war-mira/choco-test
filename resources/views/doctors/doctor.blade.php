@@ -147,52 +147,49 @@
                     </div>
                 @endif
             </div>
-
             <div class="entity-line__additional">
                 @if(count($doctor->medcenters) >1)
                     <div class="entity-line__address-select">
-                        <select name="district" placeholder="Алмалинский район" class="js-simple-select js-select-region">
+                        <select class="js-simple-select js-select-medcenter">
                             @foreach($doctor->medcenters as $medcenter)
-                                <option value="{{ $medcenter->sms_address }}">{{ $medcenter->name }}</option>
+                                <option  data-data='{"address": "{{trim($medcenter->sms_address)}}"}' value="{{ $medcenter->coordinates }}">{{ $medcenter->name }}</option>
                             @endforeach
                         </select>
                     </div>
                 @endif
                 <div class="entity-line__map entity-map" id="entity-map">
                     <div class="entity-map__address">
-                        <div class="entity-map__address-name">{{$doctor->city->name}}, {{\App\Medcenter::where('id',$doctor->med_id)->first()->sms_address}}</div>
+                        <div class="entity-map__address-name">{{$doctor->city->name}}, {{$doctor->medcenters->first() ? $doctor->medcenters->first()->sms_address:''}}</div>
                         @if($doctor['address'])<div class="entity-map__address-descr">({{$doctor['address']}})</div>@endif
                     </div>
                 </div>
+                    @php
+                        $center = $doctor->medcenters->first()->coordinates;
+                    @endphp
 
                 <script type="text/javascript">
                     ymaps.ready(function () {
 
-                        //адрес в виде строки $doctor->medc_map->map $doctor['address']
-                        var myGeocoder = ymaps.geocode("{{\App\Medcenter::where('id',$doctor->med_id)->first()->sms_address}}");
+                        var myMap = new ymaps.Map("entity-map", {
+                            center: [{{ $center }}],
+                            zoom: 15
+                        });
 
-                        myGeocoder.then( function (res) {
-                                var coords = res.geoObjects.get(0).geometry.getCoordinates();
-                                ymaps.ready(function(){
-                                    var map = new ymaps.Map("entity-map", {
-                                        center: coords,
-                                        zoom: 15,
-                                        controls: ['zoomControl']
-                                    });
-                                    var address = new ymaps.GeoObject({
-                                        geometry: {
-                                            type: "Point",
-                                            coordinates: coords
-                                        }
-                                    });
-                                    map.geoObjects.add(address);
-                                });
-                            }, function (err) {
-                                console.log('Ошибка инициализации карты');
-                            }
-                        );
+                        @foreach($doctor->medcenters as $med)
+                            var pl = new ymaps.Placemark([{{ $med->coordinates }}]);
+                            myMap.geoObjects.add(pl);
+                        @endforeach
+
+                       $('.js-select-medcenter').on('change', function () {
+                           let medcenterCoords = $(this).val();
+                           let address = $(this).parents('.entity-line__address-select').find('.selectize-control').find('.items').find('div').data('address');
+                           $('.entity-map__address-name').text(address);
+
+                            myMap.panTo(
+                                [medcenterCoords.split(", ")]
+                            )
+                       });
                     });
-
                 </script>
             </div>
         </div>
