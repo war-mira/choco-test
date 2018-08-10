@@ -22,7 +22,7 @@ class CheckRole
             abort(403, 'Unauthorized action.');
         } else if ($role == 'seo' && \Auth::user()->role != 1 && \Auth::user()->role != 7) {
             abort(403, 'Unauthorized action.');
-        } else if ($role == 'superdev' && \Auth::user()->email != 'nadilk@ya.ru') {
+        } else if ($role == 'superdev' && \Auth::user()->role != 1) {
             abort(403, 'Unauthorized action.');
         }
 
