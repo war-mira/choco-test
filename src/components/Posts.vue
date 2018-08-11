@@ -15,11 +15,11 @@
       <tbody>
       <tr v-for="post in filteredPosts" :key="post.id">
         <td>
+        <router-link :to="{ name: 'post', params: { id: post.id }}">
+          <h5>{{post.title}}</h5> <span>{{ getRating(post.id) }}</span>
+        </router-link>
         <button @click="incrementRating(post.id)">+</button>
         <button @click="decrementRating(post.id)">-</button>
-        <router-link :to="{ name: 'post', params: { id: post.id }}">
-          {{post.title}} {{ getRating(post.id) }}
-        </router-link>
         </td>
         <td>{{ post.body }}</td>
         <td>{{ commentsLength(post.id) }}</td>
