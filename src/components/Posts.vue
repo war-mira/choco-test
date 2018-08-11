@@ -15,8 +15,10 @@
       <tbody>
       <tr v-for="post in filteredPosts" :key="post.id">
         <td>
+        <button @click="incrementRating(post.id)">+</button>
+        <button @click="decrementRating(post.id)">-</button>
         <router-link :to="{ name: 'post', params: { id: post.id }}">
-          {{post.title}}
+          {{post.title}} {{ getRating(post.id) }}
         </router-link>
         </td>
         <td>{{ post.body }}</td>
@@ -30,6 +32,7 @@
 <script>
 import PostService from '@/services/PostService'
 import CommentService from '@/services/CommentService'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Posts',
@@ -42,6 +45,7 @@ export default {
     }
   },
   mounted () {
+    this.clearPosts()
     this.getPosts()
     this.getComments()
     this.scroll()
@@ -51,7 +55,10 @@ export default {
       return this.$store.state.posts.filter(post => {
         return post.title.includes(this.search)
       })
-    }
+    },
+    ...mapGetters([
+      'getRating'
+    ])
   },
   methods: {
     async getPosts () {
@@ -65,10 +72,19 @@ export default {
       const response = await CommentService.getComments()
       this.comments = response.data
     },
+    clearPosts () {
+      this.$store.commit('removePosts')
+    },
     commentsLength (postId) {
       return this.comments.filter(comment => {
         return comment.postId === postId
       }).length
+    },
+    incrementRating (postId) {
+      return this.$store.dispatch('incrementRating', postId)
+    },
+    decrementRating (postId) {
+      return this.$store.dispatch('decrementRating', postId)
     },
     scroll () {
       window.onscroll = () => {
