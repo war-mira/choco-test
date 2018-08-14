@@ -74,4 +74,31 @@ Route::group(['middleware' => 'role:superdev', 'as' => 'sandbox.', 'prefix' => '
         return $value;
     });
 
+
+    Route::any('search/{input?}/{modifier?}',function (\Illuminate\Http\Request $request, $input = '', $modifier = ''){
+
+
+        $search = new \App\Helpers\DoctorSearcher([$input,$modifier]);
+
+        $search->lex()->skills();
+
+        $filter = $search->filter;
+        $log = $search->log;
+        $undefined = $search->stack;
+        $processed = $search->input;
+
+        return (
+            [
+                'original'=>[
+                    $input,
+                    $modifier,
+                    $request->all()
+                ],
+                'processing'=>$processed,
+                'not recognized'=>$undefined,
+                'filter'=>$filter,
+                'log'=>$log
+            ]
+        );
+    });
 });
