@@ -32,6 +32,7 @@
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
     <script src="{{URL::asset("js/scripts.js?hw34h")}}"></script>
     <script src="{{URL::asset("js/spaghetti.js")}}"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/11.0.1/classic/ckeditor.js"></script>
 </head>
 <body>
 <div class="main-wrap">

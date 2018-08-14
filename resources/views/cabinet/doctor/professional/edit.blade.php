@@ -120,7 +120,7 @@
                                             <div class="doc-prof-data__data-item doc-prof-data__data-item_grow account-data-item">
                                                 <div class="account-data-item__name">Расскажите подробнее о себе</div>
                                                 <div class="account-data-item__val">
-                                                    <textarea name="about_text">{!! old('about_text') ? old('about_text'):strip_tags($doctor->about_text)  !!}</textarea>
+                                                    <textarea class="editor" name="about_text">{!! old('about_text') ? old('about_text'):$doctor->about_text  !!}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -135,7 +135,7 @@
                                             <div class="doc-prof-data__data-item doc-prof-data__data-item_grow account-data-item">
                                                 <div class="account-data-item__name">Расскажите подробнее о том, какие заболевания вы лечите</div>
                                                 <div class="account-data-item__val">
-                                                    <textarea name="treatment_text" class="">{!! old('treatment_text') ? old('treatment_text'):strip_tags($doctor->treatment_text)  !!}</textarea>
+                                                    <textarea class="editor" name="treatment_text" class="">{!! old('treatment_text') ? old('treatment_text'):$doctor->treatment_text  !!}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -150,7 +150,7 @@
                                             <div class="doc-prof-data__data-item doc-prof-data__data-item_grow account-data-item">
                                                 <div class="account-data-item__name">Расскажите подробнее о своем опыте</div>
                                                 <div class="account-data-item__val">
-                                                    <textarea name="exp_text">{!! old('exp_text') ? old('exp_text'):strip_tags($doctor->exp_text)  !!}</textarea>
+                                                    <textarea class="editor" name="exp_text">{!! old('exp_text') ? old('exp_text'):$doctor->exp_text  !!}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -165,7 +165,7 @@
                                             <div class="doc-prof-data__data-item doc-prof-data__data-item_grow account-data-item">
                                                 <div class="account-data-item__name">Расскажите подробнее о своем образовании</div>
                                                 <div class="account-data-item__val">
-                                                    <textarea name="grad_text">{!! old('grad_text') ? old('grad_text'):strip_tags($doctor->grad_text) !!}</textarea>
+                                                    <textarea class="editor" name="grad_text">{!! old('grad_text') ? old('grad_text'):$doctor->grad_text !!}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -180,7 +180,7 @@
                                             <div class="doc-prof-data__data-item doc-prof-data__data-item_grow account-data-item">
                                                 <div class="account-data-item__name">Если у вас имеются сертификаты, вы можете прикрепить их здесь</div>
                                                 <div class="account-data-item__val">
-                                                    <textarea name="certs_text">{!! old('certs_text') ? old('certs_text'):strip_tags($doctor->certs_text) !!}</textarea>
+                                                    <textarea class="editor" name="certs_text">{!! old('certs_text') ? old('certs_text'):$doctor->certs_text !!}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -195,4 +195,10 @@
                 </div>
             </div>
     </div>
+    <script type="text/javascript">
+        var allEditors = document.querySelectorAll('.editor');
+        for (var i = 0; i < allEditors.length; ++i) {
+            ClassicEditor.create(allEditors[i]);
+        }
+    </script>
 @endsection
