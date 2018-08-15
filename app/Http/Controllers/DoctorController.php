@@ -72,13 +72,23 @@ class DoctorController extends Controller
      * @param DoctorFilters $filters
      * @return array|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View|mixed|void
      */
-    public function list(City $city = null, Skill $skill = null, DoctorFilters $filters)
+    public function list(City $city = null, $input = '', $modifier = '', DoctorFilters $filters)
     {
+
+//        $skill = Skill::where('alias',)
+
+        $search = new \App\Helpers\DoctorSearcher([$input,$modifier]);
+
+        $search->lex()->context()->registerLog();
+
+        $searcher = $search->filter->toArray();
+
         $doctors = Doctor::where('doctors.status', 1)
                          ->filter($filters->add([
                              'city'=>$city->id,
-                             'skills'=>$skill->alias??null
-                         ]));
+//                             'skills'=>$skill->alias??null
+                         ])
+                         ->add($searcher));
 
 
         $query = request()->only([
