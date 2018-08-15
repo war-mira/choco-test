@@ -6,8 +6,6 @@
         <div class="reviews-list__message" v-if="comments.length==0">
             <div class="account-data-item__val">Здесь пока нет вопросов =(</div>
         </div>
-        <div class="btn btn-success" @click="load">load</div>
-
 
 
         <div class="reviews-list__item reviews-list-item" v-for="comment in comments">
@@ -17,7 +15,7 @@
                         <div class="reviews-list-item__data">
                             <div class="reviews-list-item__data-item account-data-item">
                                 <div class="account-data-item__name">Текст отзыва</div>
-                                <div class="account-data-item__val">Новая модель организационной деятельности обеспечивает широкому кругу (специалистов) участие в формировании модели развития. Не следует, однако забывать, что рамки и место обучения кадров требуют определения и уточнения форм развития. Значимость этих проблем настолько очевидна, что сложившаяся структура организации позволяет оценить значение форм развития.</div>
+                                <div class="account-data-item__val">{{ comment.text }}</div>
                             </div>
                         </div>
                     </div>
@@ -30,8 +28,8 @@
                                 <div class="account-data-item__val">#1435</div>
                             </div>
                             <div class="reviews-list-item__data-item account-data-item">
-                                <div class="account-data-item__name">Пациент</div>
-                                <div class="account-data-item__val">Протасова Марина Андреевна</div>
+                                <div class="account-data-item__name">Автор</div>
+                                <div class="account-data-item__val">{{ comment.user_name }}</div>
                             </div>
                             <div class="reviews-list-item__data-item account-data-item">
                                 <div class="account-data-item__name">Оценка</div>
@@ -48,8 +46,8 @@
                                 </div>
                             </div>
                             <div class="reviews-list-item__data-item account-data-item">
-                                <div class="account-data-item__name">Дата приема</div>
-                                <div class="account-data-item__val">25.01.2018</div>
+                                <div class="account-data-item__name">Дата</div>
+                                <div class="account-data-item__val">{{ comment.created_at}}</div>
                             </div>
                         </div>
                     </div>
@@ -97,9 +95,8 @@
         methods:{
             load: function(){
 
-                console.log('load!',this.comments)
                 this.res.get().then((response) => {
-                    this.comments = response.data;
+                    this.comments = response.data.data;
                 }, (response) => {  });
 
             },

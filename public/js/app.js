@@ -335,8 +335,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -354,9 +352,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         load: function load() {
             var _this = this;
 
-            console.log('load!', this.comments);
             this.res.get().then(function (response) {
-                _this.comments = response.data;
+                _this.comments = response.data.data;
             }, function (response) {});
         },
         create: function create() {
@@ -3717,7 +3714,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -43587,19 +43584,86 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _c("div", { staticClass: "btn btn-success", on: { click: _vm.load } }, [
-        _vm._v("load")
-      ]),
-      _vm._v(" "),
       _vm._l(_vm.comments, function(comment) {
         return _c(
           "div",
           { staticClass: "reviews-list__item reviews-list-item" },
-          [_vm._m(0, true)]
+          [
+            _c("div", { staticClass: "reviews-list-item__inner" }, [
+              _c("div", { staticClass: "reviews-list-item__line" }, [
+                _c("div", { staticClass: "reviews-list-item__data-wr" }, [
+                  _c("div", { staticClass: "reviews-list-item__data" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "reviews-list-item__data-item account-data-item"
+                      },
+                      [
+                        _c("div", { staticClass: "account-data-item__name" }, [
+                          _vm._v("Текст отзыва")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "account-data-item__val" }, [
+                          _vm._v(_vm._s(comment.text))
+                        ])
+                      ]
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "reviews-list-item__line" }, [
+                _c("div", { staticClass: "reviews-list-item__data-wr" }, [
+                  _c("div", { staticClass: "reviews-list-item__data" }, [
+                    _vm._m(0, true),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "reviews-list-item__data-item account-data-item"
+                      },
+                      [
+                        _c("div", { staticClass: "account-data-item__name" }, [
+                          _vm._v("Автор")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "account-data-item__val" }, [
+                          _vm._v(_vm._s(comment.user_name))
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _vm._m(1, true),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "reviews-list-item__data-item account-data-item"
+                      },
+                      [
+                        _c("div", { staticClass: "account-data-item__name" }, [
+                          _vm._v("Дата")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "account-data-item__val" }, [
+                          _vm._v(_vm._s(comment.created_at))
+                        ])
+                      ]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm._m(2, true)
+              ])
+            ])
+          ]
         )
       }),
       _vm._v(" "),
-      _vm._m(1)
+      _vm._m(3)
     ],
     2
   )
@@ -43609,124 +43673,70 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "reviews-list-item__inner" }, [
-      _c("div", { staticClass: "reviews-list-item__line" }, [
-        _c("div", { staticClass: "reviews-list-item__data-wr" }, [
-          _c("div", { staticClass: "reviews-list-item__data" }, [
-            _c(
-              "div",
-              { staticClass: "reviews-list-item__data-item account-data-item" },
-              [
-                _c("div", { staticClass: "account-data-item__name" }, [
-                  _vm._v("Текст отзыва")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "account-data-item__val" }, [
-                  _vm._v(
-                    "Новая модель организационной деятельности обеспечивает широкому кругу (специалистов) участие в формировании модели развития. Не следует, однако забывать, что рамки и место обучения кадров требуют определения и уточнения форм развития. Значимость этих проблем настолько очевидна, что сложившаяся структура организации позволяет оценить значение форм развития."
-                  )
-                ])
-              ]
-            )
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "reviews-list-item__line" }, [
-        _c("div", { staticClass: "reviews-list-item__data-wr" }, [
-          _c("div", { staticClass: "reviews-list-item__data" }, [
-            _c(
-              "div",
-              { staticClass: "reviews-list-item__data-item account-data-item" },
-              [
-                _c("div", { staticClass: "account-data-item__name" }, [
-                  _vm._v("Прием")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "account-data-item__val" }, [
-                  _vm._v("#1435")
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "reviews-list-item__data-item account-data-item" },
-              [
-                _c("div", { staticClass: "account-data-item__name" }, [
-                  _vm._v("Пациент")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "account-data-item__val" }, [
-                  _vm._v("Протасова Марина Андреевна")
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "reviews-list-item__data-item account-data-item" },
-              [
-                _c("div", { staticClass: "account-data-item__name" }, [
-                  _vm._v("Оценка")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "account-data-item__val" }, [
-                  _c("div", { staticClass: "rating-line rating-line_blue" }, [
-                    _c("div", { staticClass: "rating-line__stars" }, [
-                      _c("i", {
-                        staticClass: "fa fa-star",
-                        attrs: { "aria-hidden": "true" }
-                      }),
-                      _vm._v(" "),
-                      _c("i", {
-                        staticClass: "fa fa-star",
-                        attrs: { "aria-hidden": "true" }
-                      }),
-                      _vm._v(" "),
-                      _c("i", {
-                        staticClass: "fa fa-star",
-                        attrs: { "aria-hidden": "true" }
-                      }),
-                      _vm._v(" "),
-                      _c("i", {
-                        staticClass: "fa fa-star",
-                        attrs: { "aria-hidden": "true" }
-                      }),
-                      _vm._v(" "),
-                      _c("i", {
-                        staticClass: "fa fa-star",
-                        attrs: { "aria-hidden": "true" }
-                      })
-                    ])
-                  ])
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "reviews-list-item__data-item account-data-item" },
-              [
-                _c("div", { staticClass: "account-data-item__name" }, [
-                  _vm._v("Дата приема")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "account-data-item__val" }, [
-                  _vm._v("25.01.2018")
-                ])
-              ]
-            )
-          ])
+    return _c(
+      "div",
+      { staticClass: "reviews-list-item__data-item account-data-item" },
+      [
+        _c("div", { staticClass: "account-data-item__name" }, [
+          _vm._v("Прием")
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "reviews-list-item__action" }, [
-          _c(
-            "a",
-            { staticClass: "btn btn_theme_usual", attrs: { href: "#" } },
-            [_vm._v("Подробнее")]
-          )
+        _c("div", { staticClass: "account-data-item__val" }, [_vm._v("#1435")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "reviews-list-item__data-item account-data-item" },
+      [
+        _c("div", { staticClass: "account-data-item__name" }, [
+          _vm._v("Оценка")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "account-data-item__val" }, [
+          _c("div", { staticClass: "rating-line rating-line_blue" }, [
+            _c("div", { staticClass: "rating-line__stars" }, [
+              _c("i", {
+                staticClass: "fa fa-star",
+                attrs: { "aria-hidden": "true" }
+              }),
+              _vm._v(" "),
+              _c("i", {
+                staticClass: "fa fa-star",
+                attrs: { "aria-hidden": "true" }
+              }),
+              _vm._v(" "),
+              _c("i", {
+                staticClass: "fa fa-star",
+                attrs: { "aria-hidden": "true" }
+              }),
+              _vm._v(" "),
+              _c("i", {
+                staticClass: "fa fa-star",
+                attrs: { "aria-hidden": "true" }
+              }),
+              _vm._v(" "),
+              _c("i", {
+                staticClass: "fa fa-star",
+                attrs: { "aria-hidden": "true" }
+              })
+            ])
+          ])
         ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "reviews-list-item__action" }, [
+      _c("a", { staticClass: "btn btn_theme_usual", attrs: { href: "#" } }, [
+        _vm._v("Подробнее")
       ])
     ])
   },
