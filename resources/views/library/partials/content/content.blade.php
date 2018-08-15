@@ -1,4 +1,7 @@
 <div class="section section-article__article-header">
+    <div class="section__aside-mobile">
+        @include('library.partials.content.aside')
+    </div>
     <div class="article__title">
         <h1>{{ $content->name }}</h1>
     </div>
@@ -8,5 +11,7 @@
 </div>
 <div class="section section-article__content">
     <div class="article-content__main">{!! $content->description !!}</div>
-    @include('library.partials.content.aside')
+    <div class="article__aside-desktop">
+        @include('library.partials.content.aside')
+    </div>
 </div>

@@ -1,4 +1,4 @@
-@extends('new')
+@extends('redesign.layouts.inner-page')
 @section('content')
     @include('search.search_box')
     <!-- begin section -->

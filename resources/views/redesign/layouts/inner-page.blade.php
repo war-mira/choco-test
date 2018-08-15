@@ -38,7 +38,7 @@
     @include('redesign.partials.header')
     <section class="index-intro pattern-bg library">
         @include('redesign.partials.nav_line')
-        @include('redesign.partials.index.search')
+        {{--@include('redesign.partials.index.search')--}}
     </section>
     @yield('navigation')
     @yield('breadcrumbs')

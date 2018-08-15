@@ -79,18 +79,20 @@
         </div>
     </div>
     <div class="doc-line__address">
-        <div class="doc-line__address-heading">Прием по адресу:</div>
-        <div class="doc-line__address-list">
-            @if($doctor->jobs)
-                @foreach($doctor->jobs as $job)
-                    <div class="doc-line__address-item">
-                        <div class="doc-line__address-val"><a href="{{ route('doctor.item', $doctor->alias) }}">{{$doctor['city']->name}}</a>, {{$job->medcenter ? $job->medcenter->sms_address: ''}}</div>
-                        <div class="doc-line__address-clinic-link">
-                            <a href="{{$job->medcenter ? route('medcenter.item', $job->medcenter->alias):'#'}}">{{$job->medcenter ? $job->medcenter->name:''}}</a>
+        <div class="container">
+            <div class="doc-line__address-heading">Прием по адресу:</div>
+            <div class="doc-line__address-list">
+                @if($doctor->jobs)
+                    @foreach($doctor->jobs as $job)
+                        <div class="doc-line__address-item">
+                            <div class="doc-line__address-val"><a href="{{ route('doctor.item', $doctor->alias) }}">{{$doctor['city']->name}}</a>, {{$job->medcenter ? $job->medcenter->sms_address: ''}}</div>
+                            <div class="doc-line__address-clinic-link">
+                                <a href="{{$job->medcenter ? route('medcenter.item', $job->medcenter->alias):'#'}}">{{$job->medcenter ? $job->medcenter->name:''}}</a>
+                            </div>
                         </div>
-                    </div>
-                @endforeach
-            @endif
+                    @endforeach
+                @endif
+            </div>
         </div>
     </div>
 </div>
