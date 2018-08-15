@@ -3,8 +3,8 @@
     <div class="account-wrapper__rating account-top-rating">
         <div class="account-top-rating__heading">Ваш рейтинг:</div>
         <div class="account-top-rating__rating-line rating-line rating-line_blue">
-            <div class="rating-line__val">{{ $doctor->avg_rate }}</div>
-            @component('cabinet.components.doctor.raiting-stars',['rating' => $doctor->avg_rate])
+            <div class="rating-line__val">{{ auth()->user()->doctor->avg_rate }}</div>
+            @component('cabinet.components.doctor.raiting-stars',['rating' => auth()->user()->doctor->avg_rate])
             @endcomponent
         </div>
     </div>

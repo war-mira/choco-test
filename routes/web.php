@@ -145,6 +145,11 @@ Route::get('redirector', function (\Illuminate\Http\Request $request) {
 
 Route::group(['as' => 'cabinet.', 'prefix' => 'cabinet', 'middleware' => 'auth'], function () {
     Route::group(['as' => 'doctor.', 'prefix' => 'doctor'], function () {
+
+        Route::view('/feedback/index','cabinet.doctor.feedback.index')->name('feedback.index');
+
+
+
         Route::group(['as' => 'personal.', 'prefix' => 'personal'], function () {
             Route::get('/index', 'Cabinet\Doctor\DoctorCabinetPersonalController@index')->name('index');
             Route::get('/edit', 'Cabinet\Doctor\DoctorCabinetPersonalController@edit')->name('edit');
@@ -163,6 +168,7 @@ Route::group(['as' => 'cabinet.', 'prefix' => 'cabinet', 'middleware' => 'auth']
             Route::get('/view/{id}/edit', 'Cabinet\Doctor\DoctorCabinetQuestionsController@editAnswer')->name('edit');
             Route::post('/view/{id}/edit', 'Cabinet\Doctor\DoctorCabinetQuestionsController@updateAnswer')->name('update');
         });
+
         Route::get('/', function (){
         });
         Route::post('/orderList', 'Cabinet\Doctor\DoctorCabinetController@orderList')->name('orderList');

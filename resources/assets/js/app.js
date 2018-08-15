@@ -22,6 +22,7 @@ Vue.component('admin-sessions', function (resolve) {
     require(['./components/admin_sessions.vue'], resolve)
 })
 
+Vue.component('doctor-reviews', require('./components/block_reviews'));
 Vue.component('btn-ajax', require('./components/btn_ajax.vue'));
 Vue.component('inp-rate', require('./components/inp_rate.vue'));
 Vue.component('rx-span', require('./components/rx_span.vue'));
@@ -54,6 +55,7 @@ var app = new Vue({
 
         socket.on('command notify',function (msg) {
             // toastr message
+            toastr.success(msg)
         });
 
     },

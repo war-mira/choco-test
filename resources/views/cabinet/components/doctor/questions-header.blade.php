@@ -9,11 +9,11 @@
                 </a>
                 <a href="{{route('cabinet.doctor.questions.index', 'answered='.\App\Question::ANSWERED)}}" class="tab-line__item {{request()->input('answered') == \App\Question::ANSWERED ? 'tab-line__item_active':''}}">
                     <span class="tab-line__item-text">Отвеченные другими врачами</span>
-                    <span class="tab-line__item-count">{{ \App\Question::answeredNotByDoctor($doctor)->count() }}</span>
+                    <span class="tab-line__item-count">{{ \App\Question::answeredNotByDoctor(auth()->user()->doctor)->count() }}</span>
                 </a>
                 <a href="{{route('cabinet.doctor.questions.index', 'answered='.\App\Question::ANSWERED_BY_DOCTOR)}}" class="tab-line__item  {{request()->input('answered') == \App\Question::ANSWERED_BY_DOCTOR ? 'tab-line__item_active':''}}">
                     <span class="tab-line__item-text">Мои ответы</span>
-                    <span class="tab-line__item-count">{{ \App\Question::answeredByDoctor($doctor)->count() }}</span>
+                    <span class="tab-line__item-count">{{ \App\Question::answeredByDoctor(auth()->user()->doctor)->count() }}</span>
                 </a>
             </div>
         </div>
