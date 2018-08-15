@@ -33,8 +33,8 @@
     <script src="{{URL::asset("js/scripts.js")}}"></script>
 </head>
 <body>
-<div class="main-wrap">
-
+<div class="main-wrap" >
+    <div id="app"></div>
     @include('redesign.partials.header')
     @yield('content')
     @include('redesign.partials.footer')
@@ -44,6 +44,10 @@
         @include('redesign.partials.modals.feedback-callback')
     </div>
 </div>
+
+
+
+<script src="{{URL::asset("js/app.js")}}"></script>
 <script type="text/javascript">
     $('.search_event').on('click', function () {
         ga('send', 'event', {

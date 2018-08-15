@@ -75,30 +75,50 @@ Route::group(['middleware' => 'role:superdev', 'as' => 'sandbox.', 'prefix' => '
     });
 
 
-    Route::any('search/{input?}/{modifier?}',function (\Illuminate\Http\Request $request, $input = '', $modifier = ''){
+    Route::any('search/{input?}/{modifier?}',function (\App\Http\Requests\Doctor\DoctorFilters $filters, $input = '', $modifier = ''){
 
 
         $search = new \App\Helpers\DoctorSearcher([$input,$modifier]);
 
-        $search->lex()->skills();
+        $search->lex()->context()->registerLog();
 
-        $filter = $search->filter;
+        $filter = $search->filter->toArray();
         $log = $search->log;
         $undefined = $search->stack;
         $processed = $search->input;
+
+
+        $dump = [
+            'unknown requests'=> Redis::zrangebyscore('documentSearcher:unrecoqnizedRequest','-inf','+inf','WITHSCORES'),
+            'unrecognized'=> collect(Redis::keys('documentSearcher:unrecoqnized:*'))
+                ->transform(function ($item){
+                   return [substr($item,30) => collect(Redis::smembers($item))
+                       ->transform(function ($record){
+                            return json_decode($record);
+                        })];
+                })
+        ];
+
+
+
+        $docs = \App\Doctor::filter($filters->add($filter))->count();
 
         return (
             [
                 'original'=>[
                     $input,
                     $modifier,
-                    $request->all()
+                    $filters
                 ],
                 'processing'=>$processed,
                 'not recognized'=>$undefined,
                 'filter'=>$filter,
-                'log'=>$log
+                'log'=>$log,
+                'result'=>$docs,
+                'dump'=>$dump
             ]
         );
     });
+
+    Route::view('sessions','sandbox.sessions');
 });

@@ -33,9 +33,10 @@
     <script src="{{URL::asset("js/scripts.js?hw34h")}}"></script>
     <script src="{{URL::asset("js/spaghetti.js")}}"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/11.0.1/classic/ckeditor.js"></script>
+
 </head>
 <body>
-<div class="main-wrap">
+<div class="main-wrap" id="app">
     @include('redesign.partials.header')
     <main class="account-wrapper pattern-bg">
         <div class="container">
@@ -48,5 +49,6 @@
         @include('redesign.partials.modals.quick-order')
     </div>
 </div>
+<script src="{{URL::asset("js/app.js")}}"></script>
 </body>
 </html>

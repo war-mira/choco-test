@@ -7,7 +7,7 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -17,6 +17,48 @@ window.Vue = require('vue');
 
 Vue.component('example', require('./components/Example.vue'));
 
-const app = new Vue({
-    el: '#app'
+
+Vue.component('admin-sessions', function (resolve) {
+    require(['./components/admin_sessions.vue'], resolve)
+})
+
+Vue.component('btn-ajax', require('./components/btn_ajax.vue'));
+Vue.component('inp-rate', require('./components/inp_rate.vue'));
+Vue.component('rx-span', require('./components/rx_span.vue'));
+
+window.socket = Echo.connector.socket;
+// window.socket = {};
+
+var app = new Vue({
+    el: '#app',
+    data:{
+
+    },
+
+    watch:{
+
+    },
+    mounted:function(){
+
+        let tabID = sessionStorage.tabID ? sessionStorage.tabID : sessionStorage.tabID = Math.random();
+        socket.emit('handshake',Echo.connector.csrfToken(),tabID);
+        socket.on('state',function (message) {
+            // socket.emit('join','for-all-dummies');
+        });
+
+        socket.on('command redirect',function (msg) {
+            console.log('redirect to:', msg);
+            location.href = msg;
+        });
+
+
+        socket.on('command notify',function (msg) {
+            // toastr message
+        });
+
+    },
+    methods:{
+
+    }
 });
+
