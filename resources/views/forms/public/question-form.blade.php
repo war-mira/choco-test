@@ -17,8 +17,13 @@
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label>Город</label>
-            <input type="text" id="user-city" class="" name="user[city]">
+            <div class="date-text-input">
+                <label>Дата рождения *</label>
+                <input type="text" id="user-birthday"
+                       pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"
+                       name="user[birthday]" placeholder="Выберите дату рождения"
+                       data-pmu-date="" required>
+            </div>
         </div>
         <div class="form-group col-md-6">
             <label>Ваш пол *</label>
@@ -27,15 +32,6 @@
                     <option value="{{ $key }}">{{$gender}}</option>
                 @endforeach
             </select>
-        </div>
-    </div>
-    <div class="form-group" id="datetime-group">
-        <div class="date-radio js-custom-date">
-            <div class="date-radio__item">
-            <input type="radio" name="date" value="custom">
-            <span class="date-radio__text">Дата рождения *</span>
-            <input type="text" name="user[birthday]" class="js-custom-date-val">
-        </div>
         </div>
     </div>
     <div class="form-group">

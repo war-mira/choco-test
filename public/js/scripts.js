@@ -464,19 +464,6 @@ $(document).ready(function() {
         if ($this.is("[data-pmu-date]")) {
 
             pickmeup($this[0], {
-                format  : 'Y-m-d',
-                locale : "ru",
-                hide_on_select : true,
-                position : function() {
-                    return {
-                        "top" : "100%"
-                    }
-                }
-            });
-
-        } else {
-
-            pickmeup($this[0], {
                 default_date: false,
                 format  : 'Y-m-d',
                 locale : "ru",

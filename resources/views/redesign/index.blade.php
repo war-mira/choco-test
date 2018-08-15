@@ -175,6 +175,19 @@
             }
         });
 
+        // get the iso time string formatted for usage in an input['type="datetime-local"']
+        var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+        var localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0,-1);
+        var localISOTimeWithoutSeconds = localISOTime.slice(0,16);
+
+        // select the "datetime-local" input to set the default value on
+        var dtlInput = document.querySelector('input[type="datetime-local"]');
+
+        if(dtlInput){
+            // set it and forget it ;)
+            dtlInput.value = localISOTime.slice(0,16);
+        }
+
         var form = $("#question__form");
         $("#question__form-send").click(function () {
             if (form[0].checkValidity()) {
@@ -201,14 +214,43 @@
                     });
             }
             else {
-                $('#user-email').addClass('has-warning');
-                $('#user-phone').addClass('has-warning');
-                $('#user-birthday').addClass('has-warning');
-                $('#user-gender').addClass('has-warning');
-                $('#question-text').addClass('has-warning');
+                if(!$('#user-email').val()){
+                    $('#user-email').addClass('has-warning');
+                }else{
+                    $('#user-email').removeClass('has-warning');
+                }
+                if(!$('#user-phone').val()){
+                    $('#user-phone').addClass('has-warning');
+                }else{
+                    $('#user-phone').removeClass('has-warning');
+                }
+                if(!$('#user-birthday').val() || !isValidDate($('#user-birthday').val())){
+                    $('#user-birthday').addClass('has-warning');
+                }else{
+                    $('#user-birthday').removeClass('has-warning');
+                }
+                if(!$('#user-birthday-mobile').val() || !isValidDate($('#user-birthday-mobile').val())){
+                    $('#user-birthday-mobile').addClass('has-warning');
+                }else{
+                    $('#user-birthday-mobile').removeClass('has-warning');
+                }
+                if(!$('#user-gender').val()){
+                    $('#user-gender').addClass('has-warning');
+                }else{
+                    $('#user-gender').removeClass('has-warning');
+                }
+                if(!$('#question-text').val()){
+                    $('#question-text').addClass('has-warning');
+                }else{
+                    $('#question-text').removeClass('has-warning');
+                }
             }
         });
 
+        function isValidDate(dateString) {
+            var regEx = /^\d{4}-\d{2}-\d{2}$/;
+            return dateString.match(regEx) != null;
+        }
     </script>
     <!-- end section -->
 @endsection
