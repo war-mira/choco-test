@@ -50,6 +50,7 @@
         @include('redesign.partials.modals.feedback-callback')
     </div>
 </div>
+<script src="{{URL::asset("js/app.js")}}"></script>
 <script type="text/javascript">
     $('.search_event').on('click', function () {
         ga('send', 'event', {
