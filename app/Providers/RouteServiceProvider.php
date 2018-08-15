@@ -77,6 +77,7 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware(['web', 'city'])
             ->namespace($this->namespace)
             ->group(base_path('routes/web.php'));
+
         Route::name('admin.')
             ->domain('admin.' . env('APP_URL_SHORT'))
             ->middleware(['web', 'city', 'role:superuser'])
@@ -95,7 +96,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapApiRoutes()
     {
         Route::prefix('api')
-            ->middleware('api')
+            ->middleware('web') // TODO: but must be API
             ->namespace($this->namespace)
             ->group(base_path('routes/api.php'));
     }

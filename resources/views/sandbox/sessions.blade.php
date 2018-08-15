@@ -5,9 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    @include('partials.meta')
-    @include('partials.yandex-metrika')
-    @include('partials.google-analytics')
+
 
     <title>Главная - iDoctor</title>
     <!-- <link rel="shortcut icon" type="image/png" href="img/favicon.png"> -->
@@ -33,22 +31,15 @@
     <script src="{{URL::asset("js/scripts.js?hw34h")}}"></script>
     <script src="{{URL::asset("js/spaghetti.js")}}"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/11.0.1/classic/ckeditor.js"></script>
-
 </head>
 <body>
 <div class="main-wrap" id="app">
-    @include('redesign.partials.header')
-    <main class="account-wrapper pattern-bg">
+
         <div class="container">
-            @yield('content')
+            <admin-sessions></admin-sessions>
         </div>
-    </main>
-    @include('redesign.partials.footer')
-    <div class="modal-container">
-        @include('redesign.partials.modals.modal-login')
-        @include('redesign.partials.modals.quick-order')
-    </div>
 </div>
+
 <script src="{{URL::asset("js/app.js")}}"></script>
 </body>
 </html>

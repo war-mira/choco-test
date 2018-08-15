@@ -119,4 +119,6 @@ Route::group(['middleware' => 'role:superdev', 'as' => 'sandbox.', 'prefix' => '
             ]
         );
     });
+
+    Route::view('sessions','sandbox.sessions');
 });
