@@ -11,11 +11,6 @@
     border-bottom: 1px solid #00A8FF !important;
 }
 
-.index-intro.pattern-bg{
-    position: relative;
-    margin-top: 65px;
-}
-
 .index-intro__heading, .search-bar{
     z-index: 1;
     position: relative;
@@ -613,5 +608,8 @@
 @media (max-width: 767.98px) {
     .modal-window{
         width: 100%;
+    }
+    .search-bar-container .input-block__icon {
+        top: 80px;
     }
 }

@@ -30,9 +30,6 @@
                         <div class="index-intro__stat-text">Реальных отзывов</div>
                     </div>
                 </div>
-                <div class="heart-bg responsive_hide">
-                    <img src="{{asset('img/heart.png')}}" alt="">
-                </div>
             </div>
         </div>
     </section>

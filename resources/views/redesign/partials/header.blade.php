@@ -10,11 +10,6 @@
                         </a>
                     </li>
                     <li>
-                        <a href="https://chocomart.kz/?utm_source=idoctor.kz&utm_medium=plashka" rel="nofollow" target="_blank">
-                            <div class="main-header__partners-item main-header__partners-chocomart"></div>
-                        </a>
-                    </li>
-                    <li>
                         <a href="https://chocotravel.com/?utm_source=idoctor.kz&utm_medium=plashka" rel="nofollow" target="_blank">
                             <div class="main-header__partners-item main-header__partners-chocotravel"></div>
                         </a>

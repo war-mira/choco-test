@@ -1,4 +1,4 @@
-@extends('new')
+@extends('redesign.layouts.inner-page')
 @section('content')
     @include('search.search_box')
 
@@ -175,8 +175,10 @@
                 </div>
                 @if($doctors->links() != "")
                     <div class="results filter">
-                        <div class="text-center search-pagination" id="topPagination">
-                            {!! $doctors->links() !!}
+                        <div class="container">
+                            <div class="text-center search-pagination" id="topPagination">
+                                {!! $doctors->links() !!}
+                            </div>
                         </div>
                     </div>
                 @endif
