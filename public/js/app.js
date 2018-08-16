@@ -425,7 +425,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         css: {
             type: String,
-            default: 'btn red-btn'
+            default: ''
         }
     }
 });
@@ -452,25 +452,47 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            val: null
+            val: {
+                'rate': 0,
+                'karma': 0,
+                'likes': 0,
+                'dislikes': 0
+            },
+            updated: false
         };
     },
 
     computed: {
         path: function path() {
-            return '/api/' + this.obj + '/' + this.id + '/vote';
+            return '/api/v2/' + this.obj + '/' + this.id + '/vote';
         }
     },
     mounted: function mounted() {
         socket.emit('join', this.obj + ':' + this.id);
         socket.on('NewVoteEvent', function (msg) {
-            console.log(msg);
-            this.val = msg.vote;
+            if (msg.obj == this.obj && msg.obj_id == this.id) {
+                console.log(msg);
+                this.val = msg.values;
+                this.updated = true;
+            }
         }.bind(this));
     },
     props: ['obj', 'id', 'type'],
@@ -479,7 +501,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         sent: function sent(vote) {
-            this.val = vote.karma;
+            this.val = vote;
         }
     }
 });
@@ -3699,7 +3721,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.no-padding{\n    padding: 0;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -43519,38 +43541,78 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "span",
+    "div",
+    { staticClass: "entity-thumb-img__thumb-control thumb-control" },
     [
       _c(
-        "btn",
-        {
-          attrs: {
-            css: "no-padding btn btn-link",
-            href: _vm.path,
-            data: { mark: 1 }
-          },
-          on: { ready: _vm.sent }
-        },
-        [_c("i", { staticClass: "fa fa-angle-up" })]
+        "button",
+        { staticClass: "thumb-control__item", attrs: { "data-type": "1" } },
+        [
+          _c(
+            "span",
+            { staticClass: "thumb-control__val" },
+            [
+              !_vm.updated ? _vm._t("likes") : _vm._e(),
+              _vm.updated
+                ? _c("span", [_vm._v(_vm._s(_vm.val.likes))])
+                : _vm._e()
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "btn",
+            {
+              attrs: { css: "no-padding", href: _vm.path, data: { mark: 1 } },
+              on: { ready: _vm.sent }
+            },
+            [
+              _c("i", {
+                staticClass: "fa fa-thumbs-o-up",
+                attrs: { "aria-hidden": "true" }
+              })
+            ]
+          )
+        ],
+        1
       ),
       _vm._v(" "),
-      !_vm.val ? _vm._t("default") : _vm._e(),
-      _vm.val ? _c("span", [_vm._v(_vm._s(_vm.val))]) : _vm._e(),
-      _vm._v(" "),
       _c(
-        "btn",
+        "button",
         {
-          attrs: {
-            css: "no-padding btn btn-link",
-            href: _vm.path,
-            data: { mark: -1 }
-          },
-          on: { ready: _vm.sent }
+          staticClass: "thumb-control__item down",
+          attrs: { "data-type": "2" }
         },
-        [_c("i", { staticClass: "fa fa-angle-down" })]
+        [
+          _c(
+            "span",
+            { staticClass: "thumb-control__val" },
+            [
+              !_vm.updated ? _vm._t("dislikes") : _vm._e(),
+              _vm.updated
+                ? _c("span", [_vm._v(_vm._s(_vm.val.dislikes))])
+                : _vm._e()
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "btn",
+            {
+              attrs: { css: "no-padding", href: _vm.path, data: { mark: -1 } },
+              on: { ready: _vm.sent }
+            },
+            [
+              _c("i", {
+                staticClass: "fa fa-thumbs-o-down",
+                attrs: { "aria-hidden": "true" }
+              })
+            ]
+          )
+        ],
+        1
       )
-    ],
-    2
+    ]
   )
 }
 var staticRenderFns = []
@@ -43790,9 +43852,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "button",
+    "span",
     {
       class: _vm.css,
+      staticStyle: { cursor: "pointer" },
       on: {
         click: function($event) {
           $event.preventDefault()

@@ -6,6 +6,7 @@ use App\Helpers\FormatHelper;
 use App\Helpers\MathHelper;
 use App\Helpers\SeoMetadataHelper;
 use App\Helpers\SessionContext;
+use App\Helpers\votes;
 use App\Http\Requests\Filter;
 use App\Interfaces\IReferenceable;
 use App\Interfaces\ISeoMetadata;
@@ -117,6 +118,8 @@ use Illuminate\Database\Eloquent\Model;
 class Doctor extends Model implements IReferenceable, ISeoMetadata
 {
     use FilterScopes;
+    use votes;
+
     const STATUS = [
         -1 => 'Заблокирован',
         0  => 'Скрыт',
@@ -192,6 +195,7 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
 //        'sund',
 //        'comercial'
     ];
+
     protected $casts = [
         'child'   => 'int',
         'city_id' => 'int'

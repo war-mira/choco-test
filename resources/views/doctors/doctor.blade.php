@@ -32,16 +32,10 @@
                             <?php }else { ?>
                             &nbsp;&nbsp;<a href="#comments">Нет отзывов</a>
                             <?php } ?>
-                        <div class="entity-thumb-img__thumb-control thumb-control">
-                            <button class="thumb-control__item" data-type="1">
-                                <span class="thumb-control__val">{{$doctor->like ? $doctor->like : 0}}</span>
-                                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                            </button>
-                            <button class="thumb-control__item down" data-type="2">
-                                <span class="thumb-control__val">{{$doctor->dislike ? $doctor->dislike : 0}}</span>
-                                <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
-                            </button>
-                        </div>
+                            <inp-rate obj="doctor" id="{{ $doctor->id }}" type="likes" >
+                                <template slot="likes">{{ $doctor->likes }}</template>
+                                <template slot="dislikes">{{ $doctor->dislikes }}</template>
+                            </inp-rate>
                     </div>
                 </div>
             </div>

@@ -33,7 +33,7 @@
     <script src="{{URL::asset("js/scripts.js")}}"></script>
 </head>
 <body>
-<div class="main-wrap">
+<div class="main-wrap" id="app">
 
     @include('redesign.partials.header')
     <section class="index-intro pattern-bg library">

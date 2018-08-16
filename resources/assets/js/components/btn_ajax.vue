@@ -1,7 +1,7 @@
 <template>
-    <button @click.prevent="send" :class="css">
+    <span @click.prevent="send" :class="css" style="cursor:pointer">
         <slot>Отправить</slot>
-    </button>
+    </span>
 </template>
 <style>
 
@@ -44,7 +44,7 @@
             },
             css:{
                 type:String,
-                default:'btn red-btn'
+                default:''
             }
         }
     }
