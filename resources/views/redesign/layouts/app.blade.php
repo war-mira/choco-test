@@ -11,6 +11,7 @@
 
     <title>Главная - iDoctor</title>
     <!-- <link rel="shortcut icon" type="image/png" href="img/favicon.png"> -->
+    <link rel="stylesheet" href="{{URL::asset("css/app.css")}}">
     <link rel="stylesheet" href="{{URL::asset("css/normalize.css")}}">
     <link rel="stylesheet" href="{{URL::asset("css/slick.css")}}">
     <link rel="stylesheet" href="{{URL::asset("css/lightbox.min.css")}}">

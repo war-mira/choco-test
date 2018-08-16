@@ -31,7 +31,7 @@ class FeedbackController extends Controller
     {
 
         return User::find(12884)->doctor
-            ->comments()->orderBy('id','desc')->paginate(10)
+            ->comments()->orderBy('id','desc')->paginate(20)
             ;
 //        return Auth::user()->doctor->comments;
     }

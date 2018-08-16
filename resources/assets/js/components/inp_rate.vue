@@ -1,22 +1,22 @@
 <template>
 
     <div class="entity-thumb-img__thumb-control thumb-control">
-        <button class="thumb-control__item" data-type="1">
+        <span class="thumb-control__item" data-type="1">
             <span class="thumb-control__val">
                 <slot name="likes" v-if="!updated"></slot><span v-if="updated">{{ val.likes }}</span>
             </span>
             <btn css="no-padding" :href="path" :data="{mark:1}" @ready="sent"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></btn>
-        </button>
+        </span>
 
 
 
 
-        <button class="thumb-control__item down" data-type="2">
+        <span class="thumb-control__item down" data-type="2">
             <span class="thumb-control__val">
                 <slot name="dislikes" v-if="!updated"></slot><span v-if="updated">{{ val.dislikes }}</span>
             </span>
             <btn css="no-padding" :href="path" :data="{mark:-1}" @ready="sent"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></btn>
-        </button>
+        </span>
 
     </div>
 
@@ -46,6 +46,7 @@
         mounted:function(){
             socket.emit('join',`${this.obj}:${this.id}`);
             socket.on('NewVoteEvent',function (msg) {
+                // toastr.warning('vote');
                 if(msg.obj == this.obj && msg.obj_id == this.id){
                     console.log(msg);
                     this.val = msg.values;
@@ -61,6 +62,7 @@
         methods:{
             sent:function (vote) {
                 this.val = vote;
+                this.updated = true;
             },
         },
     }
