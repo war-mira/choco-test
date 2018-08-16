@@ -192,6 +192,7 @@ return [
         BenSampo\Enum\EnumServiceProvider::class,
         DaveJamesMiller\Breadcrumbs\BreadcrumbsServiceProvider::class,
         Ixudra\Curl\CurlServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class
 
     ],
 
@@ -252,6 +253,7 @@ return [
         'Slug' => Alexusmai\Ruslug\RuslugFacade::class,
         'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs::class,
         'Curl' => Ixudra\Curl\Facades\Curl::class,
+        'Image' => Intervention\Image\Facades\Image::class
     ],
 
 ];

@@ -13,6 +13,8 @@
 Route::get('/', 'IndexController@r_home')->name('home');
 //Route::get('main-new', 'IndexController@r_home')->name('home');
 
+Route::get('resize', 'ImageController@resizeImages');
+
 Route::get('likes','IndexController@ratings')->name('rates');
 
 Route::get('order/gotopay/{id}', 'OrderController@gotopay');
