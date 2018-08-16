@@ -3,7 +3,7 @@
     <div class="session-app">
         <div class="active-sessions">
             <div class="card my-2" v-for="(user, id) in sessions">
-                <div class="card-header">{{ user.user }} ({{ id }})</div>
+                <div class="card-header">{{ user.name }} ({{ id }})</div>
 
                 <div class="list-group list-group-flush" v-for="(device, csrf) in user.devices">
                     <div class="list-group-item flex-column align-items-start">
@@ -143,7 +143,7 @@
                     return item.user? item.user.id : null;
                 }).transform(function (user, key) {
                     return {
-                        'user': key > 0 ? user.items[0].user.username: 'Гость',
+                        'user': key > 0 ? user.items[0].user.name: 'Гость',
                         'devices': collect(user.items).groupBy('csrf').transform(function (device,csrf) {
                             return {
                                 'device': csrf,

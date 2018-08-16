@@ -36,10 +36,10 @@
 
 </head>
 <body>
-<div class="main-wrap" id="app">
+<div class="main-wrap" >
     @include('redesign.partials.header')
     <main class="account-wrapper pattern-bg">
-        <div class="container">
+        <div class="container" id="app">
             @yield('content')
         </div>
     </main>

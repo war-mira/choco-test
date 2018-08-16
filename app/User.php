@@ -136,4 +136,8 @@ class User extends Authenticatable implements CanResetPassword
 
     }
 
+    public function doctor()
+    {
+        return $this->hasOne(Doctor::class);
+    }
 }

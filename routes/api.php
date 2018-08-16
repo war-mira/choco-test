@@ -21,3 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('me', function (Request $request) {
     return Auth::user()??['errror'=>'not authenticated'];
 });
+
+Route::group(['prefix'=>'my'],function (){
+    Route::resource('reviews','FeedbackController');
+});
+

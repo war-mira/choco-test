@@ -29,7 +29,7 @@ try {
  * to our Laravel back-end. This library automatically handles sending the
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
-window.Laravel = {"csrfToken":document.getElementsByName('csrf-token')[0]};
+window.Laravel = {"csrfToken":document.getElementsByName('csrf-token')[0].content};
 
 Vue.http.headers.common['X-CSRF-TOKEN'] = Laravel.csrfToken;
 Vue.http.interceptors.push((request, next) => {
