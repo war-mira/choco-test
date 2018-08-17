@@ -32,7 +32,7 @@
     </div>
     <div class="entity-line__about-text">
         <p>
-            {{strip_tags($medcenter['content'])}}
+            {{strip_tags($medcenter['content_lite'])}}
         </p>
     </div>
     <div class="clinic-line__brief">

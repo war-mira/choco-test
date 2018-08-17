@@ -170,7 +170,7 @@ class MedcenterController extends Controller
 
         $meta = SeoMetadataHelper::getMeta($medcenter, $city);
 
-        return view('medcenters.item')
+        return view('medcenters.new_item')
             ->with('meta', $meta)
             ->with('medcenter', $medcenter)
             ->with('city', $medcenter->city)
