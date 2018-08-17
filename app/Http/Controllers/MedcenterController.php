@@ -115,6 +115,14 @@ class MedcenterController extends Controller
             $medcenters->whereIn('id',($ids));
         }
 
+        if(isset($filter['child']))
+        {
+            $ids = Doctor::where('doctors.child','=','1')
+                ->pluck('doctors.id')->toArray();
+
+            $medcenters->whereIn('id',($ids));
+        }
+
         $order = [$filter['sort'] ?? 'rate', $filter['order'] ?? 'desc'];
         if ($order[0] == 'rate')
             $medcenters->orderBy('rate', $order[1]);
