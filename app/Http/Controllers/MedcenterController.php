@@ -112,7 +112,7 @@ class MedcenterController extends Controller
                 ->orWhere('skills.name','like','%'.$filter['q'].'%')
                 ->pluck('doctors.id')->toArray();
 
-            $medcenters->whereIn('id',($ids));
+            $medcenters->whereIn('id',$ids);
         }
 
         if(isset($filter['child']))
@@ -120,7 +120,7 @@ class MedcenterController extends Controller
             $ids = Doctor::where('doctors.child','=','1')
                 ->pluck('doctors.id')->toArray();
 
-            $medcenters->whereIn('id',($ids));
+            $medcenters->whereIn('id',$ids);
         }
 
         $order = [$filter['sort'] ?? 'rate', $filter['order'] ?? 'desc'];
