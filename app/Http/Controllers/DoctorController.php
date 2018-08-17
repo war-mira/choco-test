@@ -290,8 +290,6 @@ class DoctorController extends Controller
     private function applyDoctorsFilter($doctors, $filter)
     {
 
-
-
         if (isset($filter['rate_range']) && $filter['rate_range']) {
             $doctors = $doctors->whereBetween('rate', explode(',', $filter['rate_range']));
         }

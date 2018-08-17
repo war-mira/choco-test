@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 
 use App\City;
+use App\Doctor;
 use App\Helpers\SearchHelper;
+use App\Http\Requests\Doctor\DoctorFilters;
 use App\Medcenter;
 use App\Helpers\SeoMetadataHelper;
 use App\PageSeo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MedcenterController extends Controller
 {
@@ -28,8 +31,9 @@ class MedcenterController extends Controller
             'price_range',
             'rate_range',
             'page',
-            'district',
-            'child'
+            //'district',
+            'child',
+            'type'
         ]);
         $filter = $query;
 
@@ -93,8 +97,23 @@ class MedcenterController extends Controller
         if (isset($filter['district']) && $filter['district']) {
             $medcenters->where('district_id', $filter['district']);
         }
-        if (isset($filter['q']) && $filter['q'] && trim($filter['q']) != '')
+        if(isset($filter['q']) && $filter['q'] && trim($filter['q']) != '' && $filter['type'] == 'medcenter')
             SearchHelper::searchByFields($medcenters, ['name', 'content'], $filter['q']);
+
+        if(isset($filter['q']) && $filter['q'] && trim($filter['q']) != '' && $filter['type'] == 'doctor')
+        {
+            $ids = Doctor::leftJoin('doctors_skills',function($join){
+                $join->on('doctors_skills.doctor_id','=','doctors.id');
+            })->leftJoin('skills',function($rj){
+                $rj->on('doctors_skills.skill_id','=','skills.id');
+            })->where('doctors.firstname','like','%'.$filter['q'].'%')
+                ->orWhere('doctors.lastname','like','%'.$filter['q'].'%')
+                ->orWhere('doctors.patronymic','like','%'.$filter['q'].'%')
+                ->orWhere('skills.name','like','%'.$filter['q'].'%')
+                ->pluck('doctors.id')->toArray();
+
+            $medcenters->whereIn('id',($ids));
+        }
 
         $order = [$filter['sort'] ?? 'rate', $filter['order'] ?? 'desc'];
         if ($order[0] == 'rate')
