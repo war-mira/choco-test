@@ -28,7 +28,8 @@ class MedcenterController extends Controller
             'price_range',
             'rate_range',
             'page',
-            'district'
+            'district',
+            'child'
         ]);
         $filter = $query;
 
