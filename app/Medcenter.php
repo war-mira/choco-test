@@ -107,7 +107,14 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
         'avatar',
         'email',
         'seo_text',
-        'partner'
+        'partner',
+        'mond',
+        'tues',
+        'wedn',
+        'thur',
+        'frid',
+        'satu',
+        'sund'
     ];
 
     protected $attributes = [
