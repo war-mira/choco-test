@@ -243,53 +243,7 @@
     @include('medcenters.meds_near')
 
     <!-- begin section -->
-    <div class="section top-clear bottom-clear">
 
-        <!-- begin container -->
-        <div class="container">
-
-            <!-- begin breadcrumbs -->
-            <!--nav class="breadcrumbs">
-                <ul class="breadcrumbs__list">
-                    <li class="breadcrumbs__item"><a href="{{url('/')}}">Главная</a></li>
-                    <li class="breadcrumbs__item"><a
-                                href="{{route('medcenters.list')}}">Клиники</a>
-                    </li>
-                    <li class="breadcrumbs__item">{{$medcenter->name}}</li>
-                </ul>
-            </nav-->
-            <!-- end breadcrumbs -->
-
-            <!-- begin middle -->
-            <!--div class="middle mtop-20">
-
-
-                <div class="column column--right mbottom-20">
-                    <h1 class="page-title">{{$meta['h1']}}</h1>
-                    <h3 class="profiles__short">Многопрофильное медицинское учреждение</h3>
-                    <p>
-                        @component('components.rating-stars',['rating' => $medcenter['rate']])
-                        @endcomponent
-                        &nbsp;&nbsp;<a href="#comments">{{$medcenter->allComments()->count()}} отзывов</a>
-                    </p>
-                    <ul class="profiles__desc-list">
-                        <li><span>Врачей: </span>{{$medcenter->publicDoctors()->count()}}</li>
-                        <li><span>Специализаций: </span>{{$medcenter->skills()->count()}}</li>
-                    </ul>
-                    <?php if(!empty($medcenter['price'])){ ?>
-                    <p class="profiles__price">Стоимость приема: от <strong>{{$medcenter['price']}} тг</strong></p>
-                    <?php } ?>
-                    @component('components.ya-share')
-                    @endcomponent
-                </div>
-
-            </div-->
-            <!-- end middle -->
-
-        </div>
-        <!-- end container -->
-
-    </div>
     <!-- end section -->
 
     <!-- begin section -->
@@ -297,35 +251,7 @@
     <!-- end section -->
 
     <!-- begin section -->
-    <div class="section bg-shadow">
 
-        <!-- begin container -->
-        <div class="container">
-
-            <!-- begin middle -->
-            <div class="middle">
-
-                <!-- begin sidebar -->
-                <aside class="sidebar sidebar--left hidden-xs hidden-sm">
-                    <div class="sidebar__section">
-
-                        @component('elements.banners-slider',['position'=>\App\Banner::POSITION_EXT_B['id']])
-                        @endcomponent
-                    </div>
-                </aside>
-                <!-- end sidebar -->
-
-                <!-- begin column -->
-
-                <!-- end column -->
-
-            </div>
-            <!-- end middle -->
-
-        </div>
-        <!-- end container -->
-
-    </div>
     <!-- end section -->
 
     <!-- begin section -->
