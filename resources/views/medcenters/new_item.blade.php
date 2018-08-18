@@ -30,7 +30,7 @@
                         </div>
 
                         <div class="entity-thumb-img__bot-line">
-                            <a href="#" class="entity-thumb-img__reviews">{{$medcenter->publicComments()->count()}} отзывов</a>
+                            <a href="#" class="entity-thumb-img__reviews">{{$medcenter->allComments()->count()}} отзывов</a>
 
                             <inp-rate obj="medcenter" id="{{ $medcenter->id }}" type="likes" >
                                 <template slot="likes">{{ ($medcenter->likes ? $medcenter->likes : 0) }}</template>
@@ -170,19 +170,65 @@
                     </div>
                 </div>
                 <div id="tab-2" class="entity-about-article">
-                    @foreach ($medcenter->skills() as $skill)
-                        <div id="skill{{$skill->id}}" class="tab-pane fade @if($loop->first) in active @endif">
-                            @foreach($skill->publicDoctors()->with('medcenters')
-                            ->whereHas(
-                            'medcenters',function($query)use($medcenter)
-                            {
-                            $query->where('medcenters.id',$medcenter->id);
-                            })
-                            ->orderBy('lastname')->get() as $doctor)
-                                @include('model.doctor.prof_new')
-                            @endforeach
+                    <div class="entity-about__content entity-content">
+                        <div class="entity-content__main entity-content__main_single">
+
+                        <div class="doc-list-bar">
+                            <div class="doc-list-bar__line">
+                                <div class="doc-list-bar__filter">
+                                    <select name="spec" placeholder="Специальность врача" class="js-simple-select">
+                                        <option value="">Специальность врача</option>
+                                        <option value="spec-1">Хирург</option>
+                                        <option value="spec-2">Терапевт</option>
+                                        <option value="spec-3">Диетолог</option>
+                                    </select>
+                                </div>
+                                <div class="doc-list-bar__sort sort-line">
+                                    <div class="sort-line__item">
+                                        <span class="sort-line__heading">Сортировать по:</span>
+                                    </div>
+                                    <a href="#" class="sort-line__item sort-line-btn btn btn_theme_radio btn_theme_radio_active">
+                                        <span class="sort-line-btn__text">Рейтингу</span>
+                                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="#" class="sort-line__item sort-line-btn btn btn_theme_radio">
+                                        <span class="sort-line-btn__text">Стажу</span>
+                                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="#" class="sort-line__item sort-line-btn btn btn_theme_radio">
+                                        <span class="sort-line-btn__text">Отзывам</span>
+                                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="#" class="sort-line__item sort-line-btn btn btn_theme_radio">
+                                        <span class="sort-line-btn__text">Стоимости</span>
+                                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="#" class="sort-line__item sort-line-btn btn btn_theme_radio">
+                                        <span class="sort-line-btn__text">Посещаемости</span>
+                                        <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                    @endforeach
+                        <div class="doc-list">
+                            <div class="doc-list__list">
+
+                                            @foreach($medcenter->publicDoctors()->with('medcenters')
+                                            ->whereHas(
+                                            'medcenters',function($query)use($medcenter)
+                                            {
+                                            $query->where('medcenters.id',$medcenter->id);
+                                            })
+                                            ->orderBy('lastname')->get() as $doctor)
+                                    <div class="doc-list__item entity-line doc-line">
+                                                @include('model.doctor.prof_new')
+                                    </div>
+                                            @endforeach
+
+                            </div>
+                        </div>
+                    </div>
+                    </div>
                 </div>
                 <div id="tab-3" class="entity-about-article">
 
@@ -193,6 +239,8 @@
             </div>
         </div>
     </section>
+
+    @include('medcenters.meds_near')
 
     <!-- begin section -->
     <div class="section top-clear bottom-clear">
@@ -374,64 +422,6 @@
         <!-- end container -->
 
     </div>
-    <!-- end section -->
-
-    <!-- begin section -->
-    <div class="section bg-shadow">
-
-        <!-- begin container -->
-        <div class="container">
-
-            <h2 class="section-title">Врачи клиники</h2>
-
-            <!-- begin middle -->
-            <div class="middle mtop-40">
-
-                <!-- begin sidebar -->
-                <div class="sidebar sidebar--left">
-                    <ul class="nav nav-pills">
-                        @foreach ($medcenter->skills() as $item)
-                            <li @if($loop->first) class="active" @endif><a class="skill_item" data-toggle="pill"
-                                                                           id="{{$item->id}}"
-                                                                           href="#skill{{$item->id}}">{{$item->name}}</a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-                <div class="column column--right tab-content">
-                    <!-- begin profiles -->
-                    @foreach ($medcenter->skills() as $skill)
-                        <div id="skill{{$skill->id}}" class="tab-pane fade @if($loop->first) in active @endif">
-                            @foreach($skill->publicDoctors()->with('medcenters')
-                            ->whereHas(
-                            'medcenters',function($query)use($medcenter)
-                            {
-                            $query->where('medcenters.id',$medcenter->id);
-                            })
-                            ->orderBy('lastname')->get() as $doctor)
-                                @include('model.doctor.profile-short')
-                            @endforeach
-                        </div>
-                    @endforeach
-                <!-- end profiles -->
-                </div>
-                <!-- end sidebar -->
-
-                <!-- begin column -->
-
-                <!-- end column -->
-
-            </div>
-            <!-- end middle -->
-
-        </div>
-        <!-- end container -->
-
-    </div>
-    <!-- end section -->
-
-    <!-- begin section -->
-
     <!-- end section -->
 
     <!-- begin section -->

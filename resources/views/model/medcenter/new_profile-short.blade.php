@@ -14,7 +14,7 @@
             @endcomponent
         </div>
         <div class="entity-thumb-img__bot-line">
-            <a href="#" class="entity-thumb-img__reviews">{{$medcenter->publicComments()->count()}} отзывов</a>
+            <a href="#" class="entity-thumb-img__reviews">{{$medcenter->allComments()->count()}} отзывов</a>
 
             <inp-rate obj="medcenter" id="{{ $medcenter->id }}" type="likes" >
                 <template slot="likes">{{ ($medcenter->likes ? $medcenter->likes : 0) }}</template>
