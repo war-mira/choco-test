@@ -166,6 +166,7 @@ class MedcenterController extends Controller
         }
 
         $near_meds = Medcenter::query()->whereStatus(1)
+            ->where('id','<>',$medcenter->id)
             ->where('medcenters.city_id', $medcenter->city->id)->limit(9)->get();
 
         $doctors = $medcenter->doctors()->where('doctors.status', 1)->get();
