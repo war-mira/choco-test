@@ -249,7 +249,7 @@
         <div class="container">
 
             <!-- begin breadcrumbs -->
-            <nav class="breadcrumbs">
+            <!--nav class="breadcrumbs">
                 <ul class="breadcrumbs__list">
                     <li class="breadcrumbs__item"><a href="{{url('/')}}">Главная</a></li>
                     <li class="breadcrumbs__item"><a
@@ -257,11 +257,11 @@
                     </li>
                     <li class="breadcrumbs__item">{{$medcenter->name}}</li>
                 </ul>
-            </nav>
+            </nav-->
             <!-- end breadcrumbs -->
 
             <!-- begin middle -->
-            <div class="middle mtop-20">
+            <!--div class="middle mtop-20">
 
 
                 <div class="column column--right mbottom-20">
@@ -283,7 +283,7 @@
                     @endcomponent
                 </div>
 
-            </div>
+            </div-->
             <!-- end middle -->
 
         </div>

@@ -165,6 +165,9 @@ class MedcenterController extends Controller
             return redirect()->route('medcenter.item', ['medcenter' => $medcenter->alias, 'city' => $medcenter->city->alias]);
         }
 
+        $near_meds = Medcenter::query()->whereStatus(1)
+            ->where('medcenters.city_id', $medcenter->city->id)->limit(9)->get();
+
         $doctors = $medcenter->doctors()->where('doctors.status', 1)->get();
         $comments = $medcenter->allComments()->where('status', 1)->orderByDesc('created_at')->limit(5)->get();
 
@@ -174,6 +177,7 @@ class MedcenterController extends Controller
             ->with('meta', $meta)
             ->with('medcenter', $medcenter)
             ->with('city', $medcenter->city)
+            ->with('near',$near_meds)
             ->with('doctors', $doctors->keyBy('id'))
             ->with('comments', $comments);
     }

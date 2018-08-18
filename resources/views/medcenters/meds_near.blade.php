@@ -3,5 +3,6 @@
         <div class="clinic-slider__heading">
             Похожие клиники
         </div>
+        @include('medcenters.near')
     </div>
 </section>
