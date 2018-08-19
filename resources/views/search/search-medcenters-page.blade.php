@@ -38,7 +38,11 @@
         </form>
     </div>
     <script>
-        $('.search-input-group select').selectpicker();
+        if($('.search-input-group select').length)
+        {
+            $('.search-input-group select').selectpicker();
+        }
+
         $(function () {
 
             $('#filtersGroup .btn-radio').click(

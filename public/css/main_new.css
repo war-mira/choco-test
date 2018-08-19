@@ -794,7 +794,7 @@ img {
     text-align: center;
   }
 
-    .entity-thumb-img__img_shadow,.search-result .parent_cont {
+    .entity-thumb-img__img_shadow,.search-result .parent_cont,.doc-line .parent_cont {
       -webkit-box-shadow: 0px 5px 18px 0px rgba(0, 0, 0, 0.06);
               box-shadow: 0px 5px 18px 0px rgba(0, 0, 0, 0.06); }
   .entity-thumb-img__add-favorite {

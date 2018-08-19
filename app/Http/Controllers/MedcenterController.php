@@ -9,6 +9,7 @@ use App\Helpers\SearchHelper;
 use App\Http\Requests\Doctor\DoctorFilters;
 use App\Medcenter;
 use App\Helpers\SeoMetadataHelper;
+use App\Model\ServiceItem;
 use App\PageSeo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -167,9 +168,14 @@ class MedcenterController extends Controller
 
         $near_meds = Medcenter::query()->whereStatus(1)
             ->where('id','<>',$medcenter->id)
-            ->where('medcenters.city_id', $medcenter->city->id)->limit(9)->get();
+            ->where('medcenters.city_id', $medcenter->city->id)
+            ->limit(9)
+            ->get();
 
         $doctors = $medcenter->doctors()->where('doctors.status', 1)->get();
+
+        $skills = ServiceItem::where('vendor_type','=','Doctor')->whereIn('vendor_id',$doctors->pluck('id')->toArray());
+
         $comments = $medcenter->allComments()->where('status', 1)->orderByDesc('created_at')->limit(5)->get();
 
         $meta = SeoMetadataHelper::getMeta($medcenter, $city);
@@ -179,6 +185,9 @@ class MedcenterController extends Controller
             ->with('medcenter', $medcenter)
             ->with('city', $medcenter->city)
             ->with('near',$near_meds)
+            ->with('visible',5)
+            ->with('skils',$skills)
+            ->with('ost',(($medcenter->doctors()->where('doctors.status', 1)->count() - 5) > 0) ? $medcenter->doctors()->where('doctors.status', 1)->count() - 5 : 0 )
             ->with('doctors', $doctors->keyBy('id'))
             ->with('comments', $comments);
     }
@@ -203,5 +212,38 @@ class MedcenterController extends Controller
         return compact('view', 'offset', 'left');
     }
 
+    public function loadDoctors($city, $medcenter, Request $request)
+    {
+        $offset = $request->query('offset', 0);
+        $limit = $request->query('limit', 10);
+        $docs = $medcenter->doctors()->where('doctors.status', 1);
 
+        if($request->query('spec'))
+        {
+            $skill = $request->query('spec');
+            $docs = $docs->whereHas('skills', function ($skillsQuery) use ($skill) {
+                $skillsQuery->where('skills.id', $skill);
+            });
+        }
+
+        if($request->query('comments_count'))
+        {
+            $docs->withCount('publicComments')->orderBy('public_comments_count', $request->query('orderm', 'DESC'));
+        }
+        else
+        {
+            $docs->orderBy($request->query('fname', 'rate'),$request->query('orderm', 'DESC'));
+        }
+
+        $total = $docs->count();
+        $docs_more = $docs->offset($offset)
+            ->limit($limit)
+            ->get();
+
+        $view = view('model.doctor.ajax-list', compact('docs_more'))->render();
+        $offset = $offset + $limit;
+        $left = $total - $offset;
+        $left = $left < 0 ? 0 : $left;
+        return compact('view', 'offset', 'left');
+    }
 }

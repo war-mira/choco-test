@@ -158,7 +158,7 @@
                                         <a class="skill_item entity-profiles__item" data-toggle="pill"
                                                                                    id="{{$item->id}}"
                                                                                    href="#skill{{$item->id}}">{{$item->name}}</a>
-                                     @if($loop->iteration%3 == 0) </div> @endif
+                                     @if($loop->iteration%3 == 0 || $loop->last) </div> @endif
                                 @endforeach
                             </div>
                         </div>
@@ -174,36 +174,40 @@
                         <div class="entity-content__main entity-content__main_single">
 
                         <div class="doc-list-bar">
-                            <div class="doc-list-bar__line">
+                            <div class="doc-list-bar__line" id="medoc_filter" data-action="{{route('medcenter.doctors',['medcenter'=>$medcenter->alias])}}">
+                                <input type="hidden" name="orderm" value="DESC" />
+                                <input type="hidden" name="fname" value="rate" />
                                 <div class="doc-list-bar__filter">
                                     <select name="spec" placeholder="Специальность врача" class="js-simple-select">
                                         <option value="">Специальность врача</option>
-                                        <option value="spec-1">Хирург</option>
-                                        <option value="spec-2">Терапевт</option>
-                                        <option value="spec-3">Диетолог</option>
+                                        @if($medcenter->skills())
+                                            @foreach($medcenter->skills() as $skill)
+                                                <option value="{{$skill->id}}">{{$skill->name}}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
                                 <div class="doc-list-bar__sort sort-line">
                                     <div class="sort-line__item">
                                         <span class="sort-line__heading">Сортировать по:</span>
                                     </div>
-                                    <a href="#" class="sort-line__item sort-line-btn btn btn_theme_radio btn_theme_radio_active">
+                                    <a href="#" data-name="rate" class="sort-line__item sort-line-btn btn btn_theme_radio btn_theme_radio_active">
                                         <span class="sort-line-btn__text">Рейтингу</span>
                                         <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                     </a>
-                                    <a href="#" class="sort-line__item sort-line-btn btn btn_theme_radio">
+                                    <a href="#" data-name="works_since" class="sort-line__item sort-line-btn btn btn_theme_radio">
                                         <span class="sort-line-btn__text">Стажу</span>
                                         <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                     </a>
-                                    <a href="#" class="sort-line__item sort-line-btn btn btn_theme_radio">
+                                    <a href="#" data-name="comments_count" class="sort-line__item sort-line-btn btn btn_theme_radio">
                                         <span class="sort-line-btn__text">Отзывам</span>
                                         <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                     </a>
-                                    <a href="#" class="sort-line__item sort-line-btn btn btn_theme_radio">
+                                    <a href="#" data-name="price" class="sort-line__item sort-line-btn btn btn_theme_radio">
                                         <span class="sort-line-btn__text">Стоимости</span>
                                         <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                     </a>
-                                    <a href="#" class="sort-line__item sort-line-btn btn btn_theme_radio">
+                                    <a href="#" data-name="orders_count" class="sort-line__item sort-line-btn btn btn_theme_radio">
                                         <span class="sort-line-btn__text">Посещаемости</span>
                                         <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                     </a>
@@ -219,19 +223,49 @@
                                             {
                                             $query->where('medcenters.id',$medcenter->id);
                                             })
-                                            ->orderBy('lastname')->get() as $doctor)
-                                    <div class="doc-list__item entity-line doc-line">
-                                                @include('model.doctor.prof_new')
-                                    </div>
+                                            ->orderBy('lastname')->get()->slice(0,$visible) as $doctor)
+                                                <div class="doc-list__item entity-line doc-line">
+                                                    @include('model.doctor.prof_new')
+                                                </div>
                                             @endforeach
 
+                            </div>
+                            <div class="hidden_more">
+
+                            </div>
+
+                            <div class="doc-list__more">
+                                <a href="#" data-url="{{route('medcenter.doctors',['city'=>$medcenter->city->alias,'medcenter'=>$medcenter->alias])}}" class="btn btn_theme_more">Еще
+                                    <span id="docsLeftText">{{$ost}}</span> врачей</a>
                             </div>
                         </div>
                     </div>
                     </div>
                 </div>
                 <div id="tab-3" class="entity-about-article">
-
+                    <div class="entity-content__main">
+                        <div class="">
+                            <div class="entity-about-article__service-list entity-service-list">
+                                @foreach($skils->get() as $tr)
+                                    <div class="entity-service-list__item service-item">
+                                        <div class="service-item__name">
+                                            <div class="service-item__name-text">{{$tr['name']}}</div>
+                                            <div class="service-item__name-descr">(органы мошонки, предстательная железа, мочевой пузырь)</div>
+                                        </div>
+                                        <div class="service-item__price">
+                                            <div class="service-item__price-val">5000 тг</div>
+                                            <a href="#" class="service-item__price-book btn btn_theme_usual">Записаться онлайн</a>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                    <div class="entity-content__aside">
+                        <div class="entity-content__banner">
+                            <img src="{{asset('img/banner.jpg')}}" alt="">
+                        </div>
+                    </div>
                 </div>
                 <div id="tab-4" class="entity-about-article">
 
@@ -285,6 +319,52 @@
     @endif
 
     <script type="text/javascript">
+        $(function () {
+            var offset = {{$visible}};
+            var limit = 10;
+            $('.doc-list__more a').click(function (e) {
+                e.preventDefault;
+                var source = $(this).data('url');
+                $.get(source, {offset: offset}, function (medcenters) {
+                    $('.hidden_more').append($(medcenters.view));
+                    offset = medcenters.offset;
+                    $('#docsLeftText').text(medcenters.left);
+                    if (medcenters.left <= 0)
+                        $('.doc-list__more .btn_theme_more').prop('disabled', true);
+                });
+
+            });
+
+            $('#medoc_filter select').change(function (e) {
+                e.preventDefault;
+                var data = $('#medoc_filter').find('select, input').serializeArray();
+                $.get($('#medoc_filter').data('action'), data, function (docs) {
+                    $('.doc-list__list').html(docs.view);
+                });
+            });
+
+            $('#medoc_filter a.sort-line__item').click(function (e) {
+                e.preventDefault;
+                e.stopPropagation;
+                $(this).find('i').removeClass('fa-chevron-down');
+                var cat = $(this).is('.btn_theme_radio_active'), asdes = $('input[name="orderm"]').val(), order = 'DESC';
+                order = ((cat) ? (asdes == 'DESC' ? 'ASC' : 'DESC') : (asdes == 'DESC' ? 'DESC' : 'ASC'));
+                var upd = ((order == 'DESC') ? 'fa-chevron-down' : 'fa-chevron-up');
+                $(this).find('i').addClass(upd);
+                $('input[name="orderm"]').val(order);
+                $(this).parent().find('a').removeClass('btn_theme_radio_active');
+                $(this).addClass('btn_theme_radio_active');
+                $('#medoc_filter').find('input[name="fname"]').val($(this).data('name'));
+
+
+
+                var data = $('#medoc_filter').find('select, input').serializeArray();
+                $.get($('#medoc_filter').data('action'), data, function (docs) {
+                    $('.doc-list__list').html(docs.view);
+                });
+                return false;
+            });
+        });
 
         ga(function (tracker) {
             var cid = tracker.get('clientId');
