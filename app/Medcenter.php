@@ -200,15 +200,18 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
 //        }
             $city = City::find($this->city_id);
             $address = $city->name.' '.$this->sms_address;
-            $response = Curl::to('https://geocode-maps.yandex.ru/1.x/?format=json&geocode='.$address.'')
-                ->get();
-            $response = json_decode($response, true);
-            $firstObject = array_shift($response['response']['GeoObjectCollection']['featureMember']);
-            $points = $firstObject['GeoObject']['Point']['pos'];
-            $points = str_replace(' ', ', ', $points);
-            $points = implode(', ', array_reverse(explode(', ', $points)));;
 
-            return $points;
+        $client = new \GuzzleHttp\Client();
+        $response = $client->get('https://geocode-maps.yandex.ru/1.x/?format=json&geocode='.$address.'');
+        $response = $response->getBody();
+        $response = $response->getContents();
+        $response = json_decode($response, true);
+        $firstObject = array_shift($response['response']['GeoObjectCollection']['featureMember']);
+        $points = $firstObject['GeoObject']['Point']['pos'];
+        $points = str_replace(' ', ', ', $points);
+        $points = implode(', ', array_reverse(explode(', ', $points)));;
+
+        return $points;
     }
 
     public function orders()
