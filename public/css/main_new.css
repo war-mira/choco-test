@@ -4150,8 +4150,9 @@ box-shadow: 0px 1px 4px #e7e7e7; margin-bottom: 30px;}
 .article-content__main h2{
   font-family: "ProximaNova-Semibold" !important;
 }
-.ck-editor{
 
+.mobile-datetime{
+  display: none;
 }
 @media (max-width: 1199.98px) {
   .container {
@@ -4276,6 +4277,12 @@ box-shadow: 0px 1px 4px #e7e7e7; margin-bottom: 30px;}
     bottom: -3px; } }
 
 @media (max-width: 767.98px) {
+  .desktop-datetime{
+    display: none;
+  }
+  .mobile-datetime{
+    display: block;
+  }
   .doc-letter-search__nav{
     width: 100%;
     display: block;

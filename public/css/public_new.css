@@ -484,7 +484,7 @@
 
 .question__form{
     padding-top: 40px;
-    display: none;
+    /*display: none;*/
 }
 
 .question__form .tips {
