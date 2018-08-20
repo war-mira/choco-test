@@ -45,9 +45,11 @@ class FeedbackController extends Controller
     public function index()
     {
 
-        return User::find(12884)->doctor
-            ->comments()->with('replies')->orderBy('id','desc')->paginate(20)
-            ;
+        return
+//            Auth::user()
+            User::find(12884)
+                ->doctor
+                ->comments()->with('replies')->orderBy('id','desc')->paginate(20);
 //        return Auth::user()->doctor->comments;
     }
 }
