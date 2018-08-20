@@ -335,37 +335,60 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             res: this.$resource('/api/my/reviews'),
-            comments: []
-
+            comments: [],
+            page_current: 1,
+            page_total: 1,
+            total: 0,
+            responce: ''
         };
     },
 
     mounted: function mounted() {
         this.load();
     },
+    watch: {
+        page_current: function page_current(value) {
+            this.load();
+        }
+    },
     methods: {
         load: function load() {
             var _this = this;
 
-            this.res.get().then(function (response) {
+            this.res.get({ page: this.page_current }).then(function (response) {
                 _this.comments = response.data.data;
+                _this.page_total = response.data.last_page;
+                _this.total = response.data.total;
+
+                window.scrollTo(0, 0);
             }, function (response) {});
         },
         create: function create() {
-            var _this2 = this;
-
-            this.res.save(this.group).then(function (response) {
-                _this2.groups.push(response.data);
-                _this2.group = {
-                    key: 'system',
-                    name: '',
-                    description: ''
-                };
+            this.res.save(this.responce).then(function (response) {
+                // this.groups.push(response.data)
+                // this.group = {
+                //     key:'system',
+                //     name:'',
+                //     description:''
+                // };
                 toastr.success('Сохранено');
             }, function (error) {
                 console.log(error);
@@ -425,7 +448,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         css: {
             type: String,
-            default: 'btn red-btn'
+            default: ''
         }
     }
 });
@@ -452,25 +475,48 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            val: null
+            val: {
+                'rate': 0,
+                'karma': 0,
+                'likes': 0,
+                'dislikes': 0
+            },
+            updated: false
         };
     },
 
     computed: {
         path: function path() {
-            return '/api/' + this.obj + '/' + this.id + '/vote';
+            return '/api/v2/' + this.obj + '/' + this.id + '/vote';
         }
     },
     mounted: function mounted() {
         socket.emit('join', this.obj + ':' + this.id);
         socket.on('NewVoteEvent', function (msg) {
-            console.log(msg);
-            this.val = msg.vote;
+            // toastr.warning('vote');
+            if (msg.obj == this.obj && msg.obj_id == this.id) {
+                console.log(msg);
+                this.val = msg.values;
+                this.updated = true;
+            }
         }.bind(this));
     },
     props: ['obj', 'id', 'type'],
@@ -479,7 +525,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         sent: function sent(vote) {
-            this.val = vote.karma;
+            this.val = vote;
+            this.updated = true;
         }
     }
 });
@@ -3699,7 +3746,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.no-padding{\n    padding: 0;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -3714,7 +3761,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n.pagination__item{\n    cursor: pointer;\n}\n", ""]);
 
 // exports
 
@@ -43519,38 +43566,78 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "span",
+    "div",
+    { staticClass: "entity-thumb-img__thumb-control thumb-control" },
     [
       _c(
-        "btn",
-        {
-          attrs: {
-            css: "no-padding btn btn-link",
-            href: _vm.path,
-            data: { mark: 1 }
-          },
-          on: { ready: _vm.sent }
-        },
-        [_c("i", { staticClass: "fa fa-angle-up" })]
+        "span",
+        { staticClass: "thumb-control__item", attrs: { "data-type": "1" } },
+        [
+          _c(
+            "span",
+            { staticClass: "thumb-control__val" },
+            [
+              !_vm.updated ? _vm._t("likes") : _vm._e(),
+              _vm.updated
+                ? _c("span", [_vm._v(_vm._s(_vm.val.likes))])
+                : _vm._e()
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "btn",
+            {
+              attrs: { css: "no-padding", href: _vm.path, data: { mark: 1 } },
+              on: { ready: _vm.sent }
+            },
+            [
+              _c("i", {
+                staticClass: "fa fa-thumbs-o-up",
+                attrs: { "aria-hidden": "true" }
+              })
+            ]
+          )
+        ],
+        1
       ),
       _vm._v(" "),
-      !_vm.val ? _vm._t("default") : _vm._e(),
-      _vm.val ? _c("span", [_vm._v(_vm._s(_vm.val))]) : _vm._e(),
-      _vm._v(" "),
       _c(
-        "btn",
+        "span",
         {
-          attrs: {
-            css: "no-padding btn btn-link",
-            href: _vm.path,
-            data: { mark: -1 }
-          },
-          on: { ready: _vm.sent }
+          staticClass: "thumb-control__item down",
+          attrs: { "data-type": "2" }
         },
-        [_c("i", { staticClass: "fa fa-angle-down" })]
+        [
+          _c(
+            "span",
+            { staticClass: "thumb-control__val" },
+            [
+              !_vm.updated ? _vm._t("dislikes") : _vm._e(),
+              _vm.updated
+                ? _c("span", [_vm._v(_vm._s(_vm.val.dislikes))])
+                : _vm._e()
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "btn",
+            {
+              attrs: { css: "no-padding", href: _vm.path, data: { mark: -1 } },
+              on: { ready: _vm.sent }
+            },
+            [
+              _c("i", {
+                staticClass: "fa fa-thumbs-o-down",
+                attrs: { "aria-hidden": "true" }
+              })
+            ]
+          )
+        ],
+        1
       )
-    ],
-    2
+    ]
   )
 }
 var staticRenderFns = []
@@ -43572,119 +43659,141 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "reviews-list" },
-    [
-      _vm.comments.length == 0
-        ? _c("div", { staticClass: "reviews-list__message" }, [
-            _c("div", { staticClass: "account-data-item__val" }, [
-              _vm._v("Здесь пока нет вопросов =(")
-            ])
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm._l(_vm.comments, function(comment) {
-        return _c(
-          "div",
-          { staticClass: "reviews-list__item reviews-list-item" },
-          [
-            _c("div", { staticClass: "reviews-list-item__inner" }, [
-              _c("div", { staticClass: "reviews-list-item__line" }, [
-                _c("div", { staticClass: "reviews-list-item__data-wr" }, [
-                  _c("div", { staticClass: "reviews-list-item__data" }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "reviews-list-item__data-item account-data-item"
-                      },
-                      [
-                        _c("div", { staticClass: "account-data-item__name" }, [
-                          _vm._v("Текст отзыва")
-                        ]),
+  return _c("div", { staticClass: "account-line__main account-content" }, [
+    _c("div", { staticClass: "account-content__head" }, [
+      _c("div", { staticClass: "account-content__page-name" }, [
+        _vm._v("Отзывы (" + _vm._s(_vm.total) + ")")
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "account-content__body" }, [
+      _c(
+        "div",
+        { staticClass: "reviews-list" },
+        [
+          _vm.comments.length == 0
+            ? _c("div", { staticClass: "reviews-list__message" }, [
+                _c("div", { staticClass: "account-data-item__val" }, [
+                  _vm._v("Здесь пока нет вопросов =(")
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm._l(_vm.comments, function(comment) {
+            return _c(
+              "div",
+              { staticClass: "reviews-list__item reviews-list-item" },
+              [
+                _c("div", { staticClass: "reviews-list-item__inner" }, [
+                  _c("div", { staticClass: "reviews-list-item__line" }, [
+                    _c("div", { staticClass: "reviews-list-item__data-wr" }, [
+                      _c("div", { staticClass: "reviews-list-item__data" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "reviews-list-item__data-item account-data-item"
+                          },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "account-data-item__name" },
+                              [_vm._v("Текст отзыва")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "account-data-item__val" },
+                              [_vm._v(_vm._s(comment.text))]
+                            )
+                          ]
+                        )
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "reviews-list-item__line" }, [
+                    _c("div", { staticClass: "reviews-list-item__data-wr" }, [
+                      _c("div", { staticClass: "reviews-list-item__data" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "reviews-list-item__data-item account-data-item"
+                          },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "account-data-item__name" },
+                              [_vm._v("Автор")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "account-data-item__val" },
+                              [_vm._v(_vm._s(comment.user_name))]
+                            )
+                          ]
+                        ),
                         _vm._v(" "),
-                        _c("div", { staticClass: "account-data-item__val" }, [
-                          _vm._v(_vm._s(comment.text))
-                        ])
-                      ]
-                    )
+                        _vm._m(0, true),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "reviews-list-item__data-item account-data-item"
+                          },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "account-data-item__name" },
+                              [_vm._v("Дата")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "account-data-item__val" },
+                              [_vm._v(_vm._s(comment.created_at))]
+                            )
+                          ]
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(1, true)
                   ])
                 ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "reviews-list-item__line" }, [
-                _c("div", { staticClass: "reviews-list-item__data-wr" }, [
-                  _c("div", { staticClass: "reviews-list-item__data" }, [
-                    _vm._m(0, true),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "reviews-list-item__data-item account-data-item"
-                      },
-                      [
-                        _c("div", { staticClass: "account-data-item__name" }, [
-                          _vm._v("Автор")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "account-data-item__val" }, [
-                          _vm._v(_vm._s(comment.user_name))
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _vm._m(1, true),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "reviews-list-item__data-item account-data-item"
-                      },
-                      [
-                        _c("div", { staticClass: "account-data-item__name" }, [
-                          _vm._v("Дата")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "account-data-item__val" }, [
-                          _vm._v(_vm._s(comment.created_at))
-                        ])
-                      ]
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _vm._m(2, true)
-              ])
-            ])
-          ]
-        )
-      }),
-      _vm._v(" "),
-      _vm._m(3)
-    ],
-    2
-  )
+              ]
+            )
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "reviews-list__pagination pagination" },
+            _vm._l(_vm.page_total, function(page) {
+              return _c(
+                "span",
+                {
+                  staticClass: "pagination__item",
+                  class: { pagination__item_active: page == _vm.page_current },
+                  on: {
+                    click: function($event) {
+                      _vm.page_current = page
+                    }
+                  }
+                },
+                [_vm._v(_vm._s(page))]
+              )
+            })
+          )
+        ],
+        2
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "reviews-list-item__data-item account-data-item" },
-      [
-        _c("div", { staticClass: "account-data-item__name" }, [
-          _vm._v("Прием")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "account-data-item__val" }, [_vm._v("#1435")])
-      ]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -43739,36 +43848,6 @@ var staticRenderFns = [
         _vm._v("Подробнее")
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "reviews-list__pagination pagination" }, [
-      _c("span", { staticClass: "pagination__item pagination__item_active" }, [
-        _vm._v("1")
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "pagination__item", attrs: { href: "#" } }, [
-        _vm._v("2")
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "pagination__item", attrs: { href: "#" } }, [
-        _vm._v("3")
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "pagination__item", attrs: { href: "#" } }, [
-        _vm._v("4")
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "pagination__item", attrs: { href: "#" } }, [
-        _vm._v("5")
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "pagination__item", attrs: { href: "#" } }, [
-        _vm._v("Последняя")
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -43790,9 +43869,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "button",
+    "span",
     {
       class: _vm.css,
+      staticStyle: { cursor: "pointer" },
       on: {
         click: function($event) {
           $event.preventDefault()
@@ -57538,10 +57618,18 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/sass/app.scss":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__("./resources/assets/js/app.js");
+__webpack_require__("./resources/assets/js/app.js");
+module.exports = __webpack_require__("./resources/assets/sass/app.scss");
 
 
 /***/ }),

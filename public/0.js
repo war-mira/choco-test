@@ -190,7 +190,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.session-app{\n    display: flex;\n    width: 100%;\n    height: 100%;\n}\n.active-sessions{\n    border-right: 1px solid #888;\n}\n.session-viewer{\n    display: flex;\n    flex-direction: column;\n    flex-grow: 1;\n}\n.session-viewer .details{\n    flex-grow: 1;\n}\n.session-info{\n    border-bottom: 1px solid #888;\n    display: flex;\n}\n.socket-item{\n    cursor: pointer;\n}\n", ""]);
+exports.push([module.i, "\n.session-app{\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    width: 100%;\n    height: 100%;\n}\n.active-sessions{\n    border-right: 1px solid #888;\n}\n.session-viewer{\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-flex: 1;\n        -ms-flex-positive: 1;\n            flex-grow: 1;\n}\n.session-viewer .details{\n    -webkit-box-flex: 1;\n        -ms-flex-positive: 1;\n            flex-grow: 1;\n}\n.session-info{\n    border-bottom: 1px solid #888;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n}\n.socket-item{\n    cursor: pointer;\n}\n", ""]);
 
 // exports
 

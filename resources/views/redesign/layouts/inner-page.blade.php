@@ -11,6 +11,7 @@
 
     <title>Главная - iDoctor</title>
     <!-- <link rel="shortcut icon" type="image/png" href="img/favicon.png"> -->
+    <link rel="stylesheet" href="{{URL::asset("css/app.css")}}">
     <link rel="stylesheet" href="{{URL::asset("css/normalize.css")}}">
     <link rel="stylesheet" href="{{URL::asset("css/slick.css")}}">
     <link rel="stylesheet" href="{{URL::asset("css/lightbox.min.css")}}">
@@ -33,7 +34,7 @@
     <script src="{{URL::asset("js/scripts.js")}}"></script>
 </head>
 <body>
-<div class="main-wrap">
+<div class="main-wrap" id="app">
 
     @include('redesign.partials.header')
     <section class="index-intro pattern-bg library">

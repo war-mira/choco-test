@@ -1,34 +1,58 @@
 <template>
-    <span>
-        <!--<a href="#" class="fa fa-angle-up"></a>-->
-        <btn css="no-padding btn btn-link" :href="path" :data="{mark:1}" @ready="sent"><i class="fa fa-angle-up"></i></btn>
-        <slot v-if="!val"></slot><span v-if="val">{{ val }}</span>
-        <btn css="no-padding btn btn-link" :href="path" :data="{mark:-1}" @ready="sent"><i class="fa fa-angle-down"></i></btn>
-    </span>
+
+    <div class="entity-thumb-img__thumb-control thumb-control">
+        <span class="thumb-control__item" data-type="1">
+            <span class="thumb-control__val">
+                <slot name="likes" v-if="!updated"></slot><span v-if="updated">{{ val.likes }}</span>
+            </span>
+            <btn css="no-padding" :href="path" :data="{mark:1}" @ready="sent"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></btn>
+        </span>
+
+
+
+
+        <span class="thumb-control__item down" data-type="2">
+            <span class="thumb-control__val">
+                <slot name="dislikes" v-if="!updated"></slot><span v-if="updated">{{ val.dislikes }}</span>
+            </span>
+            <btn css="no-padding" :href="path" :data="{mark:-1}" @ready="sent"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></btn>
+        </span>
+
+    </div>
+
 </template>
 <style>
-    .no-padding{
-        padding: 0;
-    }
+
 </style>
 <script>
     import btn from './btn_ajax.vue'
     export default{
         data(){
             return{
-                val:null,
+                val:{
+                    'rate':0,
+                    'karma':0,
+                    'likes':0,
+                    'dislikes':0,
+                },
+                updated:false
             }
         },
         computed:{
             path:function () {
-                return `/api/${this.obj}/${this.id}/vote`
+                return `/api/v2/${this.obj}/${this.id}/vote`
             }
         },
         mounted:function(){
             socket.emit('join',`${this.obj}:${this.id}`);
             socket.on('NewVoteEvent',function (msg) {
-                console.log(msg);
-                this.val = msg.vote;
+                // toastr.warning('vote');
+                if(msg.obj == this.obj && msg.obj_id == this.id){
+                    console.log(msg);
+                    this.val = msg.values;
+                    this.updated = true;
+                }
+
             }.bind(this))
         },
         props:['obj','id','type'],
@@ -37,7 +61,8 @@
         },
         methods:{
             sent:function (vote) {
-                this.val = vote.karma;
+                this.val = vote;
+                this.updated = true;
             },
         },
     }

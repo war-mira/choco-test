@@ -7,6 +7,7 @@ use App\Helpers\SessionContext;
 use App\Interfaces\IReferenceable;
 use App\Interfaces\ISeoMetadata;
 use App\Model\Location\District;
+use App\Model\ServiceItem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Ixudra\Curl\Facades\Curl;
@@ -107,7 +108,14 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
         'avatar',
         'email',
         'seo_text',
-        'partner'
+        'partner',
+        'mond',
+        'tues',
+        'wedn',
+        'thur',
+        'frid',
+        'satu',
+        'sund'
     ];
 
     protected $attributes = [
