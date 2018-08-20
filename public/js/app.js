@@ -348,16 +348,80 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            res: this.$resource('/api/my/reviews'),
+            res: this.$resource('/api/my/reviews{/id}'),
             comments: [],
             page_current: 1,
             page_total: 1,
             total: 0,
-            responce: ''
+            answer_review: null,
+            answer: ''
         };
     },
 
@@ -381,19 +445,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 window.scrollTo(0, 0);
             }, function (response) {});
         },
-        create: function create() {
-            this.res.save(this.responce).then(function (response) {
-                // this.groups.push(response.data)
-                // this.group = {
-                //     key:'system',
-                //     name:'',
-                //     description:''
-                // };
+        reply: function reply() {
+            var _this2 = this;
+
+            this.res.update({ id: this.answer_review.id }, {
+                reply: this.answer
+            }).then(function (response) {
+                _this2.answer_review.replies.push(response.data);
+                _this2.answer = '';
+                _this2.toggleReply(_this2.answer_review);
                 toastr.success('Сохранено');
             }, function (error) {
                 console.log(error);
             });
+        },
+        toggleReply: function toggleReply(elem) {
+            this.answer_review = this.isActive(elem) ? null : elem;
+        },
+        isActive: function isActive(elem) {
+            return this.answer_review && this.answer_review.id == elem.id;
         }
+
     }
 });
 
@@ -3761,7 +3833,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.pagination__item{\n    cursor: pointer;\n}\n", ""]);
+exports.push([module.i, "\n.pagination__item{\n    cursor: pointer;\n}\n.slide-fade-enter-active {\n    -webkit-transition: all .3s ease;\n    transition: all .3s ease;\n}\n.slide-fade-leave-active {\n    -webkit-transition: all .3s ease;\n    transition: all .3s ease;\n}\n.slide-fade-enter, .slide-fade-leave-to\n    /* .slide-fade-leave-active до версии 2.1.8 */ {\n    -webkit-transform: translateY(40px);\n            transform: translateY(40px);\n    opacity: 0;\n}\n.btn{\n    background: #00A8FF;\n    -webkit-transition: all .3s ease;\n    transition: all .3s ease;\n}\n.btn-cancel{\n    background:#ffc107;\n    -webkit-transition: all .3s ease;\n    transition: all .3s ease;\n}\n", ""]);
 
 // exports
 
@@ -43682,33 +43754,83 @@ var render = function() {
           _vm._l(_vm.comments, function(comment) {
             return _c(
               "div",
-              { staticClass: "reviews-list__item reviews-list-item" },
+              {
+                staticClass: "reviews-list__item reviews-list-item",
+                class: { blur: _vm.answer_review && !_vm.isActive(comment) },
+                attrs: { id: "review-" + comment.id }
+              },
               [
                 _c("div", { staticClass: "reviews-list-item__inner" }, [
                   _c("div", { staticClass: "reviews-list-item__line" }, [
                     _c("div", { staticClass: "reviews-list-item__data-wr" }, [
-                      _c("div", { staticClass: "reviews-list-item__data" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "reviews-list-item__data-item account-data-item"
-                          },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "account-data-item__name" },
-                              [_vm._v("Текст отзыва")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "account-data-item__val" },
-                              [_vm._v(_vm._s(comment.text))]
-                            )
-                          ]
-                        )
-                      ])
+                      _c(
+                        "div",
+                        {
+                          staticClass: "reviews-list-item__data",
+                          staticStyle: { "flex-direction": "column" }
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "reviews-list-item__data-item account-data-item"
+                            },
+                            [
+                              _c(
+                                "div",
+                                { staticClass: "account-data-item__name" },
+                                [_vm._v("Текст отзыва")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "account-data-item__val" },
+                                [_vm._v(_vm._s(comment.text))]
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          comment.replies.length > 0
+                            ? _c("div", [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "reviews-list-item__data-item account-data-item"
+                                  },
+                                  [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "account-data-item__name"
+                                      },
+                                      [_vm._v("Ответы")]
+                                    ),
+                                    _vm._v(" "),
+                                    _vm._l(comment.replies, function(reply) {
+                                      return _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "account-data-item__val with-border-row"
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                            " +
+                                              _vm._s(reply.text) +
+                                              "\n                                        "
+                                          )
+                                        ]
+                                      )
+                                    })
+                                  ],
+                                  2
+                                )
+                              ])
+                            : _vm._e()
+                        ]
+                      )
                     ])
                   ]),
                   _vm._v(" "),
@@ -43761,10 +43883,125 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _vm._m(1, true)
+                    _c("div", { staticClass: "reviews-list-item__action" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn_theme_usual",
+                          class: { "btn-cancel": _vm.isActive(comment) },
+                          attrs: { href: "#review-" + comment.id },
+                          on: {
+                            click: function($event) {
+                              _vm.toggleReply(comment)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            _vm._s(
+                              _vm.isActive(comment) ? "Отмена" : "Ответить"
+                            )
+                          )
+                        ]
+                      )
+                    ])
                   ])
+                ]),
+                _vm._v(" "),
+                _c("transition", { attrs: { name: "slide-fade" } }, [
+                  _vm.isActive(comment)
+                    ? _c("div", { staticClass: "account-content__body" }, [
+                        _c(
+                          "div",
+                          { staticClass: "account-content__body-heading" },
+                          [
+                            _c("i", {
+                              staticClass: "fa fa-level-up",
+                              attrs: { "aria-hidden": "true" }
+                            }),
+                            _vm._v(" "),
+                            _c("span", [_vm._v("Ответ на отзыв")])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "leave-account-review" }, [
+                          _c(
+                            "div",
+                            { staticClass: "leave-account-review__line" },
+                            [
+                              _c(
+                                "div",
+                                { staticClass: "leave-account-review__input" },
+                                [
+                                  _c(
+                                    "div",
+                                    { staticClass: "account-data-item" },
+                                    [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "account-data-item__name"
+                                        },
+                                        [_vm._v("Напишите ваш ответ")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "account-data-item__val"
+                                        },
+                                        [
+                                          _c("textarea", {
+                                            directives: [
+                                              {
+                                                name: "model",
+                                                rawName: "v-model",
+                                                value: _vm.answer,
+                                                expression: "answer"
+                                              }
+                                            ],
+                                            attrs: {
+                                              name: "leave-account-review"
+                                            },
+                                            domProps: { value: _vm.answer },
+                                            on: {
+                                              input: function($event) {
+                                                if ($event.target.composing) {
+                                                  return
+                                                }
+                                                _vm.answer = $event.target.value
+                                              }
+                                            }
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "leave-account-review__aside" },
+                                [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn_theme_usual",
+                                      on: { click: _vm.reply }
+                                    },
+                                    [_vm._v("Отправить ответ")]
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        ])
+                      ])
+                    : _vm._e()
                 ])
-              ]
+              ],
+              1
             )
           }),
           _vm._v(" "),
@@ -43838,16 +44075,6 @@ var staticRenderFns = [
         ])
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "reviews-list-item__action" }, [
-      _c("a", { staticClass: "btn btn_theme_usual", attrs: { href: "#" } }, [
-        _vm._v("Подробнее")
-      ])
-    ])
   }
 ]
 render._withStripped = true
