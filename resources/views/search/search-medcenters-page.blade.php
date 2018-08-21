@@ -37,6 +37,7 @@
             @endif
         </form>
     </div>
+    @include('forms.public.order_med_new')
     <script>
         if($('.search-input-group select').length)
         {
