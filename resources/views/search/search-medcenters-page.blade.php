@@ -45,14 +45,16 @@
 
         $(function () {
 
-            $('#filtersGroup .btn_theme_radio').click(
+            $('#filtersGroup .sort-line__item').click(
                 function () {
-                    if ($(this).prev('input[name=sort]').prop('checked')) {
+                    if ($(this).find('input[name=sort]').prop('checked')) {
                         var order = $('input[name=order]:checked').val();
                         order = (order == 'asc') ? 'desc' : 'asc';
-                        $('input[name="order"]').val([order]).trigger("change");
+                        $('input[name=order]').val([order]).trigger("change");
                     }
-                });
+                }
+            );
+
             $('.btn_theme_radio').click(function () {
                 var name = $(this).find('input').prop('name');
                 var value = $(this).find('input').prop('value');
