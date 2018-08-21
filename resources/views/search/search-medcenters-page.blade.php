@@ -45,17 +45,17 @@
 
         $(function () {
 
-            $('#filtersGroup .btn-radio').click(
+            $('#filtersGroup .btn_theme_radio').click(
                 function () {
                     if ($(this).prev('input[name=sort]').prop('checked')) {
                         var order = $('input[name=order]:checked').val();
                         order = (order == 'asc') ? 'desc' : 'asc';
-                        $('input[name=order]').val([order]).trigger("change");
+                        $('input[name="order"]').val([order]).trigger("change");
                     }
                 });
-            $('.btn-radio').click(function () {
-                var name = $(this).prev().prop('name');
-                var value = $(this).prev().prop('value');
+            $('.btn_theme_radio').click(function () {
+                var name = $(this).find('input').prop('name');
+                var value = $(this).find('input').prop('value');
 
                 $('input[name=' + name + ']').val([value]).trigger("change");
             });
@@ -65,8 +65,8 @@
             var $typeSelect = $('#typeSelect');
             var $skillSelect = $('#skillSelect');
             var $medcenterSelect = $('#medcenterSelect');
-            var doctorPriceSlider = $("#doctor_price").slider({tooltip: "always"}).data('slider');
-            var doctorRateSlider = $("#doctor_rate").slider({tooltip: "always"}).data('slider');
+            //var doctorPriceSlider = $("#doctor_price").slider({tooltip: "always"}).data('slider');
+            //var doctorRateSlider = $("#doctor_rate").slider({tooltip: "always"}).data('slider');
 
             $typeSelect.on('change', function () {
                 var type = $(this).val();
