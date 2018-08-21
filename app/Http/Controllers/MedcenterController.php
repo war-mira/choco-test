@@ -226,7 +226,7 @@ class MedcenterController extends Controller
             });
         }
 
-        if($request->query('comments_count'))
+        if($request->query('fname') == 'comments_count')
         {
             $docs->withCount('publicComments')->orderBy('public_comments_count', $request->query('orderm', 'DESC'));
         }
