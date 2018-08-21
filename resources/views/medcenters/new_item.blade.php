@@ -317,7 +317,7 @@
         </div>
         <!-- end section -->
     @endif
-
+    @include('forms.public.order_doc')
     <script type="text/javascript">
         $(function () {
             var offset = {{$visible}};
