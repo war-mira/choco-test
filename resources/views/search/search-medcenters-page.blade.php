@@ -107,7 +107,8 @@
                 }
             });
             $searchForm.find('#filtersGroup input[name], #mainSearch input[name],#mainSearch select[name]').on('change', function () {
-                $searchForm.submit();
+                //$searchForm.submit();
+                $('form.search-bar__line').submit();
             });
 
             $skillSelect.on('change', function () {
