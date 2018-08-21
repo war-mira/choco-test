@@ -340,6 +340,7 @@
                 var data = $('#medoc_filter').find('select, input').serializeArray();
                 $.get($('#medoc_filter').data('action'), data, function (docs) {
                     $('.doc-list__list').html(docs.view);
+                    $('#docsLeftText').text(docs.left);
                 });
             });
 
