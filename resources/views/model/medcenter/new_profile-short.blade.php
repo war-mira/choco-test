@@ -79,12 +79,15 @@
         <div class="work-hours__list">
             <div class="work-hours__item">
                 <span>Пн - Пт</span><br/>
+                <span>{{ implode('-',$medcenter->work_days(0,4))}}</span>
             </div>
             <div class="work-hours__item">
                 <span>Сб</span><br/>
+                <span>{{ implode('-',$medcenter->work_days(4,5))}}</span>
             </div>
             <div class="work-hours__item">
                 <span>Вс</span><br/>
+                <span>{{ implode('-',$medcenter->work_days(5,6))}}</span>
             </div>
         </div>
         <div class="work-hours__book">
