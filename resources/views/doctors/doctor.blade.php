@@ -99,28 +99,10 @@
                         <div class="appointment-book-small__when">
                             <div class="appointment-book-small__top-line">
                                 <div>Записаться на прием:</div>
-                                <div class="appointment-book-small__date js-appointment-book-date">
-                                    <div class="appointment-book-small__date-text">Сегодня</div>
-                                    <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>
-                                    <input type="text" name="date" value="today" class="js-custom-date-val">
-                                    <input type="hidden" name="dayweek" />
-                                </div>
                             </div>
-                            <div class="appointment-book-small__time-list">
-
-                                @if(isset($nic) && $nic)
-                                    @while($start_time <= $end_time)
-                                            <div class="appointment-book-small__time-item time-radio">
-                                                <label class="time-radio__item">
-                                                    <input type="radio" name="time" value="@php echo date('H:i',$start_time); @endphp"/>
-                                                    <span class="time-radio__text btn btn_theme_radio noselect">@php echo date('H:i',$start_time); @endphp</span>
-                                                </label>
-                                            </div>
-                                        @php $start_time += $add_mins; $st++; @endphp
-                                    @endwhile
-                                @endif
-
-                            </div>
+                        </div>
+                        <div class="appointment-book-big__timeline">
+                            {!! $doctor->timetable !!}
                         </div>
                         <div class="appointment-book-small__action">
                             <a data-doc-id="{{$doctor->id}}" data-dname="{{$doctor['name']}}" href="#order_doctor" class="appointment-book-small__book-btn btn btn_theme_usual popup-with-form">Записаться</a>
@@ -323,7 +305,6 @@
 
         if (callbackForm[0].checkValidity()) {
             var formData = new FormData(callbackForm[0]);
-            console.log(getFormData(callbackForm));
             formData.ga_cid =
                 $.getJSON("{{route('callback.newDoc')}}", getFormData(callbackForm))
                     .done(function (json) {
