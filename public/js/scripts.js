@@ -124,26 +124,7 @@ $(document).ready(function() {
 
     $('a.popup-with-form').on("click", function()
     {
-        if($(this).closest('div.search-result__item').length)
-        {
-            let block = $(this).closest('div.search-result__item');
-        }
-        else
-        {
-            let block = $(this).closest('div.appointment-book-small__line');
-        }
-
-        let condition = false;
-
-        if($(this).data('status') == 6){
-            condition = true;
-        }else{
-            condition = checkblock(block);
-        }
-        if(condition)
-        {
-            $(this).magnificPopup(popupDefaults).magnificPopup('open');
-        }
+        $(this).magnificPopup(popupDefaults).magnificPopup('open');
     });
 
     let $select = $(".js-search-select").selectize({
