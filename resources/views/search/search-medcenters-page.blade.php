@@ -37,6 +37,7 @@
             @endif
         </form>
     </div>
+    @include('forms.public.order_med_new')
     <script>
         if($('.search-input-group select').length)
         {
@@ -45,17 +46,19 @@
 
         $(function () {
 
-            $('#filtersGroup .btn-radio').click(
+            $('#filtersGroup .sort-line__item').click(
                 function () {
-                    if ($(this).prev('input[name=sort]').prop('checked')) {
+                    if ($(this).find('input[name=sort]').prop('checked')) {
                         var order = $('input[name=order]:checked').val();
                         order = (order == 'asc') ? 'desc' : 'asc';
                         $('input[name=order]').val([order]).trigger("change");
                     }
-                });
-            $('.btn-radio').click(function () {
-                var name = $(this).prev().prop('name');
-                var value = $(this).prev().prop('value');
+                }
+            );
+
+            $('.btn_theme_radio').click(function () {
+                var name = $(this).find('input').prop('name');
+                var value = $(this).find('input').prop('value');
 
                 $('input[name=' + name + ']').val([value]).trigger("change");
             });
@@ -65,8 +68,8 @@
             var $typeSelect = $('#typeSelect');
             var $skillSelect = $('#skillSelect');
             var $medcenterSelect = $('#medcenterSelect');
-            var doctorPriceSlider = $("#doctor_price").slider({tooltip: "always"}).data('slider');
-            var doctorRateSlider = $("#doctor_rate").slider({tooltip: "always"}).data('slider');
+            //var doctorPriceSlider = $("#doctor_price").slider({tooltip: "always"}).data('slider');
+            //var doctorRateSlider = $("#doctor_rate").slider({tooltip: "always"}).data('slider');
 
             $typeSelect.on('change', function () {
                 var type = $(this).val();
@@ -105,7 +108,8 @@
                 }
             });
             $searchForm.find('#filtersGroup input[name], #mainSearch input[name],#mainSearch select[name]').on('change', function () {
-                $searchForm.submit();
+                //$searchForm.submit();
+                $('form.search-bar__line').submit();
             });
 
             $skillSelect.on('change', function () {

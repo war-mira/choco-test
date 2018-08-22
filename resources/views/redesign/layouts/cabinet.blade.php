@@ -51,5 +51,10 @@
     </div>
 </div>
 <script src="{{URL::asset("js/app.js")}}"></script>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" style="display: none">
+    <filter id="blur">
+        <feGaussianBlur stdDeviation="3"/>
+    </filter>
+</svg>
 </body>
 </html>

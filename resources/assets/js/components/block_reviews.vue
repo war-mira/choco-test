@@ -20,14 +20,27 @@
                 </div>
 
 
-                <div class="reviews-list__item reviews-list-item" v-for="comment in comments">
+                <div class="reviews-list__item reviews-list-item"
+                     v-for="comment in comments"
+                     :class="{blur:(answer_review && !isActive(comment))}"
+                     :id="'review-'+comment.id"
+                >
+
                     <div class="reviews-list-item__inner">
                         <div class="reviews-list-item__line">
                             <div class="reviews-list-item__data-wr">
-                                <div class="reviews-list-item__data">
+                                <div class="reviews-list-item__data" style="flex-direction: column">
                                     <div class="reviews-list-item__data-item account-data-item">
                                         <div class="account-data-item__name">Текст отзыва</div>
                                         <div class="account-data-item__val">{{ comment.text }}</div>
+                                    </div>
+                                    <div v-if="comment.replies.length>0">
+                                        <div class="reviews-list-item__data-item account-data-item" >
+                                            <div class="account-data-item__name">Ответы</div>
+                                            <div class="account-data-item__val with-border-row" v-for="reply in comment.replies">
+                                                {{ reply.text }}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -64,10 +77,40 @@
                                 </div>
                             </div>
                             <div class="reviews-list-item__action">
-                                <a href="#" class="btn btn_theme_usual">Подробнее</a>
+                                <a :href="'#review-'+comment.id"
+                                   class="btn btn_theme_usual"
+                                   :class="{'btn-cancel':isActive(comment)}"
+                                   @click="toggleReply(comment)"
+                                >{{ isActive(comment)?'Отмена':'Ответить' }}</a>
                             </div>
                         </div>
                     </div>
+
+
+                    <transition name="slide-fade">
+                        <div class="account-content__body" v-if="isActive(comment)">
+                            <div class="account-content__body-heading">
+                                <i class="fa fa-level-up" aria-hidden="true"></i>
+                                <span>Ответ на отзыв</span>
+                            </div>
+                            <div class="leave-account-review">
+                                <div class="leave-account-review__line">
+                                    <div class="leave-account-review__input">
+                                        <div class="account-data-item">
+                                            <div class="account-data-item__name">Напишите ваш ответ</div>
+                                            <div class="account-data-item__val">
+                                                <textarea name="leave-account-review" v-model="answer"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="leave-account-review__aside">
+                                        <button class="btn btn_theme_usual" @click='reply'>Отправить ответ</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </transition>
+
                 </div>
 
 
@@ -92,17 +135,38 @@
     .pagination__item{
         cursor: pointer;
     }
+
+    .slide-fade-enter-active {
+        transition: all .3s ease;
+    }
+    .slide-fade-leave-active {
+        transition: all .3s ease;
+    }
+    .slide-fade-enter, .slide-fade-leave-to
+        /* .slide-fade-leave-active до версии 2.1.8 */ {
+        transform: translateY(40px);
+        opacity: 0;
+    }
+    .btn{
+        background: #00A8FF;
+        transition: all .3s ease;
+    }
+    .btn-cancel{
+        background:#ffc107;
+        transition: all .3s ease;
+    }
 </style>
 <script>
     export default {
         data() {
             return {
-                res: this.$resource('/api/my/reviews'),
+                res: this.$resource('/api/my/reviews{/id}'),
                 comments: [],
                 page_current: 1,
                 page_total: 1,
                 total: 0,
-                responce: '',
+                answer_review: null,
+                answer: '',
             }
         },
         mounted: function () {
@@ -126,22 +190,29 @@
                 });
 
             },
-            create: function () {
-                this.res.save(this.responce).then(
+            reply: function () {
+                this.res.update({ id:this.answer_review.id },
+                {
+                    reply:this.answer
+                }).then(
                     (response) => {
-                        // this.groups.push(response.data)
-                        // this.group = {
-                        //     key:'system',
-                        //     name:'',
-                        //     description:''
-                        // };
+                        this.answer_review.replies.push(response.data);
+                        this.answer='';
+                        this.toggleReply(this.answer_review);
                         toastr.success('Сохранено')
                     },
                     (error) => {
                         console.log(error)
                     }
                 )
+            },
+            toggleReply:function(elem){
+                this.answer_review = this.isActive(elem)?null:elem;
+            },
+            isActive:function (elem) {
+                return this.answer_review && this.answer_review.id == elem.id
             }
+
         }
     }
 </script>

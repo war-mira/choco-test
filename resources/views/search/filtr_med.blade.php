@@ -5,8 +5,8 @@
                 <div class="result-control-bar__query-name">@if(!empty($meta['h1_title'])) {{$meta['h1_title']}} @endif</div>
                 <div class="result-control-bar__query-count">найдено {{$Medcenters->total()}} учреждений</div>
 
-                <!--input type="radio" style="display:none;" checked="true" name="order" value="asc">
-                <input type="radio" style="display:none;" name="order" value="desc"-->
+                <input type="radio" style="display:none;" checked="true" name="order" value="asc">
+                <input type="radio" style="display:none;" name="order" value="desc">
             </div>
             <div class="result-control-bar__sort sort-line" id="filtersGroup">
                 <div class="sort-line__item">
