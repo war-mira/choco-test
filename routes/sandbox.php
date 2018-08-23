@@ -5,6 +5,10 @@
  * Date: 27.11.2017
  * Time: 15:24
  */
+
+use App\Doctor;
+use App\Skill;
+
 Route::group(['middleware' => 'role:superdev', 'as' => 'sandbox.', 'prefix' => 'sandbox'], function () {
     Route::get('/test', function () {
         return response('ok');
@@ -73,6 +77,63 @@ Route::group(['middleware' => 'role:superdev', 'as' => 'sandbox.', 'prefix' => '
         \Illuminate\Support\Facades\Cache::put('memtest', compact('value', 't'), 10);
         return $value;
     });
+
+
+    Route::get('comment-digest',function (){
+        $digest = \App\Comment::where([
+                'status'=>1,
+                'owner_type'=>'Doctor',
+                ['created_at','>',\Carbon\Carbon::now()->startOfWeek()->toDateTimeString()]
+            ])
+            ->get()
+            ->groupBy('owner_id')
+            ->transform(function ($item,$key){
+
+                $doc = Doctor::find($key);
+
+                $name = $doc->firstname . ' ' . $doc->lastname;
+                $mail = $doc->user ? $doc->user->email : $doc->email;
+
+                $mail = 'alex@fed.kz';
+
+                if(str_is('*@*.*',$mail))
+                    Mail::to($mail)->send(new \App\Mail\DoctorReviewsWeeklyMail($name, $item));
+
+                return  [
+                    'mail'=>$mail,
+                    'name'=>$name,
+                    'items'=>$item->toArray()
+                ];
+            })
+        ;
+
+//        Doctor::whereHas('comments',function ($q){
+//            return $q->where(['status'=>1])->whereDate('created_at','>',\Carbon\Carbon::now()->startOfWeek());
+//        });
+
+        dd( \Carbon\Carbon::now()->startOfWeek()->toDateTimeString(), $digest );
+    });
+
+
+
+
+    Route::get('search-index',function (){
+        $index = new \App\Helpers\SearchIndex(
+            class_basename(Doctor::class),
+            [
+                'firstname'=>'self',
+                'lastname'=>'self',
+                'patronymic'=>'self',
+                'skills'=>'name',
+            ]
+        );
+
+        $index->addToIndex(Doctor::has('skills')->take(5)->get());
+
+        return $index->getValues('skills');
+    });
+
+
 
 
     Route::any('search/{input?}/{modifier?}',function (\App\Http\Requests\Doctor\DoctorFilters $filters, $input = '', $modifier = ''){

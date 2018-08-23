@@ -502,4 +502,10 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     {
         return $this->qualifications->contains('id', $qualification->id);
     }
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

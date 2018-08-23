@@ -502,7 +502,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(response);
                 _this.$emit('ready', response.data);
             }, function (error) {
-                console.log(error);
+                _this.$emit('failed', error);
             });
         }
     },
@@ -599,6 +599,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         sent: function sent(vote) {
             this.val = vote;
             this.updated = true;
+        },
+        failed: function failed(err) {
+            if (err.status == 401) toastr.error('Необходимо авторизоваться!');
         }
     }
 });
@@ -43661,7 +43664,7 @@ var render = function() {
             "btn",
             {
               attrs: { css: "no-padding", href: _vm.path, data: { mark: 1 } },
-              on: { ready: _vm.sent }
+              on: { failed: _vm.failed, ready: _vm.sent }
             },
             [
               _c("i", {
@@ -43697,7 +43700,7 @@ var render = function() {
             "btn",
             {
               attrs: { css: "no-padding", href: _vm.path, data: { mark: -1 } },
-              on: { ready: _vm.sent }
+              on: { failed: _vm.failed, ready: _vm.sent }
             },
             [
               _c("i", {
