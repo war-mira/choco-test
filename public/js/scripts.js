@@ -100,33 +100,33 @@ $(document).ready(function() {
         fixedBgPos: true,
         overflowY: 'auto',
         closeBtnInside: true,
-        callbacks: {
-            beforeOpen: function() {
-                $('form#callback_form').find('input[name="target_id"]').val(this.st.el.data('doc-id'));
-                $('form#callback_form').find('input[name="status"]').val(this.st.el.data('status'));
-                $('form#callback_form').find('#doctor_name').val(this.st.el.data('dname'));
-                $('form#callback_form').find('#medcenter_name').val(this.st.el.data('dname'));
-
-                if($(this.st.el).parent().parent().find('input[name="date"]:checked').val() != 'custom' && $(this.st.el).parent().parent().find('input[name="date"]').is(':radio'))
-                {
-                    $('form#callback_form').find('input[name="date"]').val($(this.st.el).parent().parent().find('input[name="date"]:checked').val());
-                }else if($(this.st.el).parent().parent().find('input[name="custom-date"]').length)
-                {
-                    $('form#callback_form').find('input[name="date"]').val($(this.st.el).parent().parent().find('input[name="custom-date"]').val());
-                }
-                else
-                {
-                    $('form#callback_form').find('input[name="date"]').val($(this.st.el).parent().parent().find('input.js-custom-date-val').val());
-                }
-
-                $('form#callback_form').find('input[name="time"]').val($(this.st.el).parent().parent().find('input[name="time"]:checked').val());
-            }
-        }
+        // callbacks: {
+        //     beforeOpen: function() {
+        //         $('form#callback_form').find('input[name="target_id"]').val(this.st.el.data('doc-id'));
+        //         $('form#callback_form').find('input[name="status"]').val(this.st.el.data('status'));
+        //         $('form#callback_form').find('#doctor_name').val(this.st.el.data('dname'));
+        //         $('form#callback_form').find('#medcenter_name').val(this.st.el.data('dname'));
+        //
+        //         if($(this.st.el).parent().parent().find('input[name="date"]:checked').val() != 'custom' && $(this.st.el).parent().parent().find('input[name="date"]').is(':radio'))
+        //         {
+        //             $('form#callback_form').find('input[name="date"]').val($(this.st.el).parent().parent().find('input[name="date"]:checked').val());
+        //         }else if($(this.st.el).parent().parent().find('input[name="custom-date"]').length)
+        //         {
+        //             $('form#callback_form').find('input[name="date"]').val($(this.st.el).parent().parent().find('input[name="custom-date"]').val());
+        //         }
+        //         else
+        //         {
+        //             $('form#callback_form').find('input[name="date"]').val($(this.st.el).parent().parent().find('input.js-custom-date-val').val());
+        //         }
+        //
+        //         $('form#callback_form').find('input[name="time"]').val($(this.st.el).parent().parent().find('input[name="time"]:checked').val());
+        //     }
+        // }
     }
 
     $('body').on('click', 'a.popup-with-form', function(e)
     {
-        $(this).magnificPopup(popupDefaults).magnificPopup('open');
+            $(this).magnificPopup(popupDefaults).magnificPopup('open');
     });
 
     let $select = $(".js-search-select").selectize({

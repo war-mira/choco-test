@@ -26,6 +26,8 @@ Vue.component('doctor-reviews', require('./components/block_reviews'));
 Vue.component('btn-ajax', require('./components/btn_ajax.vue'));
 Vue.component('inp-rate', require('./components/inp_rate.vue'));
 Vue.component('rx-span', require('./components/rx_span.vue'));
+Vue.component('phone-show-btn', require('./components/phone_show_btn.vue'));
+Vue.component('find-doctor-btn', require('./components/find_doctor_btn.vue'));
 
 window.socket = Echo.connector.socket;
 // window.socket = {};

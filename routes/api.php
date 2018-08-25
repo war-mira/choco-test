@@ -31,5 +31,10 @@ Route::group(['prefix'=>'v2'],function (){
     Route::get('{obj}/{id}/votes', 'VoteController@index');
     Route::get('{obj}/{id}/vote', 'VoteController@show');
     Route::post('{obj}/{id}/vote', 'VoteController@store')->middleware('auth');  // TODO: policy
+    Route::get('{obj}/{id}/clicks-count', 'DoctorController@clicksCount');
+
+});
+
+Route::group(['prefix'=>'phones'],function (){
 
 });

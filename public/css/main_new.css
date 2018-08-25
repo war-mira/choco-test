@@ -2054,8 +2054,8 @@ img {
 
 .appointment-book-big {
   background: #fcfcfc;
-  padding: 10px 5.88235% 20px;
-  font-size: 14px; }
+  padding: 10px 1.88235% 20px;
+  font-size: 14px; text-align: center}
   .appointment-book-big_bg_light {
     background: #fff; }
   .appointment-book-big__heading {
@@ -2085,7 +2085,30 @@ img {
     margin-right: -15px; }
   .appointment-book-big__date-item {
     margin: 5px 15px; }
-
+  .appointment-book-big__timeline{
+    padding-top: 10px;
+    text-align: center;
+    padding-bottom: 10px}
+.phone-number__show{
+  border-bottom: 1px dotted;
+  margin-left: 5px;}
+.phone-number__show:hover{
+  text-decoration: none;
+  border-bottom: none;}
+.phone-number__show.active{
+  border: none;
+  margin-left: 0}
+.find-doctor_message{
+  display: none;
+  color: green;
+padding-bottom: 15px}
+.find-doctor_message.active{
+  display: block;
+}
+.explain-text{
+    padding: 0 10px;
+    margin-bottom: 15px;
+}
 .date-radio__item {
   cursor: pointer;
   position: relative; }

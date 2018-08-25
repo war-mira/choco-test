@@ -4,8 +4,7 @@
             <i class="fa fa-phone"></i>
             <slot name="phone-number">
                 <span class="phone-number__short">+7 (777)</span>
-                <a class="phone-number__show">
-                    Показать номер
+                <a class="phone-number__show" v-bind:class="{ active: isActive }" @click.prevent="send" v-html="message">
                 </a>
             </slot>
         </p>
@@ -16,9 +15,27 @@
     export default {
         data: function () {
             return {
-                count: 0
+                isActive: false,
+                message: 'Показать номер',
             }
-        }
+        },
+        methods: {
+            send: function () {
+                this.$http.get(`/api/v2/${this.obj}/${this.id}/clicks-count`)
+                    .then(
+                        (response) => {
+                            console.log(response.data);
+                            this.message = (response.data);
+                            this.isActive = true;
+                        },
+                        (error) => {
+                        }
+                    );
+            }
+        },
+        props: ['obj', 'id'],
+
+
     }
 </script>
 

@@ -130,6 +130,13 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     ];
     const PARTNER = 1;
     const NOT_PARTNER = 0;
+    const TYPE = [
+      0 => 'partner',
+      1 => 'not_partner_registered',
+      2 => 'not_partner_not_registered_with_phone',
+      3 => 'not_partner_not_registered_without_phone',
+      4 => 'partner_without_phone'
+    ];
     public $timestamps = true;
     protected $table = 'doctors';
     protected $fillable = [
@@ -185,7 +192,8 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         'preview_text',
         'timetable',
         'seo_text',
-        'partner'
+        'partner',
+        'showing_phone'
 //        'mond',
 //        'tues',
 //        'wedn',
@@ -501,5 +509,27 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     public function checkQualification($qualification)
     {
         return $this->qualifications->contains('id', $qualification->id);
+    }
+
+    public function whoIsIt()
+    {
+        if($this->partner = self::PARTNER){
+            if(!empty($this->showing_phone)){
+                return self::TYPE[0];
+            }else{
+                return self::TYPE[4];
+            }
+        } else{
+           $account = User::find($this->user_id);
+           if($account){
+               return self::TYPE[1];
+           }else{
+               if(!empty($this->showing_phone)){
+                   return self::TYPE[2];
+               }else{
+                   return self::TYPE[3];
+               }
+           }
+        }
     }
 }

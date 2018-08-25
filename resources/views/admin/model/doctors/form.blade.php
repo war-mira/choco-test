@@ -63,11 +63,11 @@
                                         @component('components.bootstrap.column',['class'=>'col-md-12'])
                                             @component('components.bootstrap.row')
                                                 @component('components.bootstrap.column',['class'=>'col-md-12'])
-                                                        @component('components.form.checkbox')
-                                                            @slot('field','partner')
-                                                            @slot('value',$seed['partner'] ?? null)
-                                                            @slot('label','Наш партнер')
-                                                        @endcomponent
+                                                    @component('components.form.checkbox')
+                                                        @slot('field','partner')
+                                                        @slot('value',$seed['partner'] ?? null)
+                                                        @slot('label','Наш партнер')
+                                                    @endcomponent
                                                 @endcomponent
                                                 @component('components.bootstrap.column',['class'=>'col-md-12'])
                                                     @component('components.form.text')
@@ -104,6 +104,13 @@
                                                             @slot('field','phone')
                                                             @slot('value', old('phone',$seed['phone']))
                                                             @slot('label','Phone')
+                                                        @endcomponent
+                                                    @endcomponent
+                                                    @component('components.bootstrap.column',['class'=>'col-md-12'])
+                                                        @component('components.form.text')
+                                                            @slot('field','showing_phone')
+                                                            @slot('value', old('showing_phone',$seed['showing_phone']))
+                                                            @slot('label','Телефон для отображения')
                                                         @endcomponent
                                                     @endcomponent
                                                     @component('components.bootstrap.column',['class'=>'col-md-12'])

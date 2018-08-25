@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redis;
 
 class DoctorController extends Controller
 {
@@ -74,7 +75,6 @@ class DoctorController extends Controller
      */
     public function list(City $city = null, $input = '', $modifier = '', DoctorFilters $filters)
     {
-
 //        $skill = Skill::where('alias',)
 
         $search = new \App\Helpers\DoctorSearcher([$input,$modifier]);
@@ -555,7 +555,25 @@ class DoctorController extends Controller
         return redirect()->route('doctor.feedback',['city'=>$city->alias,'doctor'=>$doctor->alias,'uid'=>$hash]);
     }
 
+    public function clicksCount(Request $request)
+    {
+        $doctor = Doctor::find($request->id);
+        if($doctor){
+            $phone = substr($doctor->showing_phone, 4);
 
+            $data = [];
+            $data['data'] = $request->data ? $request->data: '';
+            $data['doctor_id'] = $doctor->id;
+
+            $date = new \DateTime();
+            Redis::zadd('doctor:'.$doctor->id.':clicks', $date->getTimestamp(), json_encode($data));
+
+            if($phone)
+                return $phone;
+            else
+                return '<strong>Спасибо!</strong> Ваша заявка принята мы вам перезвоним!';
+        }
+    }
 
 
     protected function getFilterforSeo($skill, $flag)
@@ -683,6 +701,5 @@ class DoctorController extends Controller
         ];
 
     }
-
 
 }
