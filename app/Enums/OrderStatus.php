@@ -65,7 +65,7 @@ final class OrderStatus extends Enum
      * @param  int $value
      * @return string
      */
-    public static function getDescription(int $value): string
+    public static function getDescription($value): string
     {
         return self::$DESCRIPTIONS[$value] ?? self::getKey($value);
     }

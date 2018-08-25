@@ -277,6 +277,29 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
         });
     }
 
+    public function work_days($from,$for)
+    {
+        $days = ['mond','tues','wedn','thur','frid','satu','sund'];
+        $min = 0;$max = 0; $bet = [];$tarray = [];
+        foreach($days as $i=>$day)
+        {
+            if($this->{$days[$i]}) {
+                if ($i <= $for && $i >= $from)
+                {
+                    $bet = unserialize($this->{$days[$i]});
+                    $tarray[] = strtotime($bet[0]);
+                    $tarray[] = strtotime($bet[1]);
+                }
+            }
+        }
+        $return = [];
+        if(!empty($tarray))
+        {
+            $return = ['min'=>date('H:i',min($tarray)),'max'=>date('H:i',max($tarray))];
+        }
+
+        return $return;
+    }
 
     public function getMetaTitle()
     {

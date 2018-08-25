@@ -88,13 +88,25 @@
             </div>
         </div>
     </div>
-<div class="entity-line__additional">
-    @if($doctor->partner == \App\Doctor::PARTNER)
-    <form action="#" class="appointment-book-big">
-        <div class="appointment-book-big__heading">Записаться на прием</div>
-        <div class="appointment-book-big__timeline">
-            {!! $doctor->timetable !!}
+<div class="entity-line__additional appointment-book-big">
+    <div class="appointment-book-big__heading">Записаться на прием</div>
+    <div class="appointment-book-big__timeline">
+        {!! $doctor->timetable !!}
+    </div>
+        @if($doctor->whoIsIt() != \App\Doctor::TYPE[3] && $doctor->whoIsIt() != \App\Doctor::TYPE[4])
+            <phone-show-btn obj="doctor" id="{{ $doctor->id }}">
+                <template slot="phone-number"></template>
+            </phone-show-btn>
+        @else
+        <div class="appointment-book-big__bot-line">
+            <find-doctor-btn obj="doctor" id="{{ $doctor->id }}">
+                <template slot="link-to-modal"></template>
+            </find-doctor-btn>
+            <a href="{{ route('register') }}" class="btn btn_theme_usual">Это я</a>
         </div>
+        @endif
+    @if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])
+    <form action="#" class="">
         <div class="appointment-book-big__bot-line">
             @if(!empty($doctor->price))
                 <div class="appointment-book-big__price">
@@ -105,15 +117,5 @@
             <a href="#order_doctor" data-doc-id="{{$doctor->id}}" data-dname="{{$doctor['name']}}" class="appointment-book-big__book-btn btn btn_theme_usual trigger-link popup-with-form">Записаться<span class="hidden-xl"> онлайн</span></a>
         </div>
     </form>
-    @else
-        <div class="appointment-book-big__bot-line">
-            <div class="appointment-book-big__price">
-                <div class="appointment-book-big__price-text">Прием от:</div>
-                <div class="appointment-book-big__price-val">от {{$doctor['price']}} тг</div>
-            </div>
-            <phone-show-btn obj="doctor" id="{{ $doctor->id }}" type="ololo">
-                <template slot="phone-number"></template>
-            </phone-show-btn>
-        </div>
     @endif
 </div>

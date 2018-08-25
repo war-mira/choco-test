@@ -35,6 +35,10 @@
                                     <div class="account-data-item__val">{{ $doctor->phone ? \App\Helpers\FormatHelper::phone($doctor->phone): \App\Helpers\FormatHelper::phone($user->phone) }}</div>
                                 </div>
                                 <div class="doc-personal-data__data-item account-data-item">
+                                    <div class="account-data-item__name">Номер телефона для отображения</div>
+                                    <div class="account-data-item__val">{{ $doctor->showing_phone }}</div>
+                                </div>
+                                <div class="doc-personal-data__data-item account-data-item">
                                     <div class="account-data-item__name">E-mail</div>
                                     <div class="account-data-item__val">{{$doctor->email ? $doctor->email: $user->email }}</div>
                                 </div>

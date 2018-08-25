@@ -70,39 +70,39 @@
     </div>
     <!-- end section -->
 
-    @if($topDoctors->count() > 0)
-        <!-- begin section -->
-        <div class="section">
+    {{--@if($topDoctors->count() > 0)--}}
+        {{--<!-- begin section -->--}}
+        {{--<div class="section">--}}
 
-            <!-- begin container -->
-            <div class="container">
+            {{--<!-- begin container -->--}}
+            {{--<div class="container">--}}
 
-                <h2 class="section-title">Топ врачей </h2>
-                <p class="text-center"></p>
+                {{--<h2 class="section-title">Топ врачей </h2>--}}
+                {{--<p class="text-center"></p>--}}
 
-                <div class="slick-user">
-                    @foreach ($topDoctors as $doctor)
-                        <a href="{{ $doctor->href }}">
-                            <div class="slick-user__item">
-                                @component('components.rating-stars',['rating' => $doctor->avg_rate])
-                                @endcomponent
-                                <img class="slick-user__avatar" src="{{ asset($doctor->avatar) }}" width="120"
-                                     height="120"
-                                     alt="">
-                                <h4 class="slick-user__name">{{ $doctor['name'] }}</h4>
-                                <p>{{ isset($doctor['main_skill']) ? $doctor['main_skill']->name : ''  }}</p>
-                            </div>
-                        </a>
-                    @endforeach
+                {{--<div class="slick-user">--}}
+                    {{--@foreach ($topDoctors as $doctor)--}}
+                        {{--<a href="{{ $doctor->href }}">--}}
+                            {{--<div class="slick-user__item">--}}
+                                {{--@component('components.rating-stars',['rating' => $doctor->avg_rate])--}}
+                                {{--@endcomponent--}}
+                                {{--<img class="slick-user__avatar" src="{{ asset($doctor->avatar) }}" width="120"--}}
+                                     {{--height="120"--}}
+                                     {{--alt="">--}}
+                                {{--<h4 class="slick-user__name">{{ $doctor['name'] }}</h4>--}}
+                                {{--<p>{{ isset($doctor['main_skill']) ? $doctor['main_skill']->name : ''  }}</p>--}}
+                            {{--</div>--}}
+                        {{--</a>--}}
+                    {{--@endforeach--}}
 
-                </div>
+                {{--</div>--}}
 
-            </div>
-            <!-- end container -->
+            {{--</div>--}}
+            {{--<!-- end container -->--}}
 
-        </div>
-        <!-- end section -->
-    @endif
+        {{--</div>--}}
+        {{--<!-- end section -->--}}
+    {{--@endif--}}
     <!-- begin section -->
     <div class="section top-clear">
 

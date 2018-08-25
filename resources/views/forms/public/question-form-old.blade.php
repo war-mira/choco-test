@@ -13,8 +13,11 @@
                type="text">
     </div>
     <div class="form-group col-md-6">
-        <label>Город</label>
-        <input type="text" id="user-city" class="" name="user[city]">
+        <div class="form-group col-md-6" id="datetime-group">
+            <label>Дата рождения *</label><br>
+            <input class=""
+                   name="user[birthday]" id="user-birthday"  type="datetime-local" required>
+        </div>
     </div>
     <div class="form-group col-md-6">
         <label>Ваш пол *</label>
@@ -23,11 +26,6 @@
                 <option value="{{ $key }}">{{$gender}}</option>
             @endforeach
         </select>
-    </div>
-    <div class="form-group col-md-6" id="datetime-group">
-        <label>Дата рождения *</label><br>
-        <input class="datepicker"
-               name="user[birthday]" id="user-birthday" type="text" required>
     </div>
     <div class="form-group col-md-12">
         <label>Ваш вопрос</label>

@@ -40,7 +40,7 @@
         <div class="container">
             <div class="questions-container">
                     <div class="show-question-form">
-                        <button class="btn button">Задать вопрос врачу</button>
+                        <h1 class="button">Задать вопрос врачу</h1>
                     </div>
                     @include('forms.public.question-form')
             </div>
@@ -188,11 +188,20 @@
             dtlInput.value = localISOTime.slice(0,16);
         }
 
+        var desktop_datetime = $('.desktop-datetime');
+        var mobile_datetime = $('.mobile-datetime');
+        mobile_datetime.find('input').val('');
+        if(desktop_datetime.is(':visible')){
+            mobile_datetime.remove();
+        }else{
+            desktop_datetime.remove();
+        }
         var form = $("#question__form");
         $("#question__form-send").click(function () {
             if (form[0].checkValidity()) {
                 var data = form.serialize();
-                $.post("{{url('/question/add')}}", form.serialize())
+                console.log(data);
+                $.post("{{url('/question/add')}}", data)
                     .done(function (json) {
                         $('#user-email').removeClass('has-warning');
                         $('#user-phone').removeClass('has-warning');

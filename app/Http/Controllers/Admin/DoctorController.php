@@ -6,6 +6,7 @@ use App\Doctor;
 use App\Helpers\BootstrapTableHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Doctor\StoreDoctorRequest;
+use App\Observers\DoctorObserver;
 use Illuminate\Http\Request;
 
 class DoctorController extends Controller
@@ -108,6 +109,8 @@ class DoctorController extends Controller
         $doctor = (new Doctor($data));
         $doctor->save();
 
+        $this->slug($doctor);
+
         $jobs = $data['jobs'] ?? false;
         if ($jobs !== false) {
             $doctor->jobs = $jobs;
@@ -181,6 +184,9 @@ class DoctorController extends Controller
         }
 
         $doctor->save();
+
+        $this->slug($doctor);
+
         $skills = $data['skills'] ?? false;
         if ($skills !== false) {
             $skills = collect($skills)->mapWithKeys(function ($skill) {
@@ -233,6 +239,13 @@ class DoctorController extends Controller
         }
 
         return $data;
+    }
+
+    private function slug(Doctor $doctor)
+    {
+        $transName = \Slug::make($doctor->name);
+        $doctor->alias = $doctor->id . "-" . $transName;
+        $doctor->update();
     }
 
     public function delete(Request $request, $id)

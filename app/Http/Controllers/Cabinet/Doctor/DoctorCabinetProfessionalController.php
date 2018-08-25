@@ -20,7 +20,6 @@ class DoctorCabinetProfessionalController extends DoctorCabinetController
 
     public function update(Request $request)
     {
-
         $validator = \Validator::make($request->all(), [
             'qualifications' => 'required|between:1,2'
         ]);

@@ -29,7 +29,6 @@ class DoctorCabinetPersonalController extends DoctorCabinetController
             'email'         => 'email|required|max:255',
             'phone'         => 'required|max:255',
         ]);
-
         if ($validator->fails()) {
             return redirect()->back()
                 ->withErrors($validator)

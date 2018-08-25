@@ -23,7 +23,13 @@
                                         </div>
                                         <div class="doc-prof-data__data-item account-data-item">
                                             <div class="account-data-item__name">Квалификация</div>
-                                            <div class="account-data-item__val">{{$doctor->qualification ? $doctor->qualification: 'Не заполнено'}}</div>
+                                            @if(count($doctor->qualifications))
+                                                @foreach($doctor->qualifications as $qualification )
+                                                    <div class="account-data-item__val">{{ $qualification->name }}</div>
+                                                @endforeach
+                                            @else
+                                                <div class="account-data-item__val">{{$doctor->qualification ? $doctor->qualification: 'Не заполнено'}}</div>
+                                            @endif
                                         </div>
                                         <div class="doc-prof-data__data-item account-data-item">
                                             <div class="account-data-item__name">Стаж работы</div>

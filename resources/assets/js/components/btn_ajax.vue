@@ -26,7 +26,9 @@
                       console.log(response)
                       this.$emit('ready',response.data)
                   },
-                  (error) => { console.log(error)   }
+                  (error) => {
+                      this.$emit('failed',error)
+                  }
               )
           }
         },

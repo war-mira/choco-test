@@ -81,8 +81,16 @@
                                 </div>
                             </div>
                         </div>
-                </div>
-
+                        <div class="user-personal-data__line">
+                            <div class="user-personal-data__item account-data-item">
+                                <div class="account-data-item__name">Телефон для отображения</div>
+                                <div class="account-data-item__val">
+                                    <input type="tel" data-mask="+7 (999) 999-99-99" name="showing_phone" placeholder="Введите ваш телефон для отображения"
+                                           value="{{ old('showing_phone') ? old('showing_phone'):$doctor->showing_phone }}">
+                                    @if ($errors->has('showing_phone'))<p class="error"> Поле обязательно для заполнения </p> @endif
+                                </div>
+                            </div>
+                        </div>
                 <div class="user-personal-data__submit">
                     <button type="submit" class="btn btn_theme_usual">Сохранить</button>
                 </div>

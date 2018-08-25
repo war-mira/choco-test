@@ -38,7 +38,7 @@ class CallbackController extends Controller
         $dat = strtotime($day.' '.$data['time']);
         $callback->client_datetime = $dat;
         $data['client_datetime'] = $dat;
-
+        $data['status'] = 0;
         $callback->fill($data);
         $callback->save();
 

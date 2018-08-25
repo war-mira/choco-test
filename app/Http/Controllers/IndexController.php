@@ -289,4 +289,12 @@ class IndexController extends Controller
 
         echo $cout;
     }
+
+    public function testCurl()
+    {
+        $client = new \GuzzleHttp\Client();
+        $response = $client->get('https://geocode-maps.yandex.ru/1.x/?format=json&geocode=ул. Тайманова  блок 1');
+        $stream = $response->getBody();
+        dd( $stream->getContents());
+    }
 }

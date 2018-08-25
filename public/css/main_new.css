@@ -2957,7 +2957,7 @@ textarea:-moz-placeholder {
     width:100%;
   }
   .work-hours__item {
-    margin: 5px 12px; }
+    margin: 5px 12px;text-align: center;font-size:14px; }
     .work-hours__item span {
       white-space: nowrap; }
   .work-hours__book {

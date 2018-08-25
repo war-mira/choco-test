@@ -5,7 +5,7 @@
             <span class="thumb-control__val">
                 <slot name="likes" v-if="!updated"></slot><span v-if="updated">{{ val.likes }}</span>
             </span>
-            <btn css="no-padding" :href="path" :data="{mark:1}" @ready="sent"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></btn>
+            <btn css="no-padding" :href="path" :data="{mark:1}" @failed="failed" @ready="sent"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></btn>
         </span>
 
 
@@ -15,7 +15,7 @@
             <span class="thumb-control__val">
                 <slot name="dislikes" v-if="!updated"></slot><span v-if="updated">{{ val.dislikes }}</span>
             </span>
-            <btn css="no-padding" :href="path" :data="{mark:-1}" @ready="sent"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></btn>
+            <btn css="no-padding" :href="path" :data="{mark:-1}" @failed="failed" @ready="sent"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></btn>
         </span>
 
     </div>
@@ -63,6 +63,10 @@
             sent:function (vote) {
                 this.val = vote;
                 this.updated = true;
+            },
+            failed:function (err) {
+                if(err.status == 401)
+                    toastr.error('Необходимо авторизоваться!')
             },
         },
     }
