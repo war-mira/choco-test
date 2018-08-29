@@ -538,4 +538,21 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
            }
         }
     }
+
+
+    public function getAdditionalAttribute()
+    {
+        $opts = collect([]);
+
+        // child
+        $opts->push(['name'=>$this->child?'детский':'для взрослых']);
+        $opts->push(['name'=>$this->child?'для детей':'для взрослых']);
+        // ambulatory
+        if($this->ambulatory)
+        $opts->push(['name'=>'на дом']);
+        $opts->push(['name'=>'на дому']);
+        //
+//        dd($opts);
+        return $opts;
+    }
 }

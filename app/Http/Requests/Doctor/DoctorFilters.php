@@ -10,15 +10,15 @@ use Carbon\Carbon;
 class DoctorFilters extends Filter{
 
 
-    public function q($search)
-    {
-        return $this->builder->where(function ($q) use ($search){
-            return $q->where('firstname',$search)
-                ->orWhere('lastname',$search)
-                ->orWhere('patronimyc',$search)
-                ;
-        });
-    }
+//    public function q($search)
+//    {
+//        return $this->builder->where(function ($q) use ($search){
+//            return $q->where('firstname',$search)
+//                ->orWhere('lastname',$search)
+//                ->orWhere('patronimyc',$search)
+//                ;
+//        });
+//    }
 
 
     public function child($flag = true)
