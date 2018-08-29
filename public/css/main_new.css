@@ -790,6 +790,17 @@ img {
     width: 100%;
     min-height:200px;
   }
+  .entity-thumb-img__img.less200
+  {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    min-height: auto;
+  }
   #save_comment_mess_ok{
     text-align: center;
   }

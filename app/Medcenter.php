@@ -173,6 +173,15 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
         return $this->attributes['name'];
     }
 
+    public function checkImageheight()
+    {
+        $height = false;
+        if(file_exists($this->avatar)) {
+            list($width, $height) = getimagesize($this->avatar);
+        }
+        return $height;
+    }
+
     public function publicComments()
     {
         return $this->comments()->where('comments.status', 1);
