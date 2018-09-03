@@ -606,6 +606,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -4009,7 +4012,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -43529,7 +43532,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "leave-account-review__line" }, [
       _c("div", { staticClass: "explain-text" }, [
         _vm._v(
-          "\n                        Спасибо за проявленный интерес! Наша команда усиленно работает над поиском лучших врачей для вас.\n                        Оставьте свой емэйл и мы свяжемся с вами, как только врач начнет принимать заявки на нашем портале.\n                    "
+          "\n                        Спасибо за обращение! На данный момент врач не принимает заявки на платформе idoctor.kz, но\n                        наша команда усиленно работает над поиском лучших врачей для\n                        вас. Вы можете оставить свой email, и мы уведомим вас о возможности записаться к врачу,\n                        когда он\n                        подключится к платформе.\n                    "
         )
       ])
     ])

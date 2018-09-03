@@ -2100,6 +2100,18 @@ img {
     padding-top: 10px;
     text-align: center;
     padding-bottom: 10px}
+  .appointment-book-small-header-block{
+    padding-bottom: 20px;
+    display: flex;}
+.appointment-book-small-header-block .appointment-book-small__timeline{
+  padding-right: 20px;}
+.appointment-book-small-header-block .appointment-book-small__bot-line{
+  padding-top: 10px;
+  display: flex;}
+.appointment-book-small__bot-line .btn_it-is-me{
+  margin-left: 10px;}
+.appointment-book-small-header-block  .phone__block{
+  padding-top: 10px}
 .phone-number__show{
   border-bottom: 1px dotted;
   margin-left: 5px;}
@@ -2118,7 +2130,7 @@ padding-bottom: 15px}
 }
 .explain-text{
     padding: 0 10px;
-    margin-bottom: 15px;
+    margin-bottom: 3  5px;
 }
 .date-radio__item {
   cursor: pointer;

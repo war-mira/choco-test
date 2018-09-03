@@ -519,14 +519,16 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
 
     public function whoIsIt()
     {
-        if($this->partner = self::PARTNER){
+        if($this->partner == self::PARTNER){
             if(!empty($this->showing_phone)){
                 return self::TYPE[0];
             }else{
                 return self::TYPE[4];
             }
         } else{
-           $account = User::find($this->user_id);
+            $account = null;
+            if($this->user_id != 22)
+                $account = User::find($this->user_id);
            if($account){
                return self::TYPE[1];
            }else{
