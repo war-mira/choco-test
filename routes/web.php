@@ -10,8 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'IndexController@r_home')->name('home');
-//Route::get('main-new', 'IndexController@r_home')->name('home');
+Route::get('/', 'IndexController@home')->name('home');
 
 Route::get('resize', 'ImageController@resizeImages');
 

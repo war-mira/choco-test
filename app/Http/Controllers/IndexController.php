@@ -20,84 +20,6 @@ class IndexController extends Controller
 {
     public function home()
     {
-//        $topDoctors = Doctor::where('on_top', '=', 1)->where('status', '=', 1)->get();
-
-        $topPosts = Post::where('is_top', 1)->where('status', 1)->orderBy('created_at', 'desc')->limit(3)->get();
-
-        //Специальности по количесвам врачей
-        $skillLinks = Skill::query()
-//            ->with(['doctors' => function ($query) {
-//                $query->where('status', 1)->where('city_id', SessionContext::cityId());
-//            }])
-            ->withCount(['doctors' => function ($query) {
-                $query->where('status', 1)->where('city_id', SessionContext::cityId());
-            }])
-            ->whereHas('doctors', function ($query) {
-                $query->where('status', 1)->where('city_id', SessionContext::cityId());
-            })
-            ->orderBy('name')
-            ->get(['name','href','doctors_count'])
-//            ->map(function ($skill) {
-//                $name = $skill->name;
-//                $doctorsCount = $skill->doctors_count;
-//                $href = $skill->href;
-//                return compact('name', 'href', 'doctorsCount');
-//            })
-        ;
-
-        //Комментарии
-        $lastComments = Comment::whereStatus(1)->orderByDesc('created_at')->take(20)->get();
-
-        $pageSeo = PageSeo::query()
-            ->where('class','Home')
-            ->where('action', 'index')
-            ->first();
-        $meta = SeoMetadataHelper::getMeta($pageSeo, SessionContext::city());
-
-
-        return view('index')->with(
-            compact(
-                'meta',
-                'topDoctors',
-                'topPosts',
-                'skillLinks',
-                'lastComments')
-        );
-    }
-
-    public function ratings(Request $request)
-    {
-        $like = $request->get('likenot');
-        $doc = $request->get('doc');
-        $ip = $request->ip();
-        $status = null;
-
-        if(!Uniqueip::where('ip','=',$ip)->where('doctor','=',$doc)->count())
-        {
-            $cf = new Uniqueip();
-            $cf->doctor = $doc;
-            $cf->ip = $ip;
-            $cf->like_dis = $like;
-            $cf->save();
-
-            $doctor = Doctor::where('id','=',$doc)->first();
-            if($like == 1)
-            {
-                $doctor->like += 1;
-            }else{
-                $doctor->dislike += 1;
-            }
-            $doctor->save();
-        }
-
-        return response()->json([
-            'status'=>$status,
-            'rates'=>view('components.ratemini',['doctor'=>$doctor])->render()
-        ]);
-    }
-
-    public function r_home()
-    {
         $stats = [
             'doctors_count'  => Doctor::localPublic()->count(),
             'orders_count'   => Order::whereIn('status', [1, 2])->count(),
@@ -168,6 +90,37 @@ class IndexController extends Controller
                 'social',
                 'districts')
         );
+    }
+
+    public function ratings(Request $request)
+    {
+        $like = $request->get('likenot');
+        $doc = $request->get('doc');
+        $ip = $request->ip();
+        $status = null;
+
+        if(!Uniqueip::where('ip','=',$ip)->where('doctor','=',$doc)->count())
+        {
+            $cf = new Uniqueip();
+            $cf->doctor = $doc;
+            $cf->ip = $ip;
+            $cf->like_dis = $like;
+            $cf->save();
+
+            $doctor = Doctor::where('id','=',$doc)->first();
+            if($like == 1)
+            {
+                $doctor->like += 1;
+            }else{
+                $doctor->dislike += 1;
+            }
+            $doctor->save();
+        }
+
+        return response()->json([
+            'status'=>$status,
+            'rates'=>view('components.ratemini',['doctor'=>$doctor])->render()
+        ]);
     }
 
     public function getBuyersReport()
