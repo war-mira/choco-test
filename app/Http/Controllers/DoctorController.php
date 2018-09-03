@@ -571,7 +571,7 @@ class DoctorController extends Controller
             if($phone)
                 return $phone;
             else
-                return '<strong>Спасибо!</strong> Ваша заявка принята мы вам перезвоним!';
+                return '<strong>Спасибо!</strong> Ваша заявка была принята. Мы обязательно свяжемся с вами!';
         }
     }
 
