@@ -72,16 +72,18 @@ Route::group(['prefix' => '{city}'], function () {
         Route::get('/{medcenter}/doctors', 'MedcenterController@loadDoctors')->name('doctors');
         Route::get('/{medcenter}/comments', 'MedcenterController@loadComments')->name('comments');
     });
-    Route::group(['prefix' => 'library', 'as' => 'library.'], function () {
-        Route::get('/', 'LibraryController@index')->name('index');
-        Route::get('/{illnesses_group}', 'LibraryController@groupArticles')->name('illnesses-group-articles');
-        Route::get('/{illnesses_group}/{article}', 'LibraryController@article')->name('illnesses-group-article');
-    });
-    Route::group(['prefix' => 'illnesses', 'as' => 'illnesses.'], function () {
-        Route::get('/{letter?}', 'LibraryController@illnesses')->name('index');
-    });
-    Route::get('illness/{illness}', 'LibraryController@illness')->name('illness');
+
 });
+
+Route::group(['prefix' => 'library', 'as' => 'library.'], function () {
+    Route::get('/', 'LibraryController@index')->name('index');
+    Route::get('/{illnesses_group}', 'LibraryController@groupArticles')->name('illnesses-group-articles');
+    Route::get('/{illnesses_group}/{article}', 'LibraryController@article')->name('illnesses-group-article');
+});
+Route::group(['prefix' => 'illnesses', 'as' => 'illnesses.'], function () {
+    Route::get('/{letter?}', 'LibraryController@illnesses')->name('index');
+});
+Route::get('illness/{illness}', 'LibraryController@illness')->name('illness');
 
 //Drugs **********************************************
 Route::get('drugs/', 'DrugsController@list');
