@@ -22,6 +22,7 @@ class PostController extends Controller
             ]);
         }
 
+        $links = $this->getNavigationFromContent($post->content);
 
         $meta = $post->getMetadata();
 
@@ -49,7 +50,7 @@ class PostController extends Controller
             str_replace(['rel="publisher"'], "", $post->content)
         );
 
-        return view('posts.item', compact('post', 'meta'));
+        return view('library.posts.item', compact('post', 'meta', 'links'));
     }
 
     public function list()
@@ -58,8 +59,14 @@ class PostController extends Controller
             ->orderBy('created_at', 'desc')
             ->orderBy('is_top', 'desc')
             ->paginate(15);
-        return view('posts.list', compact('posts'));
+        return view('library.posts.list', compact('posts'));
     }
 
+    private function getNavigationFromContent($content) {
+        $regex = '#<\s*?h2\b[^>]*>(.*?)</h2\b[^>]*>#s';
+        preg_match_all($regex, $content, $m);
+
+        return $m[1];
+    }
 
 }

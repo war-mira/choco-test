@@ -100,7 +100,7 @@ Route::get('comment/{id}/rate/{rate}', 'CommentController@rateComment')->name('r
 //******questions*****************
 Route::post('question/add', 'QuestionController@add');
 //******Posts***************************
-Route::get('post/{alias}', 'PostController@item');
+Route::get('post/{alias}', 'PostController@item')->name('post');
 Route::get('posts', 'PostController@list')->name('posts');
 //******redirects*****************
 Route::get('/promos/almaty', function () {
