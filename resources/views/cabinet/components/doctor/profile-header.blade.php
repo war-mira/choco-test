@@ -9,7 +9,7 @@
                 </a>
                 <a href="{{ route('cabinet.doctor.professional.index') }}" class="tab-line__item
                     @if(Route::is('cabinet.doctor.professional.index') || Route::is('cabinet.doctor.professional.edit')) tab-line__item_active @endif" >
-                    <span class="tab-line__item-text">Профессиональнае данные</span>
+                    <span class="tab-line__item-text">Профессиональные данные</span>
                 </a>
             </div>
         </div>

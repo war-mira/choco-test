@@ -39,6 +39,9 @@
 <body>
 <div class="main-wrap" >
     @include('redesign.partials.header')
+    <section class="index-intro pattern-bg cabinet">
+        @include('redesign.partials.nav_line')
+    </section>
     <main class="account-wrapper pattern-bg">
         <div class="container" id="app">
             @yield('content')
