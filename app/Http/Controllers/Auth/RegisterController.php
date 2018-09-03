@@ -71,13 +71,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $role = $data['role']==0?0:20;
+
        $user = User::create([
             'name' => $data['name'],
             'lastname' => $data['lastname'],
             'email' => $data['email'],
             'phone' => FormatHelper::phone($data['phone']),
             'city' => $data['city'],
-            'role' => $data['role'],
+            'role' => $role,
             'password' => bcrypt($data['password']),
         ]);
 
