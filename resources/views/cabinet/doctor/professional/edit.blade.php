@@ -7,7 +7,7 @@
                 @include('cabinet.components.doctor.profile-header')
                 <div class="account-content__body">
                     <div class="doc-prof-data">
-                        <form method="post">
+                        <form method="post" class="form-with-editor">
                             {{ csrf_field() }}
                             <div class="doc-prof-data__section">
                                 <div class="doc-prof-data__data-lines">
@@ -135,7 +135,7 @@
                                             <div class="doc-prof-data__data-item doc-prof-data__data-item_grow account-data-item">
                                                 <div class="account-data-item__name">Расскажите подробнее о том, какие заболевания вы лечите</div>
                                                 <div class="account-data-item__val">
-                                                    <textarea class="editor" name="treatment_text" class="">{!! old('treatment_text') ? old('treatment_text'):$doctor->treatment_text  !!}</textarea>
+                                                    <textarea class="editor" name="treatment_text">{!! old('treatment_text') ? old('treatment_text'):$doctor->treatment_text  !!}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -188,17 +188,11 @@
                                 </div>
                             </div>
                             <div class="doc-prof-data__edit-data">
-                                <button type="submit" class="btn btn_theme_usual">Сохранить</button>
+                                <button type="submit" class="btn btn_theme_usual submit-form-with-editor-button">Сохранить</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
     </div>
-    <script type="text/javascript">
-        var allEditors = document.querySelectorAll('.editor');
-        for (var i = 0; i < allEditors.length; ++i) {
-            ClassicEditor.create(allEditors[i]);
-        }
-    </script>
 @endsection

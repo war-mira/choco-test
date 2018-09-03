@@ -643,7 +643,25 @@ $(document).ready(function() {
             }, 100).addClass('open');
         }
     });
+
+    var allEditors = document.querySelectorAll('.editor');
+    for (var i = 0; i < allEditors.length; ++i) {
+        ClassicEditor.create(allEditors[i]);
+    }
+
+    $('.submit-form-with-editor-button').on('click', function (e) {
+        e.preventDefault();
+        updateAllMessageForms();
+        $('.form-with-editor').submit();
+    })
 });
+
+
+function updateAllMessageForms(){
+    for (instance in ClassicEditor.instances) {
+        ClassicEditor.instances[instance].updateElement();
+    }
+}
 
 //returns element markup
 jQuery.fn.outerHTML = function() {

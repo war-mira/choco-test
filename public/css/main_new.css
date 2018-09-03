@@ -2126,12 +2126,10 @@ img {
   color: green;
 padding-bottom: 15px}
 .find-doctor_message.active{
-  display: block;
-}
+  display: block;}
 .explain-text{
     padding: 0 10px;
-    margin-bottom: 3  5px;
-}
+    margin-bottom: 35px;}
 .date-radio__item {
   cursor: pointer;
   position: relative; }
