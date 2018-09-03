@@ -16,21 +16,21 @@ class LibraryController
         return view('library.index', compact('illnessesGroups'));
     }
 
-    public function groupArticles(City $city = null, IllnessesGroup $illnessesGroup)
+    public function groupArticles(IllnessesGroup $illnessesGroup)
     {
         $articles = IllnessesGroupArticle::where('illnesses_group_id', $illnessesGroup->id)->orderBy('created_at', 'desc')->paginate(12);
 
         return view('library.articles.list', compact('articles', 'illnessesGroup'));
     }
 
-    public function article(City $city = null, IllnessesGroup $illnessesGroup, IllnessesGroupArticle $article)
+    public function article( IllnessesGroup $illnessesGroup, IllnessesGroupArticle $article)
     {
         $links = $this->getNavigationFromContent($article->description);
 
         return view('library.articles.item', compact('article', 'links', 'illnessesGroup'));
     }
 
-    public function illnesses(City $city = null, $letter = null)
+    public function illnesses( $letter = null)
     {
         $letters = $this->getAlphabet();
         if(!$letter)
@@ -41,7 +41,7 @@ class LibraryController
         return view('library.illnesses.list', compact('letters', 'letter', 'illnesses'));
     }
 
-    public function illness(City $city = null, Illness $illness)
+    public function illness( Illness $illness)
     {
         $links = $this->getNavigationFromContent($illness->description);
 

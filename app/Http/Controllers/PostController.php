@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Library\IllnessesGroupArticle;
 use App\Post;
 
 class PostController extends Controller
@@ -11,7 +12,16 @@ class PostController extends Controller
 
         $post = Post::where('status', 1)
             ->where('alias', $alias)
-            ->firstOrFail();
+            ->first();
+
+        if(!$post){
+            $article = IllnessesGroupArticle::where('alias',$alias)->firstOrFail();
+            return redirect()->route('library.illnesses-group-article',[
+                'illnesses_group' => $article->illnessesGroup->alias,
+                'article' => $article->alias
+            ]);
+        }
+
 
         $meta = $post->getMetadata();
 
