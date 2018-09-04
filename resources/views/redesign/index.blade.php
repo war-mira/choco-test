@@ -62,7 +62,7 @@
                     @foreach($skillsList->chunk(ceil($skillsList->count()/3)) as $skillLinksColumn)
                         <div class="doc-letter-search__result-column">
                             @foreach($skillLinksColumn as $skillLink)
-                                <a href="{{ $skillLink['href'] }}" class="doc-letter-search__result-item">
+                                <a href="{{ $skillLink['href'] }}" class="doc-letter-search__result-item" title="{{$skillLink['name']}}">
                                     <span class="doc-letter-search__result-item-text">{{$skillLink['name']}}</span>
                                     <span class="doc-letter-search__result-item-count">{{$skillLink['doctorsCount']}}</span>
                                 </a>

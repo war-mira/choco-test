@@ -1980,7 +1980,7 @@ img {
       -ms-flex-negative: 0;
           flex-shrink: 0; }
 
-.entity-line__name {
+.entity-line__name, .entity-line__name h1 {
   font-size: 18px;
   font-family: "ProximaNova-Bold", sans-serif; }
 

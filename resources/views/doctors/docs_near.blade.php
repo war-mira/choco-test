@@ -16,6 +16,9 @@
                                 @slot('height')
                                     250px
                                 @endslot
+                                @slot('alt')
+                                   {{$tt->name}}
+                                @endslot
                             @endcomponent
                             <div class="entity-thumb-img__rating">{{$tt->avg_rate}}</div>
                         </div>

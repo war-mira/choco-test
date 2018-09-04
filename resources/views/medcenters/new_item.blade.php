@@ -19,6 +19,9 @@
                                     @slot('height')
                                         200px
                                     @endslot
+                                    @slot('alt')
+                                        {{$medcenter->name}}
+                                    @endslot
                                 @endcomponent
                                     <a href="#" class="entity-thumb-img__add-favorite"></a>
                         </div>

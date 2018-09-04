@@ -17,6 +17,9 @@
                             @slot('on_top')
                                 {{$doctor->on_top}}
                             @endslot
+                            @slot('alt')
+                                {{$doctor->name}}
+                            @endslot
                         @endcomponent
                     </div>
                     <div class="entity-thumb-img__rating-line rating-line">
@@ -41,7 +44,7 @@
                 </div>
             </div>
             <div class="entity-line__main">
-                <div class="entity-line__name">{{$doctor['name']}}</div>
+                <div class="entity-line__name"><h1>{{$doctor['name']}}</h1></div>
                 <div class="entity-line__descr">@foreach ($doctor['skills'] as $i=>$skill)<a href="{{$skill->href}}"
                                                                                              style="text-decoration: none">{{$skill->name }}</a>
                     @if(count($doctor['skills']) > 1 && $i!=(count($doctor['skills'])-1)) / @endif  @endforeach</div>
@@ -199,16 +202,16 @@
     <div class="container">
         <div class="entity-about__tab-line tabs">
             <a href="#" data-tab="tab-1" class="entity-about__tab-item entity-about__tab-item_active">
-                <span class="entity-about__tab-name">О враче</span>
+                <h2 class="entity-about__tab-name">О враче</h2>
             </a>
 
             <a href="#" data-tab="tab-2" class="entity-about__tab-item">
-                <span class="entity-about__tab-name">Отзывы</span>
-                <span class="entity-about__tab-count">{{$doctor->publicComments()->count()}}</span>
+                <h2 class="entity-about__tab-name">Отзывы<span class="entity-about__tab-count">{{$doctor->publicComments()->count()}}</span>
+                </h2>
             </a>
-            <a href="#" data-tab="tab-3" class="entity-about__tab-item">
-                <span class="entity-about__tab-name">Акции и скидки</span>
-            </a>
+            {{--<a href="#" data-tab="tab-3" class="entity-about__tab-item">--}}
+                {{--<h2 class="entity-about__tab-name">Акции и скидки</h2>--}}
+            {{--</a>--}}
         </div>
 
         <div class="entity-about__content entity-content">
@@ -216,7 +219,7 @@
                 <div class="entity-content__main">
                     @foreach(App\Doctor::CONTENTS as $field=>$title)
                         @if(!empty(trim($doctor[$field])) && $doctor[$field] != '0' && strlen($doctor[$field])>10)
-                            <span class="entity-about-article__heading">{{$title}}</span>
+                            <h3><span class="entity-about-article__heading">{{$title}}</span></h3>
                             <div>{!! str_replace('\r\n', '<br />', $doctor[$field]) !!}</div>
                         @endif
                     @endforeach

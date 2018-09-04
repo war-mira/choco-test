@@ -1,7 +1,7 @@
 <div class="entity-line__img">
     <div class="entity-thumb-img">
         <div class="entity-thumb-img__img-wr">
-            @component('components.prof-img',['width'=>$width??'200px','height'=>$height??'200px','class_min'=>$medcenter->checkImageheight()??'0'])
+            @component('components.prof-img',['width'=>$width??'200px','height'=>$height??'200px','class_min'=>$medcenter->checkImageheight()??'0', 'alt'=>$medcenter->name])
                 @slot('src')
                     {{$medcenter->avatar}}
                 @endslot

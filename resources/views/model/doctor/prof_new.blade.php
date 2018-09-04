@@ -6,6 +6,9 @@
         @slot('on_top')
              {{$doctor->on_top}}
         @endslot
+        @slot('alt')
+            {{$doctor->name}}
+        @endslot
         @if(isset($comercial))
             @slot('comercial')
                 {{$comercial}}
