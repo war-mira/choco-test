@@ -282,12 +282,6 @@
                                 @endcomponent
                             </div>
                         </div>
-
-                        @component('components.script',['owner'=>['type'=>'Doctor','id'=>$doctor->id]])
-                            @slot('title') @endslot
-                            @slot('visible',5)
-                            @slot('url',route('doctor.comments',['doctor'=>$doctor->alias]))
-                        @endcomponent
                     </div>
 
                 </div>
@@ -316,32 +310,3 @@
     </div>
 </section>
 @include('forms.public.order_doc')
-<script type="text/javascript">
-
-    var callbackForm = $('form#callback_form');
-
-    $("#save_order").click(function (e) {
-        e.preventDefault();
-        ga('send', 'event', {
-            eventCategory: 'zapisatsya',
-            eventAction: 'click'
-        });
-        //Ya goal
-        yaCounter47714344.reachGoal('registration');
-
-        if (callbackForm[0].checkValidity()) {
-            var formData = new FormData(callbackForm[0]);
-            formData.ga_cid =
-                $.getJSON("{{route('callback.newDoc')}}", getFormData(callbackForm))
-                    .done(function (json) {
-                        $.magnificPopup.close();
-                        $.magnificPopup.open({
-                            items: {
-                                src: '#callback_mess_ok',
-                                type: 'inline'
-                            }
-                        });
-                    });
-        }
-    });
-</script>
