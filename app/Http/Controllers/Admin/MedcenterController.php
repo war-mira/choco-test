@@ -88,8 +88,7 @@ class MedcenterController extends Controller
             $data['sund'] = serialize(array($data['sund_from'],$data['sund_to']));
         }
 
-        $medcenter = new Medcenter();
-        $medcenter->fill($data);
+        $medcenter = Medcenter::create($data);
         $medcenter->save();
 
         if ($redirectRoute != null) {
@@ -142,7 +141,7 @@ class MedcenterController extends Controller
 
         $medcenter = Medcenter::find($id);
         $medcenter->fill($data);
-        $medcenter->save();
+        $medcenter->update();
 
         if($medcenter->partner == Medcenter::PARTNER){
             $this->updateDoctors($medcenter);

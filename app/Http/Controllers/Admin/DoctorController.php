@@ -106,10 +106,8 @@ class DoctorController extends Controller
             $data['sund'] = serialize(array($data['sund_from'],$data['sund_to']));
         }
 
-        $doctor = (new Doctor($data));
+        $doctor = Doctor::create($data);
         $doctor->save();
-
-        $this->slug($doctor);
 
         $jobs = $data['jobs'] ?? false;
         if ($jobs !== false) {
@@ -185,8 +183,6 @@ class DoctorController extends Controller
 
         $doctor->save();
 
-        $this->slug($doctor);
-
         $skills = $data['skills'] ?? false;
         if ($skills !== false) {
             $skills = collect($skills)->mapWithKeys(function ($skill) {
@@ -239,13 +235,6 @@ class DoctorController extends Controller
         }
 
         return $data;
-    }
-
-    private function slug(Doctor $doctor)
-    {
-        $transName = \Slug::make($doctor->name);
-        $doctor->alias = $doctor->id . "-" . $transName;
-        $doctor->update();
     }
 
     public function delete(Request $request, $id)
