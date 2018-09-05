@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\City;
 use App\Interfaces\ISeoMetadata;
+use morphos\Russian\GeographicalNamesInflection;
 
 class SeoMetadataHelper
 {
@@ -61,14 +62,14 @@ class SeoMetadataHelper
 
     private static function getCityPP($cityId = null)
     {
-        return self::CityPP[$cityId] ?? '';
+        $city = City::find($cityId);
+        return self::CityPP[$cityId] ?? GeographicalNamesInflection::getCase($city->name, 'предложный');
     }
 
     private static function getCityPhs(City $city)
     {
         $cityName = $city ? $city->name : '';
         $cityPP = $city ? self::getCityPP($city->id) : '';
-
         return [
             ':city_name' => $cityName,
             ':city_pp'   => $cityPP,

@@ -1955,6 +1955,9 @@ img {
   padding-bottom: 40px; }
   .search-result__item {
     border-bottom: 1px solid #f9f9f9; }
+.search-result__city-name h1:first-letter {
+  text-transform: uppercase;
+}
 
 .doc-clinic-line__item {
   border-bottom: 1px solid #f9f9f9; }
@@ -2241,7 +2244,10 @@ padding-bottom: 15px}
 .posts-pagination{
  margin-bottom: 35px;
 }
-
+.search-result__city-name{
+  padding: 20px;
+  text-align: center;
+}
 .pagination {
   display: -webkit-box;
   display: -webkit-flex;

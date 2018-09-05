@@ -6,6 +6,8 @@ use App\Helpers\SessionContext;
 use App\Interfaces\ISeoMetadata;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use morphos\Russian\GeographicalNamesInflection;
+use morphos\Russian\NounPluralization;
 
 /**
  * App\Skills
@@ -147,7 +149,8 @@ class Skill extends Model implements ISeoMetadata
 
     public function getMetaHeader()
     {
-        return empty($this->seo_h1) ? $this->name : $this->seo_h1;
+        $city = SessionContext::city();
+        return empty($this->seo_h1) ?  NounPluralization::getCase($this->name, 'именительный').' в '. GeographicalNamesInflection::getCase($city->name, 'предложный'): $this->seo_h1;
     }
 
     public function getSeoText()

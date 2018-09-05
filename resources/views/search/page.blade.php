@@ -10,7 +10,11 @@
                 <div class="container">
                     <div class="search-result__list">
                         <div class="search-result__city-name">
-                            <h1>Врачи в {{ morphos\Russian\GeographicalNamesInflection::getCase($city->name, 'предложный')  }}</h1>
+                            <h1>
+                                @if(!empty($meta['h1']))
+                                    {{$meta['h1']}}
+                                @endif
+                            </h1>
                         </div>
                         @if($comercial)
                         @foreach($comercial->get() as $doctor)
