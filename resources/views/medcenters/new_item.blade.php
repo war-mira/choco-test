@@ -335,7 +335,10 @@
                     offset = medcenters.offset;
                     $('#docsLeftText').text(medcenters.left);
                     if (medcenters.left <= 0)
+                    {
                         $('.doc-list__more .btn_theme_more').prop('disabled', true);
+                        $('.doc-list__more').addClass('hidden');
+                    }
                 });
 
             });
