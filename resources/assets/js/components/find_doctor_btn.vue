@@ -1,9 +1,9 @@
 <template>
     <div>
-    <slot name="link-to-modal">
-        <a href="#find-doctor-modal" class="btn btn_theme_usual popup-with-form" v-bind:class="{ active: isActive }" v-html="message">
-        </a>
-    </slot>
+        <slot name="link-to-modal">
+            <a href="#find-doctor-modal" class="btn btn_theme_usual popup-with-form" v-bind:class="{ active: isActive }" v-html="message">
+            </a>
+        </slot>
         <modal :href="path"></modal>
     </div>
 </template>

@@ -23,7 +23,7 @@
                                         {{$medcenter->name}}
                                     @endslot
                                 @endcomponent
-                                    <a href="#" class="entity-thumb-img__add-favorite"></a>
+                                    {{--<a href="#" class="entity-thumb-img__add-favorite"></a>--}}
                         </div>
 
                         <div class="entity-thumb-img__rating-line rating-line">
@@ -32,14 +32,14 @@
                             @endcomponent
                         </div>
 
-                        <div class="entity-thumb-img__bot-line">
-                            <a href="#" class="entity-thumb-img__reviews">{{$medcenter->allComments()->count()}} отзывов</a>
+                        {{--<div class="entity-thumb-img__bot-line">--}}
+                            {{--<a href="#" class="entity-thumb-img__reviews">{{$medcenter->allComments()->count()}} отзывов</a>--}}
 
-                            <inp-rate obj="medcenter" id="{{ $medcenter->id }}" type="likes" >
-                                <template slot="likes">{{ ($medcenter->likes ? $medcenter->likes : 0) }}</template>
-                                <template slot="dislikes">{{ ($medcenter->dislikes ? $medcenter->dislikes : 0) }}</template>
-                            </inp-rate>
-                        </div>
+                            {{--<inp-rate obj="medcenter" id="{{ $medcenter->id }}" type="likes" >--}}
+                                {{--<template slot="likes">{{ ($medcenter->likes ? $medcenter->likes : 0) }}</template>--}}
+                                {{--<template slot="dislikes">{{ ($medcenter->dislikes ? $medcenter->dislikes : 0) }}</template>--}}
+                            {{--</inp-rate>--}}
+                        {{--</div>--}}
                     </div>
                 </div>
 
@@ -80,11 +80,13 @@
                     </div>
                     <div class="entity-line__appointment-mini appointment-mini">
                         <div class="appointment-mini__heading">
-                            Прием от: <span>{{$medcenter['price']}} тг.</span>
+                            @if($medcenter->price && $medcenter->price != 0)
+                                Прием от: <span>{{$medcenter['price']}} тг.</span>
+                            @endif
                         </div>
-                        <div class="appointment-mini__book">
-                            <button class="btn btn_theme_usual">Записаться онлайн</button>
-                        </div>
+                        {{--<div class="appointment-mini__book">--}}
+                            {{--<button class="btn btn_theme_usual">Записаться онлайн</button>--}}
+                        {{--</div>--}}
                     </div>
                 </div>
 
@@ -137,12 +139,12 @@
                 <a href="#" data-tab="tab-2" class="entity-about__tab-item">
                     <span class="entity-about__tab-name">Врачи клиники</span>
                 </a>
-                <a href="#" data-tab="tab-3" class="entity-about__tab-item">
-                    <span class="entity-about__tab-name">Услуги и цены</span>
-                </a>
-                <a href="#" data-tab="tab-3" class="entity-about__tab-item">
-                    <span class="entity-about__tab-name">Акции и скидки</span>
-                </a>
+                {{--<a href="#" data-tab="tab-3" class="entity-about__tab-item">--}}
+                    {{--<span class="entity-about__tab-name">Услуги и цены</span>--}}
+                {{--</a>--}}
+                {{--<a href="#" data-tab="tab-3" class="entity-about__tab-item">--}}
+                    {{--<span class="entity-about__tab-name">Акции и скидки</span>--}}
+                {{--</a>--}}
             </div>
 
             <div class="entity-about__content entity-content">

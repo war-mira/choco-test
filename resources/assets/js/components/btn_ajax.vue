@@ -1,7 +1,9 @@
 <template>
+    <div>
     <span @click.prevent="send" :class="css" style="cursor:pointer">
         <slot>Отправить</slot>
     </span>
+    </div>
 </template>
 <style>
 

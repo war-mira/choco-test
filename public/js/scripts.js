@@ -655,7 +655,7 @@ $(document).ready(function() {
         $('.form-with-editor').submit();
     });
 
-    var offset = 0;
+    var offset = 5;
     var limit = 10;
     $('#loadMoreComments').click(function (e) {
         e.preventDefault();

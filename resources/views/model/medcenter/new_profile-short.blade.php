@@ -6,21 +6,21 @@
                     {{$medcenter->avatar}}
                 @endslot
             @endcomponent
-                <a href="#" class="entity-thumb-img__add-favorite"></a>
+                {{--<a href="#" class="entity-thumb-img__add-favorite"></a>--}}
         </div>
         <div class="entity-thumb-img__rating-line rating-line">
             <div class="rating-line__val">{{$medcenter['rate']}}</div>
             @component('components.rstars',['rating' => $medcenter['rate'] == 0 ? 0:$medcenter['rate']])
             @endcomponent
         </div>
-        <div class="entity-thumb-img__bot-line">
-            <a href="#" class="entity-thumb-img__reviews">{{$medcenter->allComments()->count()}} отзывов</a>
+        {{--<div class="entity-thumb-img__bot-line">--}}
+            {{--<a href="#" class="entity-thumb-img__reviews">{{$medcenter->allComments()->count()}} отзывов</a>--}}
 
-            <inp-rate obj="medcenter" id="{{ $medcenter->id }}" type="likes" >
-                <template slot="likes">{{ ($medcenter->likes ? $medcenter->likes : 0) }}</template>
-                <template slot="dislikes">{{ ($medcenter->dislikes ? $medcenter->dislikes : 0) }}</template>
-            </inp-rate>
-        </div>
+            {{--<inp-rate obj="medcenter" id="{{ $medcenter->id }}" type="likes" >--}}
+                {{--<template slot="likes">{{ ($medcenter->likes ? $medcenter->likes : 0) }}</template>--}}
+                {{--<template slot="dislikes">{{ ($medcenter->dislikes ? $medcenter->dislikes : 0) }}</template>--}}
+            {{--</inp-rate>--}}
+        {{--</div>--}}
     </div>
 </div>
 <div class="entity-line__main">
@@ -91,7 +91,8 @@
             </div>
         </div>
         <div class="work-hours__book">
-            <a href="#order_med" data-doc-id="{{$medcenter->id}}" data-dname="{{$medcenter['name']}}" data-status="6" class="appointment-book-big__book-btn btn btn_theme_usual trigger-link popup-with-form">Записаться<span class="hidden-xl"> онлайн</span></a>
+            {{--<a href="#order_med" data-doc-id="{{$medcenter->id}}" data-dname="{{$medcenter['name']}}" data-status="6" class="appointment-book-big__book-btn btn btn_theme_usual trigger-link popup-with-form">Записаться<span class="hidden-xl"> онлайн</span></a>--}}
+            <a href="{{ route('medcenter.item',['medcenter'=>$medcenter->alias, 'city' => $medcenter->city->alias]) }}" class="appointment-book-big__book-btn btn btn_theme_usual trigger-link">Побробнее</a>
         </div>
     </div>
 </div>

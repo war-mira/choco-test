@@ -7,10 +7,6 @@
             </span>
             <btn css="no-padding" :href="path" :data="{mark:1}" @failed="failed" @ready="sent"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></btn>
         </span>
-
-
-
-
         <span class="thumb-control__item down" data-type="2">
             <span class="thumb-control__val">
                 <slot name="dislikes" v-if="!updated"></slot><span v-if="updated">{{ val.dislikes }}</span>

@@ -75,7 +75,7 @@ class DoctorController extends Controller
      */
     public function list(City $city = null, $input = '', $modifier = '', DoctorFilters $filters)
     {
-//        $skill = Skill::where('alias',)
+        $skill = Skill::where('alias', $input)->first();
 
         $search = new \App\Helpers\DoctorSearcher([$input,$modifier]);
 
@@ -103,7 +103,6 @@ class DoctorController extends Controller
             'page'
         ]);
         $filter = $query;
-
 
         // remove ?page=1 from url
         if (isset($filter['page']) && $filter['page'] == 1){
@@ -153,7 +152,6 @@ class DoctorController extends Controller
             $pageSeo = PageSeo::where(['class'=>'Doctor','action'=>'list'])->first();
 
         $meta = SeoMetadataHelper::getMeta($skill??$pageSeo, $city);
-
 
         return view('search.page',
             compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage', 'skill', 'comercial','districts'));

@@ -252,10 +252,10 @@
                                             {{\App\Comment::where('owner_id', $doctor->id)->where('user_rate','<=',5)->where('owner_type', 'Doctor')->where('status', 1)->count()}}
                                         </span></span></a>
                             </div>
-                            <div class="entity-reviews__about">
-                                <div class="entity-reviews__about-text">У нас только реальные отзывы</div>
-                                <a href="#" class="entity-reviews__about-link">Как формируется рейтинг?</a>
-                            </div>
+                            {{--<div class="entity-reviews__about">--}}
+                                {{--<div class="entity-reviews__about-text">У нас только реальные отзывы</div>--}}
+                                {{--<a href="#" class="entity-reviews__about-link">Как формируется рейтинг?</a>--}}
+                            {{--</div>--}}
                         </div>
                         <div id="taz1" class="entity-about-articl current">
                             <div class="entity-reviews__list">

@@ -6,7 +6,7 @@
                 Пон.
             </div>
             <div class="col-sm-8">
-                @if($value["mond"])
+                @if(!empty($value) && $value["mond"])
                     @php
                         $nic = unserialize($value["mond"]);
                     @endphp
@@ -34,7 +34,7 @@
             </div>
 
             <div class="col-sm-8">
-                @if($value["tues"])
+                @if(!empty($value) && $value["tues"])
                     @php
                         $nic = unserialize($value["tues"]);
                     @endphp
@@ -62,7 +62,7 @@
             </div>
 
             <div class="col-sm-8">
-                @if($value["wedn"])
+                @if(!empty($value) && $value["wedn"])
                     @php
                         $nic = unserialize($value["wedn"]);
                     @endphp
@@ -90,7 +90,7 @@
             </div>
 
             <div class="col-sm-8">
-                @if($value["thur"])
+                @if(!empty($value) && $value["thur"])
                     @php
                         $nic = unserialize($value["thur"]);
                     @endphp
@@ -118,7 +118,7 @@
             </div>
 
             <div class="col-sm-8">
-                @if($value["frid"])
+                @if(!empty($value) && $value["frid"])
                     @php
                         $nic = unserialize($value["frid"]);
                     @endphp
@@ -146,7 +146,7 @@
             </div>
 
             <div class="col-sm-8">
-                @if($value["satu"])
+                @if(!empty($value) && $value["satu"])
                     @php
                         $nic = unserialize($value["satu"]);
                     @endphp
@@ -174,7 +174,7 @@
             </div>
 
             <div class="col-sm-8">
-                @if($value["sund"])
+                @if(!empty($value) && $value["sund"])
                     @php
                         $nic = unserialize($value["sund"]);
                     @endphp
