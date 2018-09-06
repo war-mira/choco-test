@@ -1879,13 +1879,17 @@ img {
 .parent_cont
 {
     display: block;
-    width: 200px;
     height: 200px;
     max-height: 200px;
     max-width: 200px;
     position: relative;
     overflow: hidden;
-    border-radius: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;}
+.parent_cont.medcenters{
+  width: 200px;
+  border-radius: 50%;
 }
 .result-control-bar__line {
   display: -webkit-box;
@@ -1900,7 +1904,6 @@ img {
   -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between; }
-
 .result-control-bar__query {
   -webkit-flex-shrink: 0;
       -ms-flex-negative: 0;
@@ -2123,6 +2126,8 @@ img {
   margin-left: 10px;}
 .appointment-book-small-header-block  .phone__block{
   padding-top: 10px}
+.appointment-book-small .appointment-book-small__line{
+  width: 100%;}
 .phone-number__show{
   border-bottom: 1px dotted;
   margin-left: 5px;}
