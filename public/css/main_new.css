@@ -1890,6 +1890,7 @@ img {
 .parent_cont.medcenters{
   width: 200px;
   border-radius: 50%;
+  overflow:hidden;
 }
 .result-control-bar__line {
   display: -webkit-box;
