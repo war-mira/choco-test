@@ -124,6 +124,33 @@ $(document).ready(function() {
         // }
     }
 
+    var callbackForm = $('form#callback_form');
+
+    $("#save_order").click(function (e) {
+        e.preventDefault();
+        ga('send', 'event', {
+            eventCategory: 'zapisatsya',
+            eventAction: 'click'
+        });
+        //Ya goal
+        yaCounter47714344.reachGoal('registration');
+
+        if (callbackForm[0].checkValidity()) {
+            var formData = new FormData(callbackForm[0]);
+            console.log(getFormData(callbackForm));
+            formData.ga_cid =
+                $.getJSON("/callback/newDoc", getFormData(callbackForm))
+                    .done(function (json) {
+                        $.magnificPopup.open({
+                            items: {
+                                src: '<div class="white-popup"><p><strong>Спасибо!</strong> Ваша заявка принята мы вам перезвоним!</p></div>',
+                            },
+                            type: 'inline'
+                        });
+                    });
+        }
+    });
+
     $('body').on('click', 'a.popup-with-form', function(e)
     {
             $(this).magnificPopup(popupDefaults).magnificPopup('open');

@@ -101,13 +101,15 @@
                 </div>
 
                 <div class="entity-line__additional appointment-book-small">
-                    <div class="appointment-book-big__heading">Записаться на прием</div>
+                    @if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])
+                        <div class="appointment-book-big__heading">Записаться на прием</div>
+                    @endif
                     <div class="appointment-book-small-header-block">
                         <div class="appointment-book-small__line">
                             <div class="appointment-book-small__timeline">
                                 {!! $doctor->timetable !!}
                             </div>
-                            @if($doctor->whoIsIt() == \App\Doctor::TYPE[3])
+                            @if($doctor->whoIsIt() == \App\Doctor::TYPE[3] || $doctor->whoIsIt() == \App\Doctor::TYPE[5])
                                 <div class="appointment-book-small__bot-line">
                                     <find-doctor-btn obj="doctor" id="{{ $doctor->id }}">
                                         <template slot="link-to-modal"></template>
@@ -115,7 +117,7 @@
                                     <a href="{{ route('register') }}" class="btn btn_theme_usual btn_it-is-me">Это я</a>
                                 </div>
                             @else
-                                @if( $doctor->whoIsIt() != \App\Doctor::TYPE[4])
+                                @if( $doctor->whoIsIt() != \App\Doctor::TYPE[4] && $doctor->whoIsIt() != \App\Doctor::TYPE[5])
                                     <phone-show-btn obj="doctor" id="{{ $doctor->id }}">
                                         <template slot="phone-number"></template>
                                     </phone-show-btn>

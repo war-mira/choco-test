@@ -54,7 +54,7 @@
                 </div>
             </div>
             <div class="leave-review__submit">
-                <button type="submit" id="save_order" class="btn btn_theme_usual" id="save_order">Записаться</button>
+                <button type="submit" id="save_order" class="btn btn_theme_usual">Записаться</button>
             </div>
         </div>
     </form>

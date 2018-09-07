@@ -92,7 +92,9 @@
         </div>
     </div>
 <div class="entity-line__additional appointment-book-big">
-    <div class="appointment-book-big__heading">Записаться на прием</div>
+    @if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])
+        <div class="appointment-book-big__heading">Записаться на прием</div>
+    @endif
     <div class="appointment-book-big__timeline">
         {!! $doctor->timetable !!}
     </div>
@@ -104,7 +106,7 @@
             <a href="{{ route('register') }}" class="btn btn_theme_usual">Это я</a>
         </div>
         @else
-        @if( $doctor->whoIsIt() != \App\Doctor::TYPE[4])
+        @if( $doctor->whoIsIt() != \App\Doctor::TYPE[4] && $doctor->whoIsIt() != \App\Doctor::TYPE[5])
             <phone-show-btn obj="doctor" id="{{ $doctor->id }}">
                 <template slot="phone-number"></template>
             </phone-show-btn>

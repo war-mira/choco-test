@@ -132,10 +132,11 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     const NOT_PARTNER = 0;
     const TYPE = [
       0 => 'partner',
-      1 => 'not_partner_registered',
+      1 => 'not_partner_registered_with_phone',
       2 => 'not_partner_not_registered_with_phone',
       3 => 'not_partner_not_registered_without_phone',
-      4 => 'partner_without_phone'
+      4 => 'partner_without_phone',
+      5 => 'not_partner_registered_without_phone'
     ];
     public $timestamps = true;
     protected $table = 'doctors';
@@ -530,7 +531,11 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
             if($this->user_id != 22)
                 $account = User::find($this->user_id);
            if($account){
-               return self::TYPE[1];
+               if($this->showing_phone){
+                   return self::TYPE[1];
+               }else{
+                   return self::TYPE[5];
+               }
            }else{
                if(!empty($this->showing_phone)){
                    return self::TYPE[2];
