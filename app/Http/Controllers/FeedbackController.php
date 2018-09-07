@@ -46,8 +46,8 @@ class FeedbackController extends Controller
     {
 
         return
-//            Auth::user()
-            User::find(12884)
+            Auth::user()
+//            User::find(12884)
                 ->doctor
                 ->comments()->with('replies')->orderBy('id','desc')->paginate(20);
 //        return Auth::user()->doctor->comments;

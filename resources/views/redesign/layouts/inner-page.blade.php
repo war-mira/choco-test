@@ -60,5 +60,6 @@
         });
     });
 </script>
+@stack('custom.js')
 </body>
 </html>

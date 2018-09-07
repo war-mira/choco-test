@@ -44,9 +44,9 @@ class SearchIndexJob implements ShouldQueue
 
         $index->addToIndex($this->data);
 
-        $this->data->each(function ($itm){
-            Redis::zadd("search.index2:{$this->config['model']}-info",$itm->id, json_encode($itm));
-        });
+//        $this->data->each(function ($itm){
+//            Redis::zadd("search.index2:{$this->config['model']}-info",$itm->id, json_encode($itm));
+//        });
 
         Redis::publish('search indexed pages',1);
 
