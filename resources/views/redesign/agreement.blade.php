@@ -196,7 +196,7 @@
                 </ul>
                 <br>
                 <p style="float: right">контактный телефон: +7 (727) 2 22 22 00<br>
-                    e-mail: <a mailto="info@idcotor.kz"></a>info@idcotor.kz</p>
+                    e-mail: <a mailto="info@idcotor.kz"></a>info@idoctor.kz</p>
             </div>
         </div>
     </div>

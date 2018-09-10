@@ -23,8 +23,10 @@ class LibraryController
         return view('library.articles.list', compact('articles', 'illnessesGroup'));
     }
 
-    public function article( IllnessesGroup $illnessesGroup, IllnessesGroupArticle $article)
+    public function article( IllnessesGroup $illnessesGroup,  $article)
     {
+
+        $article = IllnessesGroupArticle::where('alias',$article)->firstOrFail();
         $links = $this->getNavigationFromContent($article->description);
 
         return view('library.articles.item', compact('article', 'links', 'illnessesGroup'));
