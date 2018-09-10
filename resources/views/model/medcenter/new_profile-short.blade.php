@@ -27,12 +27,12 @@
     <div class="h3 profiles__title">
         <div class="entity-line__name"><a href="{{ route('medcenter.item',['medcenter'=>$medcenter->alias, 'city' => $medcenter->city->alias]) }}">{{$medcenter->name}}</a></div>
     </div>
-    <div class="entity-line__descr">
-        Многопрофильное медицинское учреждение
-    </div>
+    {{--<div class="entity-line__descr">--}}
+        {{--Многопрофильное медицинское учреждение--}}
+    {{--</div>--}}
     <div class="entity-line__about-text">
         <p>
-            {{strip_tags($medcenter['content_lite'])}}
+            {!! $medcenter['content_lite'] !!}
         </p>
     </div>
     <div class="clinic-line__brief">

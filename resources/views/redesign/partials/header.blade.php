@@ -39,7 +39,7 @@
                 @if(Auth::guest())
                 <a href="#signin-modal"  rel="modal-link" class="main-header__action-item header-link-btn header-login-btn">
                     <span class="header-link-btn__icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>
-                    <span>Вход / Регистрация</span>
+                    <span>Войти</span>
                 </a>
                 @else
                     <a href="@if(Auth::user()->role == \App\User::ROLE_DOCTOR) {{route('cabinet.doctor.personal.index')}}
@@ -60,7 +60,7 @@
         </div>
         <div class="mobile-menu pattern-bg">
             <a href="#signin-modal"  rel="modal-link"  class="mobile-menu__item mobile-menu-item">
-                <span>Вход / Регистрация</span>
+                <span>Войти</span>
             </a>
             {{--<a href="#" class="mobile-menu__item mobile-menu-item">--}}
                 {{--<span>Сотрудничество</span>--}}

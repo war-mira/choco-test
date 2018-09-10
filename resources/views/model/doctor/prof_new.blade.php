@@ -37,6 +37,9 @@
 </div>
 <div class="entity-line__main">
     <h3 class="entity-line__name profiles__title"><a href="{{ route('doctor.item',['doctor'=>$doctor->alias]) }}">{{$doctor['name']}}</a></h3>
+    <div class="entity-line__descr">@foreach ($doctor['skills'] as $i=>$skill)<a href="{{$skill->href}}"
+                                                                                 style="text-decoration: none">{{$skill->name }}</a>
+        @if(count($doctor['skills']) > 1 && $i!=(count($doctor['skills'])-1)) / @endif  @endforeach</div>
     @if($doctor['qualification'])<div class="entity-line__label">{{$doctor['qualification']}}</div>@endif
     <div class="entity-line__features">
         <div class="entity-line__feature entity-feature">
@@ -76,21 +79,27 @@
         </div>
     </div>
     <div class="doc-line__address">
+        @if(count($doctor->jobs))
             <div class="doc-line__address-heading">Прием по адресу:</div>
             <div class="doc-line__address-list">
-                @if($doctor->jobs)
-                    @foreach($doctor->jobs as $job)
-                        <div class="doc-line__address-item">
-                            <div class="doc-line__address-val"><a href="{{ route('doctor.item', $doctor->alias) }}">{{$doctor['city']->name}}</a>, {{$job->medcenter ? $job->medcenter->sms_address: ''}}</div>
-                            <div class="doc-line__address-clinic-link">
-                                <a href="{{$job->medcenter ? route('medcenter.item', $job->medcenter->alias):'#'}}">{{$job->medcenter ? $job->medcenter->name:''}}</a>
-                            </div>
+                @foreach($doctor->jobs as $job)
+                    <div class="doc-line__address-item">
+                        <div class="doc-line__address-val"><a href="{{ route('doctor.item', $doctor->alias) }}">{{$doctor['city']->name}}</a>, {{$job->medcenter ? $job->medcenter->sms_address: ''}}</div>
+                        <div class="doc-line__address-clinic-link">
+                            @if($job->medcenter)
+                                @if($job->medcenter->status == 1)
+                                    <a href="{{route('medcenter.item', $job->medcenter->alias)}}">{{$job->medcenter->name}}</a>
+                                @else
+                                    <span>{{$job->medcenter->name}}</span>
+                                @endif
+                            @endif
                         </div>
-                    @endforeach
-                @endif
+                    </div>
+                @endforeach
             </div>
-        </div>
+        @endif
     </div>
+</div>
 <div class="entity-line__additional appointment-book-big">
     @if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])
         <div class="appointment-book-big__heading">Записаться на прием</div>

@@ -1,4 +1,5 @@
 <div class="modal-window w20" id="signin-modal">
+    <div class="moodal-close-bg"></div>
         <div class="modal-close"></div>
         <div class="modal__title py-4">
             Вход

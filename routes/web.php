@@ -197,6 +197,7 @@ Route::get('/{city}/specializacii/{skill}', 'SkillController@showSkillDoctors')-
 
 Route::get('/load', 'ExcelController@loadDoctors')->name('load.doctors');
 Route::get('/load-skills', 'ExcelController@loadSkills')->name('load.skills');
+Route::get('/add-phones', 'ExcelController@addPhones')->name('load.phones');
 
 
 // Telegram doctors bot
