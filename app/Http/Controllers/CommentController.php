@@ -55,6 +55,7 @@ class CommentController extends Controller
 
             // TODO send sms code
             Redis::publish('debug-sms',$code);
+            Redis::publish('debug-sms',$phone);
 
             //TODO: throttle sms delivery for 1 min for number
             $sms = \SmsService::send([

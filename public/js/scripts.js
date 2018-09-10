@@ -143,7 +143,7 @@ $(document).ready(function() {
                     .done(function (json) {
                         $.magnificPopup.open({
                             items: {
-                                src: '<div class="white-popup"><p><strong>Спасибо!</strong> Ваша заявка принята мы вам перезвоним!</p></div>',
+                                src: '<div class="white-popup"><p><strong>Спасибо!</strong> Ваша заявка принята. Мы вам перезвоним!</p></div>',
                             },
                             type: 'inline'
                         });
