@@ -14,10 +14,17 @@ mix
     .babel([
         'resources/assets/packages/lvg/js/*.js'
     ], 'public/projects/lvg/js/app.js')
-    .sass('resources/assets/packages/lvg/scss/app.scss', 'public/projects/lvg/css/app.css');
-
+    .sass('resources/assets/packages/lvg/scss/app.scss', 'public/projects/lvg/css/app.css')
+    .options({
+        processCssUrls: false,
+        postCss: [
+            require('postcss-css-variables')()
+        ]
+    })
+    .copy('resources/assets/packages/lvg/img','public/projects/lvg/img')
+    ;
 mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');
 
-
+//mix.browserSync('localhost:8000');
 mix.version();

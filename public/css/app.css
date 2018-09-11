@@ -45,7 +45,6 @@
 /*Additional properties for button version
  iOS requires the button element instead of an anchor tag.
  If you want the anchor version, it requires `href="#"`.*/
-
 button.toast-close-button {
   padding: 0;
   cursor: pointer;
@@ -197,13 +196,11 @@ button.toast-close-button {
 }
 
 /*Responsive Design*/
-
 @media all and (max-width: 240px) {
   #toast-container > div {
     padding: 8px 8px 8px 50px;
     width: 11em;
   }
-
   #toast-container .toast-close-button {
     right: -0.2em;
     top: -0.2em;
@@ -215,7 +212,6 @@ button.toast-close-button {
     padding: 8px 8px 8px 50px;
     width: 18em;
   }
-
   #toast-container .toast-close-button {
     right: -0.2em;
     top: -0.2em;
@@ -240,4 +236,3 @@ button.toast-close-button {
   transition: 0.3s filter linear;
   transition: 0.3s filter linear, 0.3s -webkit-filter linear;
 }
-

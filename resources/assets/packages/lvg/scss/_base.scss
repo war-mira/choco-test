@@ -1,6 +1,33 @@
+
+$font-regular:"ProximaNova-Regular", sans-serif;
+$font-bold:"ProximaNova-Bold", sans-serif;
+$font-semibold:"ProximaNova-Semibold", sans-serif;
+$font-extrabold:"ProximaNova-Extrabold",sans-serif;
+$font-black:"ProximaNova-Black",sans-serif;
+$white:#fff;
+
+
+
+
 .page--lvg{
   max-width: 1600px;
   margin:0 auto;
   position: relative;
+  font-family: $font-regular;
+  h1{
+    font-family: $font-black;
+    font-size:48px;
+  }
+  h3{
+    font-family: $font-black;
+    font-size: 31px;
+  }
+
 }
 
+.card{
+  position: relative;
+  background-color:#fff;
+  border-radius: 3px;
+  padding: 16px;
+}

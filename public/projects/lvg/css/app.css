@@ -2,5 +2,135 @@
   max-width: 1600px;
   margin: 0 auto;
   position: relative;
+  font-family: "ProximaNova-Regular", sans-serif;
 }
 
+.page--lvg h1 {
+  font-family: "ProximaNova-Black", sans-serif;
+  font-size: 48px;
+}
+
+.page--lvg h3 {
+  font-family: "ProximaNova-Black", sans-serif;
+  font-size: 31px;
+}
+
+.card {
+  position: relative;
+  background-color: #fff;
+  border-radius: 3px;
+  padding: 16px;
+}
+
+.page--lvg__main {
+  padding: 64px;
+  background-image: url(/projects/lvg/img/background.jpg);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  min-height: 50vh;
+  position: relative;
+}
+
+.page--lvg__main:after {
+  content: " ";
+  position: absolute;
+  width: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+.page--lvg__main .content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  position: relative;
+  z-index: 3;
+}
+
+.page--lvg__main .content .title {
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+}
+
+.page--lvg__main .title {
+  text-align: center;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.page--lvg__main .title h1 {
+  line-height: 34px;
+}
+
+.page--lvg__main .main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 24px;
+  color: #fff;
+  padding: 0 64px;
+}
+
+.page--lvg__main .main > div {
+  -ms-flex-preferred-size: 50%;
+      flex-basis: 50%;
+}
+
+.page--lvg__main .main .intro {
+  margin-top: 48px;
+}
+
+.page--lvg__main .main .intro--text {
+  font-family: "ProximaNova-Semibold", sans-serif;
+  font-size: 18px;
+  padding-right: 48px;
+}
+
+.page--lvg__main .main .intro--text p {
+  margin-bottom: 10px;
+}
+
+.page--lvg__main .main .form h2 {
+  font-family: "ProximaNova-Bold", sans-serif;
+  font-size: 26px;
+  line-height: 24px;
+  color: #454545;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.page--lvg__main .main .form--input {
+  color: #454545;
+  margin-bottom: 16px;
+}
+
+.page--lvg__main .main .form--input input {
+  padding-left: 12px;
+}
+
+.page--lvg__main .main .form--input select {
+  display: block;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 5px;
+  font-size: 14px;
+  border: 0;
+  border-bottom: 1px solid #cfcfcf;
+  width: 100%;
+}
+
+.page--lvg__main .main .form--input .selectize-input, .page--lvg__main .main .form--input .selectize-dropdown-content .option {
+  padding-left: 12px;
+  font-family: "ProximaNova-Regular", sans-serif;
+}

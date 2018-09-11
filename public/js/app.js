@@ -182,42 +182,6 @@ function noop() {}
 
 /***/ }),
 
-/***/ "./node_modules/arraybuffer.slice/index.js":
-/***/ (function(module, exports) {
-
-/**
- * An abstraction for slicing an arraybuffer even when
- * ArrayBuffer.prototype.slice is not supported
- *
- * @api public
- */
-
-module.exports = function(arraybuffer, start, end) {
-  var bytes = arraybuffer.byteLength;
-  start = start || 0;
-  end = end || bytes;
-
-  if (arraybuffer.slice) { return arraybuffer.slice(start, end); }
-
-  if (start < 0) { start += bytes; }
-  if (end < 0) { end += bytes; }
-  if (end > bytes) { end = bytes; }
-
-  if (start >= bytes || start >= end || bytes === 0) {
-    return new ArrayBuffer(0);
-  }
-
-  var abv = new Uint8Array(arraybuffer);
-  var result = new Uint8Array(end - start);
-  for (var i = start, ii = 0; i < end; i++, ii++) {
-    result[ii] = abv[i];
-  }
-  return result.buffer;
-};
-
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",[\"transform-runtime\",{\"polyfill\":false,\"helpers\":false}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/Example.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -4168,7 +4132,7 @@ module.exports = __webpack_require__("./node_modules/engine.io-client/lib/socket
  * @api public
  *
  */
-module.exports.parser = __webpack_require__("./node_modules/engine.io-parser/lib/browser.js");
+module.exports.parser = __webpack_require__("./node_modules/engine.io-client/node_modules/engine.io-parser/lib/browser.js");
 
 
 /***/ }),
@@ -4184,7 +4148,7 @@ var transports = __webpack_require__("./node_modules/engine.io-client/lib/transp
 var Emitter = __webpack_require__("./node_modules/component-emitter/index.js");
 var debug = __webpack_require__("./node_modules/engine.io-client/node_modules/debug/browser.js")('engine.io-client:socket');
 var index = __webpack_require__("./node_modules/indexof/index.js");
-var parser = __webpack_require__("./node_modules/engine.io-parser/lib/browser.js");
+var parser = __webpack_require__("./node_modules/engine.io-client/node_modules/engine.io-parser/lib/browser.js");
 var parseuri = __webpack_require__("./node_modules/parseuri/index.js");
 var parsejson = __webpack_require__("./node_modules/parsejson/index.js");
 var parseqs = __webpack_require__("./node_modules/parseqs/index.js");
@@ -4321,7 +4285,7 @@ Socket.protocol = parser.protocol; // this is an int
 Socket.Socket = Socket;
 Socket.Transport = __webpack_require__("./node_modules/engine.io-client/lib/transport.js");
 Socket.transports = __webpack_require__("./node_modules/engine.io-client/lib/transports/index.js");
-Socket.parser = __webpack_require__("./node_modules/engine.io-parser/lib/browser.js");
+Socket.parser = __webpack_require__("./node_modules/engine.io-client/node_modules/engine.io-parser/lib/browser.js");
 
 /**
  * Creates transport of the given type.
@@ -4926,7 +4890,7 @@ Socket.prototype.filterUpgrades = function (upgrades) {
  * Module dependencies.
  */
 
-var parser = __webpack_require__("./node_modules/engine.io-parser/lib/browser.js");
+var parser = __webpack_require__("./node_modules/engine.io-client/node_modules/engine.io-parser/lib/browser.js");
 var Emitter = __webpack_require__("./node_modules/component-emitter/index.js");
 
 /**
@@ -5824,7 +5788,7 @@ function unloadHandler () {
 
 var Transport = __webpack_require__("./node_modules/engine.io-client/lib/transport.js");
 var parseqs = __webpack_require__("./node_modules/parseqs/index.js");
-var parser = __webpack_require__("./node_modules/engine.io-parser/lib/browser.js");
+var parser = __webpack_require__("./node_modules/engine.io-client/node_modules/engine.io-parser/lib/browser.js");
 var inherit = __webpack_require__("./node_modules/component-inherit/index.js");
 var yeast = __webpack_require__("./node_modules/yeast/index.js");
 var debug = __webpack_require__("./node_modules/engine.io-client/node_modules/debug/browser.js")('engine.io-client:polling');
@@ -6075,7 +6039,7 @@ Polling.prototype.uri = function () {
  */
 
 var Transport = __webpack_require__("./node_modules/engine.io-client/lib/transport.js");
-var parser = __webpack_require__("./node_modules/engine.io-parser/lib/browser.js");
+var parser = __webpack_require__("./node_modules/engine.io-client/node_modules/engine.io-parser/lib/browser.js");
 var parseqs = __webpack_require__("./node_modules/parseqs/index.js");
 var inherit = __webpack_require__("./node_modules/component-inherit/index.js");
 var yeast = __webpack_require__("./node_modules/yeast/index.js");
@@ -6402,6 +6366,42 @@ module.exports = function (opts) {
 };
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/engine.io-client/node_modules/arraybuffer.slice/index.js":
+/***/ (function(module, exports) {
+
+/**
+ * An abstraction for slicing an arraybuffer even when
+ * ArrayBuffer.prototype.slice is not supported
+ *
+ * @api public
+ */
+
+module.exports = function(arraybuffer, start, end) {
+  var bytes = arraybuffer.byteLength;
+  start = start || 0;
+  end = end || bytes;
+
+  if (arraybuffer.slice) { return arraybuffer.slice(start, end); }
+
+  if (start < 0) { start += bytes; }
+  if (end < 0) { end += bytes; }
+  if (end > bytes) { end = bytes; }
+
+  if (start >= bytes || start >= end || bytes === 0) {
+    return new ArrayBuffer(0);
+  }
+
+  var abv = new Uint8Array(arraybuffer);
+  var result = new Uint8Array(end - start);
+  for (var i = start, ii = 0; i < end; i++, ii++) {
+    result[ii] = abv[i];
+  }
+  return result.buffer;
+};
+
 
 /***/ }),
 
@@ -6797,172 +6797,16 @@ function coerce(val) {
 
 /***/ }),
 
-/***/ "./node_modules/engine.io-client/node_modules/ms/index.js":
-/***/ (function(module, exports) {
-
-/**
- * Helpers.
- */
-
-var s = 1000
-var m = s * 60
-var h = m * 60
-var d = h * 24
-var y = d * 365.25
-
-/**
- * Parse or format the given `val`.
- *
- * Options:
- *
- *  - `long` verbose formatting [false]
- *
- * @param {String|Number} val
- * @param {Object} options
- * @throws {Error} throw an error if val is not a non-empty string or a number
- * @return {String|Number}
- * @api public
- */
-
-module.exports = function (val, options) {
-  options = options || {}
-  var type = typeof val
-  if (type === 'string' && val.length > 0) {
-    return parse(val)
-  } else if (type === 'number' && isNaN(val) === false) {
-    return options.long ?
-			fmtLong(val) :
-			fmtShort(val)
-  }
-  throw new Error('val is not a non-empty string or a valid number. val=' + JSON.stringify(val))
-}
-
-/**
- * Parse the given `str` and return milliseconds.
- *
- * @param {String} str
- * @return {Number}
- * @api private
- */
-
-function parse(str) {
-  str = String(str)
-  if (str.length > 10000) {
-    return
-  }
-  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(str)
-  if (!match) {
-    return
-  }
-  var n = parseFloat(match[1])
-  var type = (match[2] || 'ms').toLowerCase()
-  switch (type) {
-    case 'years':
-    case 'year':
-    case 'yrs':
-    case 'yr':
-    case 'y':
-      return n * y
-    case 'days':
-    case 'day':
-    case 'd':
-      return n * d
-    case 'hours':
-    case 'hour':
-    case 'hrs':
-    case 'hr':
-    case 'h':
-      return n * h
-    case 'minutes':
-    case 'minute':
-    case 'mins':
-    case 'min':
-    case 'm':
-      return n * m
-    case 'seconds':
-    case 'second':
-    case 'secs':
-    case 'sec':
-    case 's':
-      return n * s
-    case 'milliseconds':
-    case 'millisecond':
-    case 'msecs':
-    case 'msec':
-    case 'ms':
-      return n
-    default:
-      return undefined
-  }
-}
-
-/**
- * Short format for `ms`.
- *
- * @param {Number} ms
- * @return {String}
- * @api private
- */
-
-function fmtShort(ms) {
-  if (ms >= d) {
-    return Math.round(ms / d) + 'd'
-  }
-  if (ms >= h) {
-    return Math.round(ms / h) + 'h'
-  }
-  if (ms >= m) {
-    return Math.round(ms / m) + 'm'
-  }
-  if (ms >= s) {
-    return Math.round(ms / s) + 's'
-  }
-  return ms + 'ms'
-}
-
-/**
- * Long format for `ms`.
- *
- * @param {Number} ms
- * @return {String}
- * @api private
- */
-
-function fmtLong(ms) {
-  return plural(ms, d, 'day') ||
-    plural(ms, h, 'hour') ||
-    plural(ms, m, 'minute') ||
-    plural(ms, s, 'second') ||
-    ms + ' ms'
-}
-
-/**
- * Pluralization helper.
- */
-
-function plural(ms, n, name) {
-  if (ms < n) {
-    return
-  }
-  if (ms < n * 1.5) {
-    return Math.floor(ms / n) + ' ' + name
-  }
-  return Math.ceil(ms / n) + ' ' + name + 's'
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/engine.io-parser/lib/browser.js":
+/***/ "./node_modules/engine.io-client/node_modules/engine.io-parser/lib/browser.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module dependencies.
  */
 
-var keys = __webpack_require__("./node_modules/engine.io-parser/lib/keys.js");
+var keys = __webpack_require__("./node_modules/engine.io-client/node_modules/engine.io-parser/lib/keys.js");
 var hasBinary = __webpack_require__("./node_modules/has-binary/index.js");
-var sliceBuffer = __webpack_require__("./node_modules/arraybuffer.slice/index.js");
+var sliceBuffer = __webpack_require__("./node_modules/engine.io-client/node_modules/arraybuffer.slice/index.js");
 var after = __webpack_require__("./node_modules/after/index.js");
 var utf8 = __webpack_require__("./node_modules/wtf-8/wtf-8.js");
 
@@ -7570,7 +7414,7 @@ exports.decodePayloadAsBinary = function (data, binaryType, callback) {
 
 /***/ }),
 
-/***/ "./node_modules/engine.io-parser/lib/keys.js":
+/***/ "./node_modules/engine.io-client/node_modules/engine.io-parser/lib/keys.js":
 /***/ (function(module, exports) {
 
 
@@ -7592,6 +7436,162 @@ module.exports = Object.keys || function keys (obj){
   }
   return arr;
 };
+
+
+/***/ }),
+
+/***/ "./node_modules/engine.io-client/node_modules/ms/index.js":
+/***/ (function(module, exports) {
+
+/**
+ * Helpers.
+ */
+
+var s = 1000
+var m = s * 60
+var h = m * 60
+var d = h * 24
+var y = d * 365.25
+
+/**
+ * Parse or format the given `val`.
+ *
+ * Options:
+ *
+ *  - `long` verbose formatting [false]
+ *
+ * @param {String|Number} val
+ * @param {Object} options
+ * @throws {Error} throw an error if val is not a non-empty string or a number
+ * @return {String|Number}
+ * @api public
+ */
+
+module.exports = function (val, options) {
+  options = options || {}
+  var type = typeof val
+  if (type === 'string' && val.length > 0) {
+    return parse(val)
+  } else if (type === 'number' && isNaN(val) === false) {
+    return options.long ?
+			fmtLong(val) :
+			fmtShort(val)
+  }
+  throw new Error('val is not a non-empty string or a valid number. val=' + JSON.stringify(val))
+}
+
+/**
+ * Parse the given `str` and return milliseconds.
+ *
+ * @param {String} str
+ * @return {Number}
+ * @api private
+ */
+
+function parse(str) {
+  str = String(str)
+  if (str.length > 10000) {
+    return
+  }
+  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(str)
+  if (!match) {
+    return
+  }
+  var n = parseFloat(match[1])
+  var type = (match[2] || 'ms').toLowerCase()
+  switch (type) {
+    case 'years':
+    case 'year':
+    case 'yrs':
+    case 'yr':
+    case 'y':
+      return n * y
+    case 'days':
+    case 'day':
+    case 'd':
+      return n * d
+    case 'hours':
+    case 'hour':
+    case 'hrs':
+    case 'hr':
+    case 'h':
+      return n * h
+    case 'minutes':
+    case 'minute':
+    case 'mins':
+    case 'min':
+    case 'm':
+      return n * m
+    case 'seconds':
+    case 'second':
+    case 'secs':
+    case 'sec':
+    case 's':
+      return n * s
+    case 'milliseconds':
+    case 'millisecond':
+    case 'msecs':
+    case 'msec':
+    case 'ms':
+      return n
+    default:
+      return undefined
+  }
+}
+
+/**
+ * Short format for `ms`.
+ *
+ * @param {Number} ms
+ * @return {String}
+ * @api private
+ */
+
+function fmtShort(ms) {
+  if (ms >= d) {
+    return Math.round(ms / d) + 'd'
+  }
+  if (ms >= h) {
+    return Math.round(ms / h) + 'h'
+  }
+  if (ms >= m) {
+    return Math.round(ms / m) + 'm'
+  }
+  if (ms >= s) {
+    return Math.round(ms / s) + 's'
+  }
+  return ms + 'ms'
+}
+
+/**
+ * Long format for `ms`.
+ *
+ * @param {Number} ms
+ * @return {String}
+ * @api private
+ */
+
+function fmtLong(ms) {
+  return plural(ms, d, 'day') ||
+    plural(ms, h, 'hour') ||
+    plural(ms, m, 'minute') ||
+    plural(ms, s, 'second') ||
+    ms + ' ms'
+}
+
+/**
+ * Pluralization helper.
+ */
+
+function plural(ms, n, name) {
+  if (ms < n) {
+    return
+  }
+  if (ms < n * 1.5) {
+    return Math.floor(ms / n) + ' ' + name
+  }
+  return Math.ceil(ms / n) + ' ' + name + 's'
+}
 
 
 /***/ }),
@@ -40114,7 +40114,7 @@ process.umask = function() { return 0; };
  */
 
 var url = __webpack_require__("./node_modules/socket.io-client/lib/url.js");
-var parser = __webpack_require__("./node_modules/socket.io-parser/index.js");
+var parser = __webpack_require__("./node_modules/socket.io-client/node_modules/socket.io-parser/index.js");
 var Manager = __webpack_require__("./node_modules/socket.io-client/lib/manager.js");
 var debug = __webpack_require__("./node_modules/socket.io-client/node_modules/debug/browser.js")('socket.io-client');
 
@@ -40232,7 +40232,7 @@ exports.Socket = __webpack_require__("./node_modules/socket.io-client/lib/socket
 var eio = __webpack_require__("./node_modules/engine.io-client/index.js");
 var Socket = __webpack_require__("./node_modules/socket.io-client/lib/socket.js");
 var Emitter = __webpack_require__("./node_modules/component-emitter/index.js");
-var parser = __webpack_require__("./node_modules/socket.io-parser/index.js");
+var parser = __webpack_require__("./node_modules/socket.io-client/node_modules/socket.io-parser/index.js");
 var on = __webpack_require__("./node_modules/socket.io-client/lib/on.js");
 var bind = __webpack_require__("./node_modules/component-bind/index.js");
 var debug = __webpack_require__("./node_modules/socket.io-client/node_modules/debug/browser.js")('socket.io-client:manager');
@@ -40827,7 +40827,7 @@ function on (obj, ev, fn) {
  * Module dependencies.
  */
 
-var parser = __webpack_require__("./node_modules/socket.io-parser/index.js");
+var parser = __webpack_require__("./node_modules/socket.io-client/node_modules/socket.io-parser/index.js");
 var Emitter = __webpack_require__("./node_modules/component-emitter/index.js");
 var toArray = __webpack_require__("./node_modules/to-array/index.js");
 var on = __webpack_require__("./node_modules/socket.io-client/lib/on.js");
@@ -41876,7 +41876,7 @@ function plural(ms, n, name) {
 
 /***/ }),
 
-/***/ "./node_modules/socket.io-parser/binary.js":
+/***/ "./node_modules/socket.io-client/node_modules/socket.io-parser/binary.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/*global Blob,File*/
@@ -41886,7 +41886,7 @@ function plural(ms, n, name) {
  */
 
 var isArray = __webpack_require__("./node_modules/isarray/index.js");
-var isBuf = __webpack_require__("./node_modules/socket.io-parser/is-buffer.js");
+var isBuf = __webpack_require__("./node_modules/socket.io-client/node_modules/socket.io-parser/is-buffer.js");
 
 /**
  * Replaces every Buffer | ArrayBuffer in packet with a numbered placeholder.
@@ -42025,7 +42025,7 @@ exports.removeBlobs = function(data, callback) {
 
 /***/ }),
 
-/***/ "./node_modules/socket.io-parser/index.js":
+/***/ "./node_modules/socket.io-client/node_modules/socket.io-parser/index.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -42033,11 +42033,11 @@ exports.removeBlobs = function(data, callback) {
  * Module dependencies.
  */
 
-var debug = __webpack_require__("./node_modules/socket.io-parser/node_modules/debug/browser.js")('socket.io-parser');
+var debug = __webpack_require__("./node_modules/socket.io-client/node_modules/socket.io-parser/node_modules/debug/browser.js")('socket.io-parser');
 var json = __webpack_require__("./node_modules/json3/lib/json3.js");
-var Emitter = __webpack_require__("./node_modules/socket.io-parser/node_modules/component-emitter/index.js");
-var binary = __webpack_require__("./node_modules/socket.io-parser/binary.js");
-var isBuf = __webpack_require__("./node_modules/socket.io-parser/is-buffer.js");
+var Emitter = __webpack_require__("./node_modules/socket.io-client/node_modules/socket.io-parser/node_modules/component-emitter/index.js");
+var binary = __webpack_require__("./node_modules/socket.io-client/node_modules/socket.io-parser/binary.js");
+var isBuf = __webpack_require__("./node_modules/socket.io-client/node_modules/socket.io-parser/is-buffer.js");
 
 /**
  * Protocol version.
@@ -42436,7 +42436,7 @@ function error(data){
 
 /***/ }),
 
-/***/ "./node_modules/socket.io-parser/is-buffer.js":
+/***/ "./node_modules/socket.io-client/node_modules/socket.io-parser/is-buffer.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -42457,7 +42457,7 @@ function isBuf(obj) {
 
 /***/ }),
 
-/***/ "./node_modules/socket.io-parser/node_modules/component-emitter/index.js":
+/***/ "./node_modules/socket.io-client/node_modules/socket.io-parser/node_modules/component-emitter/index.js":
 /***/ (function(module, exports) {
 
 
@@ -42628,7 +42628,7 @@ Emitter.prototype.hasListeners = function(event){
 
 /***/ }),
 
-/***/ "./node_modules/socket.io-parser/node_modules/debug/browser.js":
+/***/ "./node_modules/socket.io-client/node_modules/socket.io-parser/node_modules/debug/browser.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -42638,7 +42638,7 @@ Emitter.prototype.hasListeners = function(event){
  * Expose `debug()` as the module.
  */
 
-exports = module.exports = __webpack_require__("./node_modules/socket.io-parser/node_modules/debug/debug.js");
+exports = module.exports = __webpack_require__("./node_modules/socket.io-client/node_modules/socket.io-parser/node_modules/debug/debug.js");
 exports.log = log;
 exports.formatArgs = formatArgs;
 exports.save = save;
@@ -42803,7 +42803,7 @@ function localstorage(){
 
 /***/ }),
 
-/***/ "./node_modules/socket.io-parser/node_modules/debug/debug.js":
+/***/ "./node_modules/socket.io-client/node_modules/socket.io-parser/node_modules/debug/debug.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -42819,7 +42819,7 @@ exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = __webpack_require__("./node_modules/socket.io-parser/node_modules/ms/index.js");
+exports.humanize = __webpack_require__("./node_modules/socket.io-client/node_modules/socket.io-parser/node_modules/ms/index.js");
 
 /**
  * The currently active debug mode names, and names to skip.
@@ -43007,7 +43007,7 @@ function coerce(val) {
 
 /***/ }),
 
-/***/ "./node_modules/socket.io-parser/node_modules/ms/index.js":
+/***/ "./node_modules/socket.io-client/node_modules/socket.io-parser/node_modules/ms/index.js":
 /***/ (function(module, exports) {
 
 /**
