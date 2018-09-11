@@ -116,7 +116,7 @@
     <div class="line"></div>
     <p id="ModalInfoText"></p>
 </div>
-
+@push('custom.js')
 <script type="text/javascript">
     //сallback_save
     $('#callback_mess_ok').hide();
@@ -158,3 +158,4 @@
 
 
 </script>
+@push('custom.js')

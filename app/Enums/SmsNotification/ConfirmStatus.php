@@ -18,7 +18,7 @@ final class ConfirmStatus extends Enum
      * @param  int $value
      * @return string
      */
-    public static function getDescription(int $value): string
+    public static function getDescription($value): string
     {
         switch ($value) {
             case self::CANCEL:
@@ -31,7 +31,7 @@ final class ConfirmStatus extends Enum
                 return 'Подтверждено';
                 break;
             default:
-                return self::getKey($value);
+                return (string) self::getKey($value);
         }
     }
 }

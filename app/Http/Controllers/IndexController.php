@@ -20,11 +20,6 @@ class IndexController extends Controller
 {
     public function home()
     {
-        $stats = [
-            'doctors_count'  => Doctor::localPublic()->count(),
-            'orders_count'   => Order::whereIn('status', [1, 2])->count(),
-            'comments_count' => Comment::count()
-        ];
 
 
         if(Cache::has('index:skills'))
@@ -48,7 +43,14 @@ class IndexController extends Controller
 
 //        $topDoctors = Doctor::where('on_top', '=', 1)->where('status', '=', 1)->get();
 
-        $topPosts = Post::where('is_top', 1)->where('status', 1)->orderBy('created_at', 'desc')->limit(3)->get();
+        if(Cache::has('index:topPosts'))
+            $topPosts = Cache::get('index:topPosts');
+        else{
+            $topPosts = Post::where('is_top', 1)->where('status', 1)->orderBy('created_at', 'desc')->limit(3)->get();
+            Cache::set('index:topPosts',$topPosts,120);
+        }
+
+
 
         //Специальности по количесвам врачей
         if(Cache::has('index:skills'))
@@ -67,8 +69,14 @@ class IndexController extends Controller
             Cache::set('index:skills',$skillsList,120);
         }
 
+        if(Cache::has('index:districts'))
+            $districts = Cache::get('index:districts');
+        else{
+            $districts = District::all();
+            Cache::set('index:districts',$topPosts,120);
+        }
 
-        $districts = District::all();
+
 
         //Комментарии
         $topPromotions = collect([]);

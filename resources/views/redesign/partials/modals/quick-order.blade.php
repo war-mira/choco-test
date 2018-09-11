@@ -30,7 +30,7 @@
         </div>
     </div>
 </div>
-
+@push('custom.js')
 <script type="text/javascript">
     //сallback_save
     $('#callback_mess_ok').hide();
@@ -83,3 +83,4 @@
 
     $("#сallback_save_button").click(validateForm);
 </script>
+@endpush

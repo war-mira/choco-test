@@ -59,6 +59,11 @@
 
         </form>
     </div>
+
+
+@endsection
+
+@push('custom.js')
     <script>
 
         //$('.search-input-group select').selectpicker();
@@ -101,7 +106,7 @@
             });
 
             $('div.search-bar__item_search').find('input').on('keyup',function (e) {
-               var serachv = $(this).val();
+                var serachv = $(this).val();
 
                 if(serachv.length >= 3)
                 {
@@ -209,4 +214,4 @@
             });
         });
     </script>
-@endsection
+@endpush

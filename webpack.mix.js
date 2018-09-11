@@ -12,5 +12,18 @@ const { mix } = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')
+    .scripts([
+        'resources/assets/js/plugins/jquery.min.js',
+        'resources/assets/js/plugins/jquery-masked-input.js',
+        'resources/assets/js/plugins/slick.min.js',
+        'resources/assets/js/plugins/lightbox.min.js',
+        'resources/assets/js/plugins/selectize.min.js',
+        'resources/assets/js/plugins/pickmeup.min.js',
+        'resources/assets/js/plugins/jquery.magnific-popup.min.js',
+        // 'resources/assets/js/plugins/scripts.js'
+    ],'public/js/all.js')
    .sass('resources/assets/sass/app.scss', 'public/css')
+   .options({
+        processCssUrls: false
+    })
    .version();
