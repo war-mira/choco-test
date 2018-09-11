@@ -79,6 +79,7 @@ Route::group(['prefix' => 'library', 'as' => 'library.'], function () {
     Route::get('/{illnesses_group}', 'LibraryController@groupArticles')->name('illnesses-group-articles');
     Route::get('/{illnesses_group}/{article}', 'LibraryController@article')->name('illnesses-group-article');
 });
+
 Route::group(['prefix' => 'illnesses', 'as' => 'illnesses.'], function () {
     Route::get('/{letter?}', 'LibraryController@illnesses')->name('index');
 });
@@ -197,6 +198,7 @@ Route::get('/{city}/specializacii/{skill}', 'SkillController@showSkillDoctors')-
 
 Route::get('/load', 'ExcelController@loadDoctors')->name('load.doctors');
 Route::get('/load-skills', 'ExcelController@loadSkills')->name('load.skills');
+Route::get('/add-phones', 'ExcelController@addPhones')->name('load.phones');
 
 
 // Telegram doctors bot

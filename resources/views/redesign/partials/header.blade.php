@@ -39,7 +39,7 @@
                 @if(Auth::guest())
                 <a href="#signin-modal"  rel="modal-link" class="main-header__action-item header-link-btn header-login-btn">
                     <span class="header-link-btn__icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>
-                    <span>Вход / Регистрация</span>
+                    <span>Войти</span>
                 </a>
                 @else
                     <a href="@if(Auth::user()->role == \App\User::ROLE_DOCTOR) {{route('cabinet.doctor.personal.index')}}
@@ -50,6 +50,10 @@
                 @endif
                 @include('redesign.partials.cities_select')
                 <a href="tel:+77272222200" class="main-header__action-item main-header-phone">+7 (727) 222-22-00</a>
+                <div>
+                    <a class="additional_number" href="tel:+77715033221">+7 (771) 503 32 21
+                    </a>
+                </div>
                 <div class="nav-toggle main-header__action-item">
                     <span></span>
                     <span></span>
@@ -60,13 +64,15 @@
         </div>
         <div class="mobile-menu pattern-bg">
             <a href="#signin-modal"  rel="modal-link"  class="mobile-menu__item mobile-menu-item">
-                <span>Вход / Регистрация</span>
+                <span>Войти</span>
             </a>
             {{--<a href="#" class="mobile-menu__item mobile-menu-item">--}}
                 {{--<span>Сотрудничество</span>--}}
             {{--</a>--}}
             <a href="tel:+77272222200" class="mobile-menu__item mobile-menu-item">
                 <span>+7 (727) 222-22-00</span>
+            </a>
+            <a class="additional_number" href="tel:+77715033221">+7 (771) 503 32 21
             </a>
         </div>
     </div>

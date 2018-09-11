@@ -1896,6 +1896,9 @@ img {
 .entity-slider__item .parent_cont{
     margin-left: 30px;
 }
+#callback_mess_ok{
+  display: none;
+}
 .result-control-bar__line {
   display: -webkit-box;
   display: -webkit-flex;
@@ -2075,6 +2078,9 @@ img {
   .doc-line__address-clinic-link {
     color: #00A8FF;
     text-decoration: underline; }
+  .doc-line__address-clinic-link span{
+    text-decoration: none;
+  }
 
 .entity-line__additional {
   -webkit-box-flex: 1;
@@ -4757,6 +4763,16 @@ box-shadow: 0px 1px 4px #e7e7e7; margin-bottom: 30px;}
     .index-intro__stat-img {
         width: 45px;
     }
+    .appointment-book-big__heading{
+      padding-bottom: 30px;
+    }
+    .appointment-book-small-header-block{
+      padding-bottom: 30px;
+    }
+  .entity-about__tab-line.tabs{
+    padding-top: 30px;
+  }
+
 }
 
 @media (max-width: 374.98px) {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\City;
 use App\Doctor;
+use App\Medcenter;
 use App\Skill;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -105,6 +106,29 @@ class ExcelController extends Controller
                 }
             }
 
+            return 'ok';
+        });
+    }
+
+    public function addPhones()
+    {
+        Excel::load('files/med_phones.xlsx', function ($reader) {
+            $reader->skipRows(1);
+            $results = $reader->toArray();
+
+            foreach ($results as $rows) {
+                foreach ($rows as $row){
+                    $phone = trim(preg_replace('/[()]|\-|\–|\s+/', '', $row[2]));
+                    $medcenter = Medcenter::find($row[0]);
+                    if($medcenter){
+                        foreach ($medcenter->doctors as $doctor){
+                            $doctor->showing_phone = $phone;
+                            $doctor->update();
+                        }
+                    }
+                }
+
+            }
             return 'ok';
         });
     }

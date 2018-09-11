@@ -47,13 +47,13 @@
                     <div class="entity-line__name">
                         {{$meta['h1']}}
                     </div>
-                    <div class="entity-line__descr">
-                        Многопрофильное медицинское учреждение
-                    </div>
+                    {{--<div class="entity-line__descr">--}}
+                        {{--Многопрофильное медицинское учреждение--}}
+                    {{--</div>--}}
 
                     <div class="entity-line__about-text">
                         <p>
-                            {{strip_tags($medcenter->content)}}
+                            {!! $medcenter->content !!}
                         </p>
                     </div>
 

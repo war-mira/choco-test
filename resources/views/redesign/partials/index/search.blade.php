@@ -8,7 +8,7 @@
                 <option  data-action="{{route('medcenters.list')}}" value="medcenter">Поиск медцентра</option>
             </select>
         </div>
-        <div class="search-bar__item search-bar__item_search">
+        <div class="search-bar__item search-bar__item_search" style="flex-grow: 1">
             <input id="searchform" name="q" value="{{$q ?? ""}}"  placeholder="Введите специальность или фамилию врача" class="js-search-input"  autocomplete="off">
             <label for="searchform" class="input-block__icon"><img src="{{asset('/img/icons/search-inactive.png')}}" alt=""></label>
             <div class="live-search">
@@ -16,13 +16,15 @@
                 </div>
             </div>
         </div>
+        @if(\App\Models\District::where('city_id',session('cityid',6))->count()>0)
         <div class="search-bar__item search-bar__item_region">
-            <select name="district" placeholder="Алмалинский район" class="js-simple-select js-select-region">
-                @foreach(\App\Models\District::all() as $district)
+            <select name="district" placeholder="Выберите район..." class="js-simple-select js-select-region">
+                @foreach(\App\Models\District::where('city_id',session('cityid',6))->get() as $district)
                     <option value="{{ $district->id }}">{{ $district->name }}</option>
                 @endforeach
             </select>
         </div>
+        @endif
         <div class="search-bar__item search-bar__item_submit">
             <button class="btn search_event">Найти</button>
         </div>

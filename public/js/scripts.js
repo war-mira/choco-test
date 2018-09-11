@@ -100,12 +100,12 @@ $(document).ready(function() {
         fixedBgPos: true,
         overflowY: 'auto',
         closeBtnInside: true,
-        // callbacks: {
-        //     beforeOpen: function() {
-        //         $('form#callback_form').find('input[name="target_id"]').val(this.st.el.data('doc-id'));
-        //         $('form#callback_form').find('input[name="status"]').val(this.st.el.data('status'));
-        //         $('form#callback_form').find('#doctor_name').val(this.st.el.data('dname'));
-        //         $('form#callback_form').find('#medcenter_name').val(this.st.el.data('dname'));
+        callbacks: {
+            beforeOpen: function() {
+                $('form#callback_form').find('input[name="target_id"]').val(this.st.el.data('doc-id'));
+                $('form#callback_form').find('input[name="status"]').val(this.st.el.data('status'));
+                $('form#callback_form').find('#doctor_name').val(this.st.el.data('dname'));
+                $('form#callback_form').find('#medcenter_name').val(this.st.el.data('dname'));
         //
         //         if($(this.st.el).parent().parent().find('input[name="date"]:checked').val() != 'custom' && $(this.st.el).parent().parent().find('input[name="date"]').is(':radio'))
         //         {
@@ -120,8 +120,8 @@ $(document).ready(function() {
         //         }
         //
         //         $('form#callback_form').find('input[name="time"]').val($(this.st.el).parent().parent().find('input[name="time"]:checked').val());
-        //     }
-        // }
+            }
+        }
     }
 
     var callbackForm = $('form#callback_form');
@@ -143,7 +143,7 @@ $(document).ready(function() {
                     .done(function (json) {
                         $.magnificPopup.open({
                             items: {
-                                src: '<div class="white-popup"><p><strong>Спасибо!</strong> Ваша заявка принята мы вам перезвоним!</p></div>',
+                                src: '<div class="white-popup"><p><strong>Спасибо!</strong> Ваша заявка принята. Мы вам перезвоним!</p></div>',
                             },
                             type: 'inline'
                         });
@@ -590,7 +590,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#searchform').on("focusout", function (e) {
+    $('.search-bar__item search-bar__item_search').on("focusout", function (e) {
         $(".live-search")
             .removeClass("live-search--fold");
     });
