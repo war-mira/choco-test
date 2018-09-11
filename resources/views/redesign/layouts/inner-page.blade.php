@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{{URL::asset("css/magnific-popup.css")}}">
     <link rel="stylesheet" href="{{URL::asset("css/main_new.css")}}">
     <link rel="stylesheet" href="{{URL::asset("css/public_new.css")}}">
+    @stack('custom.css')
 
     <script src="{{URL::asset("js/jquery.min.js")}}"></script>
     <script src="{{URL::asset("js/jquery-masked-input.js")}}"></script>

@@ -14,7 +14,7 @@ mix
     .babel([
         'resources/assets/packages/lvg/js/*.js'
     ], 'public/projects/lvg/js/app.js')
-    ;//.sass('src/assets/scss/app.scss', 'src/public/css');
+    .sass('resources/assets/packages/lvg/scss/app.scss', 'public/projects/lvg/css/app.css');
 
 mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');

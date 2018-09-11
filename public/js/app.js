@@ -58507,6 +58507,13 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/packages/lvg/scss/app.scss":
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./resources/assets/sass/app.scss":
 /***/ (function(module, exports) {
 
@@ -58518,6 +58525,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__("./resources/assets/js/app.js");
+__webpack_require__("./resources/assets/packages/lvg/scss/app.scss");
 module.exports = __webpack_require__("./resources/assets/sass/app.scss");
 
 
