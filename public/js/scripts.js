@@ -590,7 +590,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#searchform').on("focusout", function (e) {
+    $('.search-bar__item search-bar__item_search').on("focusout", function (e) {
         $(".live-search")
             .removeClass("live-search--fold");
     });
