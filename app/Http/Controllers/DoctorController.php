@@ -558,7 +558,6 @@ class DoctorController extends Controller
         $doctor = Doctor::find($request->id);
         if($doctor){
             $phone = substr($doctor->showing_phone, 4);
-
             $data = [];
             $data['data'] = $request->data ? $request->data: '';
             $data['doctor_id'] = $doctor->id;

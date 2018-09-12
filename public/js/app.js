@@ -616,14 +616,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             message: '',
-            errors: []
+            errors: [],
+            user_phone: ''
         };
+    },
+    watch: {
+        user_phone: function user_phone(newval, oldval) {
+            console.log(newval);
+            this.user_phone = val;
+        }
     },
     methods: {
         send: function send() {
             var _this = this;
 
-            this.$http[this.method](this.href, { params: { data: this.user_email } }).then(function (response) {
+            this.$http[this.method](this.href, { params: { data: this.user_phone } }).then(function (response) {
                 console.log(response.data);
                 _this.message = response.data;
                 _this.isActive = true;
@@ -4012,7 +4019,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -43489,24 +43496,25 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.user_email,
-                            expression: "user_email"
+                            value: _vm.user_phone,
+                            expression: "user_phone"
                           }
                         ],
                         staticClass: "form-control",
                         attrs: {
-                          placeholder: "*Email",
+                          placeholder: "*Телефон",
                           required: "",
-                          name: "email",
-                          type: "email"
+                          name: "phone",
+                          type: "text",
+                          "data-mask": "+7 (999) 999-99-99"
                         },
-                        domProps: { value: _vm.user_email },
+                        domProps: { value: _vm.user_phone },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.user_email = $event.target.value
+                            _vm.user_phone = $event.target.value
                           }
                         }
                       })
@@ -43545,7 +43553,7 @@ var staticRenderFns = [
       _c(
         "button",
         { staticClass: "btn btn_theme_usual", attrs: { type: "submit" } },
-        [_vm._v("Оставить email")]
+        [_vm._v("Оставить телефон")]
       )
     ])
   }
