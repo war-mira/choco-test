@@ -50,6 +50,10 @@
                 @endif
                 @include('redesign.partials.cities_select')
                 <a href="tel:+77272222200" class="main-header__action-item main-header-phone">+7 (727) 222-22-00</a>
+                <div>
+                    <a class="additional_number" href="tel:+77715033221">+7 (771) 503 32 21
+                    </a>
+                </div>
                 <div class="nav-toggle main-header__action-item">
                     <span></span>
                     <span></span>
@@ -67,6 +71,8 @@
             {{--</a>--}}
             <a href="tel:+77272222200" class="mobile-menu__item mobile-menu-item">
                 <span>+7 (727) 222-22-00</span>
+            </a>
+            <a class="additional_number" href="tel:+77715033221">+7 (771) 503 32 21
             </a>
         </div>
     </div>
