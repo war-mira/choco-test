@@ -8,6 +8,7 @@
     @include('partials.meta')
     @include('partials.yandex-metrika')
     @include('partials.google-analytics')
+    @include('partials.gtm')
 
     <title>Главная - iDoctor</title>
     <!-- <link rel="shortcut icon" type="image/png" href="img/favicon.png"> -->
@@ -37,6 +38,7 @@
 
 </head>
 <body>
+@include('partials.gtm-additionally')
 <div class="main-wrap" >
     @include('redesign.partials.header')
     <section class="index-intro pattern-bg cabinet">

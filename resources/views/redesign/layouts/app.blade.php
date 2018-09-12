@@ -8,6 +8,7 @@
     @include('partials.meta')
     @include('partials.yandex-metrika')
     @include('partials.google-analytics')
+    @include('partials.gtm')
 
     <title>Главная - iDoctor</title>
     <!-- <link rel="shortcut icon" type="image/png" href="img/favicon.png"> -->
@@ -34,6 +35,7 @@
     <script src="{{URL::asset("js/scripts.js")}}"></script>
 </head>
 <body>
+@include('partials.gtm-additionally')
 <div class="main-wrap" >
     <div id="app"></div>
     @include('redesign.partials.header')
