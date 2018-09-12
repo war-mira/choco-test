@@ -1,5 +1,5 @@
 <div class="account-content__head">
-    <div class="account-content__page-name">Вопросы </div>
+    <div class="account-content__page-name">Вопросы</div>
     <div class="account-content__nav-line">
         <div class="account-content__tab-line">
             <div class="tab-line">
