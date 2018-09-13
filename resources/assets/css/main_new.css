@@ -4238,9 +4238,11 @@ box-shadow: 0px 1px 4px #e7e7e7; margin-bottom: 30px;}
 .article-content__main{
   margin-bottom: 40px;}
 .article-content__main p{
-  font-family: "ProximaNova-Regular"}
+  font-family: "ProximaNova-Regular";
+}
 .article-content__main h2{
   font-family: "ProximaNova-Semibold" !important;
+  padding-top: 15px;
 }
 
 .mobile-datetime{
