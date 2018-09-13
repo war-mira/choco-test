@@ -19,14 +19,38 @@ class LVG {
         let _self = this;
         form.querySelectorAll('.form--input').forEach(function (input) {
             input = input.querySelector('input');
-            _self.user[input.getAttribute('name')] = input.value;
+            if(input.getAttribute('data-id') !== null){
+                _self.user[input.getAttribute('name')] = {
+                    value: input.value,
+                    id:input.getAttribute('data-id')
+                }
+            }else{
+                _self.user[input.getAttribute('name')] = input.value;
+            }
         });
+
+        form.querySelectorAll('.form--checkbox input').forEach(function(checkbox){
+            _self.user[checkbox.getAttribute('name')] = checkbox.checked;
+        });
+    }
+    saveUser(target){
+        console.warn('implement save user');
+        let _self = this;
+        $.post('/actions/best-doctor-2018/create',_self.user)
+            .done(function(response){
+                if(response.code == 200){
+                    _self.user.doctor_id = response.data.doctor_id;
+                        _self.goToStep(target.getAttribute('data-next-step'),'begin')
+                }
+            })
+
     }
     stepBegin(target) {
         let validate = this.validateBeginForm();
         if (validate === true) {
+
             this.fillUser();
-            this.goToStep(target.getAttribute('data-next-step'),'begin')
+            this.saveUser(target);
         } else {
             if(Array.isArray(validate)){
                 validate.forEach(function(msg){

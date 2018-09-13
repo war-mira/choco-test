@@ -176,19 +176,16 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   position: relative;
   z-index: 3;
 }
 
-.page--lvg__main .content .title {
+.page--lvg__main .content .title, .page--lvg__main .content .main {
   -ms-flex-preferred-size: 100%;
       flex-basis: 100%;
+  max-width: 100%;
 }
 
 .page--lvg__main .title {
@@ -202,11 +199,10 @@
 }
 
 .page--lvg__main .main {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
   margin-top: 24px;
   color: #fff;
   padding: 0 64px;
@@ -214,6 +210,8 @@
 
 @media (max-width: 768px) {
   .page--lvg__main .main {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
     padding: 0 16px;
   }
 }
@@ -221,6 +219,7 @@
 .page--lvg__main .main > div {
   -ms-flex-preferred-size: 50%;
       flex-basis: 50%;
+  max-width: 100%;
 }
 
 @media (max-width: 768px) {
@@ -307,6 +306,13 @@
   position: absolute;
 }
 
+@media (max-width: 768px) {
+  .page--lvg__main .main .form .card.hide {
+    -webkit-transform: translateX(-200px);
+            transform: translateX(-200px);
+  }
+}
+
 .page--lvg__main .main .form h2 {
   font-family: "ProximaNova-Bold", sans-serif;
   font-size: 26px;
@@ -365,4 +371,11 @@
 
 .page--lvg__main .main .form--checkbox {
   padding: 12px 0;
+}
+
+@media (max-width: 768px) {
+  .page--lvg__main .main .form--checkbox {
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
 }
