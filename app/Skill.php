@@ -157,4 +157,5 @@ class Skill extends Model implements ISeoMetadata
     {
         return empty($this->seo_text) ? '' : $this->seo_text;
     }
+
 }
