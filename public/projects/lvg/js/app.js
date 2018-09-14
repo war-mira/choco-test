@@ -136,6 +136,11 @@ var LVG = function () {
                     evt.target.classList.remove('error');
                 });
             });
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
         }
     }, {
         key: 'fillUser',
@@ -161,13 +166,14 @@ var LVG = function () {
     }, {
         key: 'saveUser',
         value: function saveUser(target) {
-            console.warn('implement save user');
             var _self = this;
             $.post('/actions/best-doctor-2018/create', _self.user).done(function (response) {
                 if (response.code == 200) {
                     _self.user.doctor_id = response.data.doctor_id;
                     _self.goToStep(target.getAttribute('data-next-step'), 'begin');
                 }
+            }).fail(function (data) {
+                console.log(data);
             });
         }
     }, {
@@ -187,6 +193,77 @@ var LVG = function () {
                     console.log(validate);
                 }
             }
+        }
+    }, {
+        key: 'stepSendSms',
+        value: function stepSendSms(target) {
+
+            var validate = this.validateRegisterForm();
+            if (validate === true) {
+                var form = document.querySelector('.form--register');
+
+                this.user.email = form.querySelector('.form--input input[name="email"]').value;
+                this.user.phone = form.querySelector('.form--input input[name="phone"]').value;
+
+                this.sendSms(target);
+            } else {
+                if (Array.isArray(validate)) {
+                    validate.forEach(function (msg) {
+                        console.log(msg);
+                    });
+                } else {
+                    console.log(validate);
+                }
+            }
+        }
+    }, {
+        key: 'sendSms',
+        value: function sendSms(target) {
+            var _self = this;
+            $.post('/actions/best-doctor-2018/register', _self.user).done(function (response) {
+                if (response.code == 200) {
+                    _self.showSmsCheck();
+                }
+            }).fail(function (data) {
+                data = data.responseJSON;
+                if (data.msg.hasOwnProperty('validator')) {
+                    alert(data.msg.validator.phone[0]);
+                } else {
+                    alert(data.msg);
+                }
+            });
+        }
+    }, {
+        key: 'showSmsCheck',
+        value: function showSmsCheck() {
+            var form = document.querySelector('.form--register');
+            form.querySelector('.smscheck').classList.remove('hidden');
+            var btn = form.querySelector('.btn[data-step="SendSms"]');
+            btn.setAttribute('data-step', 'ValidateSms');
+        }
+    }, {
+        key: 'stepValidateSms',
+        value: function stepValidateSms(target) {
+            var _self = this;
+            var form = document.querySelector('.form--register');
+
+            $.post('/actions/best-doctor-2018/check', {
+                'user': _self.user,
+                'code': form.querySelector('.smscheck input').value
+            }).done(function (response) {
+                if (response.code == 200) {
+                    window.location.href = '/actions/best-doctor-2018/vote';
+                } else if (response.code == 401) {
+                    var goAuth = confirm(response.msg);
+                    if (goAuth) {
+                        window.location.href = '/actions/best-doctor-2018/vote';
+                    } else {}
+                }
+            }).fail(function (data) {
+                data = data.responseJSON;
+
+                alert(data.msg);
+            });
         }
     }, {
         key: 'goToStep',
@@ -212,6 +289,20 @@ var LVG = function () {
                     messages.push((label === null ? input__field.getAttribute('name') : label.innerText) + ' \u043D\u0435 \u0437\u0430\u043F\u043E\u043B\u043D\u0435\u043D\u043E');
                 }
             });
+
+            return messages.length ? messages : true;
+        }
+    }, {
+        key: 'validateRegisterForm',
+        value: function validateRegisterForm() {
+            var _self = this;
+            var messages = [];
+            var form = document.querySelector('.form--register');
+            var input = form.querySelector('.form--input input[name="phone"]');
+            if (!input.value.trim().length) {
+                _self.markAsError(input);
+                messages.push(input.getAttribute('name') + ' \u043D\u0435 \u0437\u0430\u043F\u043E\u043B\u043D\u0435\u043D\u043E');
+            }
 
             return messages.length ? messages : true;
         }

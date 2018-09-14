@@ -369,6 +369,12 @@
   font-family: "ProximaNova-Regular", sans-serif;
 }
 
+.page--lvg__main .main .form--input .remark {
+  margin-top: 4px;
+  padding-left: 12px;
+  font-size: 12px;
+}
+
 .page--lvg__main .main .form--checkbox {
   padding: 12px 0;
 }

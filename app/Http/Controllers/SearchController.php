@@ -44,6 +44,7 @@ class SearchController extends Controller
 
     public function autocomplete(Request $request)
     {
+
         $query = $request->query('query');
         $type = $request->query('type');
 
