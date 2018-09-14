@@ -38,6 +38,9 @@
         </form>
     </div>
     @include('forms.public.order_med_new')
+
+@endsection
+@push('suctom.js')
     <script>
         if($('.search-input-group select').length)
         {
@@ -123,4 +126,4 @@
 
         });
     </script>
-@endsection
+@endpush
