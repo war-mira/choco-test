@@ -6,7 +6,8 @@
           \App\Banner::POSITION_MAIN_A,
           \App\Banner::POSITION_MAIN_B,
           \App\Banner::POSITION_EXT_A,
-          \App\Banner::POSITION_EXT_B
+          \App\Banner::POSITION_EXT_B,
+          \App\Banner::POSITION_EXT_C
         ];
          $bannerId = Request::query('banner_id',false);
          $selectedPosition = $bannerId?$banners->find($bannerId)->position:0;

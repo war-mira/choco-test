@@ -227,9 +227,7 @@
                     @endforeach
                 </div>
                 <div class="entity-content__aside">
-                    <div class="entity-content__banner">
-                        <img src="{{asset('img/banner.jpg')}}" alt="">
-                    </div>
+                    @component('elements.side-banner',['position' => App\Banner::POSITION_EXT_C['id']])@endcomponent
                 </div>
             </div>
 
@@ -306,9 +304,7 @@
 
                 </div>
                 <div class="entity-content__aside">
-                    <div class="entity-content__banner">
-                        <img src="{{asset('img/banner.jpg')}}" alt="">
-                    </div>
+                    @component('elements.side-banner',['position' => App\Banner::POSITION_EXT_C['id']])@endcomponent
                 </div>
             </div>
         </div>

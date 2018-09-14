@@ -169,15 +169,12 @@
                         </div>
                     </div>
                     <div class="entity-content__aside">
-                        <div class="entity-content__banner">
-                            <img src="{{asset('img/banner.jpg')}}" alt="">
-                        </div>
+                        @component('elements.side-banner',['position' => App\Banner::POSITION_EXT_C['id']])@endcomponent
                     </div>
                 </div>
                 <div id="tab-2" class="entity-about-article">
                     <div class="entity-about__content entity-content">
                         <div class="entity-content__main entity-content__main_single">
-
                         <div class="doc-list-bar">
                             <div class="doc-list-bar__line" id="medoc_filter" data-action="{{route('medcenter.doctors',['medcenter'=>$medcenter->alias])}}">
                                 <input type="hidden" name="orderm" value="DESC" />
