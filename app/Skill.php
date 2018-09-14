@@ -133,7 +133,7 @@ class Skill extends Model implements ISeoMetadata
     public function getMetaTitle()
     {
         return empty($this->meta_title)
-            ? ($this->name . ' :city_name.' . $this->name . ' - отзывы, рейтинг и запись прием онлайн iDoctor.kz.')
+            ? ($this->name . ' :city_name.' . $this->name . ' - отзывы о лучших врачах, фото, цены - iDoctor.kz')
             : $this->meta_title;
     }
 

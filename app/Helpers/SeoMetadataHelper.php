@@ -29,7 +29,7 @@ class SeoMetadataHelper
         $h1 = $model->getMetaHeader();
         $seoText = $model->getSeoText();
         $robots = self::getMetaRobots();
-        $phs = self::getCityPhs($city);
+        $phs = $city?self::getCityPhs($city):[];
         $meta = compact('title', 'description', 'keywords', 'h1', 'seoText', 'robots', 'default_description');
 
         self::replacePlaceHolders($meta, $phs);

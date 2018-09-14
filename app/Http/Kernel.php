@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\CheckRole;
 use App\Http\Middleware\CheckUserPhoneVerified;
+use App\Http\Middleware\RedirectManager;
 use App\Http\Middleware\SetDefaultCityForUrl;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -21,7 +22,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-
+        RedirectManager::class
     ];
 
     /**
@@ -38,6 +39,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+
         ],
         'api' => [
             'throttle:60,1',

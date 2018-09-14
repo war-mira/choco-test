@@ -3,9 +3,10 @@
 namespace App\Models\Library;
 
 use App\Doctor;
+use App\Interfaces\ISeoMetadata;
 use Illuminate\Database\Eloquent\Model;
 
-class Illness extends Model
+class Illness extends Model implements ISeoMetadata
 {
     protected $fillable = [
         'group_id',
@@ -41,4 +42,30 @@ class Illness extends Model
       return $illnesses;
     }
 
+
+
+    public function getMetaTitle()
+    {
+        return $this->name." - симптомы и лечение, причины, диагностика заболевания - iDoctor.kz";
+    }
+
+    public function getMetaDescription()
+    {
+        return "{$this->name}. Первые признаки и симптомы болезни. Профилактика и лечение. Что делать при диагнозе {$this->name}. Подробнее о болезни на iDoctor.kz.";
+    }
+
+    public function getMetaKeywords()
+    {
+        return "{$this->name} лечение, {$this->name} симптомы, {$this->name} профилактика и лечение, признаки {$this->name}, перарвые признаки {$this->name}";
+    }
+
+    public function getMetaHeader()
+    {
+        return $this->name;
+    }
+
+    public function getSeoText()
+    {
+        return '';
+    }
 }

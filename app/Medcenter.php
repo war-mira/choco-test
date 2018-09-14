@@ -315,12 +315,21 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
 
     public function getMetaTitle()
     {
-        return empty($this->meta_title) ? ($this->name . ' - Сервис по поиску врачей iDoctor.kz') : $this->meta_title;
+        return empty($this->meta_title)
+            ? sprintf('%s на %s - %s - отзывы пациетов, фото - iDoctor.kz',
+                $this->name,
+                $this->map,
+                $this->city->name
+            )
+            : $this->meta_title;
     }
 
     public function getMetaDescription()
     {
-        $desc = "Многопрофильное медицинское учреждение - " . str_replace("Медицинский центр ", "", $this->name) . ". ". SeoMetadataHelper::DEFAULT_DESCRIPTION;
+        $desc = sprintf('%s на %s: отзывы, цены, рейтинг врачей, график работы. Оставьте отзыв о враче на iDoctor.kz! ',
+        $this->name,
+        $this->map
+        );
         if(!empty($this->meta_desc)){
             $desc = $this->meta_desc;
         }
@@ -329,7 +338,17 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
 
     public function getMetaKeywords()
     {
-        return empty($this->meta_key) ? $this->name : $this->meta_key;
+        return empty($this->meta_key)
+            ? implode(',',[
+                $this->name." на ".$this->map,
+                $this->name." ".$this->city->name,
+                $this->name." {$this->city->name} цены",
+                $this->name." отзывы",
+                $this->name." адрес",
+                $this->name." {$this->city->name} врачи",
+                $this->name." {$this->city->name} отзывы"
+            ])
+            : $this->meta_key;
     }
 
     public function getMetaHeader()
