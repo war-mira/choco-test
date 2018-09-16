@@ -36,15 +36,10 @@
     <!-- section intro end -->
 
     <!-- begin questions -->
+    
     <div class="section questions">
-        <div class="container">
-            <div class="questions-container">
-                    <div class="show-question-form">
-                        <h1 class="button">Задать вопрос врачу</h1>
-                    </div>
-                    @include('forms.public.question-form')
-            </div>
-        </div>
+        @include('redesign.partials.questions_list')
+        
     </div>
     <!-- end section -->
 

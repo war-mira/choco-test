@@ -1,4 +1,4 @@
-<div class="modal-window" id="question__modal">
+<div class="modal-window" id="ask-doctor-modal">
     <div class="moodal-close-bg"></div>
     <div class="modal-close"></div>
     <div class="modal__content">
@@ -63,7 +63,7 @@
             </form>
         <div id="ask_doctor_mess_ok" class="modal-body">
             <p>
-                <strong>Спасибо за вопрос!</strong> Когда врач ответит, мы Вам обязательно сообщим.
+                <strong>Спасибо!</strong> Ваша заявка принята мы вам перезвоним!
             </p>
         </div>
     </div>
