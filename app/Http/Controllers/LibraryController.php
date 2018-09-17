@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\City;
+use App\Helpers\SeoMetadataHelper;
 use App\Models\Library\Illness;
 use App\Models\Library\IllnessesGroup;
 use App\Models\Library\IllnessesGroupArticle;
@@ -29,7 +30,9 @@ class LibraryController
         $article = IllnessesGroupArticle::where('alias',$article)->firstOrFail();
         $links = $this->getNavigationFromContent($article->description);
 
-        return view('library.articles.item', compact('article', 'links', 'illnessesGroup'));
+        $meta = SeoMetadataHelper::getMeta($article);
+
+        return view('library.articles.item', compact('meta','article', 'links', 'illnessesGroup'));
     }
 
     public function illnesses( $letter = null)
@@ -47,7 +50,9 @@ class LibraryController
     {
         $links = $this->getNavigationFromContent($illness->description);
 
-        return view('library.illnesses.item', compact('illness', 'links'));
+        $meta = SeoMetadataHelper::getMeta($illness);
+
+        return view('library.illnesses.item', compact('illness', 'links','meta'));
     }
 
     private function getAlphabet() {

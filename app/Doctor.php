@@ -471,31 +471,38 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
 
     public function getMetaTitle()
     {
-        $skills_result = [];
-        $skills = $this->skills()->get();
-        foreach ($skills as $skill) {
-            $skills_result[] = $skill->name;
-        }
+
         return empty($this->meta_title)
-            ? ($this->firstname . ' ' . $this->lastname . ' - ' . $this->city->name)
+            ? sprintf(
+                '%s - врач, %s, %s, отзывы, фото - iDoctor.kz',
+                $this->name,
+                $this->main_skill->name,
+                $this->city->name??''
+                )
             : $this->meta_title;
     }
 
     public function getMetaDescription()
     {
-        $skills_result = [];
-        $skills = $this->skills()->get();
-        foreach ($skills as $skill) {
-            $skills_result[] = $skill->name;
-        }
         return empty($this->meta_desc)
-            ? ($this->firstname . ' ' . $this->lastname . ' - ' . implode(", ", $skills_result)) . ". " . SeoMetadataHelper::DEFAULT_DESCRIPTION
+            ? sprintf('Врач %s - запись на прием, график работы, цены. Оставьте отзыв о враче на iDoctor.kz!',$this->name)
             : $this->meta_desc;
     }
 
     public function getMetaKeywords()
     {
-        return empty($this->meta_key) ? null : $this->meta_key;
+        return empty($this->meta_key)
+            ? sprintf('%s, %s отзывы, врачи %s, %s %s, %s %s отзывы, %s контакты',
+                    $this->name,
+                    $this->name,
+                    $this->city->name,
+                    $this->name,
+                    $this->main_skill->name,
+                    $this->name,
+                    $this->main_skill->name,
+                    $this->name
+                )
+            : $this->meta_key;
     }
 
     public function getMetaHeader()

@@ -218,11 +218,14 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
             $city = City::find($this->city_id);
             $address = $city->name.' '.$this->sms_address;
 
-        $client = new \GuzzleHttp\Client();
-        $response = $client->get('https://geocode-maps.yandex.ru/1.x/?format=json&geocode='.$address.'');
-        $response = $response->getBody();
-        $response = $response->getContents();
-        $response = json_decode($response, true);
+        $response = \Cache::remember('coordinates_'.$this->id,60*24*7,function() use($address){
+            $client = new \GuzzleHttp\Client();
+            $response = $client->get('https://geocode-maps.yandex.ru/1.x/?format=json&geocode='.$address.'');
+            $response = $response->getBody();
+            $response = $response->getContents();
+            $response = json_decode($response, true);
+            return $response;
+        });
         $firstObject = array_shift($response['response']['GeoObjectCollection']['featureMember']);
         $points = $firstObject['GeoObject']['Point']['pos'];
         $points = str_replace(' ', ', ', $points);
@@ -312,12 +315,21 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
 
     public function getMetaTitle()
     {
-        return empty($this->meta_title) ? ($this->name . ' - Сервис по поиску врачей iDoctor.kz') : $this->meta_title;
+        return empty($this->meta_title)
+            ? sprintf('%s на %s - %s - отзывы пациетов, фото - iDoctor.kz',
+                $this->name,
+                $this->map,
+                $this->city->name
+            )
+            : $this->meta_title;
     }
 
     public function getMetaDescription()
     {
-        $desc = "Многопрофильное медицинское учреждение - " . str_replace("Медицинский центр ", "", $this->name) . ". ". SeoMetadataHelper::DEFAULT_DESCRIPTION;
+        $desc = sprintf('%s на %s: отзывы, цены, рейтинг врачей, график работы. Оставьте отзыв о враче на iDoctor.kz! ',
+        $this->name,
+        $this->map
+        );
         if(!empty($this->meta_desc)){
             $desc = $this->meta_desc;
         }
@@ -326,7 +338,17 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
 
     public function getMetaKeywords()
     {
-        return empty($this->meta_key) ? $this->name : $this->meta_key;
+        return empty($this->meta_key)
+            ? implode(',',[
+                $this->name." на ".$this->map,
+                $this->name." ".$this->city->name,
+                $this->name." {$this->city->name} цены",
+                $this->name." отзывы",
+                $this->name." адрес",
+                $this->name." {$this->city->name} врачи",
+                $this->name." {$this->city->name} отзывы"
+            ])
+            : $this->meta_key;
     }
 
     public function getMetaHeader()

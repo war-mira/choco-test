@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\City;
 use App\Doctor;
+use App\Http\Middleware\RedirectManager;
 use App\Medcenter;
 use App\Skill;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
