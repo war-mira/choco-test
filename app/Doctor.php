@@ -14,6 +14,7 @@ use App\Model\ServiceItem;
 use App\Models\Library\Illness;
 use App\Traits\Eloquent\FilterScopes;
 use Carbon\Carbon;
+use Idoctor\Lvg\Models\LvgDoctorCandidate;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -561,5 +562,10 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         //
 //        dd($opts);
         return $opts;
+    }
+
+    public function lvg_votes()
+    {
+        return $this->belongsToMany(LvgDoctorCandidate::class,'lvg_doctors_candidates','doctor_id','candidate_id');
     }
 }

@@ -33,6 +33,10 @@ $white: #fff;
 .form {
 
   &--input{
+    label{
+      font-family: $font-semibold;
+      font-size: 14px;
+    }
     input{
       &.error{
         border-color:darkred;

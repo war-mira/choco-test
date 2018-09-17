@@ -33,6 +33,10 @@
   cursor: pointer;
 }
 
+.autocomplete__list--item span {
+  pointer-events: none;
+}
+
 .autocomplete__list--item:last-child {
   border-bottom: none;
   padding-bottom: 0;
@@ -62,6 +66,11 @@
   padding: 16px;
   -webkit-transition: all .15s ease-in-out;
   transition: all .15s ease-in-out;
+}
+
+.form--input label {
+  font-family: "ProximaNova-Semibold", sans-serif;
+  font-size: 14px;
 }
 
 .form--input input.error {
@@ -144,7 +153,7 @@
           transform: rotate(45deg);
 }
 
-.page--lvg__main {
+.page--lvg .page {
   padding: 64px;
   background-image: url(/projects/lvg/img/background.jpg);
   background-size: cover;
@@ -155,12 +164,12 @@
 }
 
 @media (max-width: 768px) {
-  .page--lvg__main {
+  .page--lvg .page {
     padding: 48px 16px;
   }
 }
 
-.page--lvg__main:after {
+.page--lvg .page:after {
   content: " ";
   position: absolute;
   width: 100%;
@@ -172,7 +181,7 @@
   z-index: 1;
 }
 
-.page--lvg__main .content {
+.page--lvg .page .content {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -182,19 +191,19 @@
   z-index: 3;
 }
 
-.page--lvg__main .content .title, .page--lvg__main .content .main {
+.page--lvg .page .content .title, .page--lvg .page .content .main {
   -ms-flex-preferred-size: 100%;
       flex-basis: 100%;
   max-width: 100%;
 }
 
-.page--lvg__main .title {
+.page--lvg .page .title {
   text-align: center;
   color: #fff;
   text-transform: uppercase;
 }
 
-.page--lvg__main .title h1 {
+.page--lvg .page .title h1 {
   line-height: 34px;
 }
 
@@ -384,4 +393,110 @@
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
   }
+}
+
+.page--lvg__vote .main {
+  margin-top: 24px;
+  padding: 0 64px;
+}
+
+.page--lvg__vote .main .card {
+  opacity: 1;
+  -webkit-transform: translateX(0);
+          transform: translateX(0);
+}
+
+.page--lvg__vote .main .card.hide {
+  opacity: 0;
+  -webkit-transform: translateX(200px);
+          transform: translateX(200px);
+  position: absolute;
+}
+
+@media (max-width: 768px) {
+  .page--lvg__vote .main .card.hide {
+    -webkit-transform: translateX(-200px);
+            transform: translateX(-200px);
+  }
+}
+
+.page--lvg__vote .main h2 {
+  font-family: "ProximaNova-Bold", sans-serif;
+  font-size: 26px;
+  line-height: 24px;
+  color: #454545;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.page--lvg__vote .main .vote--form {
+  padding: 32px;
+}
+
+.page--lvg__vote .main .vote--form h5 {
+  font-size: 15px;
+  margin-bottom: 24px;
+}
+
+.page--lvg__vote .main .vote--form .form--buttons {
+  padding-top: 6px;
+}
+
+.page--lvg__vote .main .vote--form .form--row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 26px;
+}
+
+.page--lvg__vote .main .vote--form .form--row.add_doctor {
+  color: #00a8ff;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+}
+
+.page--lvg__vote .main .vote--form .form--row.add_doctor i {
+  font-style: normal;
+  border: 1px solid #00a8ff;
+  padding: 0 4px;
+  line-height: 1;
+  font-size: 18px;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-right: 6px;
+}
+
+.page--lvg__vote .main .vote--form .form--row .form--input {
+  padding: 0 12px;
+  width: 25%;
+}
+
+.page--lvg__vote .main .vote--form .form--row .form--input input.error::-webkit-input-placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: rgba(139, 0, 0, 0.7);
+}
+
+.page--lvg__vote .main .vote--form .form--row .form--input input.error:-ms-input-placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: rgba(139, 0, 0, 0.7);
+}
+
+.page--lvg__vote .main .vote--form .form--row .form--input input.error::-ms-input-placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: rgba(139, 0, 0, 0.7);
+}
+
+.page--lvg__vote .main .vote--form .form--row .form--input input.error::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: rgba(139, 0, 0, 0.7);
+}
+
+.page--lvg__vote .main .vote--form .form--row .form--input:first-child {
+  padding-left: 0;
+}
+
+.page--lvg__vote .main .vote--form .form--row .form--input:last-child {
+  padding-right: 0;
 }

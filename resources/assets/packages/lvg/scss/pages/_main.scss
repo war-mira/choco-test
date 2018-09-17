@@ -1,6 +1,6 @@
 .page--lvg{
   $big_padding: 64;
-  &__main{
+  .page{
     padding: 64px;
     background-image: url(/projects/lvg/img/background.jpg);
     background-size:cover;
@@ -41,6 +41,10 @@
         line-height: 34px;
       }
     }
+  }
+  &__main{
+
+
     .main{
       position:relative;
       display: flex;

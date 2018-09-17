@@ -13,6 +13,8 @@ class LVG {
                 evt.target.classList.remove('error');
             });
         });
+
+        $('input[name="phone"]').mask("+7 (999) 999-9999");
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -130,11 +132,11 @@ class LVG {
             .done(function (response) {
                 if (response.code == 200) {
                     window.location.href = '/actions/best-doctor-2018/vote';
-                } else if(response.code == 401) {
+                } else if (response.code == 401) {
                     let goAuth = confirm(response.msg);
-                    if(goAuth){
+                    if (goAuth) {
                         window.location.href = '/actions/best-doctor-2018/vote';
-                    } else{
+                    } else {
 
                     }
                 }
@@ -207,6 +209,7 @@ class LVG {
     }
 }
 
-
-let lvg = new LVG();
-lvg.init();
+if (document.querySelector('.page--lvg__main')) {
+    let lvg = new LVG();
+    lvg.init();
+}

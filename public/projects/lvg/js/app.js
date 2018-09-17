@@ -136,6 +136,8 @@ var LVG = function () {
                     evt.target.classList.remove('error');
                 });
             });
+
+            $('input[name="phone"]').mask("+7 (999) 999-9999");
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -333,5 +335,257 @@ var LVG = function () {
     return LVG;
 }();
 
-var lvg = new LVG();
-lvg.init();
+if (document.querySelector('.page--lvg__main')) {
+    var lvg = new LVG();
+    lvg.init();
+}
+
+var LVGVote = function () {
+    function LVGVote() {
+        _classCallCheck(this, LVGVote);
+
+        this.container = document.querySelector('.page--lvg');
+        this.autocompletes = [];
+        this.users = [];
+        this.current = 3;
+        this.limit = 5;
+    }
+
+    _createClass(LVGVote, [{
+        key: 'initAutocomplete',
+        value: function initAutocomplete() {
+            var _self = this;
+            this.container.querySelectorAll('.autocomplete__lastname').forEach(function (item) {
+                _self.initLastnameAutocomplete(item, _self);
+            });
+
+            this.container.querySelectorAll('.autocomplete__skill').forEach(function (item) {
+                _self.initSkillAutocomplete(item, _self);
+            });
+        }
+    }, {
+        key: 'initSkillAutocomplete',
+        value: function initSkillAutocomplete(item, _self) {
+            var autocomplete = new AutoComplete(item, 'autocomplete__item--skill');
+            autocomplete.init();
+            _self.autocompletes.push(autocomplete);
+        }
+    }, {
+        key: 'initLastnameAutocomplete',
+        value: function initLastnameAutocomplete(item, _self) {
+            var autocomplete = new AutoComplete(item);
+            autocomplete.setInputValue = function (target) {
+
+                var parent = target.closest('.form--row');
+                var skill_input = parent.querySelector('input[name="skill"]');
+
+                var firstname = parent.querySelector('input[name="firstname"]');
+                firstname.value = target.querySelector('.firstname').innerText;
+                firstname.classList.remove('error');
+
+                var lastname = parent.querySelector('input[name="lastname"]');
+                lastname.value = target.querySelector('.lastname').innerText;
+                lastname.classList.remove('error');
+
+                var middlename = parent.querySelector('input[name="middlename"]');
+                middlename.value = target.querySelector('.middlename').innerText;
+                middlename.classList.remove('error');
+
+                for (var attr_name in target.dataset) {
+                    if (attr_name == 'skill') {
+                        skill_input.value = target.dataset[attr_name];
+                        skill_input.setAttribute('data-id', target.dataset['skill_id']);
+                        skill_input.classList.remove('error');
+                    } else {
+                        this.input.setAttribute('data-' + attr_name, target.dataset[attr_name]);
+                    }
+                }
+                this.closeDropdown();
+            };
+            autocomplete.init();
+            _self.autocompletes.push(autocomplete);
+        }
+    }, {
+        key: 'initAddDoctor',
+        value: function initAddDoctor() {
+            var _self = this;
+            this.container.querySelector('.add_doctor').addEventListener('click', function (e) {
+                if (_self.current < 5) {
+                    var template = _.template(document.getElementById('form--row').innerHTML);
+                    var row = _self.parseHTML(template());
+                    _self.container.querySelector('.vote--form .additional--rows').appendChild(row);
+                    _self.initLastnameAutocomplete(row.querySelector('.autocomplete__lastname'), _self);
+                    _self.initSkillAutocomplete(row.querySelector('.autocomplete__skill'), _self);
+                    _self.current++;
+                }
+            });
+        }
+    }, {
+        key: 'validateForm',
+        value: function validateForm() {
+            var _self = this;
+            var rows = this.container.querySelectorAll('.form--row');
+            var msgs = [];
+            this.users = [];
+            rows.forEach(function (row) {
+                if (!row.classList.contains('add_doctor')) {
+                    var validate = _self.validateRow(row);
+                    if (!validate) {
+                        msgs.push(validate);
+                    } else {
+                        _self.addUser(row);
+                    }
+                }
+            });
+
+            return msgs.length ? msgs : true;
+        }
+    }, {
+        key: 'addUser',
+        value: function addUser(row) {
+            var _self = this;
+            var inputs = row.querySelectorAll('.form--input');
+            var user = {};
+            inputs.forEach(function (item) {
+                var input = item.querySelector('input');
+                if (input.getAttribute('data-id') !== null) {
+                    user[input.getAttribute('name')] = {
+                        value: input.value,
+                        id: input.getAttribute('data-id')
+                    };
+                } else {
+                    user[input.getAttribute('name')] = input.value;
+                }
+            });
+
+            this.users.push(user);
+        }
+    }, {
+        key: 'validateRow',
+        value: function validateRow(row) {
+            var _self = this;
+            var errors = [];
+            var user = {};
+            row.querySelectorAll('.form--input').forEach(function (item) {
+                var label = item.querySelector('label');
+                var input = item.querySelector('input');
+                if (!input.value.trim().length) {
+                    _self.markAsError(input);
+                    input.placeholder = 'Заполните это поле';
+                    errors.push((label === null ? input.getAttribute('name') : label.innerText) + ' \u043D\u0435 \u0437\u0430\u043F\u043E\u043B\u043D\u0435\u043D\u043E');
+                } else {
+                    if (input.getAttribute('data-id') !== null) {
+                        user[input.getAttribute('name')] = {
+                            value: input.value,
+                            id: input.getAttribute('data-id')
+                        };
+                    } else {
+                        user[input.getAttribute('name')] = input.value;
+                    }
+                }
+            });
+
+            if (_.has(user, 'lastname.id')) {
+                var needle = _.filter(this.users, { lastname: { id: user.lastname.id } });
+                if (needle.length) {
+                    if (_.isEqual(user, _.first(needle)) || user.lastname.id == _.first(needle).lastname.id) {
+                        _self.cleanRow(row);
+                        confirm('Вы не можете голосовать дважды за одного врача');
+                        return false;
+                    }
+                }
+            }
+            return errors.length ? false : true;
+        }
+    }, {
+        key: 'showEnd',
+        value: function showEnd() {}
+    }, {
+        key: 'save',
+        value: function save() {
+            var _self = this;
+            $.post('/actions/best-doctor-2018/postVote', {
+                'users': _self.users
+            }).done(function (response) {
+                if (response.code == 200) {
+                    _self.showEnd();
+                }
+            }).fail(function (data) {
+                data = data.responseJSON;
+
+                alert(data.msg);
+            });
+        }
+    }, {
+        key: 'cleanRow',
+        value: function cleanRow(row) {
+            var _self = this;
+            row.querySelectorAll('input').forEach(function (input) {
+                input.value = '';
+                _self.markAsError(input);
+                input.placeholder = 'Заполните это поле';
+            });
+        }
+    }, {
+        key: 'saveForm',
+        value: function saveForm() {
+            var validate = this.validateForm();
+            if (validate === true) {
+                this.save();
+            } else {
+                if (Array.isArray(validate)) {
+                    validate.forEach(function (msg) {
+                        console.log(msg);
+                    });
+                } else {
+                    console.log(validate);
+                }
+            }
+        }
+    }, {
+        key: 'markAsError',
+        value: function markAsError(input) {
+            input.classList.add('error');
+        }
+    }, {
+        key: 'parseHTML',
+        value: function parseHTML(str) {
+            var tmp = document.implementation.createHTMLDocument();
+            tmp.body.innerHTML = str;
+            return tmp.body.children[0];
+        }
+    }, {
+        key: 'initVoteButton',
+        value: function initVoteButton() {
+            var _self = this;
+            this.container.querySelector('.vote').addEventListener('click', function (e) {
+                _self.saveForm();
+            });
+        }
+    }, {
+        key: 'init',
+        value: function init() {
+            this.initAutocomplete();
+            this.initAddDoctor();
+            this.initVoteButton();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            this.container.querySelectorAll('.form--input input').forEach(function (input) {
+                input.addEventListener('input', function (evt) {
+                    evt.target.placeholder = '';
+                    evt.target.classList.remove('error');
+                });
+            });
+        }
+    }]);
+
+    return LVGVote;
+}();
+
+if (document.querySelector('.page--lvg__vote')) {
+    var lvg_vote = new LVGVote();
+    lvg_vote.init();
+}

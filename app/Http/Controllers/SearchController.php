@@ -52,10 +52,13 @@ class SearchController extends Controller
             case 'skill':
                 return $this->autocompleteSkill($query);
                 break;
+            case 'doctor':
+                return $this->autocompleteDoctor($query);
+                break;
             case 'city':
                 return $this->autocompleteCity($query);
                 break;
-                case 'medcenter':
+            case 'medcenter':
                 return $this->autocompleteMedcenter($query);
                 break;
             default:
@@ -69,15 +72,32 @@ class SearchController extends Controller
     {
         $skills = $this->searchAllSkills($query);
         $skills = $skills->map(function ($skill) {
-            return $skill->only(['id', 'name','alias']);
+            return $skill->only(['id', 'name', 'alias']);
         });
         return response()->json($skills);
     }
+
+    public function autocompleteDoctor($query)
+    {
+        $doctors = $this->searchAllDoctors($query);
+        $doctors = $doctors->map(function ($doctor) {
+            return $doctor->only([
+                'id',
+                'lastname',
+                'firstname',
+                'middlename',
+                'patronymic',
+                'skills'
+            ]);
+        });
+        return response()->json($doctors);
+    }
+
     public function autocompleteMedcenter($query)
     {
         $medcenters = $this->searchMedcenters($query);
         $medcenters = $medcenters->map(function ($medcenter) {
-            return $medcenter->only(['id', 'name','alias']);
+            return $medcenter->only(['id', 'name', 'alias']);
         });
         return response()->json($medcenters);
     }
@@ -91,10 +111,11 @@ class SearchController extends Controller
             ->limit(20)
             ->get();
         $cities = $cities->map(function ($city) {
-            return $city->only(['id', 'name','alias']);
+            return $city->only(['id', 'name', 'alias']);
         });
         return response()->json($cities);
     }
+
     public function livesearch(Request $request)
     {
         $query = $request->query('q');
@@ -126,6 +147,21 @@ class SearchController extends Controller
             ->get();
 
         return $skills;
+    }
+
+    private function searchAllDoctors($query)
+    {
+        $doctors = \App\Doctor::
+        where('lastname', 'like', "%$query%")
+            ->where('status', 1)
+            ->with(['skills' => function ($skill) {
+                $skill->select('skills.name', 'skills.id', 'skills.alias');
+            }])
+            ->orderBy('lastname')
+            ->limit(20)
+            ->get();
+
+        return $doctors;
     }
 
     private function searchAllSkills($query)
