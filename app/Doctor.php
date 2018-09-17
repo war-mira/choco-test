@@ -15,6 +15,7 @@ use App\Models\Library\Illness;
 use App\Traits\Eloquent\FilterScopes;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Redis;
 
 /**
  * App\Doctor
@@ -561,5 +562,15 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         //
 //        dd($opts);
         return $opts;
+    }
+
+    public function clicksCount($dateFrom, $dateTo)
+    {
+        return Redis::ZCOUNT('doctor:'.$this->id.':clicks', $dateFrom->getTimestamp(), $dateTo->getTimestamp());
+    }
+
+    public function clicksCard()
+    {
+        return Redis::ZCARD('doctor:'.$this->id.':clicks');
     }
 }

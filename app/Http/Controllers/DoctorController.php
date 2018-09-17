@@ -557,12 +557,17 @@ class DoctorController extends Controller
     {
         $doctor = Doctor::find($request->id);
         if($doctor){
+            $date = new \DateTime();
             $phone = substr($doctor->showing_phone, 4);
             $data = [];
-            $data['data'] = $request->data ? $request->data: '';
-            $data['doctor_id'] = $doctor->id;
+            if($request->data)
+                $data['phone'] = $request->data;
 
-            $date = new \DateTime();
+            $data['date'] = $date->format('Y-m-d');
+            $data['token'] = $request->session()->token();
+
+            Redis::ZREM('doctor:'.$doctor->id.':clicks', '{"date":"'.$data['date'].'","token":"'.$data['token'].'"}');
+
             Redis::zadd('doctor:'.$doctor->id.':clicks', $date->getTimestamp(), json_encode($data));
 
             if($phone)

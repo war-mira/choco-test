@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Jobs\GaEcommerceJob;
+use App\Jobs\Report\DoctorClicksJob;
 use App\Jobs\SendDoctorReviewWeeklyDigest;
 use App\Jobs\SmsNotificationsJob;
 use Illuminate\Console\Scheduling\Schedule;
@@ -36,6 +37,10 @@ class Kernel extends ConsoleKernel
         })->everyMinute();
 
         $schedule->job(new SendDoctorReviewWeeklyDigest)->fridays()->at('10:00');
+
+        $schedule->call(function() {
+            (new DoctorClicksJob())->handle();
+        })->daily();
     }
 
     /**

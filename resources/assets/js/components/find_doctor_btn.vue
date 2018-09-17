@@ -1,7 +1,7 @@
 <template>
     <div>
         <slot name="link-to-modal">
-            <a href="#find-doctor-modal" class="btn btn_theme_usual popup-with-form" v-bind:class="{ active: isActive }" v-html="message">
+            <a href="#find-doctor-modal" class="btn btn_theme_usual popup-with-form" v-bind:class="{ active: isActive }" v-html="message"  @click="send">
             </a>
         </slot>
         <modal :href="path"></modal>
@@ -23,6 +23,9 @@
             }
         },
         methods: {
+            send: function () {
+                this.$http.get(`/api/v2/${this.obj}/${this.id}/clicks-count`)
+            },
             modal_open: function () {
             $('body').magnificPopup('open');
             }

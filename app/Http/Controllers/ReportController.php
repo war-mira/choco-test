@@ -11,6 +11,8 @@ use Excel;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Classes\LaravelExcelWorksheet;
 use PHPExcel_Worksheet_Drawing;
+use Illuminate\Support\Facades\Redis;
+use PhpParser\Comment\Doc;
 
 class ReportController extends Controller
 {
@@ -228,5 +230,30 @@ class ReportController extends Controller
 
             });
         })->export('xls');
+    }
+
+    public function doctorsClicks(Request $request)
+    {
+        $dateFrom = new \DateTime($request->date_from);
+        $dateTo = new \DateTime($request->date_to);
+        $city = $request->city;
+        $doctorsClicksRows = Redis::keys('doctor_city_date:*:'.$city.':*daily:clicks');
+        $doctors = collect();
+        foreach ($doctorsClicksRows as $row)
+        {
+            $date = explode(':', $row)[3];
+            if($date > $dateFrom->setTime(0,0)->getTimestamp() && $date < $dateTo->setTime(23, 59)->getTimestamp()){
+                $set = Redis::ZRANGE($row, 0, -1);
+                foreach ($set as $setRow){
+                    $data = json_decode($setRow, true)['doctor'];
+                    $data['count'] =  Redis::ZSCORE($row, $setRow);
+                    $doctors->push($data);
+                }
+            }
+            $doctors = $doctors->sortByDesc('count');
+        }
+
+        return view('admin.reports.doctors-clicks.list', compact('doctors'));
+
     }
 }
