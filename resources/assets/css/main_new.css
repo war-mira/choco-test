@@ -4194,6 +4194,9 @@ span.tab-line__item {
 .breadcrumb li{
   list-style: none;
   margin-right: 15px;}
+.section-article__article-header .article__title{
+  padding-bottom: 15px;
+}
 .section-article__content{
   display: -webkit-box;
   display: -webkit-flex;
