@@ -42,6 +42,6 @@ mix.js('resources/assets/js/app.js', 'public/js')
     ],'public/js/all.js')
    .sass('resources/assets/sass/app.scss', 'public/css')
    .options({
-        processCssUrls: false
+        processCssUrls: false 
     })
    .version();
