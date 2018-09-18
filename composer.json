@@ -7,7 +7,7 @@
     "repositories": [
         {
             "type": "git",
-            "url": "https://JIenpukoH@github.com/D-vision/iDoctor.kz-LVG"
+            "url": "git@github.com:D-vision/iDoctor.kz-LVG.git"
         }
     ],
     "require": {
