@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\City;
 use App\Doctor;
+use App\Helpers\CacheHelper;
 use App\Helpers\FormatHelper;
 use App\Helpers\SearchHelper;
 use App\Helpers\SeoMetadataHelper;
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redis;
+use Psy\Util\Str;
 
 class DoctorController extends Controller
 {
@@ -75,6 +77,7 @@ class DoctorController extends Controller
      */
     public function list(City $city = null, $input = '', $modifier = '', DoctorFilters $filters)
     {
+
         $skill = Skill::where('alias', $input)->first();
 
         $search = new \App\Helpers\DoctorSearcher([$input,$modifier]);
@@ -143,8 +146,13 @@ class DoctorController extends Controller
 
 
 
-        $doctors = $doctors->paginate(10)->appends($query);
-
+        /**
+         *
+        $doctors = \Cache::tags(['doctors'])->remember(CacheHelper::getKeyFromUrl(),24*7*60,function() use($doctors,$query){
+           return  $doctors->paginate(10)->appends($query);
+        });
+         */
+        $doctors =  $doctors->paginate(10)->appends($query);
         if($doctors->lastPage() < ($filter['page'] ?? 1))
             return redirect($doctors->url(1));
 
