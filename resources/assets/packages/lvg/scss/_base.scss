@@ -4,7 +4,9 @@ $font-semibold: "ProximaNova-Semibold", sans-serif;
 $font-extrabold: "ProximaNova-Extrabold", sans-serif;
 $font-black: "ProximaNova-Black", sans-serif;
 $white: #fff;
+@media(max-width: 768px){
 
+}
 .page--lvg {
   max-width: 1600px;
   margin: 0 auto;
@@ -13,10 +15,20 @@ $white: #fff;
   h1 {
     font-family: $font-black;
     font-size: 48px;
+    @media(max-width: 768px){
+      font-size: 26px;
+      font-family: $font-semibold;
+    }
   }
   h3 {
     font-family: $font-black;
     font-size: 31px;
+
+    @media(max-width: 768px){
+      font-size: 20px;
+      font-family: $font-semibold;
+    }
+
   }
 
 }

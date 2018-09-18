@@ -12,11 +12,14 @@
         opacity: 0;
         position: absolute;
       }
+
     }
     .main {
       margin-top: 24px;
       padding: 0 64px;
-
+      @media (max-width: 768px) {
+        padding: 0;
+      }
       .card {
         opacity: 1;
         transform: translateX(0);
@@ -40,6 +43,9 @@
 
       .vote--form {
         padding: 32px;;
+        @media (max-width: 768px) {
+          padding: 16px;
+        }
         h5 {
           font-size: 15px;
           margin-bottom: 24px;
@@ -50,6 +56,10 @@
         .form--row {
           display: flex;
           margin-bottom: 26px;
+          @media (max-width: 768px) {
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+          }
           &.add_doctor{
             color: #00a8ff;
             align-items: center;
@@ -69,6 +79,11 @@
           .form--input {
             padding: 0 12px;
             width: 25%;
+            @media (max-width: 768px) {
+              width: 100%;
+              flex-basis: 100%;
+              padding: 8px 0;
+            }
             input.error{
               &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
                 color: rgba(darkred,.7);
