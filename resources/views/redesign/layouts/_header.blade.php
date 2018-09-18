@@ -8,7 +8,6 @@
     @include('partials.google-analytics')
     @include('partials.gtm')
 
-    <title>Главная - iDoctor</title>
     <!-- <link rel="shortcut icon" type="image/png" href="img/favicon.png"> -->
     <link rel="stylesheet" href="{{mix("/css/app.css")}}">
     @stack('custom.css')
