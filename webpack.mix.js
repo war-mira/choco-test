@@ -40,6 +40,9 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'resources/assets/js/plugins/jquery.magnific-popup.min.js',
         // 'resources/assets/js/plugins/scripts.js'
     ],'public/js/all.js')
+    .babel([
+        'resources/assets/js/plugins/scripts.js'
+    ],'public/js/scripts.js')
    .sass('resources/assets/sass/app.scss', 'public/css')
    .options({
         processCssUrls: false
