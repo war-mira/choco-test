@@ -135,6 +135,7 @@ Route::get('/banner/{id}', 'BannerController@click')->name('banner.link');
 //LIVESEARCH
 Route::get('/ajax/search', 'SearchController@livesearch');
 Route::get('/ajax/index_search', 'SearchController@livesearchIndex');
+Route::get('/ajax/autocomplete','SearchController@autocomplete');
 
 Route::get('/api/345168965432865/order/new/{phone}/{operator_id}', 'MightyCall\OrderController@getFormView')->name('api.order.form');
 Route::post('/api/345168965432865/order/save', "MightyCall\OrderController@create")->name('api.order.create');
