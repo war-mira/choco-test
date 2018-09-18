@@ -236,13 +236,15 @@ class ReportController extends Controller
     {
         $dateFrom = new \DateTime($request->date_from);
         $dateTo = new \DateTime($request->date_to);
-        $city = $request->city;
+        $city = $request->city ? $request->city: 'Алматы';
         $doctorsClicksRows = Redis::keys('doctor_city_date:*:'.$city.':*daily:clicks');
         $doctors = collect();
+
         foreach ($doctorsClicksRows as $row)
         {
             $date = explode(':', $row)[3];
-            if($date > $dateFrom->setTime(0,0)->getTimestamp() && $date < $dateTo->setTime(23, 59)->getTimestamp()){
+
+            if($date >= $dateFrom->setTime(0,0)->getTimestamp() && $date <= $dateTo->setTime(23, 59)->getTimestamp()){
                 $set = Redis::ZRANGE($row, 0, -1);
                 foreach ($set as $setRow){
                     $data = json_decode($setRow, true)['doctor'];
@@ -250,10 +252,66 @@ class ReportController extends Controller
                     $doctors->push($data);
                 }
             }
+
             $doctors = $doctors->sortByDesc('count');
         }
 
+
         return view('admin.reports.doctors-clicks.list', compact('doctors'));
+    }
+
+    public function makeDoctorsClickReports()
+    {
+        $doctorsClicksRows = Redis::keys('doctor:*:clicks');
+
+        $dateStart = new \DateTime();
+        $dateStart->setTime(0,0);
+        $dateEnd = new \DateTime('tomorrow');
+        $dateEnd->setTime(0,0);
+
+        foreach ($doctorsClicksRows as $row){
+            $set = Redis::ZRANGE($row, 0, -1);
+
+            foreach ($set as $setRow){
+                if(Redis::ZSCORE($row, $setRow) > $dateStart->getTimestamp() && Redis::ZSCORE($row, $setRow) < $dateEnd->getTimestamp()) {
+                    $doctorId = explode(':', $row)[1];
+                    $doctor = Doctor::find($doctorId);
+                    if ($doctor) {
+                        $city = $doctor->city ? $doctor->city->name : 'Не известно';
+
+
+                        $usersData = Redis::ZRANGE($row, 0, -1);
+
+                        $data = [
+                            'doctor' => [
+                                'full_name' => $doctor->name,
+                                'phone' => $doctor->phone,
+                                'city'      => $city,
+                                'id'        => $doctorId,
+                                'partner'   => $doctor->partner
+                            ],
+                            'user'   => $usersData
+                        ];
+
+                        $dailyCount = $doctor->clicksCount($dateStart, $dateEnd);
+                        if ($dailyCount)
+                            Redis::zadd('doctor_city_date:' . $doctor->id . ':' . $city . ':' . $dateStart->getTimestamp() . ':daily:clicks', $dailyCount, json_encode($data));
+
+                        $week = $dateStart->modify('-1 week');
+                        $weeklyCount = $doctor->clicksCount($week, $dateEnd);
+
+                        if ($weeklyCount)
+                            Redis::zadd('doctor_city_date:' . $doctor->id . ':' . $city . ':' . $week->getTimestamp() . ':weekly:clicks', $weeklyCount, json_encode($data));
+
+                        $month = $dateStart->modify('-1 month');
+                        $monthlyCount = $doctor->clicksCount($month, $dateEnd);
+
+                        if ($monthlyCount)
+                            Redis::zadd('doctor_city_date:' . $doctor->id . ':' . $city . ':' . $month->getTimestamp() . ':monthly:clicks', $monthlyCount, json_encode($data));
+                    }
+                }
+            }
+        }
 
     }
 }

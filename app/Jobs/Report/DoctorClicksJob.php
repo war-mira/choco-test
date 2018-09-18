@@ -36,15 +36,15 @@ class DoctorClicksJob implements ShouldQueue
         $doctorsClicksRows = Redis::keys('doctor:*:clicks');
 
         $dateStart = new \DateTime();
-        $dateStart->setTime(0,0);
+        $dateStart->setTime(0, 0);
         $dateEnd = new \DateTime('tomorrow');
-        $dateEnd->setTime(0,0);
+        $dateEnd->setTime(0, 0);
 
-        foreach ($doctorsClicksRows as $row){
+        foreach ($doctorsClicksRows as $row) {
             $set = Redis::ZRANGE($row, 0, -1);
 
-            foreach ($set as $setRow){
-                if(Redis::ZSCORE($row, $setRow) > $dateStart && Redis::ZSCORE($row, $setRow) < $dateEnd) {
+            foreach ($set as $setRow) {
+                if (Redis::ZSCORE($row, $setRow) > $dateStart->getTimestamp() && Redis::ZSCORE($row, $setRow) < $dateEnd->getTimestamp()) {
                     $doctorId = explode(':', $row)[1];
                     $doctor = Doctor::find($doctorId);
                     if ($doctor) {
@@ -56,7 +56,7 @@ class DoctorClicksJob implements ShouldQueue
                         $data = [
                             'doctor' => [
                                 'full_name' => $doctor->name,
-                                'phone' => $doctor->phone,
+                                'phone'     => $doctor->phone,
                                 'city'      => $city,
                                 'id'        => $doctorId,
                                 'partner'   => $doctor->partner
@@ -68,20 +68,11 @@ class DoctorClicksJob implements ShouldQueue
                         if ($dailyCount)
                             Redis::zadd('doctor_city_date:' . $doctor->id . ':' . $city . ':' . $dateStart->getTimestamp() . ':daily:clicks', $dailyCount, json_encode($data));
 
-                        $week = $dateStart->modify('-1 week');
-                        $weeklyCount = $doctor->clicksCount($week, $dateEnd);
-
-                        if ($weeklyCount)
-                            Redis::zadd('doctor_city_date:' . $doctor->id . ':' . $city . ':' . $week->getTimestamp() . ':weekly:clicks', $weeklyCount, json_encode($data));
-
-                        $month = $dateStart->modify('-1 month');
-                        $monthlyCount = $doctor->clicksCount($month, $dateEnd);
-
-                        if ($monthlyCount)
-                            Redis::zadd('doctor_city_date:' . $doctor->id . ':' . $city . ':' . $month->getTimestamp() . ':monthly:clicks', $monthlyCount, json_encode($data));
                     }
                 }
             }
         }
     }
+
+
 }
