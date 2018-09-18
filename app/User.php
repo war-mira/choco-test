@@ -140,4 +140,9 @@ class User extends Authenticatable implements CanResetPassword
     {
         return $this->hasOne(Doctor::class);
     }
+
+    public function isDoctor()
+    {
+        return $this->role == User::ROLE_DOCTOR;
+    }
 }
