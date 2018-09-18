@@ -64,6 +64,34 @@ $(document).ready(function() {
         openOnFocus: false
     });
 
+    $(".question-slider").slick({
+        infinite: false,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        dots: true,
+        responsive: [
+        {
+            breakpoint: 1199.98,
+            settings: {
+                slidesToShow: 3
+            }
+        },
+        {
+            breakpoint: 991.98,
+            settings: {
+                slidesToShow: 2
+            }
+        },
+        {
+            breakpoint: 767.98,
+            settings: {
+                slidesToShow: 1
+            }
+        }
+        ]
+    });
+    
+
     $(".entity-slider").slick({
         infinite: false,
         slidesToShow: 4,

@@ -2,13 +2,13 @@
         <div class="container">
             <div class="questions-header-block">
                 <h1 class="button">Вопросы и ответы</h1>
-                <a href="#">700+ отвеченных врачами вопросов</a>
+                <a href="{{url('question_list')}}">700+ отвеченных врачами вопросов</a>
             </div>
             <div class="questions-block">
                 <div class="question-item">
                     <div class="question-item-header">
                         <h3 class="question-item-title">
-                            <a href="#">Появилась странная синяя сыпь на лысине</a>
+                            <a href="{{url('question_item')}}">Появилась странная синяя сыпь на лысине</a>
                         </h3>
                     </div>
                     <div class="question-item-doctor">

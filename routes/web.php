@@ -100,6 +100,12 @@ Route::post('comment/confirm-code', 'CommentController@confirmPhone');
 Route::get('comment/{id}/rate/{rate}', 'CommentController@rateComment')->name('rateComment');
 //******questions*****************
 Route::post('question/add', 'QuestionController@add');
+Route::get('question_item', function(){
+   return view('questions.item');
+});
+Route::get('question_list', function(){
+   return view('questions.list');
+});
 //******Posts***************************
 Route::get('post/{alias}', 'PostController@item')->name('post');
 Route::get('posts', 'PostController@list')->name('posts');

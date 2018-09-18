@@ -36,11 +36,9 @@
     <!-- section intro end -->
 
     <!-- begin questions -->
-    
-    <div class="section questions">
-        @include('redesign.partials.questions_list')
-        
-    </div>
+        <div class="section questions">
+            @include('redesign.partials.questions_list')
+        </div>
     <!-- end section -->
 
     <!-- section letter search start -->

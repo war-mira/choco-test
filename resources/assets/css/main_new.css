@@ -735,13 +735,54 @@ img {
   .clinic-slider_bg-white {
     background: #fff; }
   .docs-slider__heading,
-  .clinic-slider__heading {
+  .clinic-slider__heading,
+  .question-slider_heading{
     text-align: center;
     font-size: 30px;
     color: #454545;
     font-family: "ProximaNova-Extrabold", sans-serif;
     margin-bottom: 20px; }
-
+  
+  
+  .question-slider{
+    margin-left: auto;
+    margin-right: auto;
+  }
+ .question-slider__item{
+    margin: 15px 10px;
+    background: #fff;
+    -webkit-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.09);
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.09);
+    height: auto !important;
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+  .question__question-header{
+      border-bottom: 2px solid #eaeaea;
+      padding: 10px;
+  }
+  .question__question-header h3{
+      font-size: 16px;
+      font-weight: 600;
+  }
+  .question-slider-item-doctor{
+      padding: 20px 25px;
+  }
+  .question-slider-item-doctor .question-item-answer{
+      font-size: 14px;
+  }
+  .question-slider-item-doctor .question-main-img{
+      margin-bottom: 15px;
+  }
+  .question-slider-item-doctor .question-item-title{
+    font-size: 16px;
+    font-weight: 600;
+  }
 .entity-slider {
   margin-left: auto;
   margin-right: auto;
@@ -773,7 +814,7 @@ img {
   width: 200px;
  }
 
-.entity-thumb-img {
+.entity-thumb-img , .triple-blocks-thumb-img{
   margin-left: auto;
   margin-right: auto; }
   .entity-thumb-img__img-wr {
@@ -1974,7 +2015,9 @@ img {
   border-bottom: 1px solid #f9f9f9; }
   .doc-clinic-line__item:last-child {
     border-bottom: 0; }
-
+  .article-line__main{
+        padding: 0 15px;
+  }
 .entity-line {
   display: -webkit-box;
   display: -webkit-flex;
@@ -2949,11 +2992,18 @@ textarea:-moz-placeholder {
       -webkit-border-radius: 0 17px 17px 0;
               border-radius: 0 17px 17px 0; }
 
-.clinic-line__brief {
+    .article-line .no-img{
+        margin-left: 0;
+        padding-left: 0;
+    }
+    .entity-line__about-text p{
+        text-align: justify;
+    }
+.clinic-line__brief, .article-line__brief {
   font-size: 14px;
   line-height: 1.5;
   margin-top: 25px; }
-  .clinic-line__brief-line {
+  .clinic-line__brief-line, .article-line__brief-line {
     margin: -7px -35px;
     display: -webkit-box;
     display: -webkit-flex;
@@ -2962,11 +3012,11 @@ textarea:-moz-placeholder {
     -webkit-flex-wrap: wrap;
         -ms-flex-wrap: wrap;
             flex-wrap: wrap; }
-  .clinic-line__brief-item {
+  .clinic-line__brief-item, .article-line__brief-item {
     margin: 7px 35px; }
-  .clinic-line__brief-name {
+  .clinic-line__brief-name, .article-line__brief-name{
     color: #000; }
-  .clinic-line__brief-descr a {
+  .clinic-line__brief-descr a, .article-line__brief-descr a {
     text-decoration: underline;
     color: #00A8FF; }
 
