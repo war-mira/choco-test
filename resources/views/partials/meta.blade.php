@@ -13,7 +13,7 @@
 
 <!--Common metadata /-->
 @if(!empty($meta['title']))
-    <title>{{ $meta['title']}} @if(!is_null(request()->get('page')) && (request()->get('page') !== 1)) - Страница №{{request()->get('page')}} @endif</title>
+    <title>{{ $meta['title']}} @if(!is_null(request()->get('page')) && (request()->get('page') !== 1)) - Страница {{request()->get('page')}} @endif</title>
 @else
     <title>iDoctor.kz - Поиск врача в Алматы и Астане, бесплатная запись на прием</title>
 @endif
