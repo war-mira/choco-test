@@ -171,7 +171,7 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Alexusmai\Ruslug\RuslugServiceProvider::class,
-        Idoctor\Lvg\LVGServiceProvider::class,
+        //Idoctor\Lvg\LVGServiceProvider::class,
 
         /*
          * Application Service Providers...
