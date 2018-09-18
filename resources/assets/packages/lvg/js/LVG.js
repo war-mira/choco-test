@@ -45,14 +45,17 @@ class LVG {
 
     saveUser(target) {
         let _self = this;
+        target.classList.add('saving');
         $.post('/actions/best-doctor-2018/create', _self.user)
             .done(function (response) {
                 if (response.code == 200) {
                     _self.user.doctor_id = response.data.doctor_id;
                     _self.goToStep(target.getAttribute('data-next-step'), 'begin')
                 }
+                target.classList.remove('saving');
             }).fail(function (data) {
             console.log(data);
+            target.classList.remove('saving');
         })
 
     }
@@ -99,11 +102,13 @@ class LVG {
 
     sendSms(target) {
         let _self = this;
+        target.classList.add('saving');
         $.post('/actions/best-doctor-2018/register', _self.user)
             .done(function (response) {
                 if (response.code == 200) {
                     _self.showSmsCheck();
                 }
+                target.classList.remove('saving');
             }).fail(function (data) {
             data = data.responseJSON;
             if (data.msg.hasOwnProperty('validator')) {
@@ -111,6 +116,7 @@ class LVG {
             } else {
                 alert(data.msg);
             }
+            target.classList.remove('saving');
         })
     }
 
@@ -164,8 +170,10 @@ class LVG {
         let form = document.querySelector('.form--begin');
         let messages = [];
         let not_validate = [
-            'medcenter_name'
         ];
+        if(!this.container.querySelector('input[name="medcenter"]').checked){
+            not_validate.push('medcenter_name')
+        }
         form.querySelectorAll('.form--input').forEach(function (input) {
             let input__field = input.querySelector('input');
             let label = input.querySelector('label');

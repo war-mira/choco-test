@@ -62,6 +62,26 @@ $white: #fff;
       padding: 7px 27px;
       border-radius: 30px;
       font-family: $font-regular;
+      &.saving {
+        color: transparent;
+        position:relative;
+        &:after {
+          content: " ";
+          display: block;
+          width: 15px;
+          height: 15px;
+          border-radius: 50%;
+          border: 2px solid #fff;
+          border-color: #fff transparent #fff transparent;
+          animation: spin .5s linear infinite;
+          margin: 0 auto;
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: calc(50% - 9px);
+          bottom: 0;
+        }
+      }
     }
   }
   &--checkbox {
@@ -117,5 +137,14 @@ $white: #fff;
 
       }
     }
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
