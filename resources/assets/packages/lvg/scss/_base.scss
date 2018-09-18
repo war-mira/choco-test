@@ -1,0 +1,109 @@
+$font-regular: "ProximaNova-Regular", sans-serif;
+$font-bold: "ProximaNova-Bold", sans-serif;
+$font-semibold: "ProximaNova-Semibold", sans-serif;
+$font-extrabold: "ProximaNova-Extrabold", sans-serif;
+$font-black: "ProximaNova-Black", sans-serif;
+$white: #fff;
+
+.page--lvg {
+  max-width: 1600px;
+  margin: 0 auto;
+  position: relative;
+  font-family: $font-regular;
+  h1 {
+    font-family: $font-black;
+    font-size: 48px;
+  }
+  h3 {
+    font-family: $font-black;
+    font-size: 31px;
+  }
+
+}
+
+.card {
+  position: relative;
+  background-color: #fff;
+  border-radius: 3px;
+  padding: 16px;
+  transition: all .15s ease-in-out;
+
+}
+
+.form {
+
+  &--input{
+    label{
+      font-family: $font-semibold;
+      font-size: 14px;
+    }
+    input{
+      &.error{
+        border-color:darkred;
+        border-bottom-width: 2px;
+      }
+    }
+  }
+  &--buttons{
+    text-align: center;
+    .btn{
+      padding: 7px 27px;
+      border-radius: 30px;
+      font-family: $font-regular;
+    }
+  }
+  &--checkbox {
+    display: flex;
+    justify-content: space-between;
+    label {
+      display: block;
+      position: relative;
+      padding-left: 28px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      font-size: 18px;
+      font-family: $font-semibold;
+      color: #333;
+      padding-right: 16px;
+      input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+
+        &:checked ~ span {
+          background-color: #00a8ff;
+        }
+        &:checked ~ span:after, &:hover ~ span:after {
+          top: 3px;
+        }
+      }
+
+      span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 20px;
+        width: 20px;
+        border-radius: 5px;
+        background-color: #00a8ff;
+        overflow: hidden;
+        &:after {
+          content: " ";
+          position: absolute;
+          display: block;
+        }
+        &:after {
+          left: 7px;
+          top: 40px;
+          width: 4px;
+          height: 10px;
+          border: solid white;
+          border-width: 0 2px 2px 0;
+          transition: top .15s ease-in-out;
+          transform: rotate(45deg);
+        }
+
+      }
+    }
+  }
+}

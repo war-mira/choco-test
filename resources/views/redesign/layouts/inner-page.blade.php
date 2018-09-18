@@ -13,6 +13,7 @@
     <title>Главная - iDoctor</title>
     <!-- <link rel="shortcut icon" type="image/png" href="img/favicon.png"> -->
     <link rel="stylesheet" href="{{URL::asset("css/app.css")}}">
+    @stack('custom.css')
     {{--<link rel="stylesheet" href="{{URL::asset("css/normalize.css")}}">--}}
     {{--<link rel="stylesheet" href="{{URL::asset("css/slick.css")}}">--}}
     {{--<link rel="stylesheet" href="{{URL::asset("css/lightbox.min.css")}}">--}}
@@ -31,6 +32,7 @@
     {{--<script src="{{URL::asset("js/selectize.min.js")}}"></script>--}}
     {{--<script src="{{URL::asset("js/pickmeup.min.js")}}"></script>--}}
     {{--<script src="{{URL::asset("js/jquery.magnific-popup.min.js")}}"></script>--}}
+
 
 </head>
 <body>

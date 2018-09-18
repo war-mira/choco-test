@@ -35,7 +35,7 @@ class City extends Model
     protected $table = 'cities';
 
     protected $appends = ['href'];
-
+    public $timestamps = false;
     const ACTIVE = 1;
 
     public function parent()
