@@ -283,12 +283,15 @@ var LVG = function () {
             var _self = this;
             var form = document.querySelector('.form--begin');
             var messages = [];
+            var not_validate = ['medcenter_name'];
             form.querySelectorAll('.form--input').forEach(function (input) {
                 var input__field = input.querySelector('input');
                 var label = input.querySelector('label');
-                if (!input__field.value.trim().length) {
-                    _self.markAsError(input__field);
-                    messages.push((label === null ? input__field.getAttribute('name') : label.innerText) + ' \u043D\u0435 \u0437\u0430\u043F\u043E\u043B\u043D\u0435\u043D\u043E');
+                if (!not_validate.includes(input__field.name)) {
+                    if (!input__field.value.trim().length) {
+                        _self.markAsError(input__field);
+                        messages.push((label === null ? input__field.getAttribute('name') : label.innerText) + ' \u043D\u0435 \u0437\u0430\u043F\u043E\u043B\u043D\u0435\u043D\u043E');
+                    }
                 }
             });
 
@@ -499,7 +502,14 @@ var LVGVote = function () {
         }
     }, {
         key: 'showEnd',
-        value: function showEnd() {}
+        value: function showEnd() {
+            var main = this.container.querySelector('.main');
+            var end = this.container.querySelector('.end');
+            main.classList.add('hide');
+            setTimeout(function () {
+                end.classList.remove('hide');
+            }, 200);
+        }
     }, {
         key: 'save',
         value: function save() {
@@ -512,8 +522,10 @@ var LVGVote = function () {
                 }
             }).fail(function (data) {
                 data = data.responseJSON;
-
                 alert(data.msg);
+                if (data.code == 419) {
+                    _self.showEnd();
+                }
             });
         }
     }, {

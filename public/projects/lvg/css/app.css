@@ -395,6 +395,25 @@
   }
 }
 
+.page--lvg__vote .content {
+  min-height: 50vh;
+}
+
+.page--lvg__vote .main, .page--lvg__vote .end {
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+  opacity: 1;
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+}
+
+.page--lvg__vote .main.hide, .page--lvg__vote .end.hide {
+  -webkit-transform: translateY(-200px);
+          transform: translateY(-200px);
+  opacity: 0;
+  position: absolute;
+}
+
 .page--lvg__vote .main {
   margin-top: 24px;
   padding: 0 64px;
@@ -502,4 +521,16 @@
 
 .page--lvg__vote .main .vote--form .form--row .form--input:last-child {
   padding-right: 0;
+}
+
+.page--lvg__vote .end {
+  width: 100%;
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+}
+
+.page--lvg__vote .end h4 {
+  text-align: center;
+  font-size: 48px;
+  color: #fff;
 }

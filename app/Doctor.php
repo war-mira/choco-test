@@ -568,4 +568,13 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     {
         return $this->belongsToMany(LvgDoctorCandidate::class,'lvg_doctors_candidates','doctor_id','candidate_id');
     }
+
+    public function hasLvgVotes()
+    {
+        if($this->lvg_votes->count() > 0){
+            return true;
+        }
+
+        return false;
+    }
 }

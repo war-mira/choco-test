@@ -151,7 +151,12 @@ class LVGVote {
 
     }
     showEnd(){
-
+        let main = this.container.querySelector('.main');
+        let end = this.container.querySelector('.end');
+        main.classList.add('hide');
+        setTimeout(()=>{
+            end.classList.remove('hide');
+        },200)
     }
     save() {
         let _self = this;
@@ -165,8 +170,10 @@ class LVGVote {
             })
             .fail(function (data) {
                 data = data.responseJSON;
-
                 alert(data.msg);
+                if(data.code == 419){
+                    _self.showEnd();
+                }
 
             })
     }

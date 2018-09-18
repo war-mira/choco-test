@@ -1,9 +1,22 @@
 .page--lvg {
   &__vote {
-
+    .content{
+      min-height: 50vh;
+    }
+    .main,.end{
+      transform: translateY(0);
+      opacity: 1;
+      transition: all .2s ease-in-out;
+      &.hide{
+        transform: translateY(-200px);
+        opacity: 0;
+        position: absolute;
+      }
+    }
     .main {
       margin-top: 24px;
       padding: 0 64px;
+
       .card {
         opacity: 1;
         transform: translateX(0);
@@ -69,6 +82,16 @@
             }
           }
         }
+      }
+    }
+
+    .end{
+      width: 100%;
+      flex-basis: 100%;
+      h4{
+        text-align: center;
+        font-size: 48px;
+        color: #fff;
       }
     }
   }

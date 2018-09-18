@@ -163,13 +163,19 @@ class LVG {
         let _self = this;
         let form = document.querySelector('.form--begin');
         let messages = [];
+        let not_validate = [
+            'medcenter_name'
+        ];
         form.querySelectorAll('.form--input').forEach(function (input) {
             let input__field = input.querySelector('input');
             let label = input.querySelector('label');
-            if (!input__field.value.trim().length) {
-                _self.markAsError(input__field);
-                messages.push(`${label === null ? input__field.getAttribute('name') : label.innerText} не заполнено`);
+            if(!not_validate.includes(input__field.name)){
+                if (!input__field.value.trim().length) {
+                    _self.markAsError(input__field);
+                    messages.push(`${label === null ? input__field.getAttribute('name') : label.innerText} не заполнено`);
+                }
             }
+
         });
 
         return messages.length ? messages : true;
