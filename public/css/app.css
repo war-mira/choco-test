@@ -5064,7 +5064,10 @@ span.tab-line__item {
   list-style: none;
   margin-right: 15px;}
 .section-article__article-header .article__title{
-  padding-bottom: 15px;
+  margin-bottom: -35px;
+}
+.section-article__article-header img{
+  padding-top: 45px;
 }
 .section-article__content{
   display: -webkit-box;
