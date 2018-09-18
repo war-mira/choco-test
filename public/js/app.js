@@ -557,18 +557,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     computed: {
         path: function path() {
-            return '/api/v2/' + this.obj + '/' + this.id + '/clicks-count';
+            return '/api/v2/' + this.model + '/' + this.id + '/clicks-count';
         }
     },
     methods: {
         send: function send() {
-            this.$http.get('/api/v2/' + this.obj + '/' + this.id + '/clicks-count');
+            this.$http.get('/api/v2/' + this.model + '/' + this.id + '/clicks-count');
         },
         modal_open: function modal_open() {
             $('body').magnificPopup('open');
         }
     },
-    props: ['obj', 'id'],
+    props: ['model', 'id'],
     components: {
         modal: __WEBPACK_IMPORTED_MODULE_0__find_doctor_modal_vue___default.a
     }
@@ -764,14 +764,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         send: function send() {
             var _this = this;
 
-            this.$http.get('/api/v2/' + this.obj + '/' + this.id + '/clicks-count').then(function (response) {
+            this.$http.get('/api/v2/' + this.model + '/' + this.id + '/clicks-count').then(function (response) {
                 console.log(response.data);
                 _this.message = response.data;
                 _this.isActive = true;
             }, function (error) {});
         }
     },
-    props: ['obj', 'id']
+    props: ['model', 'id']
 
 });
 

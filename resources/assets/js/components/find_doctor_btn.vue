@@ -19,18 +19,18 @@
         },
         computed:{
             path:function () {
-                return `/api/v2/${this.obj}/${this.id}/clicks-count`
+                return `/api/v2/${this.model}/${this.id}/clicks-count`
             }
         },
         methods: {
             send: function () {
-                this.$http.get(`/api/v2/${this.obj}/${this.id}/clicks-count`)
+                this.$http.get(`/api/v2/${this.model}/${this.id}/clicks-count`)
             },
             modal_open: function () {
             $('body').magnificPopup('open');
             }
         },
-        props:['obj','id'],
+        props:['model','id'],
         components:{
             modal:modal
         },

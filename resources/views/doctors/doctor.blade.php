@@ -102,30 +102,31 @@
 
                 <div class="entity-line__additional appointment-book-small">
                     {{--@if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])--}}
-                        <div class="appointment-book-big__heading">Записаться на прием</div>
+                    <div class="appointment-book-big__heading">Записаться на прием</div>
                     {{--@endif--}}
                     <div class="appointment-book-small-header-block">
                         <div class="appointment-book-small__line">
                             <div class="appointment-book-small__timeline">
                                 {!! $doctor->timetable !!}
                             </div>
-                            {{--@if($doctor->whoIsIt() == \App\Doctor::TYPE[3] || $doctor->whoIsIt() == \App\Doctor::TYPE[5])--}}
-                                {{--<div class="appointment-book-small__bot-line">--}}
-                                    {{--<find-doctor-btn obj="doctor" id="{{ $doctor->id }}">--}}
-                                        {{--<template slot="link-to-modal"></template>--}}
-                                    {{--</find-doctor-btn>--}}
-                                    {{--<a href="{{ route('register') }}" class="btn btn_theme_usual btn_it-is-me">Это я</a>--}}
-                                {{--</div>--}}
-                            {{--@else--}}
-                                {{--@if( $doctor->whoIsIt() != \App\Doctor::TYPE[4] && $doctor->whoIsIt() != \App\Doctor::TYPE[5])--}}
-                                    {{--<phone-show-btn obj="doctor" id="{{ $doctor->id }}">--}}
-                                        {{--<template slot="phone-number"></template>--}}
-                                    {{--</phone-show-btn>--}}
-                                {{--@endif--}}
-                            {{--@endif--}}
+                            @if($doctor->whoIsIt() == \App\Doctor::TYPE[3] || $doctor->whoIsIt() == \App\Doctor::TYPE[5])
+                                <div class="appointment-book-small__bot-line">
+                                    <find-doctor-btn model="{{ \App\Doctor::FIND_DOCTOR_COUNT }}"
+                                                     id="{{ $doctor->id }}">
+                                        <template slot="link-to-modal"></template>
+                                    </find-doctor-btn>
+                                    <a href="{{ route('register') }}" class="btn btn_theme_usual btn_it-is-me">Это я</a>
+                                </div>
+                            @else
+                                @if( $doctor->whoIsIt() != \App\Doctor::TYPE[4] && $doctor->whoIsIt() != \App\Doctor::TYPE[5])
+                                    <phone-show-btn model="{{ \App\Doctor::SHOW_PHONE_COUNT }}" id="{{ $doctor->id }}">
+                                        <template slot="phone-number"></template>
+                                    </phone-show-btn>
+                                @endif
+                            @endif
                         </div>
                     </div>
-                    {{--@if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])--}}
+                    @if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])
                         <form action="#" class="">
                             <div class="appointment-book-small__line">
                                 @if(!empty($doctor->price))
@@ -139,7 +140,7 @@
                                             class="hidden-xl"> онлайн</span></a>
                             </div>
                         </form>
-                    {{--@endif--}}
+                    @endif
                 </div>
 
             </div>
@@ -208,11 +209,12 @@
             </a>
 
             <a href="#" data-tab="tab-2" class="entity-about__tab-item">
-                <h2 class="entity-about__tab-name">Отзывы<span class="entity-about__tab-count">{{$doctor->publicComments()->count()}}</span>
+                <h2 class="entity-about__tab-name">Отзывы<span
+                            class="entity-about__tab-count">{{$doctor->publicComments()->count()}}</span>
                 </h2>
             </a>
             {{--<a href="#" data-tab="tab-3" class="entity-about__tab-item">--}}
-                {{--<h2 class="entity-about__tab-name">Акции и скидки</h2>--}}
+            {{--<h2 class="entity-about__tab-name">Акции и скидки</h2>--}}
             {{--</a>--}}
         </div>
 
@@ -253,8 +255,8 @@
                                         </span></span></a>
                             </div>
                             {{--<div class="entity-reviews__about">--}}
-                                {{--<div class="entity-reviews__about-text">У нас только реальные отзывы</div>--}}
-                                {{--<a href="#" class="entity-reviews__about-link">Как формируется рейтинг?</a>--}}
+                            {{--<div class="entity-reviews__about-text">У нас только реальные отзывы</div>--}}
+                            {{--<a href="#" class="entity-reviews__about-link">Как формируется рейтинг?</a>--}}
                             {{--</div>--}}
                         </div>
                         <div id="taz1" class="entity-about-articl current">

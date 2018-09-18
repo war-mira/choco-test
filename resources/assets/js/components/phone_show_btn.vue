@@ -21,7 +21,7 @@
         },
         methods: {
             send: function () {
-                this.$http.get(`/api/v2/${this.obj}/${this.id}/clicks-count`)
+                this.$http.get(`/api/v2/${this.model}/${this.id}/clicks-count`)
                     .then(
                         (response) => {
                             console.log(response.data);
@@ -33,7 +33,7 @@
                     );
             }
         },
-        props: ['obj', 'id'],
+        props: ['model', 'id'],
 
 
     }

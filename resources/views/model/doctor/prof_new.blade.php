@@ -109,29 +109,31 @@
     </div>
         @if($doctor->whoIsIt() == \App\Doctor::TYPE[3])
         <div class="appointment-book-big__bot-line">
-            <find-doctor-btn obj="doctor" id="{{ $doctor->id }}">
+            <find-doctor-btn model="{{ \App\Doctor::FIND_DOCTOR_COUNT }}" id="{{ $doctor->id }}">
                 <template slot="link-to-modal"></template>
             </find-doctor-btn>
             <a href="{{ route('register') }}" class="btn btn_theme_usual">Это я</a>
         </div>
         @else
-        @if( $doctor->whoIsIt() != \App\Doctor::TYPE[4] && $doctor->whoIsIt() != \App\Doctor::TYPE[5])
-            <phone-show-btn obj="doctor" id="{{ $doctor->id }}">
-                <template slot="phone-number"></template>
-            </phone-show-btn>
-        @endif
+            @if( $doctor->whoIsIt() != \App\Doctor::TYPE[4] && $doctor->whoIsIt() != \App\Doctor::TYPE[5])
+                <phone-show-btn model="{{ \App\Doctor::SHOW_PHONE_COUNT }}" id="{{ $doctor->id }}">
+                    <template slot="phone-number"></template>
+                </phone-show-btn>
+            @endif
         @endif
     @if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])
-    <form action="#" class="">
-        <div class="appointment-book-big__bot-line">
-            @if(!empty($doctor->price))
-                <div class="appointment-book-big__price">
-                    <div class="appointment-book-big__price-text">Прием от:</div>
-                    <div class="appointment-book-big__price-val">от {{$doctor->price}} тг</div>
+            <form action="#" class="">
+                <div class="appointment-book-big__bot-line">
+                    @if(!empty($doctor->price))
+                        <div class="appointment-book-big__price">
+                            <div class="appointment-book-big__price-text">Прием от:</div>
+                            <div class="appointment-book-big__price-val">от {{$doctor->price}} тг</div>
+                        </div>
+                    @endif
+                    <a href="#order_doctor" data-doc-id="{{$doctor->id}}" data-dname="{{$doctor['name']}}"
+                       class="appointment-book-big__book-btn btn btn_theme_usual trigger-link popup-with-form">Записаться<span
+                                class="hidden-xl"> онлайн</span></a>
                 </div>
-            @endif
-            <a href="#order_doctor" data-doc-id="{{$doctor->id}}" data-dname="{{$doctor['name']}}" class="appointment-book-big__book-btn btn btn_theme_usual trigger-link popup-with-form">Записаться<span class="hidden-xl"> онлайн</span></a>
-        </div>
-    </form>
+            </form>
     @endif
 </div>

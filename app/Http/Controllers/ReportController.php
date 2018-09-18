@@ -273,7 +273,7 @@ class ReportController extends Controller
             $set = Redis::ZRANGE($row, 0, -1);
 
             foreach ($set as $setRow){
-                if(Redis::ZSCORE($row, $setRow) > $dateStart->getTimestamp() && Redis::ZSCORE($row, $setRow) < $dateEnd->getTimestamp()) {
+                if(Redis::ZSCORE($row, $setRow) >= $dateStart->getTimestamp() && Redis::ZSCORE($row, $setRow) <= $dateEnd->getTimestamp()) {
                     $doctorId = explode(':', $row)[1];
                     $doctor = Doctor::find($doctorId);
                     if ($doctor) {
