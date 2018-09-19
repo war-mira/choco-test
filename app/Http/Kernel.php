@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\CheckRole;
 use App\Http\Middleware\CheckUserPhoneVerified;
+use App\Http\Middleware\Http2Push;
 use App\Http\Middleware\RedirectManager;
 use App\Http\Middleware\SetDefaultCityForUrl;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -39,6 +40,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            Http2Push::class
 
         ],
         'api' => [

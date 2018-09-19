@@ -9,6 +9,7 @@ use App\Helpers\FormatHelper;
 use App\Helpers\SearchHelper;
 use App\Helpers\SeoMetadataHelper;
 use App\Helpers\SessionContext;
+use App\Http\Middleware\Http2Push;
 use App\Http\Requests\Doctor\DoctorFilters;
 use App\Medcenter;
 use App\PageSeo;
@@ -30,7 +31,6 @@ class DoctorController extends Controller
         $request->query->add(['model' => 'view-profile', 'id' => $doctor->id]);
 
         $this->clicksCount($request);
-
 
         if ($city->id !== $doctor->city->id) {
            // return redirect()->route('doctor.item', ['doctor' => $doctor->alias], 301);
