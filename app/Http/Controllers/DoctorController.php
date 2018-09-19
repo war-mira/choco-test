@@ -25,8 +25,13 @@ use Psy\Util\Str;
 class DoctorController extends Controller
 {
 
-    public function item(City $city, Doctor $doctor)
+    public function item(City $city, Doctor $doctor, Request $request)
     {
+        $request->query->add(['model' => 'view-profile', 'id' => $doctor->id]);
+
+        $this->clicksCount($request);
+
+
         if ($city->id !== $doctor->city->id) {
            // return redirect()->route('doctor.item', ['doctor' => $doctor->alias], 301);
         }
@@ -566,7 +571,6 @@ class DoctorController extends Controller
         $doctor = Doctor::find($request->id);
         if($doctor){
             $date = new \DateTime();
-            $phone = substr($doctor->showing_phone, 4);
             $data = [];
             if($request->data)
                 $data['phone'] = $request->data;
@@ -574,14 +578,38 @@ class DoctorController extends Controller
             $data['date'] = $date->format('Y-m-d');
             $data['token'] = $request->session()->token();
 
-            Redis::ZREM('doctor:'.$doctor->id.':clicks', '{"date":"'.$data['date'].'","token":"'.$data['token'].'"}');
+            switch ($request->model){
+                default:
 
-            Redis::zadd('doctor:'.$doctor->id.':clicks', $date->getTimestamp(), json_encode($data));
+                case Doctor::FIND_DOCTOR_COUNT:
 
-            if($phone)
-                return $phone;
-            else
-                return '<strong>Спасибо!</strong> Ваша заявка была принята. Мы обязательно свяжемся с вами!';
+                    Redis::ZREM('doctor:'.$doctor->id.':clicks', '{"date":"'.$data['date'].'","token":"'.$data['token'].'"}');
+
+                    Redis::zadd('doctor:'.$doctor->id.':clicks', $date->getTimestamp(), json_encode($data));
+
+                    $data = '<strong>Спасибо!</strong> Ваша заявка была принята. Мы обязательно свяжемся с вами!';
+
+                    break;
+
+                case Doctor::SHOW_PHONE_COUNT:
+
+                    Redis::zadd('doctor:'.$doctor->id.':'.Doctor::SHOW_PHONE_COUNT.'', $date->getTimestamp(), json_encode($data));
+
+                    $phone = substr($doctor->showing_phone, 4);
+
+                    $data = $phone;
+                    break;
+
+                case Doctor::VIEW_PROFILE_COUNT:
+
+                    Redis::zadd('doctor:'.$doctor->id.':'.Doctor::VIEW_PROFILE_COUNT.'', $date->getTimestamp(), json_encode($data));
+
+                    break;
+            }
+
+
+            if($data)
+                return $data;
         }
     }
 

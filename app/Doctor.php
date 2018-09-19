@@ -140,6 +140,11 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
       4 => 'partner_without_phone',
       5 => 'not_partner_registered_without_phone'
     ];
+
+    const SHOW_PHONE_COUNT = 'show-phone';
+    const FIND_DOCTOR_COUNT = 'find-doctor';
+    const VIEW_PROFILE_COUNT = 'view-profile';
+
     public $timestamps = true;
     protected $table = 'doctors';
     protected $fillable = [

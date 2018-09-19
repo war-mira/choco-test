@@ -16,20 +16,14 @@
                             @slot('label','Id')
                         @endcomponent
                     @endcomponent
-                    @component('components.bootstrap.column',['class'=>'col-md-8'])
+                    @component('components.bootstrap.column',['class'=>'col-md-10'])
                         @component('components.form.text')
                             @slot('field','name')
                             @slot('value',$seed['name'] ?? null)
                             @slot('label','Название')
                         @endcomponent
                     @endcomponent
-                    @component('components.bootstrap.column',['class'=>'col-md-2'])
-                        @component('components.form.checkbox')
-                            @slot('field','partner')
-                            @slot('value',$seed['partner'] ?? null)
-                            @slot('label','Наш партнер')
-                        @endcomponent
-                    @endcomponent                @endcomponent
+                @endcomponent
                 @component('components.bootstrap.row')
                     @component('components.bootstrap.column',['class'=>'col-md-4'])
                         @component('components.form.text')
@@ -146,17 +140,6 @@
                             @slot('nameField','name')
                             @slot('search',true)
                         @endcomponent
-                    @endcomponent
-
-                    @component('components.bootstrap.column',['class'=>'col-md-6'])
-                            @component('components.form.summernote.time-table')
-                                @slot('field','timetable')
-                                @slot('value',$seed ?? '')
-                                @slot('required',false)
-                                @slot('formId','edit-form')
-                                @slot('placeholder','График работы')
-                                @slot('label','График работы')
-                            @endcomponent
                     @endcomponent
                 @endcomponent
             @endcomponent

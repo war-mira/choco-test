@@ -34,14 +34,6 @@
                         @slot('readonly',true)
                     @endcomponent
                 @endcomponent
-                @component('components.bootstrap.column',['class'=>'col-md-4'])
-                    @component('components.form.image')
-                        @slot('field','image')
-                        @slot('value',$seed['image'] ?? '')
-                        @slot('placeholder','Обложка')
-                        @slot('label','Обложка')
-                    @endcomponent
-                @endcomponent
                 @component('components.bootstrap.column',['class'=>'col-md-12'])
                     @component('components.form.select2.single')
                         @slot('field','illnesses_group_id')
