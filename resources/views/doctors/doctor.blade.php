@@ -1,4 +1,6 @@
 <section class="entity-line-container">
+    {{ Breadcrumbs::render('doctor.profile', $doctor )}}
+
     <div class="container">
         <div class="search-result__item entity-line doc-line" data-id="{{$doctor->id}}">
             <div class="entity-line__img">
