@@ -85,5 +85,4 @@ class Question extends Model
 
         return $questions;
     }
-
 }

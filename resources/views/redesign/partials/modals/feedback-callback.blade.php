@@ -5,7 +5,7 @@
         <div class="modal__title">
             Задать вопрос врачу
         </div>
-            <form id="ask-doctor-modal-form">
+        <form id="ask-doctor-modal-form" class="show-question-form">
                 <div class="tips">
                     Задайте свой вопрос квалифицированному врачу и получите бесплатный ответ. Сервис iDoctor.kz гарантирует вашу
                     100% анонимность.
@@ -15,50 +15,63 @@
                         <div class="desktop-datetime">
                             <div class="date-text-input">
                                 <label>Год рождения*</label>
-                                <input type="text" id="user-birthday"
-                                       pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"
-                                       name="user[birthday]" placeholder="Год рождения"
-                                       data-pmu-date="" required>
+                                <select name="user[birthday]" id="user-birthday" required>
+                                    <option value="2002">2002</option>
+                                    <option value="2001">2001</option>
+                                    <option value="2000">2000</option>
+                                </select>
                             </div>
                         </div>
                         <div class="mobile-datetime">
                             <label>Год рождения *</label>
-                            <input type="datetime-local" id="user-birthday"
-                                   pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"
-                                   name="user[birthday-mobile]" placeholder="Выберите дату рождения"
-                                   required>
+                            <select name="user[birthday]" id="user-birthday" required>
+                                <option value="2002">2002</option>
+                                <option value="2001">2001</option>
+                                <option value="2000">2000</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Ваш пол *</label>
-                        <select type="text" id="user-gender" class="" name="user[gender]" required>
-                            
-                                <option value="0">Муж</option>
-                                <option value="1">Жен</option>
-                        </select>
+                        <div id="user-gender" class="" name="user[gender]" required>
+                            <input type="radio" name="gender" id="gender_m"/>
+                            <label for="gender_m">Мужской</label>
+                            <input type="radio" name="gender" id="gender_f"/>
+                            <label for="gender_m">Женский</label>
+                        </div>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Email *</label>
+                        <label>Куда Вам прислать ответ? *</label>
+                        <div id="user-gender" class="" name="user[gender]" required>
+                            <input type="radio" name="question_notify" id="email_notify"/>
+                            <label for="email_notify">Email</label>
+                            <input type="radio" name="question_notify" id="mobile_notify"/>
+                            <label for="mobile_notify">Телефон</label>
+                        </div>
                         <input type="email" id="user-email" class="" name="user[email]" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Телефон *</label>
                         <input class="bfh-phone" required
                                name="user[phone]" id="user-phone"
                                type="text" data-mask="+7 (999) 999-99-99">
                     </div>
                 </div>
-
+                <div class="form-group">
+                    <label>Специализация *</label>
+                    <select id="specialization">
+                        <option value="1">Акушер</option>
+                        <option value="2">Аллерголог</option>
+                    </select>
+                </div>
                 <div class="form-group">
                     <label>Ваш вопрос</label>
                     <textarea rows="5" id="question-text" name="question[text]" required
-                              placeholder="Опишите свою проблему как можно подробнее. Это позволит доктору лучше Вас проконсультировать."></textarea>
+                              placeholder="Опишите свою проблему как можно подробнее. Это позволит доктору лучше Вас проконсультировать.">
+                    </textarea>
                 </div>
                 <div class="form-group">
                     <div class="button-send-container">
-                        <button type="button" id="question__form-send">Отправить</button>
+                        <button type="button" class="btn" id="question__form-send">Отправить</button>
                     </div>
                 </div>
             </form>
@@ -69,3 +82,10 @@
         </div>
     </div>
 </div>
+<style>
+    #ask-doctor-modal-form .tips{
+        font-size: 14px;
+        text-align: center;
+        margin: 15px 0;
+    }
+</style>

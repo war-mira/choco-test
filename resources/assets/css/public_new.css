@@ -493,7 +493,10 @@
     font-family: ProximaNova-Regular;
     padding: 15px;
 }
-
+.question-doctor-name{
+    height: 90px;
+    width: 100%;
+}
 .question__form  .form-group input, .question__form  .form-group select, .question__form .form-group textarea{
     width: 100%;
     border: none;
@@ -565,6 +568,7 @@
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 .question-item{
     display: -webkit-box;
@@ -575,8 +579,11 @@
     -ms-flex-direction: column;
     flex-direction: column;
     width: 100%;
+    max-width: 48%;
+    max-height: 250px;
+    overflow: hidden;
     border: 2px solid #eaeaea;
-    margin: 0 10px;
+    margin: 0 10px 20px;
     box-shadow: 0 6px 4px -4px rgba(0, 0, 0, .2);
 }
 .question-item-header{
@@ -616,7 +623,7 @@
     float: left;
     margin-right: 20px;
 }
-.section-question__content .question-doctor-name{
+.section-question__content .question-doctor-name, .questions-block .question-doctor-name{
     margin-top: 10px;
     max-width: 300px;
     height: auto;
@@ -648,6 +655,7 @@
     flex-shrink: 0;
 }
 .section-question__content .question-block{
+    width: 65%;
     background: #fff;
     -webkit-box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.09);
     box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.09);

@@ -35,6 +35,22 @@ class QuestionController extends Controller
         $questionUser->save();
 
         return $question;
+    }    
+    
+    public function listQuestions(){
+        $questions = Question::whereHas('answers')
+                    ->orderBy('created_at','desc')
+                    ->get();
+        $answered_questions = Question::wherehas('answers')->count();
+        return view('questions.question')->with(
+            compact(
+                'answered_questions',
+                'questions')
+        );
     }
+    public function item(Question $question){
+        return view('questions.item',compact('question'));
+    }
+    
 
 }
