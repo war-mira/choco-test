@@ -34,8 +34,7 @@ class ImageCompressor
         $dirname = $path['dirname'];
         $name = $path['filename'];
 
-        $extension = Str::lower($extension);
-        if($extension == 'jpg'){
+        if(Str::lower($extension) == 'jpg'){
             if($move){
                 $dest_dir = $dirname.'/'.$this->optimized_dir;
                 if (!is_dir($dest_dir)) {
