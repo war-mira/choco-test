@@ -1,5 +1,5 @@
-<div class="parent_cont" style="background-image: url({{file_exists($src) ? URL::asset($src) :URL::asset('images/no-userpic.gif')}})">
-</div>
+<img class="doctor--image" src="{{$doctor->getAvatar(140,200)}}" alt="{{$meta['h1']??$doctor->name}}">
+
 @if((isset($top5)))
     <div class="entity-thumb-img__label entity-thumb-img__label_top">ТОП-5</div>
 @endif

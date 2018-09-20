@@ -6,7 +6,7 @@
             <div class="entity-line__img">
                 <div class="entity-thumb-img">
                     <div class="entity-thumb-img__img-wr">
-                        @component('components.prof-img')
+                        @component('components.prof-img',['doctor'=>$doctor])
                             @slot('src')
                                 {{$doctor['avatar']}}
                             @endslot

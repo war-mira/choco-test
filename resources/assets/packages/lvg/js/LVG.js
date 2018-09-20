@@ -130,7 +130,11 @@ class LVG {
     stepValidateSms(target) {
         let _self = this;
         let form = document.querySelector('.form--register');
-
+        let code = form.querySelector('.smscheck input').value.trim();
+        if(!code.length){
+            confirm('Введите код');
+            return false;
+        }
         $.post('/actions/best-doctor-2018/check', {
             'user': _self.user,
             'code': form.querySelector('.smscheck input').value
