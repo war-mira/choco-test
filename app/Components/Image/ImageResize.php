@@ -11,6 +11,7 @@ namespace App\Components\Image;
 
 
 use App\Components\Image\Compressor\ImageCompressor;
+use Illuminate\Support\Str;
 use Intervention\Image\Image;
 
 class ImageResize
@@ -32,7 +33,8 @@ class ImageResize
         if($this->isImageExist($src,$width,$height)){
             return $this->getImageLink($path,$width,$height);
         } else{
-            if($path['extension'] == 'jpg'){
+            $extension = Str::lower($path['extension']);
+            if($extension == 'jpg'){ 
                 return $this->createImageWith($src,$width,$height);
             }
             return $src;
@@ -79,7 +81,7 @@ class ImageResize
         } else{
             $img->fit($width,$height);
         }
-        $img->save( self::getRootDir().$new_path);
+        $img->save(self::getRootDir().$new_path);
 
         return $new_path;
     }
