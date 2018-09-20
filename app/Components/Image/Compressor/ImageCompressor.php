@@ -30,17 +30,21 @@ class ImageCompressor
         if(!isset($path['extension'])){
             throw new \Exception('File Extension not found');
         }
-        $extension = Str::lower($path['extension']);
+        $extension = $path['extension'];
+        $dirname = $path['dirname'];
+        $name = $path['filename'];
+
+        $extension = Str::lower($extension);
         if($extension == 'jpg'){
             if($move){
-                $dest_dir = $path['dirname'].'/'.$this->optimized_dir;
+                $dest_dir = $dirname.'/'.$this->optimized_dir;
                 if (!is_dir($dest_dir)) {
                     mkdir($dest_dir);
                 }
             } else{
-                $dest_dir = $path['dirname'];
+                $dest_dir = $dirname;
             }
-            $output_file = $dest_dir.'/'.$path['filename'].'-q-'.$quality.'.'.$path['extension'];
+            $output_file = $dest_dir.'/'.$name.'-q-'.$quality.'.'.$extension;
 
             $options = [
                 ''.$filename,
