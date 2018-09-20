@@ -1,0 +1,30 @@
+.entity-line__about-text{
+  &.open ~ &-more{
+    &:before{
+      display:none;
+    }
+    .less{
+      display: block;
+    }
+    .more{
+      display: none;
+    }
+  }
+  &-more{
+    position: relative;
+    .less{
+      display: none;
+    }
+    &:before {
+      content: '';
+      background-image: linear-gradient(rgba(255,255,255,0),#fff);
+      height: 80px;
+      display: block;
+      position: absolute;
+      top: -81px;
+      left: 0;
+      width: 100%;
+      pointer-events: none;
+    }
+  }
+}

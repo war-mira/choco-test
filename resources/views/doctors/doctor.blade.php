@@ -96,7 +96,8 @@
                         </div>
                         @if(strlen($doctor->about_text) > 465)
                             <div class="entity-line__about-text-more">
-                                <a href="#">Подробнее</a>
+                                <span class="more">Подробнее</span>
+                                <span class="less">Скрыть</span>
                             </div>
                         @endif
                     @endif
