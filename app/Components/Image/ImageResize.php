@@ -32,6 +32,9 @@ class ImageResize
     private $extension;
     private $dirname;
     private $root_dir; // public_path for laravel
+    protected $supported_extensions = [
+      'jpg','png'
+    ];
     public function __construct($source,$quality = 85,$compress = true,$root_dir = null)
     {
         $path = pathinfo($source);
@@ -52,7 +55,7 @@ class ImageResize
             return $this->getImageLink($width,$height);
         } else{
             $extension = Str::lower($this->extension);
-            if($extension == 'jpg'){
+            if(in_array($extension,$this->supported_extensions)){
                 return $this->createImageWith($width,$height);
             }
             return $this->source;
