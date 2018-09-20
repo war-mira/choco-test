@@ -6,7 +6,7 @@
                 <div class="entity-slider__item">
                     <div class="entity-slider__item-img entity-thumb-img">
                         <div class="entity-thumb-img__img-wr">
-                            @component('components.prof-img')
+                            @component('components.prof-img',['doctor'=>$tt])
                                 @slot('src')
                                     {{$tt->avatar}}
                                 @endslot
