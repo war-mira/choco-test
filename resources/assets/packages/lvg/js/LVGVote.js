@@ -3,7 +3,7 @@ class LVGVote {
         this.container = document.querySelector('.page--lvg');
         this.autocompletes = [];
         this.users = [];
-        this.current = 3;
+        this.current = 1;
         this.limit = 5;
     }
 
@@ -70,6 +70,9 @@ class LVGVote {
                 _self.initLastnameAutocomplete(row.querySelector('.autocomplete__lastname'), _self);
                 _self.initSkillAutocomplete(row.querySelector('.autocomplete__skill'), _self);
                 _self.current++;
+                if(_self.current >= 5){
+                    e.target.classList.add('hidden');
+                }
             }
         });
     }

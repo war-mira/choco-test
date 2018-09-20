@@ -9,6 +9,7 @@
             <div class="search-result">
                 <div class="container">
                     <div class="search-result__list">
+
                         <div class="search-result__city-name">
                             <h1>
                                 @if(!empty($meta['h1']))
@@ -17,19 +18,21 @@
                             </h1>
                         </div>
                         @if($comercial)
-                        @foreach($comercial->get() as $doctor)
-                            <div class="search-result__item entity-line doc-line" data-type="doctor" data-id="{{$doctor->id}}"
-                                 id="doctor-result-{{$doctor->id}}" >
-                                @component('model.doctor.prof_new',['doctor'=>$doctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'comercial'=>true])
-                                @endcomponent
-                            </div>
-                        @endforeach
+                            @foreach($comercial->get() as $doctor)
+                                <div class="search-result__item entity-line doc-line" data-type="doctor"
+                                     data-id="{{$doctor->id}}"
+                                     id="doctor-result-{{$doctor->id}}">
+                                    @component('model.doctor.prof_new',['doctor'=>$doctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'comercial'=>true])
+                                    @endcomponent
+                                </div>
+                            @endforeach
                         @endif
 
                         @if($doctorsTop)
                             @foreach($doctorsTop as $doctor)
-                                <div class="search-result__item entity-line doc-line" data-type="doctor" data-id="{{$doctor->id}}"
-                                     id="doctor-result-{{$doctor->id}}" >
+                                <div class="search-result__item entity-line doc-line" data-type="doctor"
+                                     data-id="{{$doctor->id}}"
+                                     id="doctor-result-{{$doctor->id}}">
                                     @component('model.doctor.prof_new',['doctor'=>$doctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'top5'=>true])
                                     @endcomponent
                                 </div>
@@ -37,10 +40,11 @@
                         @endif
 
                         @foreach($doctors as $doctor)
-                            <div class="search-result__item entity-line doc-line" data-type="doctor" data-id="{{$doctor->id}}"
-                                 id="doctor-result-{{$doctor->id}}" >
-                                    @component('model.doctor.prof_new',['doctor'=>$doctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null])
-                                    @endcomponent
+                            <div class="search-result__item entity-line doc-line" data-type="doctor"
+                                 data-id="{{$doctor->id}}"
+                                 id="doctor-result-{{$doctor->id}}">
+                                @component('model.doctor.prof_new',['doctor'=>$doctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null])
+                                @endcomponent
                             </div>
                         @endforeach
                         @include('forms.public.order_doc')
@@ -79,37 +83,34 @@
                 }
             );
 
-            if($('input[name="q"]').val().length)
-            {
+            if ($('input[name="q"]').val().length) {
                 $('.search-bar__item_search').find('input').val($('input[name="q"]').val().trim());
             }
 
             $('select[name="type"]').change(function () {
                 var tp = $(this).val();
 
-                if(tp == 'medcenters')
-                {
+                if (tp == 'medcenters') {
                     $('div.search-bar__item_search').find('input').val('');
                 }
 
                 $.ajax({
                     type: 'post',
-                    url:"{{url('getdata')}}",
+                    url: "{{url('getdata')}}",
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    data:{
-                        ttype:tp,
-                        query:$('.search-bar__item').find('input').val()
+                    data: {
+                        ttype: tp,
+                        query: $('.search-bar__item').find('input').val()
                     }
                 });
             });
 
-            $('div.search-bar__item_search').find('input').on('keyup',function (e) {
+            $('div.search-bar__item_search').find('input').on('keyup', function (e) {
                 var serachv = $(this).val();
 
-                if(serachv.length >= 3)
-                {
+                if (serachv.length >= 3) {
                     $('input[name="q"]').val(serachv);
                     $('input[name="q"]').change();
                 }
@@ -124,11 +125,10 @@
                 $('form.search-bar__line').find('input[name="sort"]').val(value);
                 $('form.search-bar__line').find('input[name="order"]').val($('input[name=order]:checked').val());
 
-                if($(this).find('i.fa').is('.fa-chevron-down'))
-                {
+                if ($(this).find('i.fa').is('.fa-chevron-down')) {
                     $(this).find('i.fa').removeClass('fa-chevron-down').addClass('fa-chevron-up');
                 }
-                else{
+                else {
                     $(this).find('i.fa').addClass('fa-chevron-down').removeClass('fa-chevron-up');
                 }
                 //console.log(name + ' ' + value + ' ' + $('input[name=order]:checked').val());
@@ -197,8 +197,7 @@
             $skillSelect.on('change', function () {
                 var $type = $('select[name="type"]').val();
                 console.log($type);
-                if($type == 'medcenters' || $('input[name="medc"]').val())
-                {
+                if ($type == 'medcenters' || $('input[name="medc"]').val()) {
                     $('input[name="q"]').val('');
                     var url = "{{route('doctors.list')}}";
                     var query = "{!!explode('?',url()->full())[1] ?? ""!!}";
@@ -206,8 +205,7 @@
                         query = '?' + query;
                     var skillUrl = url + '/' + $(this).val() + query;
 
-                    if($(this).val() != $('input[name="medc"]').val() || $('input[name="medc"]').val() == '')
-                    {
+                    if ($(this).val() != $('input[name="medc"]').val() || $('input[name="medc"]').val() == '') {
                         window.location.assign(skillUrl);
                     }
                 }

@@ -1,4 +1,9 @@
 <div class="result-control-bar">
+    {{ Breadcrumbs::render('search.index', [
+    'city' => $city,
+    'title' => empty($meta['h1'])?null:$meta['h1']
+    ]) }}
+
     <div class="container">
         <div class="result-control-bar__line" id="filtersGroup">
             <div class="result-control-bar__query">
@@ -38,5 +43,6 @@
                 </a>
             </div>
         </div>
+
     </div>
 </div>

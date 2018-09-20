@@ -20,7 +20,6 @@ mix
     ], 'public/projects/lvg/js/app.js')
     .sass('resources/assets/packages/lvg/scss/app.scss', 'public/projects/lvg/css/app.css')
     .options({
-        processCssUrls: false,
         postCss: [
             require('postcss-css-variables')()
         ]
