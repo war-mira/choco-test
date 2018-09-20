@@ -1,4 +1,4 @@
 <div class="article-content__aside">
     @include('library.partials.article_nav', ['links' => $links])
-    @include('redesign.partials.right_banner')
+    @component('elements.side-banner',['position' => App\Banner::POSITION_EXT_C['id']])@endcomponent
 </div>

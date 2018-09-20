@@ -26,13 +26,13 @@ class LibraryController
 
     public function article( IllnessesGroup $illnessesGroup,  $article)
     {
-
         $article = IllnessesGroupArticle::where('alias',$article)->firstOrFail();
         $links = $this->getNavigationFromContent($article->description);
+        $titleInDesc = $this->checkIfFirstTitleExist($article->description);
 
         $meta = SeoMetadataHelper::getMeta($article);
 
-        return view('library.articles.item', compact('meta','article', 'links', 'illnessesGroup'));
+        return view('library.articles.item', compact('meta','article', 'links', 'illnessesGroup', 'titleInDesc'));
     }
 
     public function illnesses( $letter = null)
@@ -49,10 +49,11 @@ class LibraryController
     public function illness( Illness $illness)
     {
         $links = $this->getNavigationFromContent($illness->description);
+        $titleInDesc = $this->checkIfFirstTitleExist($illness->description);
 
         $meta = SeoMetadataHelper::getMeta($illness);
 
-        return view('library.illnesses.item', compact('illness', 'links','meta'));
+        return view('library.illnesses.item', compact('illness', 'links','meta', 'titleInDesc'));
     }
 
     private function getAlphabet() {
@@ -68,5 +69,9 @@ class LibraryController
         preg_match_all($regex, $content, $m);
 
         return $m[1];
+    }
+
+    private function checkIfFirstTitleExist($content) {
+        return preg_match('#<\s*?h1\b[^>]*>(.*?)</h1\b[^>]*>#s', $content);
     }
 }

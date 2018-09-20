@@ -14,7 +14,9 @@ use App\Model\ServiceItem;
 use App\Models\Library\Illness;
 use App\Traits\Eloquent\FilterScopes;
 use Carbon\Carbon;
+use Idoctor\Lvg\Models\LvgDoctorCandidate;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Redis;
 
 /**
  * App\Doctor
@@ -138,6 +140,11 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
       4 => 'partner_without_phone',
       5 => 'not_partner_registered_without_phone'
     ];
+
+    const SHOW_PHONE_COUNT = 'show-phone';
+    const FIND_DOCTOR_COUNT = 'find-doctor';
+    const VIEW_PROFILE_COUNT = 'view-profile';
+
     public $timestamps = true;
     protected $table = 'doctors';
     protected $fillable = [
@@ -470,38 +477,31 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
 
     public function getMetaTitle()
     {
-
+        $skills_result = [];
+        $skills = $this->skills()->get();
+        foreach ($skills as $skill) {
+            $skills_result[] = $skill->name;
+        }
         return empty($this->meta_title)
-            ? sprintf(
-                '%s - врач, %s, %s, отзывы, фото - iDoctor.kz',
-                $this->name,
-                $this->main_skill->name,
-                $this->city->name??''
-                )
+            ? ($this->firstname . ' ' . $this->lastname . ' - ' . $this->city->name)
             : $this->meta_title;
     }
 
     public function getMetaDescription()
     {
+        $skills_result = [];
+        $skills = $this->skills()->get();
+        foreach ($skills as $skill) {
+            $skills_result[] = $skill->name;
+        }
         return empty($this->meta_desc)
-            ? sprintf('Врач %s - запись на прием, график работы, цены. Оставьте отзыв о враче на iDoctor.kz!',$this->name)
+            ? ($this->firstname . ' ' . $this->lastname . ' - ' . implode(", ", $skills_result)) . ". " . SeoMetadataHelper::DEFAULT_DESCRIPTION
             : $this->meta_desc;
     }
 
     public function getMetaKeywords()
     {
-        return empty($this->meta_key)
-            ? sprintf('%s, %s отзывы, врачи %s, %s %s, %s %s отзывы, %s контакты',
-                    $this->name,
-                    $this->name,
-                    $this->city->name,
-                    $this->name,
-                    $this->main_skill->name,
-                    $this->name,
-                    $this->main_skill->name,
-                    $this->name
-                )
-            : $this->meta_key;
+        return empty($this->meta_key) ? null : $this->meta_key;
     }
 
     public function getMetaHeader()
@@ -568,5 +568,28 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         //
 //        dd($opts);
         return $opts;
+    }
+
+    public function clicksCount($dateFrom, $dateTo)
+    {
+        return Redis::ZCOUNT('doctor:'.$this->id.':clicks', $dateFrom->getTimestamp(), $dateTo->getTimestamp());
+    }
+
+    public function clicksCard()
+    {
+        return Redis::ZCARD('doctor:' . $this->id . ':clicks');
+    }
+    public function lvg_votes()
+    {
+        return $this->belongsToMany(LvgDoctorCandidate::class,'lvg_doctors_candidates','doctor_id','candidate_id');
+    }
+
+    public function hasLvgVotes()
+    {
+        if($this->lvg_votes->count() > 0){
+            return true;
+        }
+
+        return false;
     }
 }

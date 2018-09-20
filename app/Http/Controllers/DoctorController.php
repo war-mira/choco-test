@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\City;
 use App\Doctor;
+use App\Helpers\CacheHelper;
 use App\Helpers\FormatHelper;
 use App\Helpers\SearchHelper;
 use App\Helpers\SeoMetadataHelper;
 use App\Helpers\SessionContext;
+use App\Http\Middleware\Http2Push;
 use App\Http\Requests\Doctor\DoctorFilters;
 use App\Medcenter;
 use App\PageSeo;
@@ -19,12 +21,17 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redis;
+use Psy\Util\Str;
 
 class DoctorController extends Controller
 {
 
-    public function item(City $city, Doctor $doctor)
+    public function item(City $city, Doctor $doctor, Request $request)
     {
+        $request->query->add(['model' => 'view-profile', 'id' => $doctor->id]);
+
+        $this->clicksCount($request);
+
         if ($city->id !== $doctor->city->id) {
            // return redirect()->route('doctor.item', ['doctor' => $doctor->alias], 301);
         }
@@ -75,6 +82,7 @@ class DoctorController extends Controller
      */
     public function list(City $city = null, $input = '', $modifier = '', DoctorFilters $filters)
     {
+
         $skill = Skill::where('alias', $input)->first();
 
         $search = new \App\Helpers\DoctorSearcher([$input,$modifier]);
@@ -143,8 +151,13 @@ class DoctorController extends Controller
 
 
 
-        $doctors = $doctors->paginate(10)->appends($query);
-
+        /**
+         *
+        $doctors = \Cache::tags(['doctors'])->remember(CacheHelper::getKeyFromUrl(),24*7*60,function() use($doctors,$query){
+           return  $doctors->paginate(10)->appends($query);
+        });
+         */
+        $doctors =  $doctors->paginate(10)->appends($query);
         if($doctors->lastPage() < ($filter['page'] ?? 1))
             return redirect($doctors->url(1));
 
@@ -557,19 +570,46 @@ class DoctorController extends Controller
     {
         $doctor = Doctor::find($request->id);
         if($doctor){
-            $phone = substr($doctor->showing_phone, 4);
-
-            $data = [];
-            $data['data'] = $request->data ? $request->data: '';
-            $data['doctor_id'] = $doctor->id;
-
             $date = new \DateTime();
-            Redis::zadd('doctor:'.$doctor->id.':clicks', $date->getTimestamp(), json_encode($data));
+            $data = [];
+            if($request->data)
+                $data['phone'] = $request->data;
 
-            if($phone)
-                return $phone;
-            else
-                return '<strong>Спасибо!</strong> Ваша заявка была принята. Мы обязательно свяжемся с вами!';
+            $data['date'] = $date->format('Y-m-d');
+            $data['token'] = $request->session()->token();
+
+            switch ($request->model){
+                default:
+
+                case Doctor::FIND_DOCTOR_COUNT:
+
+                    Redis::ZREM('doctor:'.$doctor->id.':clicks', '{"date":"'.$data['date'].'","token":"'.$data['token'].'"}');
+
+                    Redis::zadd('doctor:'.$doctor->id.':clicks', $date->getTimestamp(), json_encode($data));
+
+                    $data = '<strong>Спасибо!</strong> Ваша заявка была принята. Мы обязательно свяжемся с вами!';
+
+                    break;
+
+                case Doctor::SHOW_PHONE_COUNT:
+
+                    Redis::zadd('doctor:'.$doctor->id.':'.Doctor::SHOW_PHONE_COUNT.'', $date->getTimestamp(), json_encode($data));
+
+                    $phone = substr($doctor->showing_phone, 4);
+
+                    $data = $phone;
+                    break;
+
+                case Doctor::VIEW_PROFILE_COUNT:
+
+                    Redis::zadd('doctor:'.$doctor->id.':'.Doctor::VIEW_PROFILE_COUNT.'', $date->getTimestamp(), json_encode($data));
+
+                    break;
+            }
+
+
+            if($data)
+                return $data;
         }
     }
 

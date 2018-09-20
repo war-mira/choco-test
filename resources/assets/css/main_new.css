@@ -1896,6 +1896,8 @@ img {
 .entity-slider__item .parent_cont{
     margin-left: 30px;
 }
+.clinic-slider__slider .entity-slider__item .parent_cont{
+  margin-left: 0;}
 #callback_mess_ok{
   display: none;
 }
@@ -4192,6 +4194,12 @@ span.tab-line__item {
 .breadcrumb li{
   list-style: none;
   margin-right: 15px;}
+.section-article__article-header .article__title{
+  margin-bottom: -35px;
+}
+.section-article__article-header img{
+  padding-top: 45px;
+}
 .section-article__content{
   display: -webkit-box;
   display: -webkit-flex;
@@ -4283,6 +4291,9 @@ box-shadow: 0px 1px 4px #e7e7e7; margin-bottom: 30px;}
 }
 
 @media (max-width: 991.98px) {
+  .additional_number{
+    display: none;
+  }
   .main-header{
     height: 90px;
   }

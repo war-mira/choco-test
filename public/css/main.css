@@ -113,7 +113,7 @@
 
 .nav-phone {
     padding-left: 40px;
-    background: url(../images/icons/icon_phone.png) no-repeat;
+    background: url(../img/lightbox/images/icons/icon_phone.png) no-repeat;
     display: inline-block;
     line-height: 33px;
     overflow-y: visible;
@@ -518,7 +518,7 @@ a:hover, a:focus, .navbar .nav > li > a:focus, .navbar .nav > li > a:hover {
 
     .navbar .btn-navbar, .navbar-fixed-top .btn-navbar {
         padding: 2px;
-        background: transparent url('../images/nav-collapse.png') no-repeat center;
+        background: transparent url('../img/lightbox/images/nav-collapse.png') no-repeat center;
         border: 0 none;
         box-shadow: none;
         color: inherit;
@@ -2193,7 +2193,7 @@ a.link-gray {
 }
 
 .bg-shadow {
-  background: url(../images/shadow.png) top center no-repeat
+  background: url(../img/lightbox/images/shadow.png) top center no-repeat
 }
 
 .bg-gray {
@@ -2409,7 +2409,7 @@ a.link-gray {
   padding-left: 36px;
     margin-right: 10px;
   min-height: 32px;
-  background: url(../images/icons/icon_city.png) no-repeat
+  background: url(../img/lightbox/images/icons/icon_city.png) no-repeat
 }
 
 .header__city>a {
@@ -2432,7 +2432,7 @@ a.link-gray {
   margin-top: 8px;
   min-height: 30px;
   padding-left: 40px;
-  background: url(../images/icons/icon_phone.png) no-repeat
+  background: url(../img/lightbox/images/icons/icon_phone.png) no-repeat
 }
 
 .header__phone p {
@@ -2501,7 +2501,7 @@ a.link-gray {
   top: 3px;
   width: 14px;
   height: 14px;
-  background: url(../images/icons/icon_whatsapp.png) no-repeat
+  background: url(../img/lightbox/images/icons/icon_whatsapp.png) no-repeat
 }
 
 .header__button {
@@ -2533,7 +2533,7 @@ a.link-gray {
     min-height: 40px;
     padding: 6px 0 0 34px;
   text-align: left;
-  background: url(../images/icons/icon_login.png) no-repeat
+  background: url(../img/lightbox/images/icons/icon_login.png) no-repeat
 }
 
 .header__login {
@@ -2595,7 +2595,7 @@ a.link-gray {
   right: 0;
   width: 18px;
   height: 18px;
-  background: url(../images/icons/icon_close.png) no-repeat;
+  background: url(../img/lightbox/images/icons/icon_close.png) no-repeat;
   text-indent: 100%;
   white-space: nowrap;
   overflow: hidden;
@@ -2623,7 +2623,7 @@ a.link-gray {
   top: 33px;
   width: 40px;
   height: 30px;
-  background: url(../images/icons/icon_menu.png) no-repeat #fff
+  background: url(../img/lightbox/images/icons/icon_menu.png) no-repeat #fff
 }
 
 .header__menu.current {
@@ -2631,7 +2631,7 @@ a.link-gray {
 }
 
 .header__menu.current:after {
-  background: url(../images/icons/icon_menu.png) 0 -30px no-repeat #1a6c79
+  background: url(../img/lightbox/images/icons/icon_menu.png) 0 -30px no-repeat #1a6c79
 }
 
 .header__menu-content {
@@ -2759,7 +2759,7 @@ a.link-gray {
   vertical-align: top;
   width: 45px;
   height: 45px;
-  background: url(../images/sprite-social.png) no-repeat;
+  background: url(../img/lightbox/images/sprite-social.png) no-repeat;
   opacity: .8;
   text-indent: 100%;
   white-space: nowrap;
@@ -2897,7 +2897,7 @@ a.link-gray {
   position: absolute;
   width: 100%;
   top: 0;
-  background: url(../images/shadow.png) top center no-repeat;
+  background: url(../img/lightbox/images/shadow.png) top center no-repeat;
   height: 30px;
     z-index: 1
 }
@@ -3055,7 +3055,7 @@ a.link-gray {
 }
 
 .bg-pattern {
-  background: url(../images/pattern.jpg)
+  background: url(../img/lightbox/images/pattern.jpg)
 }
 
 .use {
@@ -3426,7 +3426,7 @@ a.link-gray {
 
 .profile-bg-pattern {
   padding-top: 30px;
-  background: url(../images/pattern.jpg);
+  background: url(../img/lightbox/images/pattern.jpg);
   margin-top: -30px
 }
 
@@ -4244,7 +4244,7 @@ input[type=tel].styler.styler--calendar,
 input[type=text].styler.styler--calendar,
 input[type=url].styler.styler--calendar,
 textarea.styler.styler--calendar {
-  background: url(../images/icons/icon_calendar.png) 97% 50% no-repeat;
+  background: url(../img/lightbox/images/icons/icon_calendar.png) 97% 50% no-repeat;
   max-width: 300px
 }
 
@@ -4375,7 +4375,7 @@ textarea.styler:focus {
 }
 
 .slick-loading .slick-list {
-  background: url(../images/ajax-loader.gif) center center no-repeat #fff
+  background: url(../img/lightbox/images/ajax-loader.gif) center center no-repeat #fff
 }
 
 @font-face {
@@ -4398,7 +4398,7 @@ textarea.styler:focus {
   border-radius: 4px;
   cursor: pointer;
   border: none;
-  background: url(../images/sprite_slick_arrows.png) no-repeat
+  background: url(../img/lightbox/images/sprite_slick_arrows.png) no-repeat
 }
 
 .slick-next:focus:before,
@@ -4433,7 +4433,7 @@ textarea.styler:focus {
 
 .slick-next {
   right: -50px;
-  background: url(../images/sprite_slick_arrows.png) 0 -50px no-repeat
+  background: url(../img/lightbox/images/sprite_slick_arrows.png) 0 -50px no-repeat
 }
 
 [dir=rtl] .slick-next {
@@ -5765,33 +5765,33 @@ a.ui-button:active {
 .ui-icon,
 .ui-widget-content .ui-icon,
 .ui-widget-header .ui-icon {
-  background-image: url(../images/ui-icons_444444_256x240.png)
+  background-image: url(../img/lightbox/images/ui-icons_444444_256x240.png)
 }
 
 .ui-button:focus .ui-icon,
 .ui-button:hover .ui-icon,
 .ui-state-focus .ui-icon,
 .ui-state-hover .ui-icon {
-  background-image: url(../images/ui-icons_555555_256x240.png)
+  background-image: url(../img/lightbox/images/ui-icons_555555_256x240.png)
 }
 
 .ui-button:active .ui-icon,
 .ui-state-active .ui-icon {
-  background-image: url(../images/ui-icons_ffffff_256x240.png)
+  background-image: url(../img/lightbox/images/ui-icons_ffffff_256x240.png)
 }
 
 .ui-button .ui-state-highlight.ui-icon,
 .ui-state-highlight .ui-icon {
-  background-image: url(../images/ui-icons_777620_256x240.png)
+  background-image: url(../img/lightbox/images/ui-icons_777620_256x240.png)
 }
 
 .ui-state-error .ui-icon,
 .ui-state-error-text .ui-icon {
-  background-image: url(../images/ui-icons_cc0000_256x240.png)
+  background-image: url(../img/lightbox/images/ui-icons_cc0000_256x240.png)
 }
 
 .ui-button .ui-icon {
-  background-image: url(../images/ui-icons_777777_256x240.png)
+  background-image: url(../img/lightbox/images/ui-icons_777777_256x240.png)
 }
 
 .ui-icon-blank {
@@ -7021,15 +7021,15 @@ a.ui-button:active {
 .stars__item {
   width: 16px;
   height: 15px;
-  background: url(../images/sprite_stars.png) no-repeat
+  background: url(../img/lightbox/images/sprite_stars.png) no-repeat
 }
 
 .stars__item.stars__item--half {
-  background: url(../images/sprite_stars.png) 0 -15px no-repeat
+  background: url(../img/lightbox/images/sprite_stars.png) 0 -15px no-repeat
 }
 
 .stars__item.stars__item--empty {
-  background: url(../images/sprite_stars.png) 0 -30px no-repeat
+  background: url(../img/lightbox/images/sprite_stars.png) 0 -30px no-repeat
 }
 
 .rating {
@@ -7061,7 +7061,7 @@ a.ui-button:active {
   display: block;
   width: 30px;
   height: 29px;
-  background: url(../images/sprite_stars_large.png) 0 -29px
+  background: url(../img/lightbox/images/sprite_stars_large.png) 0 -29px
 }
 
 .reviews {
@@ -7528,11 +7528,11 @@ input[type=submit].button[disabled] {
   left: 0;
   width: 30px;
   height: 20px;
-  background: url(../images/sprite_radio.png) 0 -20px no-repeat
+  background: url(../img/lightbox/images/sprite_radio.png) 0 -20px no-repeat
 }
 
 .radio-label input[type=radio]:checked+span.radio-label__icon {
-  background: url(../images/sprite_radio.png) no-repeat
+  background: url(../img/lightbox/images/sprite_radio.png) no-repeat
 }
 
 .radio-label input[type=radio]:disabled+span.radio-label__icon {

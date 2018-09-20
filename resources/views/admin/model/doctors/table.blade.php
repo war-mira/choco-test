@@ -4,7 +4,7 @@
     <th data-field="id" data-sortable="true">Id</th>
     <th data-field="firstname" data-sortable="true">Имя</th>
     <th data-field="lastname" data-sortable="true">Фамилия</th>
-    <th data-field="city" data-search="city_id" data-sortable="true" data-formatter="cityFormatter">Город</th>
+    <th data-field="city" data-sortable="true" data-formatter="cityFormatter">Город</th>
     <th data-field="medcenters" data-formatter="medcentersFormatter">Медцентр</th>
     <th data-field="status"
         data-sortable="true"

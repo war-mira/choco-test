@@ -31,7 +31,7 @@
                                             <div class="col-xs-2">
                                                 <h3>{{old('id',$seed['id'])}}</h3>
                                             </div>
-                                            <div class="col-xs-5">
+                                            <div class="col-xs-6">
                                                 @component('components.form.select')
                                                     @slot('field','status')
                                                     @slot('value',$seed['status'] ?? 0)
@@ -40,7 +40,7 @@
                                                     @slot('options',\App\Doctor::STATUS)
                                                 @endcomponent
                                             </div>
-                                            <div class="col-xs-5">
+                                            <div class="col-xs-4">
                                                 @component('components.form.select')
                                                     @slot('field','on_top')
                                                     @slot('value',$seed['on_top'] ?? 0)
@@ -104,13 +104,6 @@
                                                             @slot('field','phone')
                                                             @slot('value', old('phone',$seed['phone']))
                                                             @slot('label','Phone')
-                                                        @endcomponent
-                                                    @endcomponent
-                                                    @component('components.bootstrap.column',['class'=>'col-md-12'])
-                                                        @component('components.form.text')
-                                                            @slot('field','showing_phone')
-                                                            @slot('value', old('showing_phone',$seed['showing_phone']))
-                                                            @slot('label','Телефон для отображения')
                                                         @endcomponent
                                                     @endcomponent
                                                     @component('components.bootstrap.column',['class'=>'col-md-12'])
@@ -279,18 +272,6 @@
                                                     @slot('label','С возраста')
                                                 @endcomponent
                                             @endcomponent
-
-                                            @component('components.bootstrap.column',['class'=>'col-md-6'])
-                                                    @component('components.form.checkbox')
-                                                        @slot('field','comercial')
-                                                        @slot('value',$seed['comercial'] ?? null)
-                                                        @slot('label','Реклама')
-                                                    @endcomponent
-                                            @endcomponent
-
-                                            @component('components.bootstrap.column',['class'=>'clearfix'])
-                                            @endcomponent
-
                                             @component('components.bootstrap.column',['class'=>'col-md-6'])
                                                 @component('components.form.number')
                                                     @slot('field','works_since_year')
@@ -417,7 +398,7 @@
                                     </div>
                                     <div class="panel-body">
                                         @component('components.bootstrap.row')
-                                            @component('components.bootstrap.column',['class'=>'col-md-12'])
+                                            @component('components.bootstrap.column',['class'=>'col-md-6'])
                                                 @component('components.form.summernote.textarea')
                                                     @slot('field','preview_text')
                                                     @slot('value',$seed['preview_text'] ?? '')
@@ -428,9 +409,9 @@
                                                 @endcomponent
                                             @endcomponent
                                             @component('components.bootstrap.column',['class'=>'col-md-6'])
-                                                @component('components.form.summernote.time-table')
+                                                @component('components.form.summernote.textarea')
                                                     @slot('field','timetable')
-                                                    @slot('value',$seed ?? '')
+                                                    @slot('value',$seed['timetable'] ?? '')
                                                     @slot('required',false)
                                                     @slot('formId','edit-form')
                                                     @slot('placeholder','График работы')
