@@ -42,7 +42,7 @@
                     Врачей в клинике:
                 </div>
                 <div class="clinic-line__brief-descr">
-                    <a href="#">{{$medcenter->publicDoctors()->count()}} врача</a>
+                    <a href="{{ route('medcenter.item',['medcenter'=>$medcenter->alias, 'city' => $medcenter->city->alias]).'#tab-2'  }}">{{$medcenter->publicDoctors()->count()}} врача</a>
                 </div>
             </div>
             <div class="clinic-line__brief-item">

@@ -28,7 +28,7 @@
     </div>
 
     <div class="entity-thumb-img__bot-line">
-        <a href="#" class="entity-thumb-img__reviews">{{$doctor->publicComments()->count()}} отзывов</a>
+        <a href="{{ route('doctor.item',['doctor'=>$doctor->alias]).'#tab-2' }}" class="entity-thumb-img__reviews">{{$doctor->publicComments()->count()}} отзывов</a>
         <inp-rate obj="doctor" id="{{ $doctor->id }}" type="likes" >
             <template slot="likes">{{ $doctor->likes }}</template>
             <template slot="dislikes">{{ $doctor->dislikes }}</template>

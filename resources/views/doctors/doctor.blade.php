@@ -204,11 +204,11 @@
 <section class="entity-about">
     <div class="container">
         <div class="entity-about__tab-line tabs">
-            <a href="#" data-tab="tab-1" class="entity-about__tab-item entity-about__tab-item_active">
+            <a href="#" data-tab="tab-1" class="entity-about__tab-item">
                 <h2 class="entity-about__tab-name">О враче</h2>
             </a>
 
-            <a href="#" data-tab="tab-2" class="entity-about__tab-item">
+            <a href="#" data-tab="tab-2" class="entity-about__tab-item entity-about__tab-item_active">
                 <h2 class="entity-about__tab-name">Отзывы<span
                             class="entity-about__tab-count">{{$doctor->publicComments()->count()}}</span>
                 </h2>
@@ -219,7 +219,7 @@
         </div>
 
         <div class="entity-about__content entity-content">
-            <div id="tab-1" class="entity-about-article current">
+            <div id="tab-1" class="entity-about-article">
                 <div class="entity-content__main">
                     @foreach(App\Doctor::CONTENTS as $field=>$title)
                         @if(!empty(trim($doctor[$field])) && $doctor[$field] != '0' && strlen($doctor[$field])>10)
@@ -233,7 +233,7 @@
                 </div>
             </div>
 
-            <div id="tab-2" class="entity-about-article">
+            <div id="tab-2" class="entity-about-article current">
                 <div class="entity-content__main">
 
                     <div class="entity-reviews">

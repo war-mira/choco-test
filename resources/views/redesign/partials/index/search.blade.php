@@ -30,27 +30,3 @@
         </div>
     </form>
 </div>
-
-<script>
-    $('form').each(function () {
-        var $form = $(this);
-        $form.on('change', 'select[data-select="action"]',  function () {
-            var type = $form.find('option:selected').val();
-            var action = '';
-            if (type == 'doctor'){
-                action = "{!!route('doctors.list')!!}";
-            }else {
-                action = "{!! route('medcenters.list') !!}";
-            }
-            $form.attr('action', action);
-        });
-    });
-
-    $('.search_event').on('click', function () {
-        ga('send', 'event', {
-            eventCategory: 'poisk_glavnaya',
-            eventAction: 'click'
-        });
-    })
-
-</script>
