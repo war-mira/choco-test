@@ -49,7 +49,12 @@ class QuestionController extends Controller
         );
     }
     public function item(Question $question){
-        return view('questions.item',compact('question'));
+        $near_questions = Question::whereHas('answers')
+                    ->get();
+        return view('questions.item',compact(
+            'question',
+            'near_questions'
+        ));
     }
     
 

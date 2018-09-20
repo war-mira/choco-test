@@ -70,12 +70,16 @@
                     </textarea>
                 </div>
                 <div class="form-group">
+                    <label>Прикрепить изображение</label>
+                    <input type="file" />
+                </div>
+                <div class="form-group">
                     <div class="button-send-container">
                         <button type="button" class="btn" id="question__form-send">Отправить</button>
                     </div>
                 </div>
             </form>
-        <div id="ask_doctor_mess_ok" >
+        <div id="ask_doctor_mess_ok" style="display:none;">
             <p>
                 <strong>Спасибо за вопрос!</strong> Когда врач ответит, мы Вам обязательно сообщим.
             </p>
