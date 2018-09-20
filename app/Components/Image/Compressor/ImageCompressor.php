@@ -40,7 +40,7 @@ class ImageCompressor
             } else{
                 $dest_dir = $path['dirname'];
             }
-            $output_file = $dest_dir.'/'.$path['filename'].'.'.$path['extension'];
+            $output_file = $dest_dir.'/'.$path['filename'].'-q-'.$quality.'.'.$path['extension'];
 
             $options = [
                 ''.$filename,
@@ -61,11 +61,11 @@ class ImageCompressor
         }
     }
 
-    public function optimizedExist($filename)
+    public function optimizedExist($filename,$quality)
     {
         $path = pathinfo($filename);
         $dest_dir = $path['dirname'].'/'.$this->optimized_dir;
-        return file_exists($dest_dir.'/'.$path['filename'].'.'.$path['extension']);
+        return file_exists($dest_dir.'/'.$path['filename'].'-q-'.$quality.'.'.$path['extension']);
     }
 
 }
