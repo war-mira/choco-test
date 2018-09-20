@@ -3,7 +3,7 @@ class LVGVote {
         this.container = document.querySelector('.page--lvg');
         this.autocompletes = [];
         this.users = [];
-        this.current = 3;
+        this.current = 1;
         this.limit = 5;
     }
 
