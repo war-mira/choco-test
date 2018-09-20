@@ -70,6 +70,8 @@ class LVGVote {
                 _self.initLastnameAutocomplete(row.querySelector('.autocomplete__lastname'), _self);
                 _self.initSkillAutocomplete(row.querySelector('.autocomplete__skill'), _self);
                 _self.current++;
+            } else{ 
+                e.target.classList.add('hidden');
             }
         });
     }
