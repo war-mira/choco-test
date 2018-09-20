@@ -69,7 +69,7 @@
                               placeholder="Опишите свою проблему как можно подробнее. Это позволит доктору лучше Вас проконсультировать.">
                     </textarea>
                 </div>
-                <div class="form-group">
+            <div class="form-group" style="display:none;">
                     <label>Прикрепить изображение</label>
                     <input type="file" />
                 </div>
