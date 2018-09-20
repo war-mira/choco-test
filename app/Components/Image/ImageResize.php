@@ -16,6 +16,7 @@ use Intervention\Image\Image;
 
 class ImageResize
 {
+    //TODO: Refactor
     /**
      * @param $src
      * @param $width
