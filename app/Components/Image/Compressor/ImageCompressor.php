@@ -11,6 +11,7 @@ namespace App\Components\Image\Compressor;
 
 
 use App\Components\Image\ImageResize;
+use Illuminate\Support\Str;
 
 class ImageCompressor
 {
@@ -29,8 +30,8 @@ class ImageCompressor
         if(!isset($path['extension'])){
             throw new \Exception('File Extension not found');
         }
-
-        if($path['extension'] == 'jpg'){
+        $extension = Str::lower($path['extension']);
+        if($extension == 'jpg'){
             if($move){
                 $dest_dir = $path['dirname'].'/'.$this->optimized_dir;
                 if (!is_dir($dest_dir)) {

@@ -34,7 +34,7 @@ class ImageResize
             return $this->getImageLink($path,$width,$height);
         } else{
             $extension = Str::lower($path['extension']);
-            if($extension == 'jpg'){ 
+            if($extension == 'jpg'){
                 return $this->createImageWith($src,$width,$height);
             }
             return $src;
