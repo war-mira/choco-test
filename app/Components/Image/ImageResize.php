@@ -46,11 +46,7 @@ class ImageResize
         $compressor = new ImageCompressor();
         $filename = self::getRootDir().$path['dirname'].'/'.$this->getFilenameWithSize($path['filename'],$width,$height).'.'.$path['extension'];
         if($compressor->optimizedExist($filename,$this->quality)){
-            return $path['dirname']
-                .'/optimized/'
-                .$this->getFilenameWithSize($path['filename'],$width,$height)
-                .'-q-'.$this->quality
-                .'.'.$path['extension'];
+            return $compressor->getOptimized($path['dirname'],$filename,$this->quality);
         } else{
             try{
                 $compressor->compress($filename,$this->quality );

@@ -68,4 +68,15 @@ class ImageCompressor
         return file_exists($dest_dir.'/'.$path['filename'].'-q-'.$quality.'.'.$path['extension']);
     }
 
+    public function getOptimized($dirname,$filename,$quality)
+    {
+        $path = pathinfo($filename);
+        $dest_dir = $dirname.'/'.$this->getOptimizedDir().'/' ; 
+        return $dest_dir.$path['filename'].'-q-'.$quality.'.'.$path['extension'];
+    }
+    public function getOptimizedDir()
+    {
+        return $this->optimized_dir;
+    }
+
 }
