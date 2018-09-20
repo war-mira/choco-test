@@ -163,6 +163,12 @@
     <!-- section partners end-->
 
     <!-- begin section -->
+
+    <!-- end section -->
+@endsection
+
+
+@push('custom.js')
     <script type="text/javascript">
 
         $('.show-question-form button').on('click', function () {
@@ -261,5 +267,4 @@
             return dateString.match(regEx) != null;
         }
     </script>
-    <!-- end section -->
-@endsection
+@endpush

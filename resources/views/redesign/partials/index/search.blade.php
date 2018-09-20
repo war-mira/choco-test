@@ -30,7 +30,7 @@
         </div>
     </form>
 </div>
-
+@push('custom.js')
 <script>
     $('form').each(function () {
         var $form = $(this);
@@ -54,3 +54,4 @@
     })
 
 </script>
+@endpush
