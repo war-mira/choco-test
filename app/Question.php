@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Helpers\votes;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -17,6 +18,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Question extends Model
 {
+    use votes;
+
     const STATUS = [
         0 => 'Модерация',
         1 => 'Допущенный',
