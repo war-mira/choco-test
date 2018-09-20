@@ -11,12 +11,15 @@ namespace App\Components\Image;
 
 trait Resizer
 {
-    public function getImageUrl($url,$width,$height,$quality = 85){
+    public function getImageUrl($src, $width, $height, $quality = 85)
+    {
 
-        if (substr($url, 0, 1) !== '/') {
-            $url = '/'.$url;
+        if (substr($src, 0, 1) !== '/') {
+            $src = '/' . $src;
         }
-        return (new ImageResize($quality))->getImage($url,$width,$height);
+        return (new ImageResize($src, $quality))
+            ->setRootDir(public_path())
+            ->getImage($width, $height);
     }
 
 }

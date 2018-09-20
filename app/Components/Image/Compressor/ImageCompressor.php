@@ -48,7 +48,6 @@ class ImageCompressor
                 '-strip',
                 '-quality '.$quality,
                 '-interlace JPEG',
-                //$this->isGrayscale($filename)?'':'-colorspace sRGB ',
                 ''.$output_file
             ];
 
@@ -71,7 +70,7 @@ class ImageCompressor
     public function getOptimized($dirname,$filename,$quality)
     {
         $path = pathinfo($filename);
-        $dest_dir = $dirname.'/'.$this->getOptimizedDir().'/' ; 
+        $dest_dir = $dirname.'/'.$this->getOptimizedDir().'/' ;
         return $dest_dir.$path['filename'].'-q-'.$quality.'.'.$path['extension'];
     }
     public function getOptimizedDir()
