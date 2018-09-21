@@ -91,7 +91,7 @@
                 </div>
                 <div class="entity-line__about-block">
                     @if(!empty(trim($doctor->about_text)) && trim($doctor->about_text) != '0')
-                        <div class="entity-line__about-text">
+                        <div class="entity-line__about-text less">
                             <div>{!! str_replace('\r\n', '<br />', $doctor->about_text) !!}</div>
                         </div>
                         @if(strlen($doctor->about_text) > 465)

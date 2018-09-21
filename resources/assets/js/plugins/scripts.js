@@ -658,18 +658,13 @@ $(document).ready(function() {
             scrollTop: target.offset().top
         }, 1000);
     });
-
+    setTimeout(()=>{
+        let readmore = document.querySelector('.entity-line__about-text');
+        readmore.style.height = readmore.scrollHeight+'px';
+    },1000);
     $('.entity-line__about-text-more').on('click', function () {
         let text = $(this).parents('.entity-line__about-block').find('.entity-line__about-text');
-        if (text.hasClass('open')){
-                text.animate({
-                    height: "100px"
-                }, 100).removeClass('open');
-        }else{
-            text.animate({
-                height: "100%"
-            }, 100).addClass('open');
-        }
+        text.toggleClass('less');
     });
 
     var allEditors = document.querySelectorAll('.editor');
