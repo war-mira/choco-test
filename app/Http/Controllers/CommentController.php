@@ -109,7 +109,7 @@ class CommentController extends Controller
         if($existCommentsCount > 0)
             return ['error' => 'Вы уже оставляли отзыв этому врачу.'];
 
-        if($authorize <= 0)
+        if($authorize >= 0)
             $data['type'] = Comment::typeQR;
 
 //        if(isset($data['type'])) {
