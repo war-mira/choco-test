@@ -2,7 +2,8 @@ class LVG {
     constructor() {
         this.container = document.querySelector('.page--lvg');
         this.autocompletes = [];
-        this.user = {}
+        this.user = {};
+        this.timer = null;
     }
 
     init() {
@@ -77,7 +78,9 @@ class LVG {
 
         }
     }
-
+    stepReSendSms(target){
+        this.sendSms(target);
+    }
     stepSendSms(target) {
 
         let validate = this.validateRegisterForm();
@@ -99,7 +102,37 @@ class LVG {
 
         }
     }
+    enableTimer(){
+        let _self = this;
+        let timer = this.container.querySelector('.timer');
+        timer.classList.remove('timeout');
+        timer.classList.remove('hidden');
+        let counter = timer.querySelector('.counter span');
+        counter.innerHTML = "60";
+        let digit = parseInt(counter.innerText);
+        this.timer = setInterval(()=>{
+            if(digit > 0){
+                digit--;
+            }
+            counter.innerHTML = this.leadingZero(digit);
+        },1000);
+        setTimeout(() => {
+            clearTimeout(this.timer);
+            this.timer = null;
+            this.showResendButton()
+        },60000)
+    }
+    leadingZero(num)
+    {
+        let s = String(num);
+        if (s.length < 2) {s = "0" + s;}
+        return s;
+    }
 
+    showResendButton(){
+        let counter = this.container.querySelector('.timer');
+        counter.classList.add('timeout');
+    }
     sendSms(target) {
         let _self = this;
         target.classList.add('saving');
@@ -107,6 +140,7 @@ class LVG {
             .done(function (response) {
                 if (response.code == 200) {
                     _self.showSmsCheck();
+                    _self.enableTimer();
                 }
                 target.classList.remove('saving');
             }).fail(function (data) {
@@ -124,13 +158,19 @@ class LVG {
         let form = document.querySelector('.form--register');
         form.querySelector('.smscheck').classList.remove('hidden');
         let btn = form.querySelector('.btn[data-step="SendSms"]');
-        btn.setAttribute('data-step', 'ValidateSms');
+        if(btn){
+            btn.setAttribute('data-step', 'ValidateSms');
+        }
     }
 
     stepValidateSms(target) {
         let _self = this;
         let form = document.querySelector('.form--register');
-
+        let code = form.querySelector('.smscheck input').value.trim();
+        if(!code.length){
+            confirm('Введите код');
+            return false;
+        }
         $.post('/actions/best-doctor-2018/check', {
             'user': _self.user,
             'code': form.querySelector('.smscheck input').value

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Components\Image\Resizer;
 use App\Helpers\FormatHelper;
 use App\Helpers\MathHelper;
 use App\Helpers\SeoMetadataHelper;
@@ -17,6 +18,7 @@ use Carbon\Carbon;
 use Idoctor\Lvg\Models\LvgDoctorCandidate;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Str;
 
 /**
  * App\Doctor
@@ -121,6 +123,7 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
 {
     use FilterScopes;
     use votes;
+    use Resizer;
 
     const STATUS = [
         -1 => 'Заблокирован',
@@ -293,6 +296,26 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         return $this->attributes['avatar'] ?? asset('images/no-userpic.gif');
     }
 
+    public function getAvatar($width,$height)
+    {
+        $src = $this->avatar;
+        if(!file_exists($src)){
+            return '/images/no-userpic.gif';
+        }
+        $src = $this->getNotThumb($src);
+        return $this->getImageUrl($src,$width,$height,85);
+    }
+
+    public function getNotThumb($src)
+    {
+        $path = pathinfo($src);
+        $filename = $path['filename'];
+        if(Str::endsWith($filename,'_thumb')){
+            $filename = Str::substr($filename,0,-6);
+            return $path['dirname'].'/'.$filename.'.'.$path['extension'];
+        };
+        return $src;
+    }
     public function city()
     {
         return $this->belongsTo(City::class, 'city_id', 'id');

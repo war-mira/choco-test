@@ -1,5 +1,5 @@
 <div class="index-nav-line">
-    <a href="{{route('home')}}" class="main-header__logo"><img src="{{asset('img/footer-logo.png')}}" alt="iDoctor.kz" title="iDoctor.kz"></a>
+    <a href="{{route('home')}}" class="main-header__logo"><img src="{{asset('/img/footer-logo.png')}}" alt="iDoctor.kz" title="iDoctor.kz"></a>
         <div class="container">
             <div class="index-intro__container">
                 <nav class="index-nav">

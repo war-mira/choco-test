@@ -2335,7 +2335,9 @@ padding-bottom: 15px}
 .entity-line__about-text-more {
   color: #00A8FF;
   text-decoration: underline;
-  margin-top: 5px; }
+  margin-top: 5px;
+  cursor: pointer;
+}
 
 .entity-line__appointment-book-small {
   margin-top: 18px; }

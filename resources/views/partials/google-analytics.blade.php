@@ -1,3 +1,4 @@
+{{--
 <!-- Google Analytics -->
 <script>
     (function (i, s, o, g, r, a, m) {
@@ -17,3 +18,5 @@
 
 </script>
 <!-- End Google Analytics -->
+--}}
+<script> var ga = function(){}</script>

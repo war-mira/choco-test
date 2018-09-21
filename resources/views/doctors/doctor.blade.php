@@ -6,7 +6,7 @@
             <div class="entity-line__img">
                 <div class="entity-thumb-img">
                     <div class="entity-thumb-img__img-wr">
-                        @component('components.prof-img')
+                        @component('components.prof-img',['doctor'=>$doctor])
                             @slot('src')
                                 {{$doctor['avatar']}}
                             @endslot
@@ -91,12 +91,13 @@
                 </div>
                 <div class="entity-line__about-block">
                     @if(!empty(trim($doctor->about_text)) && trim($doctor->about_text) != '0')
-                        <div class="entity-line__about-text">
+                        <div class="entity-line__about-text less">
                             <div>{!! str_replace('\r\n', '<br />', $doctor->about_text) !!}</div>
                         </div>
                         @if(strlen($doctor->about_text) > 465)
                             <div class="entity-line__about-text-more">
-                                <a href="#">Подробнее</a>
+                                <span class="more">Подробнее</span>
+                                <span class="less">Скрыть</span>
                             </div>
                         @endif
                     @endif
