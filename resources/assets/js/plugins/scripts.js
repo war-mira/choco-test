@@ -725,7 +725,7 @@ $(document).ready(function() {
                 text: $('#comment_text').val(),
                 user_rate: $('input[name=user_rate]:checked').val(),
                 date_event: $('#date_event').val(),
-                type:1
+                type:$('#type').val()
             })
                 .done(function (json) {
                     $('#user_email').removeClass('has-warning');

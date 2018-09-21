@@ -10,7 +10,7 @@
                 {{ csrf_field() }}
                 <input type="hidden" id="owner_type" value="{{$owner['type']}}">
                 <input type="hidden" id="owner_id" value="{{$owner['id']}}">
-                <input type="hidden" id="type" value="0">
+                <input type="hidden" id="type" value="{{ \App\Comment::typeCommon }}">
 
                 <div class="leave-review__input-line">
                     @if(Auth::guest())
