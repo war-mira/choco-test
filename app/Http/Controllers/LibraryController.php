@@ -18,7 +18,10 @@ class LibraryController
             ->where('class','Library')
             ->where('action', 'index')
             ->first();
-        $meta = SeoMetadataHelper::getMeta($pageSeo);
+        $meta = [];
+        if(!is_null($pageSeo)){
+            $meta = SeoMetadataHelper::getMeta($pageSeo);
+        }
         return view('library.index', compact('illnessesGroups','meta'));
     }
 
@@ -50,8 +53,12 @@ class LibraryController
         $pageSeo = PageSeo::query()
             ->where('class','Illnesses')
             ->where('action', 'index')
-            ->first(); 
-        $meta = SeoMetadataHelper::getMeta($pageSeo);
+            ->first();
+        $meta = [];
+        if(!is_null($pageSeo)){
+            $meta = SeoMetadataHelper::getMeta($pageSeo);
+        }
+
         return view('library.illnesses.list', compact('letters', 'letter', 'illnesses','meta'));
     }
 
