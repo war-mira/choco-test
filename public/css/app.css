@@ -2005,6 +2005,36 @@ img {
     font-size: 16px;
     font-weight: 600;
   }
+  .show-question-form .form-row{
+    color: #454545;
+    margin-bottom: 16px;
+  }
+  .show-question-form .form-row label{
+        font-size: 14px
+  }
+  .show-question-form .form-row select{
+      display: -webkit-box;
+      width: 100%;
+      max-width: 300px;
+      margin-top: 10px;
+  }
+  .show-question-form .button-send-container{
+      text-align: center;
+  }
+  .show-question-form .form-row .form-group div{
+      margin-top: 10px;
+  }
+  .show-question-form .form-row .form-group > label, .show-question-form .form-group > label{
+      font-weight: bold;
+  }
+  #question__modal .moodal-close-bg{
+      top: 0;
+      left: auto;
+  }
+  #question__modal .modal-close{
+        top: 14px;
+        left: auto;
+  }
   .answers-list-block{
       margin-right: 15px;
       width: 100%;
