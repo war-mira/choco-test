@@ -1710,7 +1710,7 @@ img {
 
 .index-nav-line {
   background-color: rgba(0, 0, 0, 0.1);
-  position: fixed;
+  position: inherit;
   top:80px;
   width: 100%;
   z-index: 2;
@@ -2034,6 +2034,7 @@ img {
   #question__modal .modal-close{
         top: 14px;
         left: auto;
+        right:12px;
   }
   .answers-list-block{
       margin-right: 15px;

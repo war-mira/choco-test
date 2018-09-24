@@ -784,6 +784,9 @@ $(document).ready(function() {
     }
     window.onload = function(){
         var navbar = document.getElementById("navbar");
+        if(! /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+            navbar.style.position = "fixed";
+        }
         var currentScrollPos = window.pageYOffset;
         if(currentScrollPos > 80){
             navbar.style.top = "0px";

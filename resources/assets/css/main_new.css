@@ -469,7 +469,7 @@ img {
 
 .index-nav-line {
   background-color: rgba(0, 0, 0, 0.1);
-  position: fixed;
+  position: inherit;
   top:80px;
   width: 100%;
   z-index: 2;
