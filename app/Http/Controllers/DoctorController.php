@@ -82,7 +82,6 @@ class DoctorController extends Controller
      */
     public function list(City $city = null, $input = '', $modifier = '', DoctorFilters $filters)
     {
-
         $skill = Skill::where('alias', $input)->first();
 
         $search = new \App\Helpers\DoctorSearcher([$input,$modifier]);

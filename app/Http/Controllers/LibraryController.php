@@ -7,14 +7,22 @@ use App\Helpers\SeoMetadataHelper;
 use App\Models\Library\Illness;
 use App\Models\Library\IllnessesGroup;
 use App\Models\Library\IllnessesGroupArticle;
+use App\PageSeo;
 
 class LibraryController
 {
     public function index()
     {
         $illnessesGroups = IllnessesGroup::where('active', '1')->get();
-
-        return view('library.index', compact('illnessesGroups'));
+        $pageSeo = PageSeo::query()
+            ->where('class','Library')
+            ->where('action', 'index')
+            ->first();
+        $meta = [];
+        if(!is_null($pageSeo)){
+            $meta = SeoMetadataHelper::getMeta($pageSeo);
+        }
+        return view('library.index', compact('illnessesGroups','meta'));
     }
 
     public function groupArticles(IllnessesGroup $illnessesGroup)
@@ -42,8 +50,16 @@ class LibraryController
             $letter = $letters[0];
 
         $illnesses = Illness::getByLetter($letter)->orderBy('name', 'asc')->get();
+        $pageSeo = PageSeo::query()
+            ->where('class','Illnesses')
+            ->where('action', 'index')
+            ->first();
+        $meta = [];
+        if(!is_null($pageSeo)){
+            $meta = SeoMetadataHelper::getMeta($pageSeo);
+        }
 
-        return view('library.illnesses.list', compact('letters', 'letter', 'illnesses'));
+        return view('library.illnesses.list', compact('letters', 'letter', 'illnesses','meta'));
     }
 
     public function illness( Illness $illness)
