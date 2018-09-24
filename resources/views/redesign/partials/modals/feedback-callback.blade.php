@@ -56,13 +56,12 @@
                 </div>
                 <div class="form-group">
                     <label>Специализация *</label>
-                    @component('components.form.nested-select', ['options'=>$skillsList])
-                            @slot('field','id')
-                            @slot('value',$seed['id'] ?? null)
-                            @slot('placeholder','Новый')
-                            @slot('label','Id')
-                            @slot('readonly',true)
-                        @endcomponent
+                    <select name="skill">
+                        @foreach($skillsList as $skill)
+                            <option value="">{{$skill['name']}}</option>
+                        @endforeach
+                    </select>
+                    
                 </div>
                 <div class="form-group">
                     <label>Ваш вопрос</label>

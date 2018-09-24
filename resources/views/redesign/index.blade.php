@@ -255,10 +255,10 @@
             return dateString.match(regEx) != null;
         }
     </script>
-    <!-- end section -->
-@endsection
-<style>
+    <style>
     .index-intro {
       height:fit-content!important;
     }
 </style>
+    <!-- end section -->
+@endsection

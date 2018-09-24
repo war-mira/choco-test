@@ -797,6 +797,24 @@ $(document).ready(function() {
         }
         prevScrollpos = currentScrollPos;
     }
+    window.onload = function() {
+        var navbar = document.getElementById("navbar");
+        var currentScrollPos = window.pageYOffset;
+        if (prevScrollpos > currentScrollPos) {
+            if(currentScrollPos == 0){
+                navbar.style.top = "80px";
+                navbar.classList.remove("navbar-pattern");
+                document.getElementById('nav-top-container').classList.add('mr_0');
+                document.getElementById('nav-top-container').classList.remove('ml_0');
+            }
+        }else {
+            navbar.style.top = "0px";
+            navbar.classList.add("navbar-pattern");
+            document.getElementById('nav-top-container').classList.add('ml_0');
+            document.getElementById('nav-top-container').classList.remove('mr_0');
+        }
+        prevScrollpos = currentScrollPos;
+    };
     
     
 });
