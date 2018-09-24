@@ -9,10 +9,20 @@
                             <a href="{{url('question_item/'.$near_question->id)}}">{{ $near_question->text }}</a>
                         </h3>
                     </div>
-                    @foreach($near_question->answers as $near_answer) 
+                    @foreach($near_question->answers->take(1) as $near_answer) 
                         <div class="question-slider-item-doctor">
                             <div class="parent_cont question-main-img">
-                                <img src="{{ url($near_answer->doctor->avatar) }}" alt="{{ $near_answer->doctor->name }}">
+                                @component('components.prof-img')
+                                    @slot('src')
+                                        {{$near_answer->doctor['avatar']}}
+                                    @endslot
+                                    @slot('width')
+                                        100px
+                                    @endslot
+                                    @slot('alt')
+                                        {{$near_answer->doctor->name}}
+                                    @endslot
+                                @endcomponent
                             </div>
                             <div class="question-doctor-name">
                                 <h4>

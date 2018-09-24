@@ -323,8 +323,7 @@
         });
         $(function () {
             $('#user-birthday').datetimepicker({
-                format: 'yyyy-mm-dd',
-                minView: 2
+                format: 'yyyy'
             });
         });
 

@@ -150,6 +150,7 @@
                 <div class="partners__list-item"><img src="{{asset('img/partner/4.jpg')}}" alt=""></div>
                 <div class="partners__list-item"><img src="{{asset('img/partner/5.jpg')}}" alt=""></div>
                 <div class="partners__list-item"><img src="{{asset('img/partner/6.jpg')}}" alt=""></div>
+                <div class="partners__list-item"><img src="{{asset('img/partner/7.jpg')}}" alt=""></div>
             </div>
         </div>
     </section>
@@ -256,3 +257,8 @@
     </script>
     <!-- end section -->
 @endsection
+<style>
+    .index-intro {
+      height:fit-content!important;
+    }
+</style>

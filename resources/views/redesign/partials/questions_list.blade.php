@@ -12,10 +12,20 @@
                                 <a href="{{url('question_item/'.$question->id)}}">{{ $question->text }}</a>
                             </h3>
                         </div>
-                        @foreach($question->answers as $answer) 
-                            <div class="question-item-doctor">
+                        @foreach($question->answers->take(1) as $answer) 
+                            <div class="question-item-doctor">                                    
                                 <div class="parent_cont question-main-img">
-                                    <img src="{{ url($answer->doctor->avatar) }}" alt="{{ $answer->doctor->name }}">
+                                    @component('components.prof-img')
+                                        @slot('src')
+                                            {{$answer->doctor['avatar']}}
+                                        @endslot
+                                        @slot('width')
+                                            100px
+                                        @endslot
+                                        @slot('alt')
+                                            {{$answer->doctor->name}}
+                                        @endslot
+                                    @endcomponent
                                 </div>
                                 <div class="parent_cont question-doctor-name">
                                     <h4>
@@ -28,7 +38,7 @@
                                     </div>
                                 </div>
                                 <div class="question-item-answer">
-                                    <p>{{ $answer->text }} </p>
+                                    <p>{{ str_limit($answer->text, $limit = 100, $end = '...') }}</p>
                                 </div>
                             </div>
                         @endforeach

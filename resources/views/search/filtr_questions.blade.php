@@ -2,7 +2,9 @@
     <div class="container">
         <div class="result-control-bar__line" id="filtersGroup">
             <div class="result-control-bar__query">
-                <div class="result-control-bar__query-count">найдено 756 вопросов и ответов</div>
+                <div class="result-control-bar__query-count">
+                    <a href="{{url('question_list')}}">{{ $answered_questions }}+ отвеченных врачами вопросов</a>
+                </div>
 
                 <input type="radio" style="display:none;" checked="true" name="order" value="asc">
                 <input type="radio" style="display:none;" name="order" value="desc">

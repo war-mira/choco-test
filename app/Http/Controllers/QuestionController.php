@@ -48,7 +48,7 @@ class QuestionController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
         $answered_questions = Question::wherehas('answers')->count();
-        return view('questions.question')->with(
+        return view('questions.list')->with(
             compact(
                 'answered_questions',
                 'questions')
