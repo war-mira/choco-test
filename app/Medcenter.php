@@ -239,6 +239,11 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
         return $this->hasMany(Order::class, 'med_id', 'id');
     }
 
+    public function ordersVisited()
+    {
+        return $this->orders()->where('status', 2);
+    }
+
     public function updateCommentRate()
     {
         $rate = round($this->allComments()->where('status', 1)->avg('user_rate'));

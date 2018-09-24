@@ -54,7 +54,7 @@
                     <div class="results filter">
                         <div class="container">
                             <div class="text-center search-pagination" id="topPagination">
-                                {!! $doctors->links() !!}
+                                {!! $doctors->appends(request()->query())->links() !!}
                             </div>
                         </div>
                     </div>
@@ -88,7 +88,9 @@
             }
 
             $('select[name="type"]').change(function () {
+
                 var tp = $(this).val();
+                var q = $('.search-bar__item').find('input').val();
 
                 if (tp == 'medcenters') {
                     $('div.search-bar__item_search').find('input').val('');

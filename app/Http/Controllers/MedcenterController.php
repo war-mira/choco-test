@@ -123,14 +123,13 @@ class MedcenterController extends Controller
 
             $medcenters->whereIn('id',$ids);
         }
-
         $order = [$filter['sort'] ?? 'rate', $filter['order'] ?? 'desc'];
         if ($order[0] == 'rate')
             $medcenters->orderBy('rate', $order[1]);
         else if ($order[0] == 'price')
             $medcenters->orderBy('price', $order[1]);
-        else if ($order[0] == 'comments_count')
-            $medcenters->withCount('publicComments')->orderBy('public_comments_count', $order[1]);
+        else if ($order[0] == 'orders_count')
+            $medcenters->withCount('ordersVisited')->orderBy('orders_visited_count', $order[1]);
     }
 
     public function category_list($city_alias = 0)

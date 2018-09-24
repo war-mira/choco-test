@@ -12,7 +12,7 @@
                     </select>
                 </div>
                 <div class="search-bar__item search-bar__item_search">
-                    <input id="searchform" name="q" value="{{$q ?? ""}}"  placeholder="Введите специальность или фамилию врача" class="js-search-input"  autocomplete="off">
+                    <input id="searchform" name="q" value="{{isset($query) && isset($query['q']) ? $query['q']:''}}" placeholder="Введите специальность или фамилию врача" class="js-search-input"  autocomplete="off">
                     <label for="searchform" class="input-block__icon"><img src="{{asset('/img/icons/search-inactive.png')}}" alt=""></label>
                     <div class="live-search">
                         <div class="live-search__inner" id="liveresults">
@@ -20,7 +20,8 @@
                     </div>
                 </div>
                 <div class="search-bar__item search-bar__item_region">
-                    <select name="district" placeholder="Алмалинский район" class="js-simple-select js-select-region">
+                    <select name="district" class="js-simple-select js-select-region">
+                        <option value="0">Выберите район</option>
                         @foreach(\App\Models\District::all() as $district)
                             <option {{ $district->id == request()->input('district') ? 'selected':'' }} value="{{ $district->id }}">{{ $district->name }}</option>
                         @endforeach

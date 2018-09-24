@@ -639,9 +639,9 @@ $(document).ready(function() {
         }
     });
 
-    $('.search-bar__line .js-type-select').on('change', function () {
+    $('.search-bar__line .js-type-select').change( function () {
         let input = $(this).parents('form').find('.js-search-input');
-        input.val('');
+        // input.val('');
         let placeholder;
         if($(this).val() == 'doctor'){
             placeholder = 'Введите специальность или фамилию врача';
@@ -835,20 +835,6 @@ $(document).ready(function() {
                 $('#question-text').removeClass('has-warning');
             }
         }
-    });
-
-    $('form.search-bar__line').each(function () {
-        var $form = $(this);
-        $form.on('change', 'select[data-select="action"]',  function () {
-            var type = $form.find('option:selected').val();
-            var action = '';
-            if (type == 'doctor'){
-                action = "{!!route('doctors.list')!!}";
-            }else {
-                action = "{!! route('medcenters.list') !!}";
-            }
-            $form.attr('action', action);
-        });
     });
 
     $('.search_event').on('click', function () {
