@@ -147,6 +147,9 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     const SHOW_PHONE_COUNT = 'show-phone';
     const FIND_DOCTOR_COUNT = 'find-doctor';
     const VIEW_PROFILE_COUNT = 'view-profile';
+    const SHOW_PHONES = [
+        '331'
+    ];
 
     public $timestamps = true;
     protected $table = 'doctors';
