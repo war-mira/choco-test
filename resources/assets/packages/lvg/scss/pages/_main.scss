@@ -139,6 +139,10 @@
         .card{
           opacity: 1;
           transform: translateX(0);
+          @media (min-width:768px){
+            padding: 32px;
+          }
+
           &.hide{
             opacity: 0;
             transform: translateX(200px);
@@ -153,7 +157,7 @@
           font-size: 26px;
           line-height: 24px;
           color: rgb(69,69,69);
-          margin-bottom: 8px;
+          margin-bottom: 16px;
           text-align: center;
         }
         &--input{
