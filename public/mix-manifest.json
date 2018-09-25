@@ -1,5 +1,11 @@
 {
+<<<<<<< HEAD
     "/js/app.js": "/js/app.js?id=a387b883ff67a7e7e041",
     "/css/app.css": "/css/app.css?id=c15a88e6dc2ddaf49ebe",
+=======
+    "/js/app.js": "/js/app.js?id=1f16042833d94b7440ea",
+    "/css/app.css": "/css/app.css?id=e8f53a6bb2156fbcb63f",
+    "/js/libs/Filters.js": "/js/libs/Filters.js?id=40c91e4205d684d3cb6a",
+>>>>>>> a819cf75dfeee219fbb492cbbe995ea758fba551
     "/js/all.js": "/js/all.js?id=d0cb27aa8fcbab34e209"
 }

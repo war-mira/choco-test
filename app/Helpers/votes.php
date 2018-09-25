@@ -43,10 +43,12 @@ trait votes {
 
     public function vote($mark = 1, $user_id = null)
     {
+
         $vote = $this->votes()->UpdateOrCreate([
             'user_id'=> ($user_id?:Auth::user()->id)
         ],['mark'=>$mark]);
         event(new NewVoteEvent($this));
+
         return $vote;
     }
 

@@ -103,7 +103,7 @@ Route::get('comment/{id}/rate/{rate}', 'CommentController@rateComment')->name('r
 //******questions*****************
 Route::post('question/add', 'QuestionController@add');
 Route::get('question_item/{question}', 'QuestionController@item');
-Route::get('question_list', 'QuestionController@listQuestions');
+Route::get('question_list', 'QuestionController@listQuestions')->name('question.list');
 
 
 //******Posts***************************

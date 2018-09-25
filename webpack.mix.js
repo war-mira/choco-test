@@ -1,7 +1,7 @@
 const { mix } = require('laravel-mix');
-
+mix.disableNotifications();
 /*
- |--------------------------------------------------------------------------
+ |------------------------------------------------ --------------------------
  | Mix Asset Management
  |--------------------------------------------------------------------------
  |
@@ -10,6 +10,10 @@ const { mix } = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
+mix
+    .babel([
+    'resources/assets/js/libs/Filters.js'
+], 'public/js/libs/Filters.js');
 
 mix.js('resources/assets/js/app.js', 'public/js')
     .scripts([
@@ -22,6 +26,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'resources/assets/js/plugins/jquery.magnific-popup.min.js',
         // 'resources/assets/js/plugins/scripts.js'
     ],'public/js/all.js')
+
    .sass('resources/assets/sass/app.scss', 'public/css')
    .options({
         processCssUrls: false
