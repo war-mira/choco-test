@@ -38,6 +38,11 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'resources/assets/js/plugins/scripts.js'
     ], 'public/js/scripts.js')
     .sass('resources/assets/sass/app.scss', 'public/css')
+    .combine([
+        'public/js/all.js',
+        'public/js/scripts.js',
+        'public/js/app.js',
+    ],'public/build/js/app.js')
     .options({
         processCssUrls: false,
         postCss: [
