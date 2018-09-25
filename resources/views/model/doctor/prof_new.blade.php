@@ -101,36 +101,12 @@
     </div>
 </div>
 <div class="entity-line__additional appointment-book-big">
-    @if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])
-        <div class="appointment-book-big__heading">Записаться на прием</div>
-    @endif
+    
     <div class="appointment-book-big__timeline">
         {!! $doctor->timetable !!}
     </div>
-        {{--@if($doctor->whoIsIt() == \App\Doctor::TYPE[3])--}}
-        {{--<div class="appointment-book-big__bot-line">--}}
-            {{--<find-doctor-btn model="{{ \App\Doctor::FIND_DOCTOR_COUNT }}" id="{{ $doctor->id }}">--}}
-                {{--<template slot="link-to-modal"></template>--}}
-            {{--</find-doctor-btn>--}}
-            {{--<a href="{{ route('register') }}" class="btn btn_theme_usual">Это я</a>--}}
-        {{--</div>--}}
-        {{--@else--}}
-            {{--@if( $doctor->whoIsIt() != \App\Doctor::TYPE[4] && $doctor->whoIsIt() != \App\Doctor::TYPE[5])--}}
-                {{--<phone-show-btn model="{{ \App\Doctor::SHOW_PHONE_COUNT }}" id="{{ $doctor->id }}">--}}
-                    {{--<template slot="phone-number"></template>--}}
-                {{--</phone-show-btn>--}}
-            {{--@endif--}}
-        {{--@endif--}}
-        @if($doctor->medcenters)
-            @foreach($doctor->medcenters as $medcenter)
-                @if(in_array($medcenter->id, \App\Doctor::SHOW_PHONES))
-                    <phone-show-btn model="{{ \App\Doctor::SHOW_PHONE_COUNT }}" id="{{ $doctor->id }}" phone="{{ \App\Helpers\HtmlHelper::phoneCode($doctor->showing_phone) }}">
-                        <template slot="phone-number"></template>
-                    </phone-show-btn>
-                @endif
-            @endforeach
-        @endif
-    {{--@if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])--}}
+  
+ 
             <form action="#" class="">
                 <div class="appointment-book-big__bot-line">
                     @if(!empty($doctor->price))
@@ -144,5 +120,5 @@
                                 class="hidden-xl"> онлайн</span></a>
                 </div>
             </form>
-    {{--@endif--}}
+
 </div>

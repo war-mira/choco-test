@@ -4,7 +4,7 @@
             <div class="article-list-block">
                 @foreach($questions as $question)
                     <div class="search-result__item entity-line article-line">
-                        <div class="entity-line__img">
+<!--                        <div class="entity-line__img">
                             <div class="entity-thumb-img">
                                 <div class="entity-thumb-img__img-wr">
                                     <div class="parent_cont articles">
@@ -12,7 +12,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div> -->
                         <div class="article-line__main">
                             <div class="h3 profiles__title">
                                 <div class="entity-line__name">
@@ -28,7 +28,7 @@
                                 <div class="article-line__brief-line">
                                     <div class="article-line__brief-item">
                                         <div class="article-line__brief-name">
-                                            Ответов на вопрос:
+                                            Ответов на вопрос: {{ $question->answers->count() }}
                                         </div>
                                         <div class="article-line__brief-descr">
                                             <a href="#">{{ $answer->count }}</a>
@@ -46,4 +46,13 @@
                 </div>
             </div>
         </section>
+        @if($questions->count() != "")
+                    <div class="results filter">
+                        <div class="container">
+                            <div class="text-center search-pagination" id="topPagination">
+                                {!! $questions->count() !!}
+                            </div>
+                        </div>
+                    </div>
+                @endif
     </div>

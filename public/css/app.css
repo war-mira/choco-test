@@ -3483,7 +3483,7 @@ padding-bottom: 15px}
     font-size: 14px; }
     .entity-map__address-name {
       font-family: "ProximaNova-Semibold", sans-serif; }
-
+    
 .entity-line__about-text {
   font-size: 14px;
   margin-top: 10px;
@@ -3495,6 +3495,9 @@ padding-bottom: 15px}
   text-decoration: underline;
   margin-top: 5px; }
 
+.section-question__content .entity-line__about-text{
+    height: auto;
+}
 .entity-line__appointment-book-small {
   margin-top: 18px; }
 

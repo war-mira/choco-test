@@ -45,7 +45,7 @@
                     
                     <div style="max-width: 200px;">
                         <a href="tel:+77272222200" class="main-header__action-item main-header-phone">+7 (727) 222-22-00</a>
-                        <a href="tel:+77715033221" class="additional_number" >+7 (771) 503 32 21</a>
+                        <a href="tel:+77715033221" class="main-header__action-item main-header-phone" >+7 (771) 503-32-21</a>
                     </div>
                     <div class="nav-toggle main-header__action-item">
                         <span></span>
