@@ -49,9 +49,15 @@ class IndexController extends Controller
             $topPosts = Post::where('is_top', 1)->where('status', 1)->orderBy('created_at', 'desc')->limit(3)->get();
             Cache::set('index:topPosts',$topPosts,120);
         }
+        
+        
+        $answered_questions = \App\Question::wherehas('answers')->count();
+        $questions = \App\Question::take(4)
+                ->orderBy('created_at','desc')
+                ->whereHas('answers')
+                ->get();
 
-
-
+        
         //Специальности по количесвам врачей
         if(Cache::has('index:skills'))
             $skillsList = Cache::get('index:skills');
@@ -77,7 +83,6 @@ class IndexController extends Controller
         }
 
 
-
         //Комментарии
         $topPromotions = collect([]);
 
@@ -96,7 +101,9 @@ class IndexController extends Controller
                 'skillsList',
                 'stats',
                 'social',
-                'districts')
+                'districts',
+                'answered_questions',
+                'questions')
         );
     }
 

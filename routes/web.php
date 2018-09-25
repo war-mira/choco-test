@@ -98,8 +98,14 @@ Route::get('comment/new', 'CommentController@new');
 Route::post('comment/requestCode', 'CommentController@requestPhoneCode');
 Route::post('comment/confirm-code', 'CommentController@confirmPhone');
 Route::get('comment/{id}/rate/{rate}', 'CommentController@rateComment')->name('rateComment');
+
+
 //******questions*****************
 Route::post('question/add', 'QuestionController@add');
+Route::get('question_item/{question}', 'QuestionController@item');
+Route::get('question_list', 'QuestionController@listQuestions')->name('question.list');
+
+
 //******Posts***************************
 Route::get('post/{alias}', 'PostController@item')->name('post');
 Route::get('posts', 'PostController@list')->name('posts');

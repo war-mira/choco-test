@@ -22,3 +22,4 @@ npm-debug.log
 ide_helper.php
 composer.lock
 pub.tar
+/nbproject/private/

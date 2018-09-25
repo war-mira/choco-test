@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Doctor;
+use App\QuestionAnswer;
 use Illuminate\Http\Request;
 
 class VoteController extends Controller
@@ -10,6 +11,7 @@ class VoteController extends Controller
 
     private $morph = [
         'doctor'    => Doctor::class,
+        'answer'    => QuestionAnswer::class,
     ];
 
 
