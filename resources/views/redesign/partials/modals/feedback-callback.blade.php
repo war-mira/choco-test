@@ -12,21 +12,10 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <div class="desktop-datetime">
-                            <div class="date-text-input">
-                                <label>Год рождения*</label>
-                                <select name="select" id="user-birthday" required="">
-                                    <?php for($i = 1900 ; $i < date('Y'); $i++){ echo "<option value=".$i.">$i</option>"; }?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="mobile-datetime">
-                            <label>Год рождения *</label>
-                            <select name="select" id="user-birthday" required="">
-                                <option></option>
-                                    <?php for($i = 1900 ; $i < date('Y'); $i++){ echo "<option value=".$i.">$i</option>"; }?>
-                                </select>
-                        </div>
+                        <label>Год рождения*</label>
+                        <select name="select" id="user-birthday" required="">
+                            <?php for($i = 1900 ; $i < date('Y'); $i++){ echo "<option value=".$i.">$i</option>"; }?>
+                        </select>
                     </div>
                 </div>
                 <div class="form-row">
@@ -50,19 +39,19 @@
                             <input type="radio" name="question_notify" id="mobile_notify" onclick="answerInfoType();"/>
                             <label for="mobile_notify">Телефон</label>
                         </div>
-                        <input type="email" id="user-email" class="" name="user[email]" style="display:none">
-                        <input class="bfh-phone" name="user[phone]" id="user-phone" style="display:none" type="text" data-mask="+7 (999) 999-99-99">
+                        <input type="email" id="user-email" class="" name="user[email]" style="display:none" placeholder="email@mail.com">
+                        <input class="bfh-phone" name="user[phone]" id="user-phone" style="display:none" type="text" placeholder="+7 (XXX) XXX-XX-XX" data-mask="+7 (999) 999-99-99">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>Специализация *</label>
-                    @component('components.form.nested-select', ['options'=>$skillsList??[]])
-                            @slot('field','id')
-                            @slot('value',$seed['id'] ?? null)
-                            @slot('placeholder','Новый')
-                            @slot('label','Id')
-                            @slot('readonly',true)
-                        @endcomponent
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Специализация *</label>
+                        <select name="skill">
+                            @foreach($skillsList as $skill)
+                                <option value="">{{$skill['name']}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Ваш вопрос</label>

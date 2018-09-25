@@ -453,11 +453,7 @@ img {
 .pattern-bg {
   background-image: url("../img/pattern.png"); }
 
-.index-intro {
-  background-color: #02A0F2;
-  padding: 0 0 1px;
-  overflow: hidden;
-  margin-top: 70px;}
+
 
 .index-intro__container {
   max-width: 880px;
@@ -465,7 +461,6 @@ img {
 
 .index-nav-line {
   background-color: rgba(0, 0, 0, 0.1);
-  position: relative;
   z-index: 2; }
 
 .index-nav {
@@ -4286,7 +4281,7 @@ box-shadow: 0px 1px 4px #e7e7e7; margin-bottom: 30px;}
     height: 90px;
   }
    .index-intro.pattern-bg{
-    margin-top: 90px;
+    margin-top: 10px;
   }
   .main-header__partners{
     display: none;

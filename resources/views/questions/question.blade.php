@@ -12,7 +12,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
                         <div class="article-line__main">
                             <div class="h3 profiles__title">
                                 <div class="entity-line__name">

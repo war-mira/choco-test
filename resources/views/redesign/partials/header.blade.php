@@ -72,6 +72,9 @@
             <a href="tel:+77272222200" class="mobile-menu__item mobile-menu-item">
                 <span>+7 (727) 222-22-00</span>
             </a>
+            <a href="tel:+77715033221" class="mobile-menu__item mobile-menu-item">
+                <span>+7 (771) 503 32 21</span>
+            </a>
             <a class="additional_number" href="tel:+77715033221">+7 (771) 503 32 21
             </a>
         </div>

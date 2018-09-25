@@ -1,7 +1,7 @@
 <section class="search-bar-container pattern-bg">
     <div class="container">
         <div class="search-bar">
-            <form action="{{route('question.list')}}" class="questions__search--form search-bar__line index-search-bar__line">
+            <form action="{{route('question.list')}}" class="questions__search--form search-bar__line index-search-bar__line  question-search-bar">
                 <input type="hidden" name="sort" value="{{request()->get('sort')??'date'}}" />
                 <input type="hidden" name="order" value="{{request()->get('order')??'desc'}}" />
                 <div class="form-question-row">

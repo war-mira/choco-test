@@ -47,7 +47,7 @@
     <div class="modal-container">
         @include('redesign.partials.modals.modal-login')
         @include('redesign.partials.modals.quick-order')
-        @include('redesign.partials.modals.feedback-callback')
+        @include('redesign.partials.modals.feedback-callback',['skillsList'=> $skillsList??[]])
     </div>
 </div>
 <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
