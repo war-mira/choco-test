@@ -1,9 +1,5 @@
 {
-    "/js/app.js": "/js/app.js?id=560c149a4966ff0612ea",
-    "/projects/lvg/css/app.css": "/projects/lvg/css/app.css?id=5e486a307275e60baadd",
-    "/css/app.css": "/css/app.css?id=1ec99b78bd45748d2528",
-    "/projects/lvg/js/app.js": "/projects/lvg/js/app.js?id=55291ff6be9ad23c1b4d",
-    "/js/all.js": "/js/all.js?id=d0cb27aa8fcbab34e209",
-    "/js/scripts.js": "/js/scripts.js?id=3cb2d65ec6c0883c7b06",
-    "/build/js/app.js": "/build/js/app.js?id=51d56fbcbeb8a09b0cc9"
+    "/js/app.js": "/js/app.js",
+    "/projects/lvg/css/app.css": "/projects/lvg/css/app.css",
+    "/css/app.css": "/css/app.css"
 }

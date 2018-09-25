@@ -1,12 +1,7 @@
-<<<<<<< HEAD
+
 <div class="index-nav-line">
     <a href="{{route('home')}}" class="main-header__logo"><img src="{{asset('/img/footer-logo.png')}}" alt="iDoctor.kz" title="iDoctor.kz"></a>
-        <div class="container">
-=======
-<div class="index-nav-line" id="navbar">
-    <a href="{{route('home')}}" class="main-header__logo"><img src="{{asset('img/footer-logo.png')}}" alt="iDoctor.kz" title="iDoctor.kz"></a>
         <div class="container" id="nav-top-container">
->>>>>>> aisha-dev
             <div class="index-intro__container">
                 <nav class="index-nav">
                     <a href="{{route('doctors.list')}}" class="index-nav__item index-nav-item">
