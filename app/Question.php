@@ -3,6 +3,8 @@
 namespace App;
 
 use App\Helpers\votes;
+use App\Http\Requests\Filter;
+use App\Traits\Eloquent\FilterScopes;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -18,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Question extends Model
 {
+    use FilterScopes;
     use votes;
 
     const STATUS = [
@@ -87,5 +90,9 @@ class Question extends Model
             })  ;
 
         return $questions;
+    }
+    public function scopeFilter($query, Filter $filters)
+    {
+        return $filters->apply($query);
     }
 }

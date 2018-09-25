@@ -54,6 +54,7 @@
 <script src="{{URL::asset("js/all.js")}}"></script>
 <script src="{{URL::asset("js/scripts.js")}}"></script>
 <script src="{{URL::asset("js/app.js")}}"></script>
+
 <script type="text/javascript">
     $('.search_event').on('click', function () {
         ga('send', 'event', {

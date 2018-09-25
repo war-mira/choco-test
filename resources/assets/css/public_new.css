@@ -726,3 +726,7 @@
         top: 80px;
     }
 }
+
+.group__filters  .btn_theme_radio > * {
+    pointer-events: none;
+}

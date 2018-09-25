@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\FormatHelper;
+use App\Http\Requests\Question\QuestionFilters;
 use App\Question;
 use App\QuestionUser;
 use Carbon\Carbon;
@@ -42,12 +43,32 @@ class QuestionController extends Controller
         return $question;
     }
 
-    public function listQuestions()
+    public function listQuestions(QuestionFilters $filters)
     {
+        $sort = request()->get('sort');
+        $order = request()->get('order');
+
         $questions = Question::whereHas('answers')
-            ->orderBy('created_at', 'desc')
+            ->with('answers')
+            ->filter($filters)
             ->get();
         $answered_questions = Question::wherehas('answers')->count();
+        if($sort == 'rate'){
+            if($order == 'asc'){
+                $questions =  $questions->sortBy(function($question){
+                    $answer = $question->answers->sortByDesc('rate')->first();
+                    return $answer->likes;
+                });
+            } else{
+                $questions =  $questions->sortByDesc(function($question){
+                    $answer = $question->answers->sortByDesc('rate')->first();
+                    return $answer->likes;
+                });
+            }
+
+
+        }
+
         return view('questions.list')->with(
             compact(
                 'answered_questions',

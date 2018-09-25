@@ -56,7 +56,7 @@
                 </div>
                 <div class="form-group">
                     <label>Специализация *</label>
-                    @component('components.form.nested-select', ['options'=>$skillsList])
+                    @component('components.form.nested-select', ['options'=>$skillsList??[]])
                             @slot('field','id')
                             @slot('value',$seed['id'] ?? null)
                             @slot('placeholder','Новый')
