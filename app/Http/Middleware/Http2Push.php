@@ -12,7 +12,6 @@ class Http2Push
     {
         $this->assets = [
             "<".mix('/css/app.css').">; rel=preload; as=style",
-            "<".mix('/build/js/app.js').">; rel=preload; as=script",
         ];
     }
     public function handle($request, Closure $next)

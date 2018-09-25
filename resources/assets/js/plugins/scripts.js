@@ -689,7 +689,7 @@ $(document).ready(function() {
         let readmore = document.querySelector('.entity-line__about-text');
         if(readmore){
             readmore.style.height = readmore.scrollHeight+'px';
-        } 
+        }
 
     },1000);
     $('.entity-line__about-text-more').on('click', function () {
