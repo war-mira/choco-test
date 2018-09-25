@@ -227,7 +227,7 @@
                                             })
                                             ->orderBy('lastname')->get()->slice(0,$visible) as $doctor)
                                                 <div class="doc-list__item entity-line doc-line">
-                                                    @include('model.doctor.prof_new')
+                                                    @include('model.doctor.prof_new',['doctor'=>$doctor])
                                                 </div>
                                             @endforeach
 
