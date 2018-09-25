@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 const {mix} = require('laravel-mix');
 
+=======
+const { mix } = require('laravel-mix');
+mix.disableNotifications();
+>>>>>>> aisha-dev
 /*
- |--------------------------------------------------------------------------
+ |------------------------------------------------ --------------------------
  | Mix Asset Management
  |--------------------------------------------------------------------------
  |
@@ -10,6 +15,7 @@ const {mix} = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
+<<<<<<< HEAD
 mix.disableNotifications();
 /**
  * LVG package resources
@@ -22,6 +28,12 @@ mix
     .copy('resources/assets/packages/lvg/img', 'public/projects/lvg/img')
 ;
 
+=======
+mix
+    .babel([
+    'resources/assets/js/libs/Filters.js'
+], 'public/js/libs/Filters.js');
+>>>>>>> aisha-dev
 
 mix.js('resources/assets/js/app.js', 'public/js')
     .scripts([
@@ -33,6 +45,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'resources/assets/js/plugins/pickmeup.min.js',
         'resources/assets/js/plugins/jquery.magnific-popup.min.js',
         // 'resources/assets/js/plugins/scripts.js'
+<<<<<<< HEAD
     ], 'public/js/all.js')
     .babel([
         'resources/assets/js/plugins/scripts.js'
@@ -43,5 +56,12 @@ mix.js('resources/assets/js/app.js', 'public/js')
         postCss: [
             require('postcss-css-variables')()
         ]
+=======
+    ],'public/js/all.js')
+
+   .sass('resources/assets/sass/app.scss', 'public/css')
+   .options({
+        processCssUrls: false
+>>>>>>> aisha-dev
     })
     .version();

@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "/js/app.js": "/js/app.js?id=1106d1ea7dd3b202740f",
     "/projects/lvg/css/app.css": "/projects/lvg/css/app.css?id=5e486a307275e60baadd",
     "/css/app.css": "/css/app.css?id=8217fd292b3ae6f1c102",
@@ -6,3 +7,10 @@
     "/js/all.js": "/js/all.js?id=891f244dc6245d5abab7",
     "/js/scripts.js": "/js/scripts.js?id=acc03309942d91834744"
 }
+=======
+    "/js/app.js": "/js/app.js?id=a387b883ff67a7e7e041",
+    "/css/app.css": "/css/app.css?id=91f3b50c825624608682",
+    "/js/libs/Filters.js": "/js/libs/Filters.js?id=f95095e1b5ff0e8ecc56",
+    "/js/all.js": "/js/all.js?id=d0cb27aa8fcbab34e209"
+}
+>>>>>>> aisha-dev

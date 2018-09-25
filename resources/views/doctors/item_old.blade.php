@@ -219,7 +219,7 @@
                             <div id="client_comment" class="collapse">
                                 <textarea class="form-control" style="height: 100px" id="client_comment_text"
                                           name="client_comment"
-                                          placeholder="Напишите свои пожелания сюда..(можно оставить пустым)"></textarea>
+                                          placeholder="Напишите свои пожелания сюда"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
