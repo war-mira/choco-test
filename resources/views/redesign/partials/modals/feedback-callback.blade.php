@@ -14,7 +14,9 @@
                     <div class="form-group col-md-6">
                         <label>Год рождения*</label>
                         <select name="select" id="user-birthday" required="">
-                            <?php for($i = 1900 ; $i < date('Y'); $i++){ echo "<option value=".$i.">$i</option>"; }?>
+                            @foreach(range((int)date('Y'),1900) as $i)
+                            <option value="{{$i}}">{{$i}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
