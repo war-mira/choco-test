@@ -687,7 +687,10 @@ $(document).ready(function() {
     });
     setTimeout(()=>{
         let readmore = document.querySelector('.entity-line__about-text');
-        readmore.style.height = readmore.scrollHeight+'px';
+        if(readmore){
+            readmore.style.height = readmore.scrollHeight+'px';
+        } 
+
     },1000);
     $('.entity-line__about-text-more').on('click', function () {
         let text = $(this).parents('.entity-line__about-block').find('.entity-line__about-text');
