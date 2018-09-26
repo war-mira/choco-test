@@ -11,7 +11,7 @@
     border-bottom: 1px solid #00A8FF !important;
 }
 
-.index-intro__heading, .search-bar{
+.search-bar{
     z-index: 1;
     position: relative;
 }
@@ -529,6 +529,11 @@
     background: none;
     border-color: red;
 }
+.has-warning{
+    color: #ff0000;
+    background: none;
+    border-color: #ff0000;
+}
 
 .question__form .form-row{
     display: flex;
@@ -619,7 +624,6 @@
     max-width: 110px;
     float: left;
     margin-right: 20px;
-    margin-bottom: 15px;
 }
 .section-question__content .question-doctor-name, .questions-block .question-doctor-name{
     margin-top: 10px;

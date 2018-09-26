@@ -1,4 +1,4 @@
-{{--
+
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function (d, w, c) {
@@ -33,4 +33,4 @@
     })(document, window, "yandex_metrika_callbacks");
 </script>
 
-<!-- /Yandex.Metrika counter -->--}}
+<!-- /Yandex.Metrika counter -->

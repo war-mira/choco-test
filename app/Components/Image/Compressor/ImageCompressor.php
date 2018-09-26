@@ -16,7 +16,10 @@ use Illuminate\Support\Str;
 class ImageCompressor
 {
     public $optimized_dir = 'optimized';
-
+    protected $supported_extensions = [
+        'jpg',
+        'jpeg'
+    ];
     /**
      * @param $filename
      * $filename should be with absolute path
@@ -34,7 +37,8 @@ class ImageCompressor
         $dirname = $path['dirname'];
         $name = $path['filename'];
 
-        if(Str::lower($extension) == 'jpg'){
+
+        if(in_array(Str::lower($extension), $this->supported_extensions)){
             if($move){
                 $dest_dir = $dirname.'/'.$this->optimized_dir;
                 if (!is_dir($dest_dir)) {
