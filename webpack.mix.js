@@ -40,7 +40,6 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'resources/assets/js/plugins/selectize.min.js',
         'resources/assets/js/plugins/pickmeup.min.js',
         'resources/assets/js/plugins/jquery.magnific-popup.min.js',
-        // 'resources/assets/js/plugins/scripts.js'
     ], 'public/js/all.js')
     .babel([
         'resources/assets/js/plugins/scripts.js'
