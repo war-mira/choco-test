@@ -1,7 +1,9 @@
 <?php
 
+use App\Helpers\SeoMetadataHelper;
 use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
 use App\Post;
+use morphos\Russian\GeographicalNamesInflection;
 
 Breadcrumbs::register('home', function ($breadcrumbs) {
     $breadcrumbs->push('Главная', route('home'));
@@ -43,4 +45,36 @@ Breadcrumbs::register('posts.post', function ($breadcrumbs, $alias) {
         ->first();
     $breadcrumbs->parent('posts');
     $breadcrumbs->push($post->title, route('post', $post->alias));
+});
+Breadcrumbs::register('search.index', function ($breadcrumbs, $options) {
+
+    $city = $options['city'];
+    $title = $options['title'];
+
+    $city_title =  'Врачи в ' . GeographicalNamesInflection::getCase($city->name, 'предложный');
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push($city_title,  route('doctors.list',[
+        'city' => $city->alias
+    ],false));
+    if(!is_null($title)){
+        $breadcrumbs->push($title);
+    }
+});
+Breadcrumbs::register('doctor.profile', function ($breadcrumbs, $doctor) {
+
+    $city_title =  'Врачи в ' . GeographicalNamesInflection::getCase($doctor->city->name, 'предложный');
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push($city_title,  route('doctors.list',[
+        'city' => $doctor->city->alias
+    ],false));
+
+
+    if(!is_null($doctor->main_skill)){
+        $meta = SeoMetadataHelper::getMeta($doctor->main_skill, $doctor->city);
+        $breadcrumbs->push($meta['h1'],  route('doctors.list',[
+            'input' => $doctor->main_skill->alias
+        ],false));
+    }
+
+    $breadcrumbs->push($doctor->name);
 });

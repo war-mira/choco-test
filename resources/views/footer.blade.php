@@ -1,7 +1,7 @@
 <footer class="main-footer">
     <div class="container">
         <div class="main-footer__line">
-            <div class="main-footer__column"><a href="#" class="footer-logo"><img src="{{asset("img/footer-logo.png")}}" alt=""></a></div>
+            <div class="main-footer__column"><a href="#" class="footer-logo"><img src="{{asset("/img/footer-logo.png")}}" alt=""></a></div>
             <div class="main-footer__column main-footer__footer-nav footer-nav">
                 <div class="footer-nav__column footer-nav-column accordion accordion_mobile">
                     <div class="footer-nav-column__heading accordion__title"><span>Сервис</span><i class="fa fa-chevron-down" aria-hidden="true"></i></div>

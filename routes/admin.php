@@ -169,6 +169,8 @@ Route::group(['as' => 'report.'], function () {
     Route::get('reports/month/report', 'ReportController@reportForMonth')->name('reportForMonth');
     Route::get('reports/month/operator', 'ReportController@operatorForMonth')->name('operatorForMonth');
     Route::get('reports/month/medcenter', 'ReportController@medcenterForMonth')->name('medcenterForMonth');
+    Route::get('reports/doctors-clicks', 'ReportController@doctorsClicks')->name('doctorsClicks');
+    Route::get('reports/doctors-clicks-report', 'ReportController@makeDoctorsClickReports')->name('makeDoctorsClickReports');
 
     Route::get('reports/buyers', 'Admin\Report\BuyersReportController@page')->name('buyers.page');
     Route::post('reports/buyers', 'Admin\Report\BuyersReportController@report')->name('buyers.report');

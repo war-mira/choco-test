@@ -1,6 +1,6 @@
 <div class="result-control-bar">
     <div class="container">
-        <div class="result-control-bar__line" id="filtersGroup">
+        <div class="result-control-bar__line">
             <div class="result-control-bar__query">
                 <div class="result-control-bar__query-name">@if(!empty($meta['h1_title'])) {{$meta['h1_title']}} @endif</div>
                 <div class="result-control-bar__query-count">найдено {{$Medcenters->total()}} учреждений</div>
@@ -17,10 +17,10 @@
                     <i class="fa @if(isset($_GET['sort']) && $_GET['sort'] == 'rate' && $_GET['order'] == 'asc') fa-chevron-up @else fa-chevron-down @endif" aria-hidden="true"></i>
                     <input type="radio" style="display:none;" checked="true" name="sort" value="rate">
                 </a>
-                <a href="#" class="sort-line__item sort-line-btn btn btn_theme_radio @if(isset($_GET['sort']) && $_GET['sort'] == 'comments_count') btn_theme_radio_active @endif">
-                    <span class="sort-line-btn__text">Отзывам</span>
-                    <i class="fa @if(isset($_GET['sort']) && $_GET['sort'] == 'comments_count' && $_GET['order'] == 'asc') fa-chevron-up @else fa-chevron-down @endif" aria-hidden="true"></i>
-                    <input type="radio" style="display:none;" name="sort" value="comments_count">
+                <a href="#" class="sort-line__item sort-line-btn btn btn_theme_radio @if(isset($_GET['sort']) && $_GET['sort'] == 'price') btn_theme_radio_active @endif">
+                    <span class="sort-line-btn__text">Цене</span>
+                    <i class="fa @if(isset($_GET['sort']) && $_GET['sort'] == 'price' && $_GET['order'] == 'asc') fa-chevron-up @else fa-chevron-down @endif" aria-hidden="true"></i>
+                    <input type="radio" style="display:none;" name="sort" value="price">
                 </a>
                 <a href="#" class="sort-line__item sort-line-btn btn btn_theme_radio @if(isset($_GET['sort']) && $_GET['sort'] == 'orders_count') btn_theme_radio_active @endif">
                     <span class="sort-line-btn__text">Посещаемости</span>

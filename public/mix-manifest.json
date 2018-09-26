@@ -1,6 +1,11 @@
-{
-    "/js/app.js": "/js/app.js?id=a387b883ff67a7e7e041",
-    "/css/app.css": "/css/app.css?id=f6601cfadabccf6ca142",
-    "/js/libs/Filters.js": "/js/libs/Filters.js?id=f95095e1b5ff0e8ecc56",
-    "/js/all.js": "/js/all.js?id=d0cb27aa8fcbab34e209"
+
+    "/js/app.js": "/js/app.js?id=560c149a4966ff0612ea",
+    "/projects/lvg/css/app.css": "/projects/lvg/css/app.css?id=5e486a307275e60baadd",
+    "/css/app.css": "/css/app.css?id=211088e2f61f41c74fca",
+    "/projects/lvg/js/app.js": "/projects/lvg/js/app.js?id=55291ff6be9ad23c1b4d",
+    "/js/libs/Filters.js": "/js/libs/Filters.js?id=40c91e4205d684d3cb6a",
+    "/js/all.js": "/js/all.js?id=d0cb27aa8fcbab34e209",
+    "/js/scripts.js": "/js/scripts.js?id=a6eb8834bdc7b762bd52",
+    "/build/js/app.js": "/build/js/app.js?id=aa0982e48194d9137fd7"
 }
+

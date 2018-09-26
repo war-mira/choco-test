@@ -22,5 +22,14 @@ class HtmlHelper
         return ' id="' . $id . '" ';
     }
 
+    public static function phoneCode($phone)
+    {
+        $countryCode = substr($phone, 0, 1);
+        $code = substr($phone, 1, 3);
+        $code = '+'.$countryCode.' ('.$code.')';
+
+        return $code;
+    }
+
 
 }

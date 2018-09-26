@@ -17,11 +17,11 @@
                     </div>
                     <div class="leave-review__input-line">
                         <div class="leave-review__input-item" id="phone-group">
-                            <input v-model="user_email" placeholder="*Email" class="form-control" required name="email"
-                                   type="email">
+                            <input v-model="user_phone" placeholder="*Телефон" class="form-control" required name="phone"
+                                   type="text" data-mask="+7 (999) 999-99-99">
                         </div>
                         <div class="leave-review__submit">
-                            <button type="submit" class="btn btn_theme_usual">Оставить email</button>
+                            <button type="submit" class="btn btn_theme_usual">Оставить телефон</button>
                         </div>
                     </div>
                 </form>
@@ -35,13 +35,20 @@
         data: function () {
             return {
                 message: '',
-                errors: []
+                errors: [],
+                user_phone: ''
+            }
+        },
+        watch: {
+            user_phone: function (newval, oldval) {
+                console.log(newval);
+                this.user_phone =val;
             }
         },
         methods: {
             send: function () {
                 this.$http[this.method](
-                    this.href, {params: {data: this.user_email}}
+                    this.href, {params: {data: this.user_phone}}
                 )
                     .then(
                         (response) => {

@@ -3,7 +3,7 @@
         <p class="btn btn_theme_usual">
             <i class="fa fa-phone"></i>
             <slot name="phone-number">
-                <span class="phone-number__short">+7 (777)</span>
+                <span class="phone-number__short" v-html="code"></span>
                 <a class="phone-number__show" v-bind:class="{ active: isActive }" @click.prevent="send" v-html="message">
                 </a>
             </slot>
@@ -17,11 +17,12 @@
             return {
                 isActive: false,
                 message: 'Показать номер',
+                code: this.phone
             }
         },
         methods: {
             send: function () {
-                this.$http.get(`/api/v2/${this.obj}/${this.id}/clicks-count`)
+                this.$http.get(`/api/v2/${this.model}/${this.id}/clicks-count`)
                     .then(
                         (response) => {
                             console.log(response.data);
@@ -33,7 +34,7 @@
                     );
             }
         },
-        props: ['obj', 'id'],
+        props: ['model', 'id', 'phone'],
 
 
     }

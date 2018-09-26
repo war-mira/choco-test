@@ -1,4 +1,9 @@
 <div class="result-control-bar">
+    {{ Breadcrumbs::render('search.index', [
+    'city' => $city,
+    'title' => empty($meta['h1'])?null:$meta['h1']
+    ]) }}
+
     <div class="container">
         <div class="result-control-bar__line" id="filtersGroup">
             <div class="result-control-bar__query">
@@ -40,3 +45,18 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $('form.search-bar__line').each(function () {
+        var $form = $(this);
+        $form.on('change', 'select[data-select="action"]',  function () {
+            var type = $form.find('option:selected').val();
+            var action = '';
+            if (type == 'doctor'){
+                action = "{!!route('doctors.list')!!}";
+            }else {
+                action = "{!! route('medcenters.list') !!}";
+            }
+            $form.attr('action', action);
+        });
+    });
+</script>

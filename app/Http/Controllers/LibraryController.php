@@ -3,17 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\City;
+use App\Helpers\SeoMetadataHelper;
 use App\Models\Library\Illness;
 use App\Models\Library\IllnessesGroup;
 use App\Models\Library\IllnessesGroupArticle;
+use App\PageSeo;
 
 class LibraryController
 {
     public function index()
     {
         $illnessesGroups = IllnessesGroup::where('active', '1')->get();
-
-        return view('library.index', compact('illnessesGroups'));
+        $pageSeo = PageSeo::query()
+            ->where('class','Library')
+            ->where('action', 'index')
+            ->first();
+        $meta = [];
+        if(!is_null($pageSeo)){
+            $meta = SeoMetadataHelper::getMeta($pageSeo);
+        }
+        return view('library.index', compact('illnessesGroups','meta'));
     }
 
     public function groupArticles(IllnessesGroup $illnessesGroup)
@@ -25,11 +34,13 @@ class LibraryController
 
     public function article( IllnessesGroup $illnessesGroup,  $article)
     {
-
         $article = IllnessesGroupArticle::where('alias',$article)->firstOrFail();
         $links = $this->getNavigationFromContent($article->description);
+        $titleInDesc = $this->checkIfFirstTitleExist($article->description);
 
-        return view('library.articles.item', compact('article', 'links', 'illnessesGroup'));
+        $meta = SeoMetadataHelper::getMeta($article);
+
+        return view('library.articles.item', compact('meta','article', 'links', 'illnessesGroup', 'titleInDesc'));
     }
 
     public function illnesses( $letter = null)
@@ -39,15 +50,26 @@ class LibraryController
             $letter = $letters[0];
 
         $illnesses = Illness::getByLetter($letter)->orderBy('name', 'asc')->get();
+        $pageSeo = PageSeo::query()
+            ->where('class','Illnesses')
+            ->where('action', 'index')
+            ->first();
+        $meta = [];
+        if(!is_null($pageSeo)){
+            $meta = SeoMetadataHelper::getMeta($pageSeo);
+        }
 
-        return view('library.illnesses.list', compact('letters', 'letter', 'illnesses'));
+        return view('library.illnesses.list', compact('letters', 'letter', 'illnesses','meta'));
     }
 
     public function illness( Illness $illness)
     {
         $links = $this->getNavigationFromContent($illness->description);
+        $titleInDesc = $this->checkIfFirstTitleExist($illness->description);
 
-        return view('library.illnesses.item', compact('illness', 'links'));
+        $meta = SeoMetadataHelper::getMeta($illness);
+
+        return view('library.illnesses.item', compact('illness', 'links','meta', 'titleInDesc'));
     }
 
     private function getAlphabet() {
@@ -63,5 +85,9 @@ class LibraryController
         preg_match_all($regex, $content, $m);
 
         return $m[1];
+    }
+
+    private function checkIfFirstTitleExist($content) {
+        return preg_match('#<\s*?h1\b[^>]*>(.*?)</h1\b[^>]*>#s', $content);
     }
 }

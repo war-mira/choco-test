@@ -1,10 +1,12 @@
 <section class="entity-line-container">
+    {{ Breadcrumbs::render('doctor.profile', $doctor )}}
+
     <div class="container">
         <div class="search-result__item entity-line doc-line" data-id="{{$doctor->id}}">
             <div class="entity-line__img">
                 <div class="entity-thumb-img">
                     <div class="entity-thumb-img__img-wr">
-                        @component('components.prof-img')
+                        @component('components.prof-img',['doctor'=>$doctor])
                             @slot('src')
                                 {{$doctor['avatar']}}
                             @endslot
@@ -89,12 +91,13 @@
                 </div>
                 <div class="entity-line__about-block">
                     @if(!empty(trim($doctor->about_text)) && trim($doctor->about_text) != '0')
-                        <div class="entity-line__about-text">
+                        <div class="entity-line__about-text less">
                             <div>{!! str_replace('\r\n', '<br />', $doctor->about_text) !!}</div>
                         </div>
                         @if(strlen($doctor->about_text) > 465)
                             <div class="entity-line__about-text-more">
-                                <a href="#">Подробнее</a>
+                                <span class="more">Подробнее</span>
+                                <span class="less">Скрыть</span>
                             </div>
                         @endif
                     @endif
@@ -102,7 +105,7 @@
 
                 <div class="entity-line__additional appointment-book-small">
                     {{--@if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])--}}
-                        <div class="appointment-book-big__heading">Записаться на прием</div>
+                    <div class="appointment-book-big__heading">Записаться на прием</div>
                     {{--@endif--}}
                     <div class="appointment-book-small-header-block">
                         <div class="appointment-book-small__line">
@@ -111,17 +114,23 @@
                             </div>
                             {{--@if($doctor->whoIsIt() == \App\Doctor::TYPE[3] || $doctor->whoIsIt() == \App\Doctor::TYPE[5])--}}
                                 {{--<div class="appointment-book-small__bot-line">--}}
-                                    {{--<find-doctor-btn obj="doctor" id="{{ $doctor->id }}">--}}
+                                    {{--<find-doctor-btn model="{{ \App\Doctor::FIND_DOCTOR_COUNT }}"--}}
+                                                     {{--id="{{ $doctor->id }}">--}}
                                         {{--<template slot="link-to-modal"></template>--}}
                                     {{--</find-doctor-btn>--}}
                                     {{--<a href="{{ route('register') }}" class="btn btn_theme_usual btn_it-is-me">Это я</a>--}}
                                 {{--</div>--}}
                             {{--@else--}}
                                 {{--@if( $doctor->whoIsIt() != \App\Doctor::TYPE[4] && $doctor->whoIsIt() != \App\Doctor::TYPE[5])--}}
-                                    {{--<phone-show-btn obj="doctor" id="{{ $doctor->id }}">--}}
-                                        {{--<template slot="phone-number"></template>--}}
-                                    {{--</phone-show-btn>--}}
-                                {{--@endif--}}
+                               @if($doctor->medcenters)
+                                   @foreach($doctor->medcenters as $medcenter)
+                                       @if(in_array($medcenter->id, \App\Doctor::SHOW_PHONES))
+                                            <phone-show-btn model="{{ \App\Doctor::SHOW_PHONE_COUNT }}" id="{{ $doctor->id }}" phone="{{ \App\Helpers\HtmlHelper::phoneCode($doctor->showing_phone) }}">
+                                                <template slot="phone-number"></template>
+                                            </phone-show-btn>
+                                        @endif
+                                    @endforeach
+                                @endif
                             {{--@endif--}}
                         </div>
                     </div>
@@ -203,21 +212,22 @@
 <section class="entity-about">
     <div class="container">
         <div class="entity-about__tab-line tabs">
-            <a href="#" data-tab="tab-1" class="entity-about__tab-item entity-about__tab-item_active">
+            <a href="#" data-tab="tab-1" class="entity-about__tab-item">
                 <h2 class="entity-about__tab-name">О враче</h2>
             </a>
 
-            <a href="#" data-tab="tab-2" class="entity-about__tab-item">
-                <h2 class="entity-about__tab-name">Отзывы<span class="entity-about__tab-count">{{$doctor->publicComments()->count()}}</span>
+            <a href="#" data-tab="tab-2" class="entity-about__tab-item entity-about__tab-item_active">
+                <h2 class="entity-about__tab-name">Отзывы<span
+                            class="entity-about__tab-count">{{$doctor->publicComments()->count()}}</span>
                 </h2>
             </a>
             {{--<a href="#" data-tab="tab-3" class="entity-about__tab-item">--}}
-                {{--<h2 class="entity-about__tab-name">Акции и скидки</h2>--}}
+            {{--<h2 class="entity-about__tab-name">Акции и скидки</h2>--}}
             {{--</a>--}}
         </div>
 
         <div class="entity-about__content entity-content">
-            <div id="tab-1" class="entity-about-article current">
+            <div id="tab-1" class="entity-about-article">
                 <div class="entity-content__main">
                     @foreach(App\Doctor::CONTENTS as $field=>$title)
                         @if(!empty(trim($doctor[$field])) && $doctor[$field] != '0' && strlen($doctor[$field])>10)
@@ -227,13 +237,11 @@
                     @endforeach
                 </div>
                 <div class="entity-content__aside">
-                    <div class="entity-content__banner">
-                        <img src="{{asset('img/banner.jpg')}}" alt="">
-                    </div>
+                    @component('elements.side-banner',['position' => App\Banner::POSITION_EXT_C['id']])@endcomponent
                 </div>
             </div>
 
-            <div id="tab-2" class="entity-about-article">
+            <div id="tab-2" class="entity-about-article current">
                 <div class="entity-content__main">
 
                     <div class="entity-reviews">
@@ -255,8 +263,8 @@
                                         </span></span></a>
                             </div>
                             {{--<div class="entity-reviews__about">--}}
-                                {{--<div class="entity-reviews__about-text">У нас только реальные отзывы</div>--}}
-                                {{--<a href="#" class="entity-reviews__about-link">Как формируется рейтинг?</a>--}}
+                            {{--<div class="entity-reviews__about-text">У нас только реальные отзывы</div>--}}
+                            {{--<a href="#" class="entity-reviews__about-link">Как формируется рейтинг?</a>--}}
                             {{--</div>--}}
                         </div>
                         <div id="taz1" class="entity-about-articl current">
@@ -306,9 +314,7 @@
 
                 </div>
                 <div class="entity-content__aside">
-                    <div class="entity-content__banner">
-                        <img src="{{asset('img/banner.jpg')}}" alt="">
-                    </div>
+                    @component('elements.side-banner',['position' => App\Banner::POSITION_EXT_C['id']])@endcomponent
                 </div>
             </div>
         </div>

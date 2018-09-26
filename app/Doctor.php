@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Components\Image\Resizer;
 use App\Helpers\FormatHelper;
 use App\Helpers\MathHelper;
 use App\Helpers\SeoMetadataHelper;
@@ -14,7 +15,10 @@ use App\Model\ServiceItem;
 use App\Models\Library\Illness;
 use App\Traits\Eloquent\FilterScopes;
 use Carbon\Carbon;
+use Idoctor\Lvg\Models\LvgDoctorCandidate;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Str;
 
 /**
  * App\Doctor
@@ -119,6 +123,7 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
 {
     use FilterScopes;
     use votes;
+    use Resizer;
 
     const STATUS = [
         -1 => 'Заблокирован',
@@ -138,6 +143,14 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
       4 => 'partner_without_phone',
       5 => 'not_partner_registered_without_phone'
     ];
+
+    const SHOW_PHONE_COUNT = 'show-phone';
+    const FIND_DOCTOR_COUNT = 'find-doctor';
+    const VIEW_PROFILE_COUNT = 'view-profile';
+    const SHOW_PHONES = [
+        '331'
+    ];
+
     public $timestamps = true;
     protected $table = 'doctors';
     protected $fillable = [
@@ -286,6 +299,26 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         return $this->attributes['avatar'] ?? asset('images/no-userpic.gif');
     }
 
+    public function getAvatar($width,$height)
+    {
+        $src = $this->avatar;
+        if(!file_exists($src)){
+            return '/images/no-userpic.gif';
+        }
+        $src = $this->getNotThumb($src);
+        return $this->getImageUrl($src,$width,$height,85);
+    }
+
+    public function getNotThumb($src)
+    {
+        $path = pathinfo($src);
+        $filename = $path['filename'];
+        if(Str::endsWith($filename,'_thumb')){
+            $filename = Str::substr($filename,0,-6);
+            return $path['dirname'].'/'.$filename.'.'.$path['extension'];
+        };
+        return $src;
+    }
     public function city()
     {
         return $this->belongsTo(City::class, 'city_id', 'id');
@@ -561,5 +594,28 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         //
 //        dd($opts);
         return $opts;
+    }
+
+    public function clicksCount($dateFrom, $dateTo)
+    {
+        return Redis::ZCOUNT('doctor:'.$this->id.':clicks', $dateFrom->getTimestamp(), $dateTo->getTimestamp());
+    }
+
+    public function clicksCard()
+    {
+        return Redis::ZCARD('doctor:' . $this->id . ':clicks');
+    }
+    public function lvg_votes()
+    {
+        return $this->belongsToMany(LvgDoctorCandidate::class,'lvg_doctors_candidates','doctor_id','candidate_id');
+    }
+
+    public function hasLvgVotes()
+    {
+        if($this->lvg_votes->count() > 0){
+            return true;
+        }
+
+        return false;
     }
 }

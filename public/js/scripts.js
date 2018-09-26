@@ -1,4 +1,5 @@
 
+
 function checkblock(block)
 {
     let $back = false;
@@ -914,3 +915,4 @@ function getFormData($form) {
 
     return indexed_array;
 }
+

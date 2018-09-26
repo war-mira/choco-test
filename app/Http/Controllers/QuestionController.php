@@ -47,6 +47,11 @@ class QuestionController extends Controller
     {
         $sort = request()->get('sort');
         $order = request()->get('order');
+        if(empty(request()->all())){
+            $filters->add([
+                'default'=>''
+            ]);
+        }
 
         $questions = Question::whereHas('answers')
             ->with('answers')
