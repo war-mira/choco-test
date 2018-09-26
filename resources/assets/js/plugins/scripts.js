@@ -811,7 +811,6 @@ $(document).ready(function() {
     $("#question__form-send").click(function () {
         if (form[0].checkValidity()) {
             var data = form.serialize();
-            console.log(data);
             $.post("/question/add", data)
                 .done(function (json) {
                     $('#user-birthday').removeClass('has-warning');
@@ -847,11 +846,19 @@ $(document).ready(function() {
             }else{
                 $('#user-birthday').removeClass('has-warning');
             }
-            if(!$('#user-gender').val()){
-                $('#user-gender').addClass('has-warning');
-            }else{
+            
+            if ($('input[name=gender]:checked').length > 0) {
                 $('#user-gender').removeClass('has-warning');
+            }else{
+                $('#user-gender').addClass('has-warning');
             }
+            
+            if ($('input[name=question_notify]:checked').length > 0) {
+                $('#user-answer').removeClass('has-warning');
+            }else{
+                $('#user-answer').addClass('has-warning');
+            }
+            
             if(!$('#question-text').val()){
                 $('#question-text').addClass('has-warning');
             }else{

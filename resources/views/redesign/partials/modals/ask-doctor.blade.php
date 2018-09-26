@@ -13,7 +13,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label>Год рождения*</label>
-                        <select name="select" id="user-birthday" required="">
+                        <select name="user[birthday]" id="user-birthday" required="">
                             @foreach(range((int)date('Y'),1900) as $i)
                             <option value="{{$i}}">{{$i}}</option>
                             @endforeach
@@ -49,7 +49,7 @@
                     <div class="form-group">
                         <label>Специализация</label>
                         <select name="skill">
-                            <option value="0">Выберите специализацию</option>
+                            <option value="40">Выберите специализацию</option>
                             @foreach($skillsList as $skill)
                                 <option value="{{$skill['id']}}">{{$skill['name']}}</option>
                             @endforeach
@@ -58,10 +58,7 @@
                 </div>
                 <div class="form-group">
                     <label>Ваш вопрос *</label>
-                    <textarea rows="5" id="question-text" name="question[text]" required
-                              placeholder="Опишите свою проблему как можно подробнее. Это позволит доктору лучше Вас проконсультировать.">
-                    </textarea>
-                    
+                    <textarea rows="5" id="question-text" name="question[text]" required placeholder="Опишите свою проблему как можно подробнее. Это позволит доктору лучше Вас проконсультировать."></textarea>
                 </div>
                 <div class="form-group" style="display:none;">
                     <label>Прикрепить изображение</label>
