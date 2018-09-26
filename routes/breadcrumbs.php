@@ -61,7 +61,7 @@ Breadcrumbs::register('search.index', function ($breadcrumbs, $options) {
 });
 Breadcrumbs::register('doctor.profile', function ($breadcrumbs, $doctor) {
 
-    $city_title =  'Врачи в ' . GeographicalNamesInflection::getCase($doctor->city->name, 'предложный');
+    $city_title =  'Врачи в ' . (SeoMetadataHelper::CityPP[$city->id]??GeographicalNamesInflection::getCase($city->name, 'предложный'));
     $breadcrumbs->parent('home');
     $breadcrumbs->push($city_title,  route('doctors.list',[
         'city' => $doctor->city->alias
