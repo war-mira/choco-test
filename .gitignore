@@ -8,6 +8,8 @@
 /public/uploads
 /public/import
 /public/images
+/public/build
+/public/mix-manifest.json
 /public/photos
 /public/idoctor.tar.gz
 /storage/*.key
