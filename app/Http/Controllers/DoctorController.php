@@ -44,6 +44,7 @@ class DoctorController extends Controller
 //            dd($doc);
 //        }
 
+
         return view('doctors.item')
             ->with('meta', $meta)
             ->with('districts',$districts)

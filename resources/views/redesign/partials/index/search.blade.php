@@ -19,6 +19,7 @@
         @if(\App\Models\District::where('city_id',session('cityid',6))->count()>0)
         <div class="search-bar__item search-bar__item_region">
             <select name="district" placeholder="Выберите район..." class="js-simple-select js-select-region">
+                <option value="0">Выберите район</option>
                 @foreach(\App\Models\District::where('city_id',session('cityid',6))->get() as $district)
                     <option value="{{ $district->id }}">{{ $district->name }}</option>
                 @endforeach

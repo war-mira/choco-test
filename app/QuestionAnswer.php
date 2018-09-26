@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Helpers\votes;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -16,6 +17,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class QuestionAnswer extends Model
 {
+    use votes;
+    
     protected $table = 'question_answers';
     public $timestamps = true;
     protected $primaryKey = 'id';
