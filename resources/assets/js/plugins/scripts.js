@@ -776,6 +776,34 @@ $(document).ready(function() {
         }
     });
 
+    $("#confirm_code").click(function () {
+        if ($("#phone_code").val().length==4) {
+            $.post("{{url('/comment/confirm-code')}}", {
+                code: $('#phone_code').val(),
+                _token:'{{ csrf_token() }}'
+            })
+                .done(function (json) {
+                    if (json.error) {
+                        $('#save_comment_mess_ok').removeClass('access').addClass('error').html('<b>' + json.error + '</b>');
+                        $('#save_comment_mess_ok').slideDown(200);
+                        // $('#code_confirm').hide();
+                    }
+                    else if (json.id) {
+                        $('#code_confirm').slideUp(200);
+                        $('#save_comment_mess_ok').removeClass('error').addClass('access').html('<b>Спасибо! Ваш комментарий отправлен на модерацию</b>');
+                        $('#save_comment_mess_ok').slideDown(200);
+                        $("#feedback__form")[0].reset();
+                    }
+                });
+        }
+        else {
+            $('#user_name').addClass('has-warning');
+            $('#user_last_name').addClass('has-warning');
+            $('#text').addClass('has-warning');
+
+        }
+    });
+
     $('.show-question-form button').on('click', function () {
         $('.question__form').slideToggle(300);
     });
