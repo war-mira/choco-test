@@ -11,6 +11,7 @@ class SeoMetadataHelper
     /* TODO move to DB */
     const CityPP = [
         6 => 'Алматы',
+        31 => 'Павлодаре',
         7 => 'Астане'
     ];
 
