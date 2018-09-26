@@ -466,7 +466,6 @@ img {
   height:80px;}
 
 .index-intro__container {
-  position: relative;
   max-width: 880px;
   margin: auto; }
 
@@ -576,7 +575,7 @@ img {
     -webkit-background-size: cover;
             background-size: cover;
     left: 439px;
-    bottom: -55px;
+    bottom: -65px;
     z-index: -1; }
   .index-intro__search-bar:after {
     content: " ";
@@ -795,7 +794,7 @@ img {
     font-size: 16px;
     font-weight: 600;
   }
-    .question-main-img{
+  .question-main-img{
     border-radius: 90px;
     max-height: 110px;
     max-width: 110px;
@@ -844,7 +843,7 @@ img {
         text-align: center;
         margin: 15px 0;
     }
-        #ask_doctor_mess_ok{
+    #ask_doctor_mess_ok{
         padding-bottom: 20px;
     }
 .question__form .form-group input.has-warning, .question__form .form-group textarea.has-warning,
@@ -4479,7 +4478,6 @@ box-shadow: 0px 1px 4px #e7e7e7; margin-bottom: 30px;}
 
 @media (max-width: 991.98px) {
   .additional_number{
-    
   }
   .main-header{
     height: 80px;
@@ -4817,7 +4815,7 @@ box-shadow: 0px 1px 4px #e7e7e7; margin-bottom: 30px;}
         -ms-flex-wrap: wrap;
             flex-wrap: wrap; }
     .review-recommend__item {
-      width: 50%
+      width: 50%; }
     .review-recommend__btn_yes {
       -webkit-border-radius: 17px 0 0 17px;
               border-radius: 17px 0 0 17px; }
