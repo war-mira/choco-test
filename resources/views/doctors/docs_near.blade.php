@@ -6,16 +6,14 @@
                 <div class="entity-slider__item">
                     <div class="entity-slider__item-img entity-thumb-img">
                         <div class="entity-thumb-img__img-wr">
-                            @component('components.prof-img',['doctor'=>$tt])
+                            @component('components.prof-img',['doctor'=>$tt,
+                                'width'=>140,
+                                'height'=>200
+                                ])
                                 @slot('src')
                                     {{$tt->avatar}}
                                 @endslot
-                                @slot('width')
-                                    250px
-                                @endslot
-                                @slot('height')
-                                    250px
-                                @endslot
+
                                 @slot('alt')
                                    {{$tt->name}}
                                 @endslot

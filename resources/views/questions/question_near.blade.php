@@ -12,12 +12,13 @@
                     @foreach($near_question->answers->take(1) as $near_answer) 
                         <div class="question-slider-item-doctor">
                             <div class="parent_cont question-main-img">
-                                @component('components.prof-img',['doctor'=>$near_answer->doctor])
+                                @component('components.prof-img',[
+                                'doctor'=>$near_answer->doctor,
+                                'width'=>140,
+                                'height'=>140
+                                ])
                                     @slot('src')
                                         {{$near_answer->doctor['avatar']}}
-                                    @endslot
-                                    @slot('width')
-                                        100px
                                     @endslot
                                     @slot('alt')
                                         {{$near_answer->doctor->name}}

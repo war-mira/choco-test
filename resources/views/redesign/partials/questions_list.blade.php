@@ -15,12 +15,12 @@
                         @foreach($question->answers->take(1) as $answer) 
                             <div class="question-item-doctor">                                    
                                 <div class="parent_cont question-main-img">
-                                    @component('components.prof-img',['doctor'=>$answer->doctor])
+                                    @component('components.prof-img',['doctor'=>$answer->doctor,
+                                        'width'=>100,
+                                        'height'=>100
+                                    ])
                                         @slot('src')
                                             {{$answer->doctor['avatar']}}
-                                        @endslot
-                                        @slot('width')
-                                            100px
                                         @endslot
                                         @slot('alt')
                                             {{$answer->doctor->name}}

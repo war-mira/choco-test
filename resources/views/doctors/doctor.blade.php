@@ -6,15 +6,13 @@
             <div class="entity-line__img">
                 <div class="entity-thumb-img">
                     <div class="entity-thumb-img__img-wr">
-                        @component('components.prof-img',['doctor'=>$doctor])
+                        @component('components.prof-img',[
+                                'doctor'=>$doctor,
+                                'width'=>140,
+                                'height'=>200
+                        ])
                             @slot('src')
                                 {{$doctor['avatar']}}
-                            @endslot
-                            @slot('width')
-                                250px
-                            @endslot
-                            @slot('height')
-                                250px
                             @endslot
                             @slot('on_top')
                                 {{$doctor->on_top}}
@@ -113,41 +111,43 @@
                                 {!! $doctor->timetable !!}
                             </div>
                             {{--@if($doctor->whoIsIt() == \App\Doctor::TYPE[3] || $doctor->whoIsIt() == \App\Doctor::TYPE[5])--}}
-                                {{--<div class="appointment-book-small__bot-line">--}}
-                                    {{--<find-doctor-btn model="{{ \App\Doctor::FIND_DOCTOR_COUNT }}"--}}
-                                                     {{--id="{{ $doctor->id }}">--}}
-                                        {{--<template slot="link-to-modal"></template>--}}
-                                    {{--</find-doctor-btn>--}}
-                                    {{--<a href="{{ route('register') }}" class="btn btn_theme_usual btn_it-is-me">Это я</a>--}}
-                                {{--</div>--}}
+                            {{--<div class="appointment-book-small__bot-line">--}}
+                            {{--<find-doctor-btn model="{{ \App\Doctor::FIND_DOCTOR_COUNT }}"--}}
+                            {{--id="{{ $doctor->id }}">--}}
+                            {{--<template slot="link-to-modal"></template>--}}
+                            {{--</find-doctor-btn>--}}
+                            {{--<a href="{{ route('register') }}" class="btn btn_theme_usual btn_it-is-me">Это я</a>--}}
+                            {{--</div>--}}
                             {{--@else--}}
-                                {{--@if( $doctor->whoIsIt() != \App\Doctor::TYPE[4] && $doctor->whoIsIt() != \App\Doctor::TYPE[5])--}}
-                               @if($doctor->medcenters)
-                                   @foreach($doctor->medcenters as $medcenter)
-                                       @if(in_array($medcenter->id, \App\Doctor::SHOW_PHONES))
-                                            <phone-show-btn model="{{ \App\Doctor::SHOW_PHONE_COUNT }}" id="{{ $doctor->id }}" phone="{{ \App\Helpers\HtmlHelper::phoneCode($doctor->showing_phone) }}">
-                                                <template slot="phone-number"></template>
-                                            </phone-show-btn>
-                                        @endif
-                                    @endforeach
-                                @endif
+                            {{--@if( $doctor->whoIsIt() != \App\Doctor::TYPE[4] && $doctor->whoIsIt() != \App\Doctor::TYPE[5])--}}
+                            @if($doctor->medcenters)
+                                @foreach($doctor->medcenters as $medcenter)
+                                    @if(in_array($medcenter->id, \App\Doctor::SHOW_PHONES))
+                                        <phone-show-btn model="{{ \App\Doctor::SHOW_PHONE_COUNT }}"
+                                                        id="{{ $doctor->id }}"
+                                                        phone="{{ \App\Helpers\HtmlHelper::phoneCode($doctor->showing_phone) }}">
+                                            <template slot="phone-number"></template>
+                                        </phone-show-btn>
+                                    @endif
+                                @endforeach
+                            @endif
                             {{--@endif--}}
                         </div>
                     </div>
                     {{--@if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])--}}
-                        <form action="#" class="">
-                            <div class="appointment-book-small__line">
-                                @if(!empty($doctor->price))
-                                    <div class="appointment-book-small__price">
-                                        <div class="appointment-book-small__price-text">Прием от:</div>
-                                        <div class="appointment-book-small__price-val">от {{$doctor->price}} тг</div>
-                                    </div>
-                                @endif
-                                <a href="#order_doctor" data-doc-id="{{$doctor->id}}" data-dname="{{$doctor['name']}}"
-                                   class="appointment-book-small__book-btn btn btn_theme_usual trigger-link popup-with-form">Записаться<span
-                                            class="hidden-xl"> онлайн</span></a>
-                            </div>
-                        </form>
+                    <form action="#" class="">
+                        <div class="appointment-book-small__line">
+                            @if(!empty($doctor->price))
+                                <div class="appointment-book-small__price">
+                                    <div class="appointment-book-small__price-text">Прием от:</div>
+                                    <div class="appointment-book-small__price-val">от {{$doctor->price}} тг</div>
+                                </div>
+                            @endif
+                            <a href="#order_doctor" data-doc-id="{{$doctor->id}}" data-dname="{{$doctor['name']}}"
+                               class="appointment-book-small__book-btn btn btn_theme_usual trigger-link popup-with-form">Записаться<span
+                                        class="hidden-xl"> онлайн</span></a>
+                        </div>
+                    </form>
                     {{--@endif--}}
                 </div>
 
