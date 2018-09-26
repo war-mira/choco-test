@@ -1,4 +1,3 @@
-
 function checkblock(block)
 {
     let $back = false;
@@ -835,33 +834,30 @@ $(document).ready(function() {
     }else{
         desktop_datetime.remove();
     }
-    var form = $("#question__form");
+        var form = $("#ask-doctor-modal-form");
     $("#question__form-send").click(function () {
         if (form[0].checkValidity()) {
             var data = form.serialize();
-            console.log(data);
             $.post("/question/add", data)
                 .done(function (json) {
-                    $('#user-email').removeClass('has-warning');
-                    $('#user-phone').removeClass('has-warning');
                     $('#user-birthday').removeClass('has-warning');
                     $('#user-gender').removeClass('has-warning');
+                    $('#user-answer').removeClass('has-warning');
                     $('#question-text').removeClass('has-warning');
 
                     modalOpen('question__modal');
 
                     if (json.error) {
-                        $('#save_comment_mess_ok').removeClass('access').addClass('error').html('<b>' + json.error + '</b>');
-                        $('#save_comment_mess_ok').show();
+                        $('#ask_doctor_mess_ok').removeClass('access').addClass('error').html('<b>' + json.error + '</b>');
+                        $('#ask_doctor_mess_ok').show();
                     }
                     else if (json.id) {
-                        $('#save_comment_mess_ok').removeClass('error').addClass('access').html('<b>Спасибо! Ваш комментарий отправлен на модерацию</b>');
-                        $('#save_comment_mess_ok').show();
+                        $('#ask_doctor_mess_ok').removeClass('error').addClass('access').html('<b>Спасибо за вопрос! Когда врач ответит, мы Вам обязательно сообщим.</b>');
+                        $('#ask_doctor_mess_ok').show();
                         form[0].reset();
                     }
                 });
-        }
-        else {
+        }else {
             if(!$('#user-email').val()){
                 $('#user-email').addClass('has-warning');
             }else{
@@ -877,16 +873,19 @@ $(document).ready(function() {
             }else{
                 $('#user-birthday').removeClass('has-warning');
             }
-            if(!$('#user-birthday-mobile').val() || !isValidDate($('#user-birthday-mobile').val())){
-                $('#user-birthday-mobile').addClass('has-warning');
-            }else{
-                $('#user-birthday-mobile').removeClass('has-warning');
-            }
-            if(!$('#user-gender').val()){
-                $('#user-gender').addClass('has-warning');
-            }else{
+            
+            if ($('input[name=gender]:checked').length > 0) {
                 $('#user-gender').removeClass('has-warning');
+            }else{
+                $('#user-gender').addClass('has-warning');
             }
+            
+            if ($('input[name=question_notify]:checked').length > 0) {
+                $('#user-answer').removeClass('has-warning');
+            }else{
+                $('#user-answer').addClass('has-warning');
+            }
+            
             if(!$('#question-text').val()){
                 $('#question-text').addClass('has-warning');
             }else{
