@@ -1,5 +1,8 @@
 <div class="entity-line__img">
-    @component('components.prof-img',['width'=>'100%','height'=>'100%','doctor'=>$doctor])
+
+    @component('components.prof-img',['doctor'=>$doctor,
+                                'width'=>140,
+                                'height'=>200])
         @slot('src')
             {{$doctor['avatar']}}
         @endslot

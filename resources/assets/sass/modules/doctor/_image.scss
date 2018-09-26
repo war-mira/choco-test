@@ -1,15 +1,12 @@
 .doctor--image{
   display: block;
-  height: 200px;
+  height: auto;
   max-height: 200px;
-  max-width: 200px;
+  max-width: 140px;
   position: relative;
   overflow: hidden;
-  background-position: 50%;
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 140px;
   object-fit: cover;
+  width:100%;
   .entity-slider__item & {
     margin: 0 auto;
   }

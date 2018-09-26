@@ -299,8 +299,10 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         return $this->attributes['avatar'] ?? asset('images/no-userpic.gif');
     }
 
-    public function getAvatar($width,$height)
+    public function getAvatar(int $width,int $height)
     {
+        $height = $height == 0?'auto':$height;
+        $width = $width == 0?'auto':$width;
         $src = $this->avatar;
         if(!file_exists($src)){
             return '/images/no-userpic.gif';

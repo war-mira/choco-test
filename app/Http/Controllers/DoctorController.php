@@ -41,6 +41,7 @@ class DoctorController extends Controller
         $near_docs = Doctor::query()->where('doctors.status', 1)
             ->where('doctors.city_id', $doctor->city->id)->limit(9)->get();
 
+
         return view('doctors.item')
             ->with('meta', $meta)
             ->with('districts',$districts)

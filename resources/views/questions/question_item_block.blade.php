@@ -6,16 +6,17 @@
     </div>
     <div class="section section-question__content entity-line">
         <div class="answers-list-block">
-            @foreach($question->answers as $answer) 
+            @foreach($question->answers as $answer)
                 <div class="question-block">
                     <div class="question-item-doctor">
                         <div class="parent_cont question-main-img">
-                            @component('components.prof-img',['doctor'=>$answer->doctor])
+                            @component('components.prof-img',[
+                                'doctor'=>$answer->doctor,
+                                'width'=>140,
+                                'height'=>200
+                                ])
                                 @slot('src')
                                     {{$answer->doctor['avatar']}}
-                                @endslot
-                                @slot('width')
-                                    100px
                                 @endslot
                                 @slot('alt')
                                     {{$answer->doctor->name}}
@@ -29,7 +30,8 @@
                             <div class="entity-line__descr">
                                 @foreach ($answer->doctor['skills'] as $i=>$skill)
                                     <a href="{{$skill->href}}" style="text-decoration: none">{{$skill->name }}</a>
-                                @if(count($answer->doctor['skills']) > 1 && $i!=(count($doctor['skills'])-1)) / @endif  @endforeach
+                                    @if(count($answer->doctor['skills']) > 1 && $i!=(count($doctor['skills'])-1))
+                                        / @endif  @endforeach
                             </div>
                         </div>
                         <div class="question-item-answer">
@@ -56,6 +58,6 @@
             </div>
         </div>
     </div>
-    
+
 </div>
 
