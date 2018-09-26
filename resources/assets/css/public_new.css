@@ -11,7 +11,7 @@
     border-bottom: 1px solid #00A8FF !important;
 }
 
-.index-intro__heading, .search-bar{
+.search-bar{
     z-index: 1;
     position: relative;
 }
