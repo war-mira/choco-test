@@ -1,5 +1,5 @@
 @push('custom.js')
-    <script src="{{mix('/js/libs/Filters.js')}}"></script>
+    <script src="{{hotreload('/js/libs/Filters.js')}}"></script>
 @endpush
 <div class="result-control-bar">
     <div class="container">
