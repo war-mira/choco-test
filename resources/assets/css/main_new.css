@@ -794,6 +794,14 @@ img {
     font-size: 16px;
     font-weight: 600;
   }
+  .question-main-img{
+    border-radius: 90px;
+    max-height: 110px;
+    max-width: 110px;
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 15px;
+}
   .show-question-form .form-row{
     color: #454545;
     margin-bottom: 16px;
@@ -835,6 +843,16 @@ img {
         text-align: center;
         margin: 15px 0;
     }
+    #ask_doctor_mess_ok{
+        padding-bottom: 20px;
+    }
+    .question__form .form-group input.has-warning, .question__form .form-group textarea.has-warning,
+.question__form .form-group select.has-warning, .show-question-form .form-group input.has-warning,
+.show-question-form .form-group select.has-warning .show-question-form .form-group textarea.has-warning{
+    color: #8a6d3b;
+    background: none;
+    border-color: red;
+}
 .entity-slider {
   margin-left: auto;
   margin-right: auto;

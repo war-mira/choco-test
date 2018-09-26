@@ -522,7 +522,9 @@
     text-align: center;
 }
 
-.question__form .form-group input.has-warning, .question__form .form-group textarea.has-warning, .question__form .form-group select.has-warning {
+.question__form .form-group input.has-warning, .question__form .form-group textarea.has-warning,
+.question__form .form-group select.has-warning, .show-question-form .form-group input.has-warning,
+.show-question-form .form-group select.has-warning .show-question-form .form-group textarea.has-warning{
     color: #8a6d3b;
     background: none;
     border-color: red;
@@ -617,6 +619,7 @@
     max-width: 110px;
     float: left;
     margin-right: 20px;
+    margin-bottom: 15px;
 }
 .section-question__content .question-doctor-name, .questions-block .question-doctor-name{
     margin-top: 10px;
