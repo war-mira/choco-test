@@ -11,7 +11,7 @@ class Http2Push
     public function __construct()
     {
         $this->assets = [
-            "<".mix('/css/app.css').">; rel=preload; as=style",
+            "<".mix('/build/css/app.css').">; rel=preload; as=style",
         ];
     }
     public function handle($request, Closure $next)
