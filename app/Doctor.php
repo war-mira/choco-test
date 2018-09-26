@@ -148,7 +148,10 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     const FIND_DOCTOR_COUNT = 'find-doctor';
     const VIEW_PROFILE_COUNT = 'view-profile';
     const SHOW_PHONES = [
-        '331'
+        '331',
+        '513',
+        '524',
+        '495'
     ];
 
     public $timestamps = true;
@@ -375,6 +378,13 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     public function scopeInCities($query, $city_id)
     {
         return $query->where('city_id', $city_id);
+    }
+
+    public function inDistrict($district_id)
+    {
+        return $this->whereHas('medcenters', function ($query) use($district_id){
+           $query->where('district_id', $district_id);
+        });
     }
 
     public function scopePublic($query, $status = true)

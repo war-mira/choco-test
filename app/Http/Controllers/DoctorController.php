@@ -39,7 +39,10 @@ class DoctorController extends Controller
         $meta = SeoMetadataHelper::getMeta($doctor, $city);
 
         $near_docs = Doctor::query()->where('doctors.status', 1)
-            ->where('doctors.city_id', $doctor->city->id)->limit(9)->get();
+            ->where('doctors.city_id', $doctor->city->id)->whereNotNull('avatar')->limit(9)->get();
+//        foreach ($near_docs as $doc){
+//            dd($doc);
+//        }
 
         return view('doctors.item')
             ->with('meta', $meta)
