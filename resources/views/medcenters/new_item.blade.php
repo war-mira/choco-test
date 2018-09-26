@@ -169,15 +169,12 @@
                         </div>
                     </div>
                     <div class="entity-content__aside">
-                        <div class="entity-content__banner">
-                            <img src="{{asset('img/banner.jpg')}}" alt="">
-                        </div>
+                        @component('elements.side-banner',['position' => App\Banner::POSITION_EXT_C['id']])@endcomponent
                     </div>
                 </div>
                 <div id="tab-2" class="entity-about-article">
                     <div class="entity-about__content entity-content">
                         <div class="entity-content__main entity-content__main_single">
-
                         <div class="doc-list-bar">
                             <div class="doc-list-bar__line" id="medoc_filter" data-action="{{route('medcenter.doctors',['medcenter'=>$medcenter->alias])}}">
                                 <input type="hidden" name="orderm" value="DESC" />
@@ -230,7 +227,7 @@
                                             })
                                             ->orderBy('lastname')->get()->slice(0,$visible) as $doctor)
                                                 <div class="doc-list__item entity-line doc-line">
-                                                    @include('model.doctor.prof_new')
+                                                    @include('model.doctor.prof_new',['doctor'=>$doctor])
                                                 </div>
                                             @endforeach
 
@@ -240,7 +237,7 @@
                             </div>
 
                             <div class="doc-list__more">
-                                <a href="#" data-url="{{route('medcenter.doctors',['city'=>$medcenter->city->alias,'medcenter'=>$medcenter->alias])}}" class="btn btn_theme_more">Еще
+                                <a data-url="{{route('medcenter.doctors',['city'=>$medcenter->city->alias,'medcenter'=>$medcenter->alias])}}" class="btn btn_theme_more">Еще
                                     <span id="docsLeftText">{{$ost}}</span> врачей</a>
                             </div>
                         </div>
@@ -273,7 +270,6 @@
                     </div>
                 </div>
                 <div id="tab-4" class="entity-about-article">
-
                 </div>
             </div>
         </div>
@@ -323,6 +319,8 @@
         <!-- end section -->
     @endif
     @include('forms.public.order_doc')
+@endsection
+@push('custom.js')
     <script type="text/javascript">
         $(function () {
             var offset = {{$visible}};
@@ -408,4 +406,4 @@
 
         });
     </script>
-@endsection
+@endpush

@@ -36,7 +36,8 @@ class Banner extends Model
         0 => 'Главная А',
         1 => 'Главная Б',
         2 => 'Врач',
-        3 => 'Медцентр'
+        3 => 'Медцентр',
+        4 => 'Все внутренние страницы'
     ];
 
     const POSITION_MAIN_A = [
@@ -54,6 +55,10 @@ class Banner extends Model
     const POSITION_EXT_B = [ //Профиль медцентра. поиск медцентра
         'id' => 3,
         'name' => 'Медцентр'
+    ];
+    const POSITION_EXT_C = [ //Все внутренние страницы
+        'id' => 4,
+        'name' => 'Все внутренние страницы'
     ];
 
     protected $table = 'banners';

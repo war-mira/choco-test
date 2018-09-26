@@ -206,6 +206,9 @@
                                 <a href="{{route('admin.medcenter-reports.table')}}"><i
                                             class="fa fa-file-text-o fa-fw"></i> Для медцентров</a>
                             </li>
+                            <li>
+                                <a href="{{route('admin.report.doctorsClicks')}}">Найти врача</a>
+                            </li>
                         </ul>
                     </li>
                     <li>

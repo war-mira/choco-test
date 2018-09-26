@@ -109,11 +109,15 @@ class CommentController extends Controller
         if($existCommentsCount > 0)
             return ['error' => 'Вы уже оставляли отзыв этому врачу.'];
 
-        if(isset($data['type'])) {
-            if ($authorize <= 0 && $data['type'] != Comment::typeQR)
-                return ['error' => 'Комментарий можно оставлять только после посещения врача! Если вы уже посетили врача,'
-                    . ' то проверьте совпадает ли номер телефона с использовавшимся при записи.'];
-        }
+        if($authorize > 0)
+            $data['type'] = Comment::typeQR;
+
+//        if(isset($data['type'])) {
+//            if ($authorize <= 0 && $data['type'] != Comment::typeQR)
+//                return ['error' => 'Комментарий можно оставлять только после посещения врача! Если вы уже посетили врача,'
+//                    . ' то проверьте совпадает ли номер телефона с использовавшимся при записи.'];
+//        }
+
         $data['text'] = strip_tags($data['text'] ?? "");
         $comment = Comment::create($data);
 //        $comment->created_at = Carbon::now()->timestamp;

@@ -1890,6 +1890,8 @@ img {
 .entity-slider__item .parent_cont{
     margin-left: 30px;
 }
+.clinic-slider__slider .entity-slider__item .parent_cont{
+  margin-left: 0;}
 #callback_mess_ok{
   display: none;
 }

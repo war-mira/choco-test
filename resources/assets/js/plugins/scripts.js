@@ -27,16 +27,17 @@ $(document).ready(function() {
         let mask = "" + $this.data("mask");
         $this.mask(mask);
     });
+
+    var hash = window.location.hash.substr(1);
+
+    if(hash.length > 0){
+        changeTab('div.tabs a[data-tab='+hash+']');
+        //console.log($('div.tabs a[data-tab='+hash+']').last().trigger("click"));
+    }
     
 	$('div.tabs a').click(function(e){
 	   e.preventDefault();
-		let tab_id = $(this).data('tab');
-
-		$('div.tabs a').removeClass('entity-about__tab-item_active');
-		$('.entity-about-article').removeClass('current');
-
-		$(this).addClass('entity-about__tab-item_active');
-		$("#"+tab_id).addClass('current');
+        changeTab($(this));
 	});
 
 	$('div.tabz a').click(function(e){
@@ -617,7 +618,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#searchform').on("focusout", function (e) {
+    $('.search-bar__item search-bar__item_search').on("focusout", function (e) {
         $(".live-search")
             .removeClass("live-search--fold");
     });
@@ -665,9 +666,9 @@ $(document).ready(function() {
         }
     });
 
-    $('.search-bar__line .js-type-select').on('change', function () {
+    $('.search-bar__line .js-type-select').change( function () {
         let input = $(this).parents('form').find('.js-search-input');
-        input.val('');
+        // input.val('');
         let placeholder;
         if($(this).val() == 'doctor'){
             placeholder = 'Введите специальность или фамилию врача';
@@ -684,18 +685,16 @@ $(document).ready(function() {
             scrollTop: target.offset().top
         }, 1000);
     });
+    setTimeout(()=>{
+        let readmore = document.querySelector('.entity-line__about-text');
+        if(readmore){
+            readmore.style.height = readmore.scrollHeight+'px';
+        }
 
+    },1000);
     $('.entity-line__about-text-more').on('click', function () {
         let text = $(this).parents('.entity-line__about-block').find('.entity-line__about-text');
-        if (text.hasClass('open')){
-                text.animate({
-                    height: "100px"
-                }, 100).removeClass('open');
-        }else{
-            text.animate({
-                height: "100%"
-            }, 100).addClass('open');
-        }
+        text.toggleClass('less');
     });
 
     var allEditors = document.querySelectorAll('.editor');
@@ -751,7 +750,7 @@ $(document).ready(function() {
                 text: $('#comment_text').val(),
                 user_rate: $('input[name=user_rate]:checked').val(),
                 date_event: $('#date_event').val(),
-                type:1
+                type:$('#type').val()
             })
                 .done(function (json) {
                     $('#user_email').removeClass('has-warning');
@@ -776,8 +775,123 @@ $(document).ready(function() {
 
         }
     });
+
+    $('.show-question-form button').on('click', function () {
+        $('.question__form').slideToggle(300);
+    });
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    // get the iso time string formatted for usage in an input['type="datetime-local"']
+    var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+    var localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0,-1);
+    var localISOTimeWithoutSeconds = localISOTime.slice(0,16);
+
+    // select the "datetime-local" input to set the default value on
+    var dtlInput = document.querySelector('input[type="datetime-local"]');
+
+    if(dtlInput){
+        // set it and forget it ;)
+        dtlInput.value = localISOTime.slice(0,16);
+    }
+
+    var desktop_datetime = $('.desktop-datetime');
+    var mobile_datetime = $('.mobile-datetime');
+    mobile_datetime.find('input').val('');
+    if(desktop_datetime.is(':visible')){
+        mobile_datetime.remove();
+    }else{
+        desktop_datetime.remove();
+    }
+    var form = $("#question__form");
+    $("#question__form-send").click(function () {
+        if (form[0].checkValidity()) {
+            var data = form.serialize();
+            console.log(data);
+            $.post("/question/add", data)
+                .done(function (json) {
+                    $('#user-email').removeClass('has-warning');
+                    $('#user-phone').removeClass('has-warning');
+                    $('#user-birthday').removeClass('has-warning');
+                    $('#user-gender').removeClass('has-warning');
+                    $('#question-text').removeClass('has-warning');
+
+                    modalOpen('question__modal');
+
+                    if (json.error) {
+                        $('#save_comment_mess_ok').removeClass('access').addClass('error').html('<b>' + json.error + '</b>');
+                        $('#save_comment_mess_ok').show();
+                    }
+                    else if (json.id) {
+                        $('#save_comment_mess_ok').removeClass('error').addClass('access').html('<b>Спасибо! Ваш комментарий отправлен на модерацию</b>');
+                        $('#save_comment_mess_ok').show();
+                        form[0].reset();
+                    }
+                });
+        }
+        else {
+            if(!$('#user-email').val()){
+                $('#user-email').addClass('has-warning');
+            }else{
+                $('#user-email').removeClass('has-warning');
+            }
+            if(!$('#user-phone').val()){
+                $('#user-phone').addClass('has-warning');
+            }else{
+                $('#user-phone').removeClass('has-warning');
+            }
+            if(!$('#user-birthday').val() || !isValidDate($('#user-birthday').val())){
+                $('#user-birthday').addClass('has-warning');
+            }else{
+                $('#user-birthday').removeClass('has-warning');
+            }
+            if(!$('#user-birthday-mobile').val() || !isValidDate($('#user-birthday-mobile').val())){
+                $('#user-birthday-mobile').addClass('has-warning');
+            }else{
+                $('#user-birthday-mobile').removeClass('has-warning');
+            }
+            if(!$('#user-gender').val()){
+                $('#user-gender').addClass('has-warning');
+            }else{
+                $('#user-gender').removeClass('has-warning');
+            }
+            if(!$('#question-text').val()){
+                $('#question-text').addClass('has-warning');
+            }else{
+                $('#question-text').removeClass('has-warning');
+            }
+        }
+    });
+
+    $('.search_event').on('click', function () {
+        ga('send', 'event', {
+            eventCategory: 'poisk_glavnaya',
+            eventAction: 'click'
+        });
+    })
+
 });
 
+
+function changeTab(el) {
+    console.log(el)
+    var tab_id = $(el).data('tab');
+
+    $('div.tabs a').removeClass('entity-about__tab-item_active');
+    $('.entity-about-article').removeClass('current');
+
+    $(el).addClass('entity-about__tab-item_active');
+    $("#" + tab_id).addClass('current');
+}
+
+function isValidDate(dateString) {
+    var regEx = /^\d{4}-\d{2}-\d{2}$/;
+    return dateString.match(regEx) != null;
+}
 
 function updateAllMessageForms(){
     for (instance in ClassicEditor.instances) {

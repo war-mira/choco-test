@@ -19,9 +19,12 @@ class QuestionFilters extends Filter
         if($by == 'date' && $this->request->has('order')){
           return  $this->sortByDate($this->request->get('order'));
         }
-       return $this->builder;
     }
 
+    public function default()
+    {
+       return $this->sortByDate($this->request->get('order'));
+    }
     public function sortByDate($order)
     {
         return $this->builder->orderBy($this->getDbKey('date'),$order);
