@@ -789,7 +789,7 @@ $(document).ready(function() {
                 document.getElementById('nav-top-container').classList.add('mr_0');
                 document.getElementById('nav-top-container').classList.remove('ml_0');
             }
-        }else {
+        }else { 
             navbar.style.top = "0px";
             navbar.classList.add("navbar-pattern");
             document.getElementById('nav-top-container').classList.add('ml_0');
