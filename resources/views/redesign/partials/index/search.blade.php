@@ -4,8 +4,8 @@
         <input type="hidden" name="order" value="@if(isset($_GET['order'])) {{$_GET['order']}} @else ASC @endif" />
         <div class="search-bar__item search-bar__item_type">
             <select name="type" placeholder="Поиск медцентра" class="js-simple-select js-type-select" data-select="action">
-                <option data-action="{{route('doctors.list')}}" value="doctor">Поиск врача</option>
-                <option  data-action="{{route('medcenters.list')}}" value="medcenter">Поиск медцентра</option>
+                <option data-action="{{route('doctors.list')}}" value="doctor">Найти врача</option>
+                <option  data-action="{{route('medcenters.list')}}" value="medcenter">Найти медцентр</option>
             </select>
         </div>
         <div class="search-bar__item search-bar__item_search" style="flex-grow: 1">
