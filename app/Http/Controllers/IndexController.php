@@ -22,8 +22,7 @@ class IndexController extends Controller
     public function home()
     {
 
-        ToastrNotification::push('Hello');
-        ToastrNotification::push('Hello!!!');
+    
         if (Cache::has('index:skills'))
             $stats = Cache::get('index:stats');
         else {
