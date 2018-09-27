@@ -475,7 +475,7 @@ img {
   position: inherit;
   top:80px;
   width: 100%;
-  z-index: 9999;}
+  z-index: 999;}
 .sticky {
   position: -webkit-sticky;
   position: sticky;
@@ -1859,7 +1859,7 @@ img {
   margin-left: -10px;
   position: absolute;
   width: 100%;
-  z-index: 3;
+  z-index: 1000;
 }
 .mobile-menu__item {
   display: block;
@@ -4588,7 +4588,7 @@ label .week-days-select__btn {
     top:0px!important;
     width: 100%;
     display: block;
-    z-index:9999;}
+    z-index:999;}
 }
 
 @media (max-width: 767.98px) {
