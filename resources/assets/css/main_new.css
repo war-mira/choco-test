@@ -4532,7 +4532,8 @@ label .week-days-select__btn {
   .entity-line {
     -webkit-flex-wrap: wrap;
     -ms-flex-wrap: wrap;
-    flex-wrap: wrap; }
+    flex-wrap: wrap; 
+    box-shadow: 0 6px 4px -4px rgba(0, 0, 0, .2);}
   .entity-line__additional {
     margin-top: 20px;
     -webkit-box-flex: 1;
