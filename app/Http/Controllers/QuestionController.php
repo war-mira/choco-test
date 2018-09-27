@@ -56,21 +56,6 @@ class QuestionController extends Controller
             ->filter($filters)
             ->get();
         $answered_questions = Question::wherehas('answers')->count();
-        if($sort == 'rate'){
-            if($order == 'asc'){
-                $questions =  $questions->sortBy(function($question){
-                    $answer = $question->answers->sortByDesc('rate')->first();
-                    return $answer->likes;
-                });
-            } else{
-                $questions =  $questions->sortByDesc(function($question){
-                    $answer = $question->answers->sortByDesc('rate')->first();
-                    return $answer->likes;
-                });
-            }
-
-
-        }
 
         return view('questions.list')->with(
             compact(

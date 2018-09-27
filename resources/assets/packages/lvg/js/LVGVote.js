@@ -72,7 +72,7 @@ class LVGVote {
                 _self.container.querySelector('.vote--form .additional--rows').appendChild(row);
                 _self.initLastnameAutocomplete(row.querySelector('.autocomplete__lastname'), _self);
                 _self.initSkillAutocomplete(row.querySelector('.autocomplete__skill'), _self);
-                _self.removeDoctor(row.querySelector('.delete__row'),_self); 
+                _self.removeDoctor(row.querySelector('.delete__row'),_self);
                 _self.current++;
                 if (_self.current >= 5) {
                     e.target.classList.add('hidden');

@@ -16,13 +16,7 @@
                 <div class="sort-line__item">
                     <span class="sort-line__heading">Сортировать по:</span>
                 </div>
-                <a href="#" class="sort-line__item sort-line-btn btn btn_theme_radio sort__change
-                        {{(request()->get('sort') == 'rate')?'btn_theme_radio_active':''}}">
-                    <span class="sort-line-btn__text">Рейтингу</span>
-                    <i class="fa {{(request()->get('sort') == 'rate' && request()->get('order') == 'asc')?'fa-chevron-up':'fa-chevron-down'}}"
-                       aria-hidden="true"></i>
-                    <input type="radio" style="display:none;"  name="sort" value="rate">
-                </a>
+
                 <a href="#" class="sort-line__item sort-line-btn btn btn_theme_radio sort__change
                         {{(request()->get('sort') == 'date' ||is_null(request()->get('sort')))?'btn_theme_radio_active':''}}">
                     <span class="sort-line-btn__text">Дате</span>
