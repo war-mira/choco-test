@@ -23,11 +23,11 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label>Ваш пол *</label>
-                        <div id="user-gender" class="" name="user[gender]">
-                            <input type="radio" name="gender" id="gender_m" value="0" required/>
+                        <div id="user-gender" class="" >
+                            <input type="radio" name="user[gender]" id="gender_m" value="0"/>
                             <label for="gender_m">Мужской</label>
-                            <input type="radio" name="gender" id="gender_f"  value="1"/>
-                            <label for="gender_m">Женский</label>
+                            <input type="radio" name="user[gender]" id="gender_f"  value="1"/>
+                            <label for="gender_f">Женский</label>
                         </div>
                     </div>
                 </div>
