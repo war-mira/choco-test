@@ -4845,8 +4845,7 @@ label .week-days-select__btn {
   .accordion_mobile {
     width: 100%;
     margin: 0;
-    display: block;
-    border-bottom: 1px solid #454545; }
+    display: block;}
   .accordion_mobile .accordion__title {
     margin: 0;
     padding: 10px 0;
@@ -4862,18 +4861,21 @@ label .week-days-select__btn {
     -webkit-box-align: center;
     -webkit-align-items: center;
     -ms-flex-align: center;
-    align-items: center; }
+    align-items: center; 
+    color: #ffffff;}
   .accordion_mobile .accordion__title .fa {
     display: block; }
   .accordion_mobile .accordion__body {
-    display: none;
+    display: block;
     padding: 10px 0; }
   .footer-nav-column__item {
     margin: 0; }
   .footer-nav-column__item a {
     display: block;
-    padding: 10px 0;
-    background: rgba(0, 0, 0, 0.5); }
+    padding: 10px 0 10px 10px;
+    background: none;
+    border-bottom: 1px solid #77d0ff;
+    text-align: left;}
   .footer-nav-column__item + .footer-nav-column__item {
     margin: 0; }
   .appointment-content__wrap {
