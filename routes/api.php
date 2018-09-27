@@ -33,6 +33,7 @@ Route::group(['prefix'=>'v2'],function (){
     Route::post('{obj}/{id}/vote', 'VoteController@store')->middleware('auth');  // TODO: policy
     Route::get('{model}/{id}/clicks-count', 'DoctorController@clicksCount');
 
+    Route::get('{model}/{id}/load-doctors', 'MedcenterController@loadDoctors');
 });
 
 Route::group(['prefix'=>'phones'],function (){

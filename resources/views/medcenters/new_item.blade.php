@@ -232,14 +232,9 @@
                                             @endforeach
 
                             </div>
-                            <div class="hidden_more">
-
-                            </div>
-
-                            <div class="doc-list__more">
-                                <a data-url="{{route('medcenter.doctors',['city'=>$medcenter->city->alias,'medcenter'=>$medcenter->alias])}}" class="btn btn_theme_more">Еще
-                                    <span id="docsLeftText">{{$ost}}</span> врачей</a>
-                            </div>
+                            <load-doctors-btn model="medcenter" id="{{ $medcenter->id }}" visible="{{ $visible }}" quantity="{{$ost}}">
+                                <template slot="load-doctors-link"></template>
+                            </load-doctors-btn>
                         </div>
                     </div>
                     </div>
@@ -323,23 +318,23 @@
 @push('custom.js')
     <script type="text/javascript">
         $(function () {
-            var offset = {{$visible}};
-            var limit = 10;
-            $('.doc-list__more a').click(function (e) {
-                e.preventDefault;
-                var source = $(this).data('url');
-                $.get(source, {offset: offset}, function (medcenters) {
-                    $('.hidden_more').append($(medcenters.view));
-                    offset = medcenters.offset;
-                    $('#docsLeftText').text(medcenters.left);
-                    if (medcenters.left <= 0)
-                    {
-                        $('.doc-list__more .btn_theme_more').prop('disabled', true);
-                        $('.doc-list__more').addClass('hidden');
-                    }
-                });
+            {{--var offset = {{$visible}};--}}
+            {{--var limit = 10;--}}
+            {{--$('.doc-list__more a').click(function (e) {--}}
+                {{--e.preventDefault;--}}
+                {{--var source = $(this).data('url');--}}
+                {{--$.get(source, {offset: offset}, function (medcenters) {--}}
+                    {{--$('.hidden_more').append($(medcenters.view));--}}
+                    {{--offset = medcenters.offset;--}}
+                    {{--$('#docsLeftText').text(medcenters.left);--}}
+                    {{--if (medcenters.left <= 0)--}}
+                    {{--{--}}
+                        {{--$('.doc-list__more .btn_theme_more').prop('disabled', true);--}}
+                        {{--$('.doc-list__more').addClass('hidden');--}}
+                    {{--}--}}
+                {{--});--}}
 
-            });
+            {{--});--}}
 
             $('#medoc_filter select').change(function (e) {
                 e.preventDefault;
