@@ -100,7 +100,7 @@
                     <input type="submit" id="сallback_save_r" class="button" value="Записаться">
                 </div>
             </form>
-            <div id="callback_mess_ok" class="modal-body">
+            <div id="callback_mess_ok" class="modal-body callback_mess_ok">
                 <p>
                     <strong>Спасибо!</strong> Ваша заявка принята мы вам перезвоним!
                 </p>
@@ -119,7 +119,7 @@
 @push('custom.js')
 <script type="text/javascript">
     //сallback_save
-    $('#callback_mess_ok').hide();
+    $('#reception .callback_mess_ok').hide();
 
     var $receptionModalForm = $("#reception-modal-form");
     ga(function (tracker) {
@@ -145,6 +145,7 @@
                         $('#callback_mess_ok').show();
                         $receptionModalForm[0].reset();
                         $receptionModalForm.hide();
+                        $('#reception .callback_mess_ok').show();
                         setTimeout(function () {
                             $('#reception').modal('hide');
                         }, 1000);

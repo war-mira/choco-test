@@ -33,7 +33,7 @@
 @push('custom.js')
 <script type="text/javascript">
     //сallback_save
-    $('#callback_mess_ok').hide();
+    $('#quick-order-modal .modal-body').hide();
 
     var $receptionModalForm = $("#reception-modal-form");
     ga(function (tracker) {
@@ -60,6 +60,7 @@
                         $('#callback_mess_ok').show();
                         $receptionModalForm[0].reset();
                         $receptionModalForm.hide();
+                        $('#quick-order-modal .modal-body').show();
                         setTimeout(function () {
                             $('#quick-order-modal').modal('hide');
                         }, 1000);

@@ -31,7 +31,7 @@ mix
 ], 'public/build/js/libs/Filters.js');
 
 
-mix.js('resources/assets/js/app.js', 'public/build/js')
+mix.js('resources/assets/js/app.js', 'public/build/js/vue_app.js')
     .scripts([
         'resources/assets/js/plugins/jquery.min.js',
         'resources/assets/js/plugins/jquery-masked-input.js',
@@ -48,7 +48,7 @@ mix.js('resources/assets/js/app.js', 'public/build/js')
     .combine([
         'public/build/js/all.js',
         'public/build/js/scripts.js',
-        'public/build/js/app.js',
+        'public/build/js/vue_app.js',
     ],'public/build/js/app.js')
     .options({
         processCssUrls: false,
