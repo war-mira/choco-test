@@ -22,47 +22,45 @@ class IndexController extends Controller
     {
 
 
-        if(Cache::has('index:skills'))
+        if (Cache::has('index:skills'))
             $stats = Cache::get('index:stats');
-        else{
+        else {
             $stats = [
-                'doctors_count'  => Doctor::localPublic()->count(),
-                'orders_count'   => Order::whereIn('status', [1, 2])->count(),
+                'doctors_count' => Doctor::localPublic()->count(),
+                'orders_count' => Order::whereIn('status', [1, 2])->count(),
                 'comments_count' => Comment::count()
             ];
 
-            Cache::set('index:stats',$stats,30);
+            Cache::set('index:stats', $stats, 30);
         }
 
 
         $social = [
-            'fb'    => 'https://www.facebook.com/kz.idoctor',
+            'fb' => 'https://www.facebook.com/kz.idoctor',
             'insta' => 'https://www.instagram.com/idoctor_kz/',
-            'vk'    => 'https://vk.com/idoctorkz1',
+            'vk' => 'https://vk.com/idoctorkz1',
         ];
 
 //        $topDoctors = Doctor::where('on_top', '=', 1)->where('status', '=', 1)->get();
 
-        if(Cache::has('index:topPosts'))
+        if (Cache::has('index:topPosts'))
             $topPosts = Cache::get('index:topPosts');
-        else{
+        else {
             $topPosts = Post::where('is_top', 1)->where('status', 1)->orderBy('created_at', 'desc')->limit(3)->get();
-            Cache::set('index:topPosts',$topPosts,120);
+            Cache::set('index:topPosts', $topPosts, 120);
         }
-        
-        
+
+
         $answered_questions = \App\Question::wherehas('answers')->count();
         $questions = \App\Question::take(4)
-                ->orderBy('created_at','desc')
-                ->whereHas('answers')
-                ->get();
+            ->orderBy('created_at', 'desc')
+            ->whereHas('answers')
+            ->get();
 
-        
+
         //Специальности по количесвам врачей
-        if(Cache::has('index:skills'))
-            $skillsList = Cache::get('index:skills');
-        else{
-            $skillsList = Skill::query()
+        $skillsList = Cache::remember('index:skills-'. SessionContext::cityId(),120,function(){
+            return Skill::query()
                 ->withCount(['doctors as doctorsCount' => function ($query) {
                     $query->where('status', 1)->where('city_id', SessionContext::cityId());
                 }])
@@ -70,16 +68,16 @@ class IndexController extends Controller
                     $query->where('status', 1)->where('city_id', SessionContext::cityId());
                 })
                 ->orderBy('name')
-                ->get(['name','href','doctorsCount']);
+                ->get(['name', 'href', 'doctorsCount']);
 
-            Cache::set('index:skills',$skillsList,120);
-        }
+        });
 
-        if(Cache::has('index:districts'))
+
+        if (Cache::has('index:districts'))
             $districts = Cache::get('index:districts');
-        else{
+        else {
             $districts = District::all();
-            Cache::set('index:districts',$topPosts,120);
+            Cache::set('index:districts', $topPosts, 120);
         }
 
 
@@ -87,7 +85,7 @@ class IndexController extends Controller
         $topPromotions = collect([]);
 
         $pageSeo = PageSeo::query()
-            ->where('class','Home')
+            ->where('class', 'Home')
             ->where('action', 'index')
             ->first();
         $meta = SeoMetadataHelper::getMeta($pageSeo, SessionContext::city());
@@ -114,27 +112,25 @@ class IndexController extends Controller
         $ip = $request->ip();
         $status = null;
 
-        if(!Uniqueip::where('ip','=',$ip)->where('doctor','=',$doc)->count())
-        {
+        if (!Uniqueip::where('ip', '=', $ip)->where('doctor', '=', $doc)->count()) {
             $cf = new Uniqueip();
             $cf->doctor = $doc;
             $cf->ip = $ip;
             $cf->like_dis = $like;
             $cf->save();
 
-            $doctor = Doctor::where('id','=',$doc)->first();
-            if($like == 1)
-            {
+            $doctor = Doctor::where('id', '=', $doc)->first();
+            if ($like == 1) {
                 $doctor->like += 1;
-            }else{
+            } else {
                 $doctor->dislike += 1;
             }
             $doctor->save();
         }
 
         return response()->json([
-            'status'=>$status,
-            'rates'=>view('components.ratemini',['doctor'=>$doctor])->render()
+            'status' => $status,
+            'rates' => view('components.ratemini', ['doctor' => $doctor])->render()
         ]);
     }
 
@@ -263,6 +259,6 @@ class IndexController extends Controller
         $client = new \GuzzleHttp\Client();
         $response = $client->get('https://geocode-maps.yandex.ru/1.x/?format=json&geocode=ул. Тайманова  блок 1');
         $stream = $response->getBody();
-        dd( $stream->getContents());
+        dd($stream->getContents());
     }
 }
