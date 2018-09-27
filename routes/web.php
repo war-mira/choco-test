@@ -155,7 +155,7 @@ Route::get('redirector', function (\Illuminate\Http\Request $request) {
     return response()->redirectTo($redirectUrl);
 });
 
-Route::group(['as' => 'cabinet.', 'prefix' => 'cabinet', 'middleware' => 'auth'], function () {
+Route::group(['as' => 'cabinet.', 'prefix' => 'cabinet', 'middleware' => ['auth','doctor']], function () {
     Route::group(['as' => 'doctor.', 'prefix' => 'doctor'], function () {
 
         Route::view('/feedback/index','cabinet.doctor.feedback.index')->name('feedback.index');

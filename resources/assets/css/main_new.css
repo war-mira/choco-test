@@ -475,7 +475,7 @@ img {
   position: inherit;
   top:80px;
   width: 100%;
-  z-index: 9999;}
+  z-index: 999;}
 .sticky {
   position: -webkit-sticky;
   position: sticky;
@@ -1859,7 +1859,7 @@ img {
   margin-left: -10px;
   position: absolute;
   width: 100%;
-  z-index: 3;
+  z-index: 1000;
 }
 .mobile-menu__item {
   display: block;
@@ -2135,7 +2135,8 @@ img {
 .entity-line__label {
   text-transform: uppercase;
   color: #fff;
-  font-size: 10px;
+  font-size: 11px;
+  font-weight: 600;
   -webkit-border-radius: 2px;
   border-radius: 2px;
   background-color: #06d09e;
@@ -4432,9 +4433,9 @@ label .week-days-select__btn {
   color: #ffffff;
 }
 .desctop.fixed-top{
-    position:fixed;
-    top:0;
-    background-color: rgb(2, 144, 217);
+  position:fixed;
+  top:0;
+  background-color: rgb(2, 144, 217);
 }
 
 .index-intro__container .main-header__actions{
@@ -4531,7 +4532,7 @@ label .week-days-select__btn {
   .entity-line {
     -webkit-flex-wrap: wrap;
     -ms-flex-wrap: wrap;
-    flex-wrap: wrap; }
+    flex-wrap: wrap; box-shadow: 0 6px 4px -4px rgba(0, 0, 0, .2);}
   .entity-line__additional {
     margin-top: 20px;
     -webkit-box-flex: 1;
@@ -4588,7 +4589,7 @@ label .week-days-select__btn {
     top:0px!important;
     width: 100%;
     display: block;
-    z-index:9999;}
+    z-index:999;}
 }
 
 @media (max-width: 767.98px) {
@@ -4843,8 +4844,7 @@ label .week-days-select__btn {
   .accordion_mobile {
     width: 100%;
     margin: 0;
-    display: block;
-    border-bottom: 1px solid #454545; }
+    display: block;}
   .accordion_mobile .accordion__title {
     margin: 0;
     padding: 10px 0;
@@ -4860,18 +4860,21 @@ label .week-days-select__btn {
     -webkit-box-align: center;
     -webkit-align-items: center;
     -ms-flex-align: center;
-    align-items: center; }
+    align-items: center;  color: #ffffff;}
   .accordion_mobile .accordion__title .fa {
     display: block; }
   .accordion_mobile .accordion__body {
-    display: none;
-    padding: 10px 0; }
+    display: block;    padding: 10px 0;
+  }
   .footer-nav-column__item {
     margin: 0; }
   .footer-nav-column__item a {
     display: block;
-    padding: 10px 0;
-    background: rgba(0, 0, 0, 0.5); }
+    padding: 10px 0 10px 10px;
+    background: none;
+    border-bottom: 1px solid #77d0ff;
+    text-align: left;
+  }
   .footer-nav-column__item + .footer-nav-column__item {
     margin: 0; }
   .appointment-content__wrap {

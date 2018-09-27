@@ -1,7 +1,7 @@
 <header class="main-header">
     <div class="main-header__container">
         <div class="main-header__line">
-            <a href="{{route('home')}}" class="main-header__logo"><img src="{{asset('img/header-logo.png')}}" alt="iDoctor.kz" title="iDoctor.kz"></a>
+            <a href="{{route('home')}}" class="main-header__logo"><img src="{{asset('/img/footer-logo.png')}}" alt="iDoctor.kz" title="iDoctor.kz"></a>
             <div class="main-header__partners">
                 <ul>
                     <li>
@@ -42,8 +42,7 @@
                     <span>Войти</span>
                 </a>
                 @else
-                    <a href="@if(Auth::user()->role == \App\User::ROLE_DOCTOR) {{route('cabinet.doctor.personal.index')}}
-                            @else {{route('user.profile')}} @endif" class="main-header__action-item header-link-btn header-login-btn">
+                    <a href="@if(Auth::user()->role == \App\User::ROLE_DOCTOR) {{route('cabinet.doctor.personal.index')}} @else {{route('user.profile')}} @endif" class="main-header__action-item header-link-btn header-login-btn">
                         <span class="header-link-btn__icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>
                         <span>Профиль</span>
                     </a>

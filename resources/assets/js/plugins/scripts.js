@@ -61,7 +61,9 @@ $(document).ready(function() {
     $('.selectize-input').find('input').prop('disabled', 'disabled');
 
     $(".js-header-location").selectize({
-        openOnFocus: false
+        openOnFocus: false,
+        dropdownParent: ((window.innerWidth < 768)?'.main-header':null),
+        create: false
     });
 
     $(".question-slider").slick({
