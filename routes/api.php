@@ -45,8 +45,8 @@ Route::group(['prefix'=>'phones'],function (){
 Route::get('metrics',function (){
     return [
         'doctors_published' => Doctor::public()->count(),
-        'feedback_opened' => \App\Comment::where('status',1)->count(),
-        'feedback_closed' => \App\Comment::where('status',0)->count(),
+        'feedback_opened' => \App\Comment::where(['status'=>1,'owner_type'=>'Doctor'])->count(),
+        'feedback_closed' => \App\Comment::where(['status'=>0,'owner_type'=>'Doctor'])->count(),
         'illnesses_opened' => \App\Models\Library\Illness::where('active',1)->count(),
         'illnesses_closed' => \App\Models\Library\Illness::where('active',0)->count(),
         'questions_answered'=> \App\Question::has('answers')->count(),
