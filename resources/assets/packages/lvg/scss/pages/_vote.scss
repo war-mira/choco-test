@@ -109,5 +109,13 @@
         color: #fff;
       }
     }
+
+    .delete__row{
+      display: flex;
+      align-items: center;
+      i{
+        font-style:normal;
+      }
+    }
   }
 }

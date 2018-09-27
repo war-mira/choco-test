@@ -62,7 +62,9 @@ class LVGVote {
 
     initAddDoctor() {
         let _self = this;
+
         return false;
+         //
         this.container.querySelector('.add_doctor').addEventListener('click', function (e) {
             if (_self.current < 5) {
                 let template = _.template(document.getElementById('form--row').innerHTML);
