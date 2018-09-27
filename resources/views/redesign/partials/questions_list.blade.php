@@ -1,7 +1,7 @@
     <div class="section questions-list">
         <div class="container">
             <div class="questions-header-block">
-                <h1 class="button">Вопросы и ответы</h1>
+                <h2 class="button">Вопросы и ответы</h2>
                 <a href="{{url('question_list')}}">{{ $answered_questions }}+ отвеченных врачами вопросов</a>
             </div>
             <div class="questions-block">
