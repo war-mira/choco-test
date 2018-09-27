@@ -25,20 +25,18 @@ class QuestionController extends Controller
 
         $dataQuestion['text'] = strip_tags($dataQuestion['text'] ?? "");
         $question = $this->model::create($dataQuestion);
-        $question->save();
+        //$question->save();
 
         if (isset($dataUser['birthday'])) {
-            $dataUser['birthday'] = Carbon::createFromFormat("Y", $dataUser['birthday']);
+            $dataUser['birthday'] = Carbon::createFromDate( $dataUser['birthday'],1,1);
 
-        } elseif (isset($dataUser['birthday-mobile'])) {
-            $dataUser['birthday'] = Carbon::createFromFormat("Y", $dataUser['birthday-mobile']);
         }
 
         $dataUser['phone'] = isset($dataUser['phone']) ? FormatHelper::phone($dataUser['phone']) : '';
         $dataUser['question_id'] = $question->id;
 
-        $questionUser = QuestionUser::create($dataUser);
-        $questionUser->save();
+        QuestionUser::create($dataUser);
+        //$questionUser->save();
 
         return $question;
     }

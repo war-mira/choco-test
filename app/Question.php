@@ -40,6 +40,7 @@ class Question extends Model
         'user_id',
         'text',
         'status',
+        'skill_id',
         'created_at',
         'updated_at'
     ];
