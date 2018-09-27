@@ -1,5 +1,5 @@
 <div class="entity-line__img">
-  <a href="{{ route('doctor.item',['doctor'=>$doctor->alias]) }}">
+    <a href="{{ route('doctor.item',['doctor'=>$doctor->alias]) }}">
     @component('components.prof-img',[  'width'=>140,
                                 'height'=>200,
                                 'doctor'=>$doctor])
@@ -22,7 +22,7 @@
                 {{$top5}}
             @endslot
         @endif
-    @endcomponent</a>
+        @endcomponent</a>
     <br>
 
     <div class="entity-thumb-img__rating-line rating-line">
