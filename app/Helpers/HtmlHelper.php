@@ -9,6 +9,8 @@
 namespace App\Helpers;
 
 
+use App\Order;
+
 class HtmlHelper
 {
     public static $STR_LEN = 16;
@@ -29,6 +31,21 @@ class HtmlHelper
         $code = '+'.$countryCode.' ('.$code.')';
 
         return $code;
+    }
+
+    public static function getStatusName()
+    {
+        $statuses = [];
+        foreach (Order::STATUS as $key => $status) {
+            $statuses[$status['id']]['name'] = $status['name'];
+            if (isset($status['children'])){
+
+                foreach ($status['children'] as $child){
+                    $statuses[$child['id']]['name'] = $child['name'];
+                }
+            }
+        }
+        return $statuses;
     }
 
 

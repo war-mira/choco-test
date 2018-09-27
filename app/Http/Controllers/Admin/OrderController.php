@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Doctor;
 use App\Facades\NotificationService;
 use App\Helpers\BootstrapTableHelper;
+use App\Helpers\HtmlHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\SmsNotificationResource;
 use App\Http\Resources\BootstrapTableResource;
@@ -71,6 +72,10 @@ class OrderController extends Controller
 
         $orders = Order::whereBetween($dateColumn, [$dateBegin, $dateEnd])
             ->get();
+        foreach ($orders as $order){
+            if($order->status['children'])
+                dd($order->status['children']);
+        }
         Excel::create($name, function ($excel) use ($orders, $dateBegin, $dateEnd) {
             /** @var Excel $excel */
             $excel->sheet('Отчет', function ($sheet) use ($orders) {

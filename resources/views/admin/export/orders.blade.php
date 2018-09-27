@@ -30,7 +30,7 @@
             @php
                 $array_key = array_search($order->status, array_column(\App\Order::STATUS, 'id'));
             @endphp
-            <td>{{\App\Order::STATUS[$array_key]['name']}}</td>
+            <td>{{isset(\App\Helpers\HtmlHelper::getStatusName()[$order->status]) ? \App\Helpers\HtmlHelper::getStatusName()[$order->status]['name']:''}}</td>
         </tr>
     @endforeach
     </tbody>
