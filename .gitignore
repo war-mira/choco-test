@@ -8,6 +8,9 @@
 /public/uploads
 /public/import
 /public/images
+/public/build
+/public/projects/lvg
+/public/mix-manifest.json
 /public/photos
 /public/idoctor.tar.gz
 /storage/*.key
@@ -22,3 +25,4 @@ npm-debug.log
 ide_helper.php
 composer.lock
 pub.tar
+/nbproject/private/

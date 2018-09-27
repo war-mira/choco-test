@@ -9,7 +9,6 @@
 namespace App\Components\Image;
 
 
-
 use App\Components\Image\Compressor\ImageCompressor;
 use Illuminate\Support\Str;
 use Intervention\Image\Image;
@@ -33,9 +32,12 @@ class ImageResize
     private $dirname;
     private $root_dir; // public_path for laravel
     protected $supported_extensions = [
-      'jpg','png'
+        'jpg',
+        'jpeg',
+        'png'
     ];
-    public function __construct($source,$quality = 85,$compress = true,$root_dir = null)
+
+    public function __construct($source, $quality = 85, $compress = true, $root_dir = null)
     {
         $path = pathinfo($source);
         $this->source = $source;
@@ -44,38 +46,40 @@ class ImageResize
         $this->basename = $path['basename'];
         $this->dirname = $path['dirname'];
         $this->compress = $compress;
-        if(is_null($root_dir)){
+        if (is_null($root_dir)) {
             $this->setRootDir($root_dir);
         }
         $this->quality = $quality;
     }
-    public function getImage($width,$height)
+
+    public function getImage($width, $height)
     {
-        if($this->isImageExist($width,$height)){
-            return $this->getImageLink($width,$height);
-        } else{
+        if ($this->isImageExist($width, $height)) {
+            return $this->getImageLink($width, $height);
+        } else {
             $extension = Str::lower($this->extension);
-            if(in_array($extension,$this->supported_extensions)){
-                return $this->createImageWith($width,$height);
+            if (in_array($extension, $this->supported_extensions)) {
+                return $this->createImageWith($width, $height);
             }
             return $this->source;
         }
     }
 
-    protected function getImageLink($width,$height)
+    protected function getImageLink($width, $height)
     {
-        if($this->compress){
+        if ($this->compress) {
             $compressor = new ImageCompressor();
-            $filename = $this->getFullDirname().'/'.$this->getFilenameWithSize($width,$height).'.'.$this->extension;
-            if($compressor->optimizedExist($filename,$this->quality)){
-                return $compressor->getOptimized($this->dirname,$filename,$this->quality);
-            } else{
-                try{
-                    $compressor->compress($filename,$this->quality );
-                } catch (\Exception $e){}
-                return  $this->getResizedLink($width,$height);
+            $filename = $this->getFullDirname() . '/' . $this->getFilenameWithSize($width, $height) . '.' . $this->extension;
+            if ($compressor->optimizedExist($filename, $this->quality)) {
+                return $compressor->getOptimized($this->dirname, $filename, $this->quality);
+            } else {
+                try {
+                    $compressor->compress($filename, $this->quality);
+                } catch (\Exception $e) {
+                }
+                return $this->getResizedLink($width, $height);
             }
-        } else{
+        } else {
             return $this->getResizedLink($width, $height);
         }
 
@@ -87,47 +91,50 @@ class ImageResize
      * @param $height
      * @return mixed|string
      */
-    protected function createImageWith($width,$height)
+    protected function createImageWith($width, $height)
     {
 
-        $filepath = $this->getFullDirname().'/'.$this->basename;
-        $new_path = $this->getImageLink($width,$height);
-        if(!file_exists($filepath)){
+        $filepath = $this->getFullDirname() . '/' . $this->basename;
+        $new_path = $this->getImageLink($width, $height);
+        if (!file_exists($filepath)) {
             return $this->source;
         }
         $manager = new ImageManager(['driver' => 'imagick']);
         $image = $manager->make($filepath);
-        if($width == 'auto'){
+        if ($width == 'auto') {
             $image->resize(null, $height, function ($constraint) {
                 $constraint->aspectRatio();
             });
-        } else if($height == 'auto'){
+        } else if ($height == 'auto') {
             $image->resize($width, null, function ($constraint) {
                 $constraint->aspectRatio();
             });
-        } else{
-            $image->fit($width,$height);
+        } else {
+            $image->fit($width, $height);
         }
-        $image->save($this->getRootDir().$new_path);
+        $image->save($this->getRootDir() . $new_path);
 
         return $new_path;
     }
-    private function isImageExist($width,$height)
+
+    private function isImageExist($width, $height)
     {
-        $filename = $this->getFilenameWithSize($width,$height);
-        return file_exists($this->getFullDirname().'/'.$filename.'.'.$this->extension);
+        $filename = $this->getFilenameWithSize($width, $height);
+        return file_exists($this->getFullDirname() . '/' . $filename . '.' . $this->extension);
     }
 
     public function getFullDirname()
     {
-        return $this->getRootDir().$this->dirname;
-    }
-    protected function getFilenameWithSize($width,$height)
-    {
-        return $this->filename.'_'.$width.'x'.$height;
+        return $this->getRootDir() . $this->dirname;
     }
 
-    public function setRootDir($dir){
+    protected function getFilenameWithSize($width, $height)
+    {
+        return $this->filename . '_' . $width . 'x' . $height;
+    }
+
+    public function setRootDir($dir)
+    {
         $this->root_dir = $dir;
         return $this;
     }

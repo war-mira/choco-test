@@ -27,7 +27,6 @@ class BootstrapTableHelper
         $order = $request->input('order', 'asc');
         $offset = $request->input('offset', 0);
         $limit = $request->input('limit', 10);
-
         foreach ($filter as $filterTuple) {
             $column = $filterTuple[0];
             $operator = $filterTuple[1];
@@ -45,18 +44,24 @@ class BootstrapTableHelper
 
         }
         if ($search !== null) {
-            $query = $query->where(function (Builder $query) use ($search, $searchFields) {
-                foreach ($searchFields as $index => $searchField) {
-                    if (!is_numeric($index))
-                        foreach ($searchField as $relSearchField) {
-                            $query = $query->orWhereHas($index, function (Builder $q) use ($relSearchField, $search) {
-                                $q->where($relSearchField, 'like', '%' . $search . '%');
-                            });
-                        }
-                    else
-                        $query = $query->orWhere($searchField, 'like', '%' . $search . '%');
-                }
-            });
+            $query = SearchHelper::searchByFields($query, $searchFields, $search);
+
+//            $query = $query->where(function (Builder $query) use ($search, $searchFields, $customFields) {
+//                if($searchFields){
+//                    foreach ($searchFields as $index => $searchField) {
+//
+//                        if (!is_numeric($index))
+//                            foreach ($searchField as $relSearchField) {
+//                                $query = $query->orWhereHas($index, function (Builder $q) use ($relSearchField, $search) {
+//                                    $q->where($relSearchField, 'like', "%$search%");
+//                                });
+//                            }
+//                        else
+//                            $query = $query->orWhere($searchField, 'like', "%$search%");
+//
+//                    }
+//                }
+//            });
         }
         $total = $query->pluck('id')->count();
         $results = $query->orderBy($sort, $order)

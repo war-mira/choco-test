@@ -1,4 +1,3 @@
-
 function checkblock(block)
 {
     let $back = false;
@@ -65,6 +64,33 @@ $(document).ready(function() {
         openOnFocus: false
     });
 
+    $(".question-slider").slick({
+        infinite: false,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        dots: true,
+        responsive: [
+        {
+            breakpoint: 1199.98,
+            settings: {
+                slidesToShow: 3
+            }
+        },
+        {
+            breakpoint: 991.98,
+            settings: {
+                slidesToShow: 2
+            }
+        },
+        {
+            breakpoint: 767.98,
+            settings: {
+                slidesToShow: 1
+            }
+        }
+        ]
+    });
+    
     $(".entity-slider").slick({
         infinite: false,
         slidesToShow: 4,
@@ -639,9 +665,9 @@ $(document).ready(function() {
         }
     });
 
-    $('.search-bar__line .js-type-select').on('change', function () {
+    $('.search-bar__line .js-type-select').change( function () {
         let input = $(this).parents('form').find('.js-search-input');
-        input.val('');
+        // input.val('');
         let placeholder;
         if($(this).val() == 'doctor'){
             placeholder = 'Введите специальность или фамилию врача';
@@ -660,7 +686,10 @@ $(document).ready(function() {
     });
     setTimeout(()=>{
         let readmore = document.querySelector('.entity-line__about-text');
-        readmore.style.height = readmore.scrollHeight+'px';
+        if(readmore){
+            readmore.style.height = readmore.scrollHeight+'px';
+        }
+
     },1000);
     $('.entity-line__about-text-more').on('click', function () {
         let text = $(this).parents('.entity-line__about-block').find('.entity-line__about-text');
@@ -746,6 +775,34 @@ $(document).ready(function() {
         }
     });
 
+    $("#confirm_code").click(function () {
+        if ($("#phone_code").val().length==4) {
+            $.post("{{url('/comment/confirm-code')}}", {
+                code: $('#phone_code').val(),
+                _token:'{{ csrf_token() }}'
+            })
+                .done(function (json) {
+                    if (json.error) {
+                        $('#save_comment_mess_ok').removeClass('access').addClass('error').html('<b>' + json.error + '</b>');
+                        $('#save_comment_mess_ok').slideDown(200);
+                        // $('#code_confirm').hide();
+                    }
+                    else if (json.id) {
+                        $('#code_confirm').slideUp(200);
+                        $('#save_comment_mess_ok').removeClass('error').addClass('access').html('<b>Спасибо! Ваш комментарий отправлен на модерацию</b>');
+                        $('#save_comment_mess_ok').slideDown(200);
+                        $("#feedback__form")[0].reset();
+                    }
+                });
+        }
+        else {
+            $('#user_name').addClass('has-warning');
+            $('#user_last_name').addClass('has-warning');
+            $('#text').addClass('has-warning');
+
+        }
+    });
+
     $('.show-question-form button').on('click', function () {
         $('.question__form').slideToggle(300);
     });
@@ -777,33 +834,30 @@ $(document).ready(function() {
     }else{
         desktop_datetime.remove();
     }
-    var form = $("#question__form");
+        var form = $("#ask-doctor-modal-form");
     $("#question__form-send").click(function () {
         if (form[0].checkValidity()) {
             var data = form.serialize();
-            console.log(data);
             $.post("/question/add", data)
                 .done(function (json) {
-                    $('#user-email').removeClass('has-warning');
-                    $('#user-phone').removeClass('has-warning');
                     $('#user-birthday').removeClass('has-warning');
                     $('#user-gender').removeClass('has-warning');
+                    $('#user-answer').removeClass('has-warning');
                     $('#question-text').removeClass('has-warning');
 
                     modalOpen('question__modal');
 
                     if (json.error) {
-                        $('#save_comment_mess_ok').removeClass('access').addClass('error').html('<b>' + json.error + '</b>');
-                        $('#save_comment_mess_ok').show();
+                        $('#ask_doctor_mess_ok').removeClass('access').addClass('error').html('<b>' + json.error + '</b>');
+                        $('#ask_doctor_mess_ok').show();
                     }
                     else if (json.id) {
-                        $('#save_comment_mess_ok').removeClass('error').addClass('access').html('<b>Спасибо! Ваш комментарий отправлен на модерацию</b>');
-                        $('#save_comment_mess_ok').show();
+                        $('#ask_doctor_mess_ok').removeClass('error').addClass('access').html('<b>Спасибо за вопрос! Когда врач ответит, мы Вам обязательно сообщим.</b>');
+                        $('#ask_doctor_mess_ok').show();
                         form[0].reset();
                     }
                 });
-        }
-        else {
+        }else {
             if(!$('#user-email').val()){
                 $('#user-email').addClass('has-warning');
             }else{
@@ -819,16 +873,19 @@ $(document).ready(function() {
             }else{
                 $('#user-birthday').removeClass('has-warning');
             }
-            if(!$('#user-birthday-mobile').val() || !isValidDate($('#user-birthday-mobile').val())){
-                $('#user-birthday-mobile').addClass('has-warning');
-            }else{
-                $('#user-birthday-mobile').removeClass('has-warning');
-            }
-            if(!$('#user-gender').val()){
-                $('#user-gender').addClass('has-warning');
-            }else{
+            
+            if ($('input[name=gender]:checked').length > 0) {
                 $('#user-gender').removeClass('has-warning');
+            }else{
+                $('#user-gender').addClass('has-warning');
             }
+            
+            if ($('input[name=question_notify]:checked').length > 0) {
+                $('#user-answer').removeClass('has-warning');
+            }else{
+                $('#user-answer').addClass('has-warning');
+            }
+            
             if(!$('#question-text').val()){
                 $('#question-text').addClass('has-warning');
             }else{
@@ -837,28 +894,39 @@ $(document).ready(function() {
         }
     });
 
-    $('form.search-bar__line').each(function () {
-        var $form = $(this);
-        $form.on('change', 'select[data-select="action"]',  function () {
-            var type = $form.find('option:selected').val();
-            var action = '';
-            if (type == 'doctor'){
-                action = "{!!route('doctors.list')!!}";
-            }else {
-                action = "{!! route('medcenters.list') !!}";
-            }
-            $form.attr('action', action);
-        });
-    });
-
     $('.search_event').on('click', function () {
         ga('send', 'event', {
             eventCategory: 'poisk_glavnaya',
             eventAction: 'click'
         });
     })
-
+    
+   window.onscroll = function() {
+       stickNavbar();
+    };
+    window.onload = function(){
+        var navbar = document.getElementById("navbar");
+        if(! /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+            navbar.classList.add('desctop');
+        }
+        stickNavbar();
+    };
 });
+
+function stickNavbar(){
+    var navbar = document.getElementById("navbar");
+    var currentScrollPos = window.pageYOffset;
+
+    if(currentScrollPos>80){
+        document.getElementById('nav-top-container').classList.remove('mr_0');
+        document.getElementById('nav-top-container').classList.add('ml_0');
+        navbar.classList.add('fixed-top');
+    }else{
+        navbar.classList.remove('fixed-top');
+        document.getElementById('nav-top-container').classList.remove('ml_0');
+        document.getElementById('nav-top-container').classList.add('mr_0');
+    }
+}
 
 
 function changeTab(el) {
@@ -976,4 +1044,10 @@ function getFormData($form) {
     });
 
     return indexed_array;
+}
+
+
+if($('.section-question__content').length){
+
+
 }

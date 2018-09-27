@@ -43,6 +43,20 @@
                 </a>
             </div>
         </div>
-
     </div>
 </div>
+<script type="text/javascript">
+    $('form.search-bar__line').each(function () {
+        var $form = $(this);
+        $form.on('change', 'select[data-select="action"]',  function () {
+            var type = $form.find('option:selected').val();
+            var action = '';
+            if (type == 'doctor'){
+                action = "{!!route('doctors.list')!!}";
+            }else {
+                action = "{!! route('medcenters.list') !!}";
+            }
+            $form.attr('action', action);
+        });
+    });
+</script>

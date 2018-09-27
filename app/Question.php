@@ -2,6 +2,9 @@
 
 namespace App;
 
+use App\Helpers\votes;
+use App\Http\Requests\Filter;
+use App\Traits\Eloquent\FilterScopes;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -17,6 +20,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Question extends Model
 {
+    use FilterScopes;
+    use votes;
+
     const STATUS = [
         0 => 'Модерация',
         1 => 'Допущенный',
@@ -34,6 +40,7 @@ class Question extends Model
         'user_id',
         'text',
         'status',
+        'skill_id',
         'created_at',
         'updated_at'
     ];
@@ -85,5 +92,8 @@ class Question extends Model
 
         return $questions;
     }
-
+    public function scopeFilter($query, Filter $filters)
+    {
+        return $filters->apply($query);
+    }
 }

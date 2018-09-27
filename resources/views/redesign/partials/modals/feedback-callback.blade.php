@@ -1,4 +1,4 @@
-<div class="modal-window" id="question__modal">
+<div class="modal-window">
     <div class="modal-close"></div>
     <div class="modal__content">
         <div class="modal__title">

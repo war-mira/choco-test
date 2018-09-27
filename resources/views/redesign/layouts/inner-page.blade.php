@@ -17,8 +17,11 @@
         @include('redesign.partials.modals.modal-login')
         @include('redesign.partials.modals.quick-order')
         @include('redesign.partials.modals.feedback-callback')
+        @include('redesign.partials.modals.ask-doctor',['skillsList'=> $skillsList??[]])
     </div>
 </div>
+
 @include('redesign.layouts._footer')
+
 </body>
 </html>

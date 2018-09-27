@@ -227,7 +227,7 @@
                                             })
                                             ->orderBy('lastname')->get()->slice(0,$visible) as $doctor)
                                                 <div class="doc-list__item entity-line doc-line">
-                                                    @include('model.doctor.prof_new')
+                                                    @include('model.doctor.prof_new',['doctor'=>$doctor])
                                                 </div>
                                             @endforeach
 
@@ -237,7 +237,7 @@
                             </div>
 
                             <div class="doc-list__more">
-                                <a href="#" data-url="{{route('medcenter.doctors',['city'=>$medcenter->city->alias,'medcenter'=>$medcenter->alias])}}" class="btn btn_theme_more">Еще
+                                <a data-url="{{route('medcenter.doctors',['city'=>$medcenter->city->alias,'medcenter'=>$medcenter->alias])}}" class="btn btn_theme_more">Еще
                                     <span id="docsLeftText">{{$ost}}</span> врачей</a>
                             </div>
                         </div>
@@ -270,7 +270,6 @@
                     </div>
                 </div>
                 <div id="tab-4" class="entity-about-article">
-
                 </div>
             </div>
         </div>
@@ -320,6 +319,8 @@
         <!-- end section -->
     @endif
     @include('forms.public.order_doc')
+@endsection
+@push('custom.js')
     <script type="text/javascript">
         $(function () {
             var offset = {{$visible}};
@@ -405,4 +406,4 @@
 
         });
     </script>
-@endsection
+@endpush

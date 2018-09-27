@@ -50,7 +50,7 @@
             </div>
             <div class="leave-review__textarea-item">
                 <div id="client_comment" class="collapse">
-                    <textarea class="form-control" id="client_comment_text" name="client_comment" placeholder="Напишите свои пожелания сюда..(можно оставить пустым)"></textarea>
+                    <textarea class="form-control" id="client_comment_text" name="client_comment" placeholder="Напишите свои пожелания сюда"></textarea>
                 </div>
             </div>
             <div class="leave-review__submit">

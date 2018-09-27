@@ -7,8 +7,8 @@
         <div class="container">
             <div class="index-intro__container">
                 <div class="index-intro__heading">
-                    <div>Бесплатный сервис поиска врача</div>
-                    <div>НАЙТи ПРОВЕРЕННОГО Врача — легко!</div>
+                    <h1>Бесплатный сервис поиска врача</h1>
+                    <div>Найти проверенного врача — легко!</div>
                 </div>
 
                 @include('redesign.partials.index.search')
@@ -36,16 +36,9 @@
     <!-- section intro end -->
 
     <!-- begin questions -->
-    <div class="section questions">
-        <div class="container">
-            <div class="questions-container">
-                    <div class="show-question-form">
-                        <h1 class="button">Задать вопрос врачу</h1>
-                    </div>
-                    @include('forms.public.question-form')
-            </div>
+        <div class="section questions">
+            @include('redesign.partials.questions_list')
         </div>
-    </div>
     <!-- end section -->
 
     <!-- section letter search start -->
@@ -157,8 +150,15 @@
                 <div class="partners__list-item"><img src="{{asset('img/partner/4.jpg')}}" alt=""></div>
                 <div class="partners__list-item"><img src="{{asset('img/partner/5.jpg')}}" alt=""></div>
                 <div class="partners__list-item"><img src="{{asset('img/partner/6.jpg')}}" alt=""></div>
+                <div class="partners__list-item"><img src="{{asset('img/partner/7.jpg')}}" alt=""></div>
             </div>
         </div>
     </section>
     <!-- section partners end-->
+    <style>
+        .index-intro {
+            height:fit-content!important;
+        }
+    </style>
+
 @endsection

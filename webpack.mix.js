@@ -1,7 +1,9 @@
-const {mix} = require('laravel-mix');
+
+const { mix } = require('laravel-mix');
+mix.disableNotifications();
 
 /*
- |--------------------------------------------------------------------------
+ |------------------------------------------------ --------------------------
  | Mix Asset Management
  |--------------------------------------------------------------------------
  |
@@ -10,7 +12,7 @@ const {mix} = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
-mix.disableNotifications();
+
 /**
  * LVG package resources
  */
@@ -23,7 +25,13 @@ mix
 ;
 
 
-mix.js('resources/assets/js/app.js', 'public/js')
+mix
+    .babel([
+    'resources/assets/js/libs/Filters.js'
+], 'public/build/js/libs/Filters.js');
+
+
+mix.js('resources/assets/js/app.js', 'public/build/js')
     .scripts([
         'resources/assets/js/plugins/jquery.min.js',
         'resources/assets/js/plugins/jquery-masked-input.js',
@@ -32,16 +40,21 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'resources/assets/js/plugins/selectize.min.js',
         'resources/assets/js/plugins/pickmeup.min.js',
         'resources/assets/js/plugins/jquery.magnific-popup.min.js',
-        // 'resources/assets/js/plugins/scripts.js'
-    ], 'public/js/all.js')
+    ], 'public/build/js/all.js')
     .babel([
         'resources/assets/js/plugins/scripts.js'
-    ], 'public/js/scripts.js')
-    .sass('resources/assets/sass/app.scss', 'public/css')
+    ], 'public/build/js/scripts.js')
+    .sass('resources/assets/sass/app.scss', 'public/build/css')
+    .combine([
+        'public/build/js/all.js',
+        'public/build/js/scripts.js',
+        'public/build/js/app.js',
+    ],'public/build/js/app.js')
     .options({
         processCssUrls: false,
         postCss: [
             require('postcss-css-variables')()
         ]
+
     })
     .version();

@@ -26,7 +26,7 @@
                     @if($Medcenters->links() != "")
                     <div class="results d-result" style="">
                         <div class="text-center search-pagination" id="bottomPagination">
-                            {!! $Medcenters->links() !!}
+                            {!! $Medcenters->appends(request()->query())->links() !!}
                         </div>
                     </div>
                     @endif
@@ -40,7 +40,7 @@
     @include('forms.public.order_med_new')
 
 @endsection
-@push('suctom.js')
+@push('custom.js')
     <script>
         if($('.search-input-group select').length)
         {

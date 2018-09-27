@@ -85,6 +85,7 @@ class AutoComplete {
     closeDropdown() {
         this.dropdown.querySelector('.list').scrollTo(0, 0);
         this.dropdown.classList.remove('show');
+
     }
 
     setInputValue(target) {

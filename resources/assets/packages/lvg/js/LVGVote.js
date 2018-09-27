@@ -3,7 +3,7 @@ class LVGVote {
         this.container = document.querySelector('.page--lvg');
         this.autocompletes = [];
         this.users = [];
-        this.current = 1;
+        this.current = 5;
         this.limit = 5;
     }
 
@@ -62,6 +62,7 @@ class LVGVote {
 
     initAddDoctor() {
         let _self = this;
+        return false;
         this.container.querySelector('.add_doctor').addEventListener('click', function (e) {
             if (_self.current < 5) {
                 let template = _.template(document.getElementById('form--row').innerHTML);
