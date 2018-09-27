@@ -14,7 +14,12 @@
 
     project.messages.forEach(function(msg){
         try{
-            toastr.warning(msg);
+            if(msg.type == 'warning'){
+                toastr.warning(msg.msg);
+            } else if(msg.type == 'success'){
+                toastr.success(msg.msg);
+            }
+
         } catch(err){}
     });
 </script>

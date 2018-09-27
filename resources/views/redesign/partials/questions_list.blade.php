@@ -2,14 +2,14 @@
     <div class="container">
         <div class="questions-header-block">
             <h2 class="button">Вопросы и ответы</h2>
-            <a href="{{url('question_list')}}">{{ $answered_questions }}+ отвеченных врачами вопросов</a>
+            <a href="{{url('question/list')}}">{{ $answered_questions }}+ отвеченных врачами вопросов</a>
         </div>
         <div class="questions-block">
             @foreach($questions as $question)
                 <div class="question-item">
                     <div class="question-item-header">
                         <h3 class="question-item-title">
-                            <a href="{{url('question_item/'.$question->id)}}">{{ $question->text }}</a>
+                            <a href="{{url('question/item/'.$question->id)}}">{{ $question->text }}</a>
                         </h3>
                     </div>
                     @foreach($question->answers->take(1) as $answer)

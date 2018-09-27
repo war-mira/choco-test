@@ -11,9 +11,12 @@ namespace App\Components;
 
 class ToastrNotification
 {
-    public static function push($msg)
+    public static function push($msg,$type = 'warning')
     {
-        session()->push('toast_messages',$msg);
+        session()->push('toast_messages',[
+            'type'=>$type,
+            'msg' => $msg
+        ]);
     }
 
     public static function get($json = true){

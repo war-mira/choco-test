@@ -6,7 +6,7 @@
                 <div class="question-slider__item">
                     <div class="question__question-header">
                         <h3 class="question-item-title">
-                            <a href="{{url('question_item/'.$near_question->id)}}">{{ $near_question->text }}</a>
+                            <a href="{{url('question/item/'.$near_question->id)}}">{{ $near_question->text }}</a>
                         </h3>
                     </div>
                     @foreach($near_question->answers->take(1) as $near_answer) 

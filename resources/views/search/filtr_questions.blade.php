@@ -6,7 +6,7 @@
         <div class="result-control-bar__line group__filters" id="filtersGroup">
             <div class="result-control-bar__query">
                 <div class="result-control-bar__query-count">
-                    <a href="{{url('question_list')}}">{{ $answered_questions }}+ отвеченных врачами вопросов</a>
+                    <a href="{{url('question/list')}}">{{ $answered_questions }}+ отвеченных врачами вопросов</a>
                 </div>
 
                 <input type="radio" style="display:none;" name="order" value="asc" >

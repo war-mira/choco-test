@@ -16,7 +16,7 @@
                         <div class="article-line__main">
                             <div class="h3 profiles__title">
                                 <div class="entity-line__name">
-                                    <a href="{{url('question_item/'.$question->id)}}">{{ $question->text }}</a>
+                                    <a href="{{url('question/item/'.$question->id)}}">{{ $question->text }}</a>
                                 </div>
                             </div>
                             <div class="entity-line__about-text">
