@@ -8,8 +8,8 @@
                 <input type="hidden" name="medc" value="@if(isset($skill)){{$skill->alias}}@endif" />
                 <div class="search-bar__item search-bar__item_type">
                     <select name="type" placeholder="Поиск медцентра" class="js-simple-select js-type-select" data-select="action">
-                        <option value="doctor" @if((isset($_GET['type']) && ($_GET['type'] == 'doctor')) && !isset($skill->alias)) selected="selected" @endif>Поиск врача</option>
-                        <option value="medcenter" @if((!isset($_GET['type']) || $_GET['type'] == 'medcenter')  && !isset($skill->alias)) selected="selected" @endif>Поиск медцентра</option>
+                        <option value="doctor" @if((isset($_GET['type']) && ($_GET['type'] == 'doctor')) && !isset($skill->alias)) selected="selected" @endif>Найти врача</option>
+                        <option value="medcenter" @if((!isset($_GET['type']) || $_GET['type'] == 'medcenter')  && !isset($skill->alias)) selected="selected" @endif>Найти медцентр</option>
                     </select>
                 </div>
                 <div class="search-bar__item search-bar__item_search">
