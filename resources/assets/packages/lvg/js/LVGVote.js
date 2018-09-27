@@ -63,8 +63,8 @@ class LVGVote {
     initAddDoctor() {
         let _self = this;
 
-        return false;
-         //
+        //return false;
+        //
         this.container.querySelector('.add_doctor').addEventListener('click', function (e) {
             if (_self.current < 5) {
                 let template = _.template(document.getElementById('form--row').innerHTML);
@@ -72,10 +72,30 @@ class LVGVote {
                 _self.container.querySelector('.vote--form .additional--rows').appendChild(row);
                 _self.initLastnameAutocomplete(row.querySelector('.autocomplete__lastname'), _self);
                 _self.initSkillAutocomplete(row.querySelector('.autocomplete__skill'), _self);
+                _self.removeDoctor(row.querySelector('.delete__row'),_self); 
                 _self.current++;
-                if(_self.current >= 5){
+                if (_self.current >= 5) {
                     e.target.classList.add('hidden');
                 }
+            }
+        });
+    }
+
+    initRemoveDoctor() {
+        let _self = this;
+        this.container.querySelectorAll('.delete__row').forEach((item) => {
+            _self.removeDoctor(item, _self);
+        })
+    }
+
+    removeDoctor(item, _self) {
+        item.addEventListener('click', function (e) {
+            let target = e.target;
+            let row = target.closest('.form--row');
+            row.remove();
+            _self.current--;
+            if (_self.current < 5) {
+                _self.container.querySelector('.add_doctor').classList.remove('hidden');
             }
         });
     }
@@ -130,7 +150,7 @@ class LVGVote {
                 _self.markAsError(input);
                 input.placeholder = 'Заполните это поле';
                 errors.push(`${label === null ? input.getAttribute('name') : label.innerText} не заполнено`);
-            } else{
+            } else {
                 if (input.getAttribute('data-id') !== null) {
                     user[input.getAttribute('name')] = {
                         value: input.value,
@@ -142,10 +162,10 @@ class LVGVote {
             }
         });
 
-        if(_.has(user,'lastname.id')){
-            let needle = _.filter(this.users, { lastname:  { id: user.lastname.id } });
-            if(needle.length){
-                if(_.isEqual(user,_.first(needle)) || user.lastname.id == _.first(needle).lastname.id){
+        if (_.has(user, 'lastname.id')) {
+            let needle = _.filter(this.users, {lastname: {id: user.lastname.id}});
+            if (needle.length) {
+                if (_.isEqual(user, _.first(needle)) || user.lastname.id == _.first(needle).lastname.id) {
                     _self.cleanRow(row);
                     confirm('Вы не можете голосовать дважды за одного врача');
                     return false;
@@ -156,14 +176,16 @@ class LVGVote {
         return errors.length ? false : true;
 
     }
-    showEnd(){
+
+    showEnd() {
         let main = this.container.querySelector('.main');
         let end = this.container.querySelector('.end');
         main.classList.add('hide');
-        setTimeout(()=>{
+        setTimeout(() => {
             end.classList.remove('hide');
-        },200)
+        }, 200)
     }
+
     save() {
         let _self = this;
         $.post('/actions/best-doctor-2018/postVote', {
@@ -171,13 +193,13 @@ class LVGVote {
         })
             .done(function (response) {
                 if (response.code == 200) {
-                  _self.showEnd();
+                    _self.showEnd();
                 }
             })
             .fail(function (data) {
                 data = data.responseJSON;
                 alert(data.msg);
-                if(data.code == 419){
+                if (data.code == 419) {
                     _self.showEnd();
                 }
 
@@ -186,7 +208,7 @@ class LVGVote {
 
     cleanRow(row) {
         let _self = this;
-        row.querySelectorAll('input').forEach(function(input){
+        row.querySelectorAll('input').forEach(function (input) {
             input.value = '';
             _self.markAsError(input);
             input.placeholder = 'Заполните это поле';
@@ -229,6 +251,7 @@ class LVGVote {
     init() {
         this.initAutocomplete();
         this.initAddDoctor();
+        this.initRemoveDoctor();
         this.initVoteButton();
         $.ajaxSetup({
             headers: {
