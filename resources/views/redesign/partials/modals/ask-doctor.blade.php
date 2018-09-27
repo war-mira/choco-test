@@ -23,8 +23,8 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label>Ваш пол *</label>
-                        <div id="user-gender" class="" >
-                            <input type="radio" name="user[gender]" id="gender_m" value="0"/>
+                        <div id="user-gender">
+                            <input type="radio" name="user[gender]" id="gender_m" value="0" required/>
                             <label for="gender_m">Мужской</label>
                             <input type="radio" name="user[gender]" id="gender_f"  value="1"/>
                             <label for="gender_f">Женский</label>
@@ -48,7 +48,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label>Специализация</label>
-                        <select name="skill">
+                        <select name="question[skill_id]">
                             <option value="40">Выберите специализацию</option>
                             @foreach($skillsList as $skill)
                                 <option value="{{$skill['id']}}">{{$skill['name']}}</option>
