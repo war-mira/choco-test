@@ -8,6 +8,15 @@
             eventAction: 'click'
         });
     });
+    var project ={
+        messages:{!! \App\Components\ToastrNotification::get()??'[]' !!}
+    };
+
+    project.messages.forEach(function(msg){
+        try{
+            toastr.warning(msg);
+        } catch(err){}
+    });
 </script>
 <noscript>
     <div><img src="https://mc.yandex.ru/watch/47714344" style="position:absolute; left:-9999px;" alt=""/></div>

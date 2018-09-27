@@ -1,5 +1,5 @@
 @include('search.filtr_questions')
-    <div class="container">
+    <div class="container questions--list">
         <section class="section-question__content">
             <div class="article-list-block">
                 @foreach($questions as $question)
@@ -46,11 +46,11 @@
                 </div>
             </div>
         </section>
-        @if($questions->count() != "")
-                    <div class="results filter">
+            @if($questions->links() != "")
+                    <div class="results filter questions--list__paginate">
                         <div class="container">
                             <div class="text-center search-pagination" id="topPagination">
-                                {!! $questions->count() !!}
+                                {!! $questions->links() !!}
                             </div>
                         </div>
                     </div>

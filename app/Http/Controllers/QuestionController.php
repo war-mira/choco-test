@@ -54,7 +54,7 @@ class QuestionController extends Controller
         $questions = Question::whereHas('answers')
             ->with('answers')
             ->filter($filters)
-            ->get();
+            ->paginate(20);
         $answered_questions = Question::wherehas('answers')->count();
 
         return view('questions.list')->with(

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Components\ToastrNotification;
 use App\Doctor;
 use App\Helpers\SeoMetadataHelper;
 use App\Helpers\SessionContext;
@@ -20,7 +21,6 @@ class IndexController extends Controller
 {
     public function home()
     {
-
 
         if (Cache::has('index:skills'))
             $stats = Cache::get('index:stats');
