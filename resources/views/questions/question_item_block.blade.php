@@ -30,7 +30,7 @@
                             <div class="entity-line__descr">
                                 @foreach ($answer->doctor['skills'] as $i=>$skill)
                                     <a href="{{$skill->href}}" style="text-decoration: none">{{$skill->name }}</a>
-                                    @if(count($answer->doctor['skills']) > 1 && $i!=(count($doctor['skills'])-1))
+                                    @if(count($answer->doctor['skills']) > 1 && $i!=(count($answer->doctor['skills'])-1))
                                         / @endif  @endforeach
                             </div>
                         </div>
