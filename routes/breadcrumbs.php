@@ -71,6 +71,7 @@ Breadcrumbs::register('doctor.profile', function ($breadcrumbs, $doctor) {
     if(!is_null($doctor->main_skill)){
         $meta = SeoMetadataHelper::getMeta($doctor->main_skill, $doctor->city);
         $breadcrumbs->push($meta['h1'],  route('doctors.list',[
+            'city' => $doctor->city->alias,
             'input' => $doctor->main_skill->alias
         ],false));
     }

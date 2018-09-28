@@ -6,10 +6,10 @@
                 <div class="question-slider__item">
                     <div class="question__question-header">
                         <h3 class="question-item-title">
-                            <a href="{{url('question/item/'.$near_question->id)}}">{{ $near_question->text }}</a>
+                            <a href="{{url('question/item/'.$near_question->id)}}">{{\Illuminate\Support\Str::words($near_question->text,15) }}</a>
                         </h3>
                     </div>
-                    @foreach($near_question->answers->take(1) as $near_answer) 
+                    @foreach($near_question->answers->take(1) as $near_answer)
                         <div class="question-slider-item-doctor">
                             <div class="parent_cont question-main-img">
                                 @component('components.prof-img',[
@@ -32,15 +32,15 @@
                                 <div class="entity-line__descr">
                                     @foreach ($near_answer->doctor['skills'] as $i=>$skill)
                                         <a href="{{$skill->href}}" style="text-decoration: none">{{$skill->name }}</a>
-                                    @if(count($near_answer->doctor['skills']) > 1 && $i!=(count($doctor['skills'])-1)) / @endif  @endforeach
+                                        @if(count($near_answer->doctor['skills']) > 1 && $i!=(count($near_answer->doctor['skills'])-1)) / @endif  @endforeach
                                 </div>
                             </div>
                             <div class="question-item-answer">
-                                <p>{{ $near_answer->text }} </p>
+                                <p>{{ \Illuminate\Support\Str::words($near_answer->text,50) }} </p>
                             </div>
                         </div>
                     @endforeach
-                    
+
                 </div>
             @endforeach
         </div>
