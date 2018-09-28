@@ -22,6 +22,9 @@ class ToastrNotification
     public static function get($json = true){
         $messages = session('toast_messages');
         session()->forget('toast_messages');
+        if(empty($messages)){
+            $messages = [];
+        }
         return $json?json_encode($messages):$messages;
     }
 }
