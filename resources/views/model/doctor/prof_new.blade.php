@@ -32,7 +32,7 @@
     </div>
 
     <div class="entity-thumb-img__bot-line">
-        <a href="{{ route('doctor.item',['almaty', 'doctor'=>$doctor->alias]).'#tab-2' }}" class="entity-thumb-img__reviews">{{$doctor->publicComments()->count()}} отзывов</a>
+        <a href="{{ route('doctor.item',['doctor'=>$doctor->alias]).'#tab-2' }}" class="entity-thumb-img__reviews">{{$doctor->publicComments()->count()}} отзывов</a>
         <inp-rate obj="doctor" id="{{ $doctor->id }}" type="likes" >
             <template slot="likes">{{ $doctor->likes }}</template>
             <template slot="dislikes">{{ $doctor->dislikes }}</template>
@@ -40,7 +40,7 @@
     </div>
 </div>
 <div class="entity-line__main">
-    <h3 class="entity-line__name profiles__title"><a href="{{ route('doctor.item',['almaty','doctor'=>$doctor->alias]) }}">{{$doctor['name']}}</a></h3>
+    <h3 class="entity-line__name profiles__title"><a href="{{ route('doctor.item',['doctor'=>$doctor->alias]) }}">{{$doctor['name']}}</a></h3>
     <div class="entity-line__descr">@foreach ($doctor['skills'] as $i=>$skill)<a href="{{$skill->href}}"
                                                                                  style="text-decoration: none">{{$skill->name }}</a>
         @if(count($doctor['skills']) > 1 && $i!=(count($doctor['skills'])-1)) / @endif  @endforeach</div>
@@ -88,7 +88,7 @@
             <div class="doc-line__address-list">
                 @foreach($doctor->jobs as $job)
                     <div class="doc-line__address-item">
-                        <div class="doc-line__address-val"><a href="{{ route('doctor.item', ['almaty', $doctor->alias]) }}">{{$doctor['city']->name}}</a>, {{$job->medcenter ? $job->medcenter->sms_address: ''}}</div>
+                        <div class="doc-line__address-val"><a href="{{ route('doctor.item', ['doctor' => $doctor->alias]) }}">{{$doctor['city']->name}}</a>, {{$job->medcenter ? $job->medcenter->sms_address: ''}}</div>
                         <div class="doc-line__address-clinic-link">
                             @if($job->medcenter)
                                 @if($job->medcenter->status == 1)
