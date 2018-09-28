@@ -180,30 +180,32 @@
                         $center = \App\Medcenter::find($doctor->med_id)->coordinates;
                     @endphp
                 @endif
-                <script type="text/javascript">
-                    ymaps.ready(function () {
+                @push('custom.js')
+                    <script type="text/javascript">
+                        ymaps.ready(function () {
 
-                        var myMap = new ymaps.Map("entity-map", {
-                            center: [{{ $center }}],
-                            zoom: 15
+                            var myMap = new ymaps.Map("entity-map", {
+                                center: [{{ $center }}],
+                                zoom: 15
+                            });
+
+                                    @foreach($doctor->medcenters as $med)
+                            var pl = new ymaps.Placemark([{{ $med->coordinates }}]);
+                            myMap.geoObjects.add(pl);
+                            @endforeach
+
+                            $('.js-select-medcenter').on('change', function () {
+                                let medcenterCoords = $(this).val();
+                                let address = $(this).parents('.entity-line__address-select').find('.selectize-control').find('.items').find('div').data('address');
+                                $('.entity-map__address-name').text(address);
+
+                                myMap.panTo(
+                                    [medcenterCoords.split(", ")]
+                                )
+                            });
                         });
-
-                                @foreach($doctor->medcenters as $med)
-                        var pl = new ymaps.Placemark([{{ $med->coordinates }}]);
-                        myMap.geoObjects.add(pl);
-                        @endforeach
-
-                        $('.js-select-medcenter').on('change', function () {
-                            let medcenterCoords = $(this).val();
-                            let address = $(this).parents('.entity-line__address-select').find('.selectize-control').find('.items').find('div').data('address');
-                            $('.entity-map__address-name').text(address);
-
-                            myMap.panTo(
-                                [medcenterCoords.split(", ")]
-                            )
-                        });
-                    });
-                </script>
+                    </script>
+                @endpush
             </div>
         </div>
     </div>

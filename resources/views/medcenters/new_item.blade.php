@@ -101,7 +101,7 @@
                     @php
                         $center = $medcenter->coordinates;
                     @endphp
-
+                    @push('custom.js')
                     <script type="text/javascript">
                         ymaps.ready(function () {
 
@@ -124,6 +124,7 @@
                             });
                         });
                     </script>
+                        @endpush
                 </div>
             </div>
         </div>
