@@ -109,5 +109,22 @@
         color: #fff;
       }
     }
+
+    .delete__row{
+      display: flex;
+      align-items: flex-end;
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: underline;
+      @media(max-width:768px){
+        width: 100%;
+        flex-basis: 100%;
+        text-align: center;
+        justify-content: center;
+        margin-bottom: 28px;
+        align-items: center;
+        margin-top: 8px;
+      }
+    }
   }
 }

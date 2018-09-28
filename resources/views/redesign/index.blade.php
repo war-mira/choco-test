@@ -7,8 +7,8 @@
         <div class="container">
             <div class="index-intro__container">
                 <div class="index-intro__heading">
-                    <div>Бесплатный сервис поиска врача</div>
-                    <div>НАЙТи ПРОВЕРЕННОГО Врача — легко!</div>
+                    <h1>Бесплатный сервис поиска врача</h1>
+                    <div>Найти проверенного врача — легко!</div>
                 </div>
 
                 @include('redesign.partials.index.search')
@@ -160,4 +160,5 @@
             height:fit-content!important;
         }
     </style>
+
 @endsection

@@ -1,5 +1,5 @@
 @include('search.filtr_questions')
-    <div class="container">
+    <div class="container questions--list">
         <section class="section-question__content">
             <div class="article-list-block">
                 @foreach($questions as $question)
@@ -16,7 +16,7 @@
                         <div class="article-line__main">
                             <div class="h3 profiles__title">
                                 <div class="entity-line__name">
-                                    <a href="{{url('question_item/'.$question->id)}}">{{ $question->text }}</a>
+                                    <a href="{{url('question/item/'.$question->id)}}">{{ $question->text }}</a>
                                 </div>
                             </div>
                             <div class="entity-line__about-text">
@@ -46,11 +46,11 @@
                 </div>
             </div>
         </section>
-        @if($questions->count() != "")
-                    <div class="results filter">
+            @if($questions->links() != "")
+                    <div class="results filter questions--list__paginate">
                         <div class="container">
                             <div class="text-center search-pagination" id="topPagination">
-                                {!! $questions->count() !!}
+                                {!! $questions->links() !!}
                             </div>
                         </div>
                     </div>

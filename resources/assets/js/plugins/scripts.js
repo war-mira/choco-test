@@ -1,4 +1,3 @@
-
 function checkblock(block)
 {
     let $back = false;
@@ -62,7 +61,9 @@ $(document).ready(function() {
     $('.selectize-input').find('input').prop('disabled', 'disabled');
 
     $(".js-header-location").selectize({
-        openOnFocus: false
+        openOnFocus: false,
+        dropdownParent: ((window.innerWidth < 768)?'.main-header':null),
+        create: false
     });
 
     $(".question-slider").slick({
@@ -807,33 +808,30 @@ $(document).ready(function() {
     }else{
         desktop_datetime.remove();
     }
-    var form = $("#question__form");
+        var form = $("#ask-doctor-modal-form");
     $("#question__form-send").click(function () {
         if (form[0].checkValidity()) {
             var data = form.serialize();
-            console.log(data);
             $.post("/question/add", data)
                 .done(function (json) {
-                    $('#user-email').removeClass('has-warning');
-                    $('#user-phone').removeClass('has-warning');
                     $('#user-birthday').removeClass('has-warning');
                     $('#user-gender').removeClass('has-warning');
+                    $('#user-answer').removeClass('has-warning');
                     $('#question-text').removeClass('has-warning');
 
                     modalOpen('question__modal');
 
                     if (json.error) {
-                        $('#save_comment_mess_ok').removeClass('access').addClass('error').html('<b>' + json.error + '</b>');
-                        $('#save_comment_mess_ok').show();
+                        $('#ask_doctor_mess_ok').removeClass('access').addClass('error').html('<b>' + json.error + '</b>');
+                        $('#ask_doctor_mess_ok').show();
                     }
                     else if (json.id) {
-                        $('#save_comment_mess_ok').removeClass('error').addClass('access').html('<b>Спасибо! Ваш комментарий отправлен на модерацию</b>');
-                        $('#save_comment_mess_ok').show();
+                        $('#ask_doctor_mess_ok').removeClass('error').addClass('access').html('<b>Спасибо за вопрос! Когда врач ответит, мы Вам обязательно сообщим.</b>');
+                        $('#ask_doctor_mess_ok').show();
                         form[0].reset();
                     }
                 });
-        }
-        else {
+        }else {
             if(!$('#user-email').val()){
                 $('#user-email').addClass('has-warning');
             }else{
@@ -849,16 +847,19 @@ $(document).ready(function() {
             }else{
                 $('#user-birthday').removeClass('has-warning');
             }
-            if(!$('#user-birthday-mobile').val() || !isValidDate($('#user-birthday-mobile').val())){
-                $('#user-birthday-mobile').addClass('has-warning');
-            }else{
-                $('#user-birthday-mobile').removeClass('has-warning');
-            }
-            if(!$('#user-gender').val()){
-                $('#user-gender').addClass('has-warning');
-            }else{
+            
+            if ($('input[name=gender]:checked').length > 0) {
                 $('#user-gender').removeClass('has-warning');
+            }else{
+                $('#user-gender').addClass('has-warning');
             }
+            
+            if ($('input[name=question_notify]:checked').length > 0) {
+                $('#user-answer').removeClass('has-warning');
+            }else{
+                $('#user-answer').addClass('has-warning');
+            }
+            
             if(!$('#question-text').val()){
                 $('#question-text').addClass('has-warning');
             }else{
@@ -874,39 +875,32 @@ $(document).ready(function() {
         });
     })
     
-    var prevScrollpos = window.pageYOffset;
-    window.onscroll = function() {
-        var navbar = document.getElementById("navbar");
-        var currentScrollPos = window.pageYOffset;
-        if (prevScrollpos > currentScrollPos) {
-            if(currentScrollPos == 0){
-                navbar.style.top = "80px";
-                navbar.classList.remove("navbar-pattern");
-                document.getElementById('nav-top-container').classList.add('mr_0');
-                document.getElementById('nav-top-container').classList.remove('ml_0');
-            }
-        }else { 
-            navbar.style.top = "0px";
-            navbar.classList.add("navbar-pattern");
-            document.getElementById('nav-top-container').classList.add('ml_0');
-            document.getElementById('nav-top-container').classList.remove('mr_0');
-        }
-        prevScrollpos = currentScrollPos;
+   window.onscroll = function() {
+       stickNavbar();
     };
     window.onload = function(){
         var navbar = document.getElementById("navbar");
         if(! /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-            navbar.style.position = "fixed";
+            navbar.classList.add('desctop');
         }
-        var currentScrollPos = window.pageYOffset;
-        if(currentScrollPos > 80){
-            navbar.style.top = "0px";
-            navbar.classList.add("navbar-pattern");
-            document.getElementById('nav-top-container').classList.add('ml_0');
-            document.getElementById('nav-top-container').classList.remove('mr_0');
-        }
+        stickNavbar();
     };
 });
+
+function stickNavbar(){
+    var navbar = document.getElementById("navbar");
+    var currentScrollPos = window.pageYOffset;
+
+    if(currentScrollPos>80){
+        document.getElementById('nav-top-container').classList.remove('mr_0');
+        document.getElementById('nav-top-container').classList.add('ml_0');
+        navbar.classList.add('fixed-top');
+    }else{
+        navbar.classList.remove('fixed-top');
+        document.getElementById('nav-top-container').classList.remove('ml_0');
+        document.getElementById('nav-top-container').classList.add('mr_0');
+    }
+}
 
 
 function changeTab(el) {

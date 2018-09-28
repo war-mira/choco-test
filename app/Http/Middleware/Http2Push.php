@@ -11,7 +11,7 @@ class Http2Push
     public function __construct()
     {
         $this->assets = [
-            "<".mix('/css/app.css').">; rel=preload; as=style",
+            "<".hotreload('/build/css/app.css').">; rel=preload; as=style",
         ];
     }
     public function handle($request, Closure $next)
@@ -28,7 +28,7 @@ class Http2Push
 
     public static function addJs($link){
         try{
-            $link = mix($link);
+            $link = hotreload($link);
         } catch (\Exception $e){}
         $link ="<".$link.">; rel=preload; as=script";
 
@@ -37,7 +37,7 @@ class Http2Push
     }
     public static function addCss($link){
         try{
-            $link = mix($link);
+            $link = hotreload($link);
         } catch (\Exception $e){}
         $link =  "<".$link.">; rel=preload; as=style";
         array_push(self::$custom,$link);

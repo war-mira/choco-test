@@ -1,0 +1,17 @@
+@media (max-width: 768px) {
+  .make_order_fixed{
+    background: transparent;
+  }
+  .footer{
+    &-contacts{
+      &__appointment{
+        .btn{
+          background: #02a0f2;
+          color: #fff;
+          box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+          font-family: $font-regular;
+        }
+      }
+    }
+  }
+}

@@ -102,8 +102,8 @@ Route::get('comment/{id}/rate/{rate}', 'CommentController@rateComment')->name('r
 
 //******questions*****************
 Route::post('question/add', 'QuestionController@add');
-Route::get('question_item/{question}', 'QuestionController@item');
-Route::get('question_list', 'QuestionController@listQuestions')->name('question.list');
+Route::get('question/item/{question}', 'QuestionController@item');
+Route::get('question/list', 'QuestionController@listQuestions')->name('question.list');
 
 
 //******Posts***************************
@@ -155,7 +155,7 @@ Route::get('redirector', function (\Illuminate\Http\Request $request) {
     return response()->redirectTo($redirectUrl);
 });
 
-Route::group(['as' => 'cabinet.', 'prefix' => 'cabinet', 'middleware' => 'auth'], function () {
+Route::group(['as' => 'cabinet.', 'prefix' => 'cabinet', 'middleware' => ['auth','doctor']], function () {
     Route::group(['as' => 'doctor.', 'prefix' => 'doctor'], function () {
 
         Route::view('/feedback/index','cabinet.doctor.feedback.index')->name('feedback.index');
