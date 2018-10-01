@@ -118,6 +118,8 @@ class CommentController extends Controller
 //                    . ' то проверьте совпадает ли номер телефона с использовавшимся при записи.'];
 //        }
 
+        $rate = (int)$data['user_rate'];
+        $data['user_rate'] = $this->getUserRate($rate);
         $data['text'] = strip_tags($data['text'] ?? "");
         $comment = Comment::create($data);
 //        $comment->created_at = Carbon::now()->timestamp;
@@ -160,6 +162,20 @@ class CommentController extends Controller
         }
 
         return $ip;
+    }
+
+    /**
+     * @param $rate
+     * @return float|int
+     */
+    public function getUserRate(int $rate)
+    {
+        if($rate <= 5){
+            $rate = $rate*2;
+        }   else if($rate > 10){
+            $rate = 10;
+        }
+        return  $rate;
     }
 
     private function existCommentsFromIp($ip, $doctorId){

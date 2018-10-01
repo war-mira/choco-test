@@ -740,36 +740,54 @@ $(document).ready(function() {
         });
     });
 
-    $("#save_comment").click(function (e) {
-        e.preventDefault();
+    /**
+     * Send new comment
+     * moved from blade
+     *
+     *
+     */
+    $('#user_phone').mask("+7 (999) 999-9999");
+
+    $("#save_comment").click(function () {
+        let _btn = $(this);
+        _btn.addClass('saving');
         if ($("#comment_form")[0].checkValidity()) {
             $.getJSON("/comment/new", {
                 owner_id: $('#owner_id').val(),
                 owner_type: $('#owner_type').val(),
-                user_email: $('#user_email').val(),
+                user_email: $('#user_phone').val(),
                 user_name: $('#user_name').val(),
                 text: $('#comment_text').val(),
-                user_rate: $('input[name=user_rate]:checked').val(),
-                date_event: $('#date_event').val(),
-                type:$('#type').val()
+                user_rate: $('input[name=user_rate]').val(),
+                date_event: $('#date_event').val()
             })
                 .done(function (json) {
+                    //console.log(json.code,'what is love?');
                     $('#user_email').removeClass('has-warning');
                     $('#user_name').removeClass('has-warning');
                     $('#comment_text').removeClass('has-warning');
+                    _btn.removeClass('saving');
                     if (json.error) {
                         $('#user_email').addClass('has-warning');
                         $('#save_comment_mess_ok').html('<b>' + json.error + '</b>');
-                        $('#save_comment_mess_ok').show();
+                        $('#save_comment_mess_ok').slideDown(200);
                     }
                     else if (json.id) {
                         $('#save_comment_mess_ok').html('<b>Спасибо! Ваш комментарий отправлен на модерацию</b>');
-                        $('#save_comment_mess_ok').show();
+                        $('#save_comment_mess_ok').slideDown(200);
                         $("#comment_form")[0].reset();
                     }
-                });
-        }
-        else {
+                    else if(json.code){
+                       // console.log(json.code,"baby don't hurt me")
+                        $('#code_confirm').slideDown(200);
+                        $("#comment_form").slideUp(200);
+                        $('#save_comment_mess_ok').slideUp(200);
+                    }
+                }).fail(function(data){
+                _btn.removeClass('saving');
+            });
+        } else {
+            _btn.removeClass('saving');
             $('#user_email').addClass('has-warning');
             $('#user_name').addClass('has-warning');
             $('#comment_text').addClass('has-warning');
@@ -777,6 +795,41 @@ $(document).ready(function() {
         }
     });
 
+
+    $("#confirm_code").click(function () {
+        let _btn = $(this);
+        _btn.addClass('saving');
+        if ($("#phone_code").val().length==4) {
+            $.post("/comment/confirm-code", {
+                code: $('#phone_code').val()
+            })
+                .done(function (json) {
+                    _btn.removeClass('saving');
+                    if (json.error) {
+                        $('#save_comment_mess_ok').removeClass('access').addClass('error').html('<b>' + json.error + '</b>');
+                        $('#save_comment_mess_ok').slideDown(200);
+                        // $('#code_confirm').hide();
+                    }
+                    else if (json.id) {
+                        $('#code_confirm').slideUp(200);
+                        $('#save_comment_mess_ok').removeClass('error').addClass('access').html('<b>Спасибо! Ваш комментарий отправлен на модерацию</b>');
+                        $('#save_comment_mess_ok').slideDown(200);
+                        $("#feedback__form")[0].reset();
+                    }
+                });
+        }
+        else { 
+            _btn.removeClass('saving');
+            $('#user_name').addClass('has-warning');
+            $('#user_last_name').addClass('has-warning');
+            $('#text').addClass('has-warning');
+
+        }
+    });
+
+    /**
+     * END
+     */
     $('.show-question-form button').on('click', function () {
         $('.question__form').slideToggle(300);
     });
