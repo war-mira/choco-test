@@ -1,6 +1,5 @@
 @extends('redesign.layouts.app')
 @section('content')
-
     <!-- section intro start -->
     <section class="index-intro pattern-bg">
         @include('redesign.partials.nav_line')

@@ -8,8 +8,9 @@
             eventAction: 'click'
         });
     });
+
     var project ={
-        messages:{!! \App\Components\ToastrNotification::get()??'[]' !!}
+        messages:{!! \App\Components\ToastrNotification::get($errors??[])??'[]' !!}
     };
 
     project.messages.forEach(function(msg){

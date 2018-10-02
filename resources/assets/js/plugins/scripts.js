@@ -818,7 +818,7 @@ $(document).ready(function() {
                     }
                 });
         }
-        else { 
+        else {
             _btn.removeClass('saving');
             $('#user_name').addClass('has-warning');
             $('#user_last_name').addClass('has-warning');
