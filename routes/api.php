@@ -25,6 +25,8 @@ Route::get('me', function (Request $request) {
 
 Route::middleware(['auth'])->group(function () {
 
+    Route::post('/user/getCode','Api\UserController@requestCode');
+    Route::post('/user/checkCode','Api\UserController@checkCode');
     Route::post('/user/update','Api\UserController@update');
     Route::post('/user/updatePassword','Api\UserController@updatePassword');
 
