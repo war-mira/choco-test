@@ -31,15 +31,15 @@
             {{ $header or '' }}
 
             <!-- Email Body -->
-                <tr>
-                    <td class="body" width="100%" cellpadding="0" cellspacing="0">
-                        <table class="inner-body" align="center" width="570" cellpadding="0" cellspacing="0">
-                            <!-- Body content -->
+                <tr>                    
+                    <td class="body" width="100%" cellpadding="0" cellspacing="0" style=" border-box; background-color: #ffffff; border-bottom: 1px solid #edeff2; border-top: 1px solid #edeff2; margin: 0; padding: 0; width: 100%; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%;">
+                        <table class="inner-body" align="center" width="760" cellpadding="0" cellspacing="0" style="background-color: #ffffff; margin: 0 auto; padding: 0; width: 760px; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 760px;">
                             <tr>
-                                <td class="content-cell">
+                               <td class="content-cell" style="padding: 35px;">
                                     {{ Illuminate\Mail\Markdown::parse($slot) }}
 
                                     {{ $subcopy or '' }}
+
                                 </td>
                             </tr>
                         </table>

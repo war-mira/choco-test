@@ -6,8 +6,8 @@ body, body *:not(html):not(style):not(br):not(tr):not(code) {
 }
 
 body {
-    background-color: #f5f8fa;
-    color: #74787E;
+    background-color: #02a0f2;
+    color: #02a0f2;
     height: 100%;
     hyphens: auto;
     line-height: 1.4;
@@ -30,7 +30,7 @@ blockquote {
 }
 
 a {
-    color: #3869D4;
+    color: #717171;
 }
 
 a img {
@@ -40,7 +40,7 @@ a img {
 /* Typography */
 
 h1 {
-    color: #2F3133;
+    color: #083d59;
     font-size: 19px;
     font-weight: bold;
     margin-top: 0;
@@ -48,7 +48,7 @@ h1 {
 }
 
 h2 {
-    color: #2F3133;
+    color: #083d59;
     font-size: 16px;
     font-weight: bold;
     margin-top: 0;
@@ -56,7 +56,7 @@ h2 {
 }
 
 h3 {
-    color: #2F3133;
+    color: #083d59;
     font-size: 14px;
     font-weight: bold;
     margin-top: 0;
@@ -64,7 +64,7 @@ h3 {
 }
 
 p {
-    color: #74787E;
+    color: #02a0f2;
     font-size: 16px;
     line-height: 1.5em;
     margin-top: 0;
@@ -82,7 +82,7 @@ img {
 /* Layout */
 
 .wrapper {
-    background-color: #f5f8fa;
+    background-color: #02a0f2;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -105,22 +105,23 @@ img {
 .header {
     padding: 25px 0;
     text-align: center;
+    background-color: #02A0F2;
 }
 
 .header a {
-    color: #bbbfc3;
+    color: #ffffff;
     font-size: 19px;
     font-weight: bold;
     text-decoration: none;
-    text-shadow: 0 1px 0 white;
+    
 }
 
 /* Body */
 
 .body {
-    background-color: #FFFFFF;
-    border-bottom: 1px solid #EDEFF2;
-    border-top: 1px solid #EDEFF2;
+    background-color: #ffffff;
+    border-bottom: 1px solid #717171;
+    border-top: 1px solid #717171;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -130,7 +131,7 @@ img {
 }
 
 .inner-body {
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     margin: 0 auto;
     padding: 0;
     width: 570px;
@@ -142,7 +143,7 @@ img {
 /* Subcopy */
 
 .subcopy {
-    border-top: 1px solid #EDEFF2;
+    border-top: 1px solid #edeff2;
     margin-top: 25px;
     padding-top: 25px;
 }
@@ -164,7 +165,7 @@ img {
 }
 
 .footer p {
-    color: #AEAEAE;
+    color: #ffffff;
     font-size: 12px;
     text-align: center;
 }
@@ -180,12 +181,13 @@ img {
 }
 
 .table th {
-    border-bottom: 1px solid #EDEFF2;
+    color: #02a0f2;
+    border-bottom: 1px solid #edeff2;
     padding-bottom: 8px;
 }
 
 .table td {
-    color: #74787E;
+    color: #02a0f2;
     font-size: 15px;
     line-height: 18px;
     padding: 10px 0;
@@ -210,18 +212,18 @@ img {
 .button {
     border-radius: 3px;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
-    color: #FFF;
+    color: #ffffff;
     display: inline-block;
     text-decoration: none;
     -webkit-text-size-adjust: none;
 }
 
 .button-blue {
-    background-color: #3097D1;
-    border-top: 10px solid #3097D1;
-    border-right: 18px solid #3097D1;
-    border-bottom: 10px solid #3097D1;
-    border-left: 18px solid #3097D1;
+    background-color: #02a0f2;
+    border-top: 10px solid #02a0f2;
+    border-right: 18px solid #02a0f2;
+    border-bottom: 10px solid #02a0f2;
+    border-left: 18px solid #02a0f2;
 }
 
 .button-green {
@@ -240,6 +242,15 @@ img {
     border-left: 18px solid #bf5329;
 }
 
+
+/* block shadow */
+.box-shadow-container{
+    -webkit-box-shadow: 0px 0px 9px 2px rgba(141,141,141,0.75);
+    -moz-box-shadow: 0px 0px 9px 2px rgba(141,141,141,0.75);
+    box-shadow: 0px 0px 9px 2px rgba(141,141,141,0.75);
+}
+
+
 /* Panels */
 
 .panel {
@@ -247,7 +258,7 @@ img {
 }
 
 .panel-content {
-    background-color: #EDEFF2;
+    background-color: #edeff2;
     padding: 16px;
 }
 
