@@ -11,7 +11,7 @@
 /public/build
 /public/projects/lvg
 /public/mix-manifest.json
-/public/*.js 
+/public/*.js
 /public/photos
 /public/idoctor.tar.gz
 /storage/*.key
