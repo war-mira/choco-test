@@ -153,7 +153,7 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         '524',
         '495'
     ];
-
+    const SHOW_PHONE = 1;
     public $timestamps = true;
     protected $table = 'doctors';
     protected $fillable = [
@@ -210,7 +210,8 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         'timetable',
         'seo_text',
         'partner',
-        'showing_phone'
+        'showing_phone',
+        'show_phone'
 //        'mond',
 //        'tues',
 //        'wedn',
