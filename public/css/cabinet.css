@@ -1,0 +1,46 @@
+.cabinet-container > .tab-content {
+    background-color: white;
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.cabinet-container > .nav > li > a {
+    background-color: white;
+    margin-right: 2px !important;
+    opacity: 0.7;
+}
+
+.cabinet-container > .nav > li:last-child > a {
+    margin-right: 0 !important;
+}
+
+.cabinet-container .list-group-item:first-child {
+    border: none;
+}
+
+.cabinet-container .list-group-item {
+    border: none;
+    border-top: 1px solid #ddd;
+}
+
+.cabinet-container > .nav > li.active > a {
+    opacity: 1;
+}
+
+.order-datetime-badge {
+    font-size: 16px;
+    padding: 5px;
+    margin-right: 20px;
+}
+
+.order-patient-info {
+    align-items: center;
+    display: flex;
+}
+
+.patient-phone {
+    font-size: large;
+}

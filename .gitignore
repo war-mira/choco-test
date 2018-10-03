@@ -15,6 +15,7 @@
 /public/photos
 /public/idoctor.tar.gz
 /storage/*.key
+/storage
 /vendor
 /.idea
 /.vagrant
