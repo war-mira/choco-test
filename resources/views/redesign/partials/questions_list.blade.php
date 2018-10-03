@@ -4,6 +4,9 @@
             <a href="{{url('question/list')}}">
                 <h2 class="button">Вопросы и ответы</h2>
             </a>
+            <div class="result-control-bar__query-count">
+                <p>Задайте вопрос врачу и получите профессиональный ответ. <br>Гарантируем 100%-ую анонимность вопроса</p>
+            </div>
             <a href="{{url('question/list')}}">{{ $answered_questions }}+ отвеченных врачами вопросов</a>
         </div>
         <div class="questions-block">
