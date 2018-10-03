@@ -67,8 +67,9 @@ $(document).ready(function() {
         create: false
     });
     $(".js-form-selectize").selectize({
-        openOnFocus: false,
+        openOnFocus: true,
         dropdownParent: ((window.innerWidth < 768)?'.main-header':null),
+        persist: false,
         create: false
     });
     $(".question-slider").slick({

@@ -48,6 +48,15 @@
     padding: 10px 0;
 }
 
+.show-question-form .form-row .form-group div{
+    font-family: "ProximaNova-Regular", sans-serif;
+    cursor: pointer;
+    font-size:14px;
+}
+.result-control-bar__query-count p{
+    text-align: center;
+    font-size: 16px;
+}
 .questions__search--form {
   @media(max-width: 768px) {
     .js-search-input {
