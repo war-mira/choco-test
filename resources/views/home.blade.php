@@ -1,47 +1,79 @@
-@extends('redesign.layouts.inner-page')
+@extends('app')
 
 @section('content')
 
     <!-- begin section -->
-    <div class="section pattern-bg">
-        <div class="section-profile">
+    <div class="section profile-bg-client">
+
         <!-- begin container -->
         <div class="container">
-            <div class="tab-line">
-                <a href="{{route('home')}}" class="tab-line__item">
-                    <span class="tab-line__item-text">Личные данные</span>
-                </a>
-                <a href="{{ url('/logout') }}" class="tab-line__item" onclick="event.preventDefault(); document.getElementById('profile-logout-form').submit();">
-                    <span class="tab-line__item-text">Выйти</span>
-                </a>
-                @if(Auth::user()->role == 1)
-                    <a class="tab-line__item" href="{{ route('admin.dashboard') }}">
-                        <span class="tab-line__item-text">Панель управления</span>
+
+            <!-- begin breadcrumbs -->
+            <nav class="breadcrumbs">
+                <ul class="breadcrumbs__list">
+                    <li class="breadcrumbs__item"><a href="{{url('/')}}">Главная</a></li>
+                    <li class="breadcrumbs__item">Ваш профиль</li>
+                </ul>
+            </nav>
+            <!-- end breadcrumbs -->
+
+            <!-- begin middle -->
+            <div class="middle mtop-20">
+
+                <div style="display:none" class="sidebar sidebar--left">
+                    <img class="profiles__img profiles__img--circle" src="images/temp/250x250/client.jpg" width="250"
+                         hegiht="250" alt="Тетя Таня, Хрюша и Степашка">
+                </div>
+
+                <div class="column sidebar--left">
+                    <h1 class="page-title">{{ Auth::user()->name }}</h1>
+                    <ul class="profiles__desc-list">
+                        <li><span>Город:</span> {{Auth::user()->city['name'] ?? 'Не указан'}}</li>
+                        <li><span>Телефон:</span> {{ Auth::user()->phone }} <a
+                                    href="{{route('user.phone.verification.form')}}">Изменить</a></li>
+                        <li><span>E-mail:</span> {{ Auth::user()->email }}</li>
+                    </ul>
+
+                    <a class="button" data-toggle="modal" href="#profile_edit_modal">Редактировать профиль</a>
+                    <a href="{{ url('/logout') }}" class="button"
+                       onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();">
+                        Выйти
                     </a>
-                @endif
+                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
+                    @if(Auth::user()->role == 1)
+                        <a class="button" href="{{ route('admin.dashboard') }}">Панель управления</a>
+                    @endif
+                </div>
+
             </div>
-            <form id="profile-logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                {{ csrf_field() }}
-            </form>
-            <user-profile></user-profile>
-            <edit-user-profile></edit-user-profile>
+            <!-- end middle -->
+
         </div>
         <!-- end container -->
-        </div>
+
     </div>
     <!-- end section -->
 
     <!-- begin section -->
     <div class="section top-clear bottom-clear hidden-xs hidden-sm">
+
+
         <!-- begin container -->
         <div class="container">
             @component('elements.banners-slider',['position'=>\App\Banner::POSITION_MAIN_B['id']])
             @endcomponent
         </div>
         <!-- end container -->
+
     </div>
     <!-- end section -->
-    <div id="profile_edit_modal" class="modal fade" style="display: none;">
+
+
+
+    <div id="profile_edit_modal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

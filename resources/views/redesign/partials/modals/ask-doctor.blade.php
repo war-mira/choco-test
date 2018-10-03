@@ -6,10 +6,6 @@
             Задать вопрос врачу
         </div>
         <form id="ask-doctor-modal-form" class="show-question-form">
-                <div class="tips">
-                    Задайте свой вопрос квалифицированному врачу и получите бесплатный ответ. Сервис iDoctor.kz гарантирует вашу
-                    100% анонимность.
-                </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label>Год рождения*</label>
@@ -33,16 +29,12 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Куда Вам прислать ответ? *</label>
-                        <div id="user-answer" class="" name="user[answer]">
-                            <input type="radio" name="question_notify" id="email_notify" required onclick="answerInfoType();"/>
-                            <label for="email_notify">Email</label>
-                            
-                            <input type="radio" name="question_notify" id="mobile_notify" onclick="answerInfoType();"/>
-                            <label for="mobile_notify">Телефон</label>
-                        </div>
-                        <input type="email" id="user-email" class="" name="user[email]" style="display:none" placeholder="email@mail.com">
-                        <input class="bfh-phone" name="user[phone]" id="user-phone" style="display:none" type="text" placeholder="+7 (XXX) XXX-XX-XX" data-mask="+7 (999) 999-99-99">
+                        <label>E-mail *</label>
+                        <input type="email" id="user-email" class="" name="user[email]" placeholder="email@mail.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="mobile_notify">Телефон</label>
+                        <input class="bfh-phone" name="user[phone]" id="user-phone" type="text" placeholder="+7 (XXX) XXX-XX-XX" data-mask="+7 (999) 999-99-99">
                     </div>
                 </div>
                 <div class="form-row">
@@ -69,6 +61,7 @@
                         <button type="button" class="btn" id="question__form-send">Отправить</button>
                     </div>
                 </div>
+            <div class="loader hide" id="ask_form_loader"></div>
             </form>
         <div id="ask_doctor_mess_ok" style="display:none;">
             <p>
@@ -77,7 +70,6 @@
         </div>
     </div>
 </div>
-
 
 @push('custom.js')
     <script type="text/javascript">
@@ -102,4 +94,5 @@
     .show-question-form .form-row{
         margin-bottom: 10px;
     }
+
 </style>

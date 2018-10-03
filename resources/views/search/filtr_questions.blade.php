@@ -3,6 +3,7 @@
 @endpush
 <div class="result-control-bar">
     <div class="container">
+        <div class="section-heading__text question_heading">Вопросы и ответы</div>
         <div class="result-control-bar__line group__filters" id="filtersGroup">
             <div class="result-control-bar__query">
                 <div class="result-control-bar__query-count">
