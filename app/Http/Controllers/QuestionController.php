@@ -66,8 +66,11 @@ class QuestionController extends Controller
 
     public function item(Question $question)
     {
-        $near_questions = Question::whereHas('answers')
-            ->get();
+        $near_questions = \Cache::tags(['questions'])->remember('near_questions',120,function(){
+            return Question::whereHas('answers')
+                ->limit(10)
+                ->get();
+        });
         return view('questions.item', compact(
             'question',
             'near_questions'
