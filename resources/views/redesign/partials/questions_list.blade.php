@@ -9,8 +9,8 @@
                 <div class="question-item">
                     <div class="question-item-header">
                         <h3 class="question-item-title">
-    <a href="{{url('question/item/'.$question->id)}}">{{ \Illuminate\Support\Str::words($question->text,15) }}</a>
-	</h3>
+                            <a href="{{url('question/item/'.$question->id)}}">{{ \Illuminate\Support\Str::words($question->text,15) }}</a>
+                        </h3>
                     </div>
                     @foreach($question->answers->take(1) as $answer)
                         <div class="question-item-doctor">

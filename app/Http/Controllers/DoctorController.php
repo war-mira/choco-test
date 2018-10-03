@@ -35,21 +35,15 @@ class DoctorController extends Controller
         if ($city->id !== $doctor->city->id) {
            // return redirect()->route('doctor.item', ['doctor' => $doctor->alias], 301);
         }
-        $districts =  \Cache::remember('all_districts',120,function(){
-			return District::all();
-		});
+        $districts = District::all();
         $meta = SeoMetadataHelper::getMeta($doctor, $city);
 
-        $near_docs = \Cache::remember('near_docs-city_id'.$doctor->city->id,720,function() use ($doctor 	){
-		
-			return Doctor::query()->where('doctors.status', 1)
+        $near_docs = Doctor::query()->where('doctors.status', 1)
             ->where('doctors.city_id', $doctor->city->id)->whereNotNull('avatar')->limit(9)->get();
-		});
 //        foreach ($near_docs as $doc){
 //            dd($doc);
 //        }
-			
-			
+
 
         return view('doctors.item')
             ->with('meta', $meta)

@@ -1,12 +1,24 @@
-.questions{
- &--list{
-   .article-list-block{
-     @media(min-width:768px){
-       flex:1 auto;
-     }
-   }
-   &__paginate{
-     padding: 20px 0;
-   }
- }
+.questions {
+  &--list {
+    .article-list-block {
+      @media(min-width: 768px) {
+        flex: 1 auto;
+      }
+    }
+    &__paginate {
+      padding: 20px 0;
+    }
+  }
+}
+
+.questions__search--form {
+  @media(max-width: 768px) {
+    .js-search-input {
+      min-width: auto;
+    }
+    .input-block__icon{
+      display:none;
+    }
+
+  }
 }

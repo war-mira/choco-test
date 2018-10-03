@@ -44,7 +44,7 @@ class CommentController extends Controller
         } else {
             $comments = Comment::query()->with(['owner', 'replies']);
             $result = BootstrapTableHelper::processTableRequest($request, $comments, self::SEARCH_FIELDS);
-			 $result['rows'] = $result['rows']->each(function ($item, $key) {
+            $result['rows'] = $result['rows']->each(function ($item) {
                 $item->user_name = e($item->user_name);
                 $item->text = e($item->text);
             });

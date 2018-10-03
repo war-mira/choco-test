@@ -97,6 +97,9 @@ $white: #fff;
       font-family: $font-semibold;
       color: #333;
       padding-right: 16px;
+      @media(max-width: 768px){
+        padding-left: 22px;
+      }
       input {
         position: absolute;
         opacity: 0;
@@ -107,6 +110,9 @@ $white: #fff;
         }
         &:checked ~ span:after, &:hover ~ span:after {
           top: 3px;
+          @media(max-width: 768px){
+            top:2px;
+          }
         }
       }
 
@@ -119,6 +125,10 @@ $white: #fff;
         border-radius: 5px;
         background-color: #00a8ff;
         overflow: hidden;
+        @media(max-width: 768px){
+          height: 16px;
+          width: 16px;
+        }
         &:after {
           content: " ";
           position: absolute;
@@ -133,6 +143,12 @@ $white: #fff;
           border-width: 0 2px 2px 0;
           transition: top .15s ease-in-out;
           transform: rotate(45deg);
+          @media(max-width: 768px){
+
+            left:6px;
+            width:3px;
+            height: 8px;
+          }
         }
 
       }

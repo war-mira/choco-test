@@ -211,15 +211,12 @@ class MedcenterController extends Controller
         return compact('view', 'offset', 'left');
     }
 
-    public function loadDoctors($model, $medcenter, Request $request)
+    public function loadDoctors($model, $id, Request $request)
     {
         $offset = $request->query('offset', 0);
         $limit = $request->query('limit', 10);
-
-        if(isset($request->id))
-            $medcenter = Medcenter::find($medcenter);
-        
-        $docs = $medcenter->doctors()->where('doctors.status', 1);
+        $medcenter = Medcenter::find($id);
+        $docs = $medcenter->publicDoctors();
 
         if($request->query('spec'))
         {

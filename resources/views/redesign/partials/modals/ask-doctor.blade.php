@@ -79,23 +79,25 @@
 </div>
 
 
-<script type="text/javascript">
+@push('custom.js')
+    <script type="text/javascript">
 
-    function answerInfoType() {
-        if (document.getElementById('email_notify').checked) {
-            document.getElementById('user-email').style.display = 'inline';
-            document.getElementById('user-phone').style.display = 'none';
-        }else if(document.getElementById('mobile_notify').checked){
-            document.getElementById('user-phone').style.display = 'inline';
-            document.getElementById('user-email').style.display = 'none';
-        }else{
-            document.getElementById('user-email').style.display = 'none';
-            document.getElementById('user-phone').style.display = 'none';
+        function answerInfoType() {
+            if (document.getElementById('email_notify').checked) {
+                document.getElementById('user-email').style.display = 'inline';
+                document.getElementById('user-phone').style.display = 'none';
+            }else if(document.getElementById('mobile_notify').checked){
+                document.getElementById('user-phone').style.display = 'inline';
+                document.getElementById('user-email').style.display = 'none';
+            }else{
+                document.getElementById('user-email').style.display = 'none';
+                document.getElementById('user-phone').style.display = 'none';
+            }
+
         }
 
-    }
-
-</script>
+    </script>
+    @endpush
 <style>
     .show-question-form .form-row{
         margin-bottom: 10px;

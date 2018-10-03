@@ -10,6 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/demo-email', function (){
+    return (new \App\Mail\DoctorReviewsWeeklyMail('d', [1,2,3]))->build();
+})->name('demo-email');
+
+
 Route::get('/', 'IndexController@home')->name('home');
 
 Route::get('resize', 'ImageController@resizeImages');

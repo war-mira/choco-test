@@ -16,7 +16,7 @@
                         <div class="article-line__main">
                             <div class="h3 profiles__title">
                                 <div class="entity-line__name">
-    <a href="{{url('question/item/'.$question->id)}}">{{ \Illuminate\Support\Str::words($question->text,15) }}</a>
+                                    <a href="{{url('question/item/'.$question->id)}}">{{ \Illuminate\Support\Str::words($question->text,15) }}</a>
                                 </div>
                             </div>
                             <div class="entity-line__about-text">

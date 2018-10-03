@@ -19,6 +19,11 @@ Route::group(['as' => 'settings.', 'prefix' => 'settings'], function () {
     Route::post('/form/update', 'Admin\SettingsController@update')->name("update");
 });
 
+Route::group(['as' => 'settings.', 'prefix' => 'settings'], function () {
+    Route::get('/', 'Admin\SettingsController@form')->name("form");
+    Route::post('/form/update', 'Admin\SettingsController@update')->name("update");
+});
+
 Route::group(['as' => 'dashboard.', 'prefix' => 'dashboard'], function () {
     Route::get('/getNotifications', 'Admin\DashboardNotificationController@getNotifications');
     Route::get('/openNotification/{id}', 'Admin\DashboardNotificationController@openNotification')->name('openNotification');

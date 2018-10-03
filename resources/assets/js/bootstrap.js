@@ -2,7 +2,7 @@
 window._ = require('lodash');
 window.Popper = require('popper.js').default;
 window.io = require("socket.io-client");
-window.toastr = require('toastr');
+//window.toastr = require('toastr');
 window.collect = require('collect.js');
 
 window.Vue = require('vue');

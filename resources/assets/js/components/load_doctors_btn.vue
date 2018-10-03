@@ -8,11 +8,9 @@
                 <span id="docsLeftText" v-html="quantity"></span> врачей</a>
         </slot>
     </div>
-    <phoneNumber :ololo="true"></phoneNumber>
 </template>
 
 <script>
-    // import phoneNumber from './phone_show_btn.vue';
     export default {
         data: function () {
             return {

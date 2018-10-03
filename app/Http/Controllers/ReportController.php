@@ -262,7 +262,6 @@ class ReportController extends Controller
 
     public function makeDoctorsClickReports()
     {
-        dd(Redis::keys('doctor:*:show-phone'));
         $doctorsClicksRows = Redis::keys('doctor:*:clicks');
 
         $dateStart = new \DateTime();

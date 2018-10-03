@@ -1,6 +1,6 @@
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
 <script src="{{hotreload("/build/js/app.js")}}"></script>
-    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
- 
+
 <script type="text/javascript">
     $('.search_event').on('click', function () {
         ga('send', 'event', {
@@ -8,20 +8,21 @@
             eventAction: 'click'
         });
     });
+
     var project ={
-        messages:{!! \App\Components\ToastrNotification::get()??'[]' !!}
+        messages:{!! \App\Components\ToastrNotification::get($errors??[])??'[]' !!}
     };
 
-     project.messages.forEach(function(msg){
-         try{
-             if(msg.type == 'warning'){
-                 toastr.warning(msg.msg);
-             } else if(msg.type == 'success'){
-                 toastr.success(msg.msg);
-             }
-    
-         } catch(err){}
-     });
+    project.messages.forEach(function(msg){
+        try{
+            if(msg.type == 'warning'){
+                toastr.warning(msg.msg);
+            } else if(msg.type == 'success'){
+                toastr.success(msg.msg);
+            }
+
+        } catch(err){}
+    });
 </script>
 <noscript>
     <div><img src="https://mc.yandex.ru/watch/47714344" style="position:absolute; left:-9999px;" alt=""/></div>

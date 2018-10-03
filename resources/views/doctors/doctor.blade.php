@@ -120,13 +120,7 @@
                             {{--</div>--}}
                             {{--@else--}}
                             {{--@if( $doctor->whoIsIt() != \App\Doctor::TYPE[4] && $doctor->whoIsIt() != \App\Doctor::TYPE[5])--}}
-                            @if($doctor->show_phone == \App\Doctor::SHOW_PHONE)
-                                <phone-show-btn model="{{ \App\Doctor::SHOW_PHONE_COUNT }}"
-                                                id="{{ $doctor->id }}"
-                                                phone="{{ \App\Helpers\HtmlHelper::phoneCode($doctor->showing_phone) }}">
-                                    <template slot="phone-number"></template>
-                                </phone-show-btn>
-                            @elseif($doctor->medcenters)
+                            @if($doctor->medcenters)
                                 @foreach($doctor->medcenters as $medcenter)
                                     @if(in_array($medcenter->id, \App\Doctor::SHOW_PHONES))
                                         <phone-show-btn model="{{ \App\Doctor::SHOW_PHONE_COUNT }}"
@@ -186,32 +180,32 @@
                         $center = \App\Medcenter::find($doctor->med_id)->coordinates;
                     @endphp
                 @endif
-				 @push('custom.js')
-                <script type="text/javascript">
-                    ymaps.ready(function () {
+                @push('custom.js')
+                    <script type="text/javascript">
+                        ymaps.ready(function () {
 
-                        var myMap = new ymaps.Map("entity-map", {
-                            center: [{{ $center }}],
-                            zoom: 15
+                            var myMap = new ymaps.Map("entity-map", {
+                                center: [{{ $center }}],
+                                zoom: 15
+                            });
+
+                                    @foreach($doctor->medcenters as $med)
+                            var pl = new ymaps.Placemark([{{ $med->coordinates }}]);
+                            myMap.geoObjects.add(pl);
+                            @endforeach
+
+                            $('.js-select-medcenter').on('change', function () {
+                                let medcenterCoords = $(this).val();
+                                let address = $(this).parents('.entity-line__address-select').find('.selectize-control').find('.items').find('div').data('address');
+                                $('.entity-map__address-name').text(address);
+
+                                myMap.panTo(
+                                    [medcenterCoords.split(", ")]
+                                )
+                            });
                         });
-
-                                @foreach($doctor->medcenters as $med)
-                        var pl = new ymaps.Placemark([{{ $med->coordinates }}]);
-                        myMap.geoObjects.add(pl);
-                        @endforeach
-
-                        $('.js-select-medcenter').on('change', function () {
-                            let medcenterCoords = $(this).val();
-                            let address = $(this).parents('.entity-line__address-select').find('.selectize-control').find('.items').find('div').data('address');
-                            $('.entity-map__address-name').text(address);
-
-                            myMap.panTo(
-                                [medcenterCoords.split(", ")]
-                            )
-                        });
-                    });
-                </script>
-				@endpush
+                    </script>
+                @endpush
             </div>
         </div>
     </div>

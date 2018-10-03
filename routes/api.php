@@ -19,10 +19,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('me', function (Request $request) {
-    return Auth::user()??['errror'=>'not authenticated'];
-});
 
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/me',function(Request $request){
+        $user = Auth::user();
+        return (new \App\Http\Resources\UserResource($user));
+    });
+    Route::post('/user/getCode','Api\UserController@requestCode');
+    Route::post('/user/checkCode','Api\UserController@checkCode');
+    Route::post('/user/update','Api\UserController@update');
+    Route::post('/user/updatePassword','Api\UserController@updatePassword');
+
+});
 Route::group(['prefix'=>'my'],function (){
     Route::resource('reviews','FeedbackController');
 });
