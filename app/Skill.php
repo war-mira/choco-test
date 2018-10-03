@@ -158,4 +158,11 @@ class Skill extends Model implements ISeoMetadata
         return empty($this->seo_text) ? '' : $this->seo_text;
     }
 
+    public static function getList()
+    {
+      return   Skill::where('active',1)
+          ->orderBy('name')
+            ->get();
+    }
+
 }

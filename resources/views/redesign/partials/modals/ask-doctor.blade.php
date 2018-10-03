@@ -42,7 +42,7 @@
                         <label>Специализация</label>
                         <select name="question[skill_id]">
                             <option value="40">Выберите специализацию</option>
-                            @foreach($skillsList as $skill)
+                            @foreach(\App\Skill::getList() as $skill)
                                 <option value="{{$skill['id']}}">{{$skill['name']}}</option>
                             @endforeach
                         </select>
