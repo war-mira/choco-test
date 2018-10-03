@@ -311,6 +311,7 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
             return '/images/no-userpic.gif';
         }
         $src = $this->getNotThumb($src);
+        return $src;
         return $this->getImageUrl($src,$width,$height,85);
     }
 

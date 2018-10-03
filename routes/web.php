@@ -14,6 +14,9 @@ Route::get('/demo-email', function (){
     return (new \App\Mail\DoctorReviewsWeeklyMail('d', [1,2,3]))->build();
 })->name('demo-email');
 
+Route::get('/cabinet/user/edit', function () {
+    return view('cabinet.user.edit');
+});
 
 Route::get('/', 'IndexController@home')->name('home');
 

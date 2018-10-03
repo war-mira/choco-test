@@ -21,7 +21,8 @@ Vue.component('example', require('./components/Example.vue'));
 Vue.component('admin-sessions', function (resolve) {
     require(['./components/admin_sessions.vue'], resolve)
 });
-
+Vue.component('user-profile', require('./components/user_profile'));
+Vue.component('edit-user-profile', require('./components/edit_profile'));
 Vue.component('doctor-reviews', require('./components/block_reviews'));
 Vue.component('btn-ajax', require('./components/btn_ajax.vue'));
 Vue.component('inp-rate', require('./components/inp_rate.vue'));

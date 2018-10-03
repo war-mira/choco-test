@@ -1,31 +1,17 @@
 <template>
     <div class="account-line__main account-content">
-
-
-
         <div class="account-content__head">
             <div class="account-content__page-name">Отзывы ({{ total }})</div>
         </div>
-
-
-
-
-
         <div class="account-content__body">
             <div class="reviews-list">
-
-
                 <div class="reviews-list__message" v-if="comments.length==0">
                     <div class="account-data-item__val">Здесь пока нет вопросов =(</div>
                 </div>
-
-
                 <div class="reviews-list__item reviews-list-item"
                      v-for="comment in comments"
                      :class="{blur:(answer_review && !isActive(comment))}"
-                     :id="'review-'+comment.id"
-                >
-
+                     :id="'review-'+comment.id">
                     <div class="reviews-list-item__inner">
                         <div class="reviews-list-item__line">
                             <div class="reviews-list-item__data-wr">
