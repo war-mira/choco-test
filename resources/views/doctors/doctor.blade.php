@@ -101,6 +101,23 @@
                     @endif
                 </div>
 
+                {{--@if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])--}}
+                    <form action="#" class="appointment_form">
+                        <div class="appointment-book-small__line">
+                            <a href="#order_doctor" data-doc-id="{{$doctor->id}}" data-dname="{{$doctor['name']}}"
+                               class="appointment-book-small__book-btn btn btn_theme_usual trigger-link popup-with-form">Записаться<span
+                                        class="hidden-xl"> онлайн</span>
+                            </a>
+                            @if(!empty($doctor->price))
+                                <div class="appointment-book-small__price">
+                                    <div class="appointment-book-small__price-text">Стоимость приёма от:</div>
+                                    <div class="appointment-book-small__price-val">от {{$doctor->price}} тг</div>
+                                </div>
+                            @endif
+                            
+                        </div>
+                    </form>
+                    {{--@endif--}}
                 <div class="entity-line__additional appointment-book-small">
                     {{--@if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])--}}
                     <div class="appointment-book-big__heading">Записаться на прием</div>
@@ -134,21 +151,7 @@
                             {{--@endif--}}
                         </div>
                     </div>
-                    {{--@if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])--}}
-                    <form action="#" class="">
-                        <div class="appointment-book-small__line">
-                            @if(!empty($doctor->price))
-                                <div class="appointment-book-small__price">
-                                    <div class="appointment-book-small__price-text">Прием от:</div>
-                                    <div class="appointment-book-small__price-val">от {{$doctor->price}} тг</div>
-                                </div>
-                            @endif
-                            <a href="#order_doctor" data-doc-id="{{$doctor->id}}" data-dname="{{$doctor['name']}}"
-                               class="appointment-book-small__book-btn btn btn_theme_usual trigger-link popup-with-form">Записаться<span
-                                        class="hidden-xl"> онлайн</span></a>
-                        </div>
-                    </form>
-                    {{--@endif--}}
+                    
                 </div>
 
             </div>
