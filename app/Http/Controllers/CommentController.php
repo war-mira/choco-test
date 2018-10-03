@@ -98,6 +98,13 @@ class CommentController extends Controller
     public function publishNewComment($data)
     {
         $data['user_email'] = isset($data['user_email']) ? FormatHelper::phone($data['user_email']):'';
+
+        try{
+            $data['user_name'] = e($data['user_name']);
+            $data['text'] = e($data['text']);
+        } catch (\Exception $e){
+
+        }
         $authorize = $this->authorizeComment($data);
         $ip = $this->getUserIp();
 
