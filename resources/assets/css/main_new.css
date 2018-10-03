@@ -4437,6 +4437,7 @@ label .week-days-select__btn {
 .desktop.fixed-top{
   position:fixed;
   top:0;
+  display: flex;
   background-color: rgb(2, 144, 217);
 }
 
