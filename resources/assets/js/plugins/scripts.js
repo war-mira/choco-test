@@ -65,7 +65,11 @@ $(document).ready(function() {
         dropdownParent: ((window.innerWidth < 768)?'.main-header':null),
         create: false
     });
-
+    $(".js-form-selectize").selectize({
+        openOnFocus: false,
+        dropdownParent: ((window.innerWidth < 768)?'.main-header':null),
+        create: false
+    });
     $(".question-slider").slick({
         infinite: false,
         slidesToShow: 3,
