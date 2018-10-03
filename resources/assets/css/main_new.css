@@ -408,7 +408,7 @@ img {
   background-size: 18px;
   background-repeat: no-repeat;
   background-position: top 50% right 0;
-  background-color: #fff;
+  background-color: transparent;
   right: 0;
   top: 0;
   margin: 0;
@@ -4437,6 +4437,7 @@ label .week-days-select__btn {
 .desktop.fixed-top{
   position:fixed;
   top:0;
+  display: flex;
   background-color: rgb(2, 144, 217);
 }
 
