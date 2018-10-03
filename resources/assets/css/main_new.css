@@ -408,7 +408,7 @@ img {
   background-size: 18px;
   background-repeat: no-repeat;
   background-position: top 50% right 0;
-  background-color: #fff;
+  background-color: transparent;
   right: 0;
   top: 0;
   margin: 0;
@@ -2260,8 +2260,7 @@ img {
   text-align: center;
   padding-bottom: 10px}
 .appointment-book-small-header-block{
-  padding-bottom: 20px;
-  display: flex;}
+  padding-bottom: 20px;}
 .appointment-book-small-header-block .appointment-book-small__timeline{
   padding-right: 20px;}
 .appointment-book-small-header-block .appointment-book-small__bot-line{
@@ -4435,9 +4434,10 @@ label .week-days-select__btn {
 .ml_0 .main-header-location .selectize-control.single .selectize-input .item{
   color: #ffffff;
 }
-.desctop.fixed-top{
+.desktop.fixed-top{
   position:fixed;
   top:0;
+  display: flex;
   background-color: rgb(2, 144, 217);
 }
 

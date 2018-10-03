@@ -61,13 +61,15 @@ $(document).ready(function() {
     $('.selectize-input').find('input').prop('disabled', 'disabled');
 
     $(".js-header-location").selectize({
-        openOnFocus: false,
+        openOnFocus: true,
         dropdownParent: ((window.innerWidth < 768)?'.main-header':null),
+        persist: false,
         create: false
     });
     $(".js-form-selectize").selectize({
-        openOnFocus: false,
+        openOnFocus: true,
         dropdownParent: ((window.innerWidth < 768)?'.main-header':null),
+        persist: false,
         create: false
     });
     $(".question-slider").slick({
@@ -936,7 +938,7 @@ $(document).ready(function() {
     window.onload = function(){
         var navbar = document.getElementById("navbar");
         if(! /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-            navbar.classList.add('desctop');
+            navbar.classList.add('desktop');
         }
         stickNavbar();
     };

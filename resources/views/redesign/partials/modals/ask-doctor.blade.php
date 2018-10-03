@@ -8,8 +8,8 @@
         <form id="ask-doctor-modal-form" class="show-question-form">
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label>Год рождения*</label>
-                        <select name="user[birthday]" id="user-birthday" required="">
+                        <select name="user[birthday]" id="user-birthday" required class="form-control js-form-selectize">
+                            <option>Год рождения *</option>
                             @foreach(range((int)date('Y'),1900) as $i)
                             <option value="{{$i}}">{{$i}}</option>
                             @endforeach
@@ -30,7 +30,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label>E-mail *</label>
-                        <input type="email" id="user-email" class="" name="user[email]" placeholder="email@mail.com">
+                        <input type="email" id="user-email" class="" name="user[email]" placeholder="example@example.com">
                     </div>
                     <div class="form-group">
                         <label for="mobile_notify">Телефон</label>
@@ -40,7 +40,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label>Специализация</label>
-                        <select name="question[skill_id]">
+                        <select name="question[skill_id]" class="form-control js-form-selectize">
                             <option value="40">Выберите специализацию</option>
                             @foreach(\App\Skill::getList() as $skill)
                                 <option value="{{$skill['id']}}">{{$skill['name']}}</option>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="form-group">
                     <label>Ваш вопрос *</label>
-                    <textarea rows="5" id="question-text" name="question[text]" required placeholder="Опишите свою проблему как можно подробнее. Это позволит доктору лучше Вас проконсультировать."></textarea>
+                    <textarea rows="5" id="question-text" name="question[text]" required placeholder="Опишите подробно возникшую проблему"></textarea>
                 </div>
                 <div class="form-group" style="display:none;">
                     <label>Прикрепить изображение</label>
