@@ -108,7 +108,7 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
-        $cities = City::query()->orderBy('name')->get();
+        $cities = City::query()->active()->orderBy('name')->get();
         return view('auth.register', compact('cities'));
     }
 
