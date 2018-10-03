@@ -4434,7 +4434,7 @@ label .week-days-select__btn {
 .ml_0 .main-header-location .selectize-control.single .selectize-input .item{
   color: #ffffff;
 }
-.desctop.fixed-top{
+.desktop.fixed-top{
   position:fixed;
   top:0;
   background-color: rgb(2, 144, 217);
