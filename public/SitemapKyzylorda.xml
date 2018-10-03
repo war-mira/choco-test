@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  
+<!--  Все врачи iDoctor.kz Кызылорды  -->
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/all</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<!--  СПЕЦИАЛИЗАЦИИ врачей iDoctor.kz Кызылорды  -->
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/akusher-ginekolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/allergolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/androlog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/anesteziolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/venerolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/gastroenterolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/gematolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/genetik</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/gepatolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/ginekolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/girudoterapevt-lechenie-piyavkami</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/gomeopat</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/dermatolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/diagnost</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/dietolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/iglorefleksoterapevt</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/immunolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/infektsionist</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/kardiolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/kardiokhirurg</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/kosmetolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/lechenie-alkogolnoy-i-narkoticheskoy-zavisimosti</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/logoped</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/lor-otorinolaringolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/mammolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/manualnyy-terapevt</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/massazhist</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/medsestra-domoy</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/narkolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/narkolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/nevrolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/neyrokhirurg</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/nefrolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/nefrolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/okulist-oftalmolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/onkolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/ortoped</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/osteopat</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/pediatr</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/perfuziolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/plasticheskiy-khirurg</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/proktolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/proktolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/psikhiatr</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/psikholog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/psikhoterapevt</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/pulmonolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/radiolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/reanimatolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/revmatolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/rentgenolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/rentgenolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/reproduktolog-eko</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/seksolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/stomatolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/terapevt</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/travmatolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/trikholog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/uzi-spetsialist</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/urolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/fizioterapevt</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/flebolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/khirurg</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/embriolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/endokrinolog</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/doctors/kyzylorda/endoskopist</loc>
+  <lastmod>2014-09-19</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.60</priority>
+</url>
+</urlset>

@@ -1,0 +1,11 @@
+#search-form{
+  .breadcrumb{
+    padding:10px 0 10px;
+  }
+}
+
+.breadcrumb{
+  @media  (max-width: 768px){
+    flex-wrap: wrap;
+  }
+}

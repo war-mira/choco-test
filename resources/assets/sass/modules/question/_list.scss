@@ -1,0 +1,12 @@
+.questions{
+ &--list{
+   .article-list-block{
+     @media(min-width:768px){
+       flex:1 auto;
+     }
+   }
+   &__paginate{
+     padding: 20px 0;
+   }
+ }
+}

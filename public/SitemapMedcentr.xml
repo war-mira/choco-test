@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+<!--  МЕДЦЕНТРЫ  -->
+<url>
+  <loc>http://idoctor.kz/medcenters/kz/all</loc>
+  <lastmod>2014-09-18</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenters/kz/all?page=2</loc>
+  <lastmod>2015-09-15</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenters/kz/all?page=3</loc>
+  <lastmod>2015-09-15</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenter/neyromed</loc>
+  <lastmod>2016-01-02</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenter/amd-laboratoriya-almaty</loc>
+  <lastmod>2016-01-02</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenter/gkkp-lechebno-diagnostichekiy-tsentr</loc>
+  <lastmod>2016-01-02</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenter/tsentr-reproduktivnogo-zdorovya</loc>
+  <lastmod>2016-01-02</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenter/klinika-sau-zhardem</loc>
+  <lastmod>2016-01-02</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenter/meditsinskiy-tsentr-lux-s</loc>
+  <lastmod>2016-01-02</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenter/megatauers</loc>
+  <lastmod>2016-01-02</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenter/klinika-tau-sunkar</loc>
+  <lastmod>2016-01-02</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenter/relayf-klinik</loc>
+  <lastmod>2016-01-02</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenter/meditsinskiy-tsentr-metida</loc>
+  <lastmod>2016-01-02</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenter/health-city-almaty</loc>
+  <lastmod>2015-09-15</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenter/krial-med</loc>
+  <lastmod>2015-09-15</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenter/mediker</loc>
+  <lastmod>2015-09-15</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenter/institut-semeynoy-meditsiny</loc>
+  <lastmod>2015-09-15</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenter/grand-klinik</loc>
+  <lastmod>2015-09-15</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenter/meditsinskiy-tsentr-beta</loc>
+  <lastmod>2015-09-15</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenter/meditsinskiy-tsentr-amitrud-dariga</loc>
+  <lastmod>2015-09-15</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenter/klinika-rakhat</loc>
+  <lastmod>2015-09-15</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenter/onclinic-almaty</loc>
+  <lastmod>2015-09-15</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenter/tsentr-nevrologii-i-reabilitatsii-aspasia</loc>
+  <lastmod>2015-09-15</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenter/privat-clinic</loc>
+  <lastmod>2015-09-15</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenter/sema-hospital</loc>
+  <lastmod>2015-09-15</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenter/med-line-service</loc>
+  <lastmod>2015-09-15</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenter/klinika-innovatsionnoy-meditsiny</loc>
+  <lastmod>2015-09-15</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>http://idoctor.kz/medcenter/meditsinskiy-tsentr-dermatologii-na-shevchenko</loc>
+  <lastmod>2015-09-15</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.80</priority>
+</url>
+</urlset>
