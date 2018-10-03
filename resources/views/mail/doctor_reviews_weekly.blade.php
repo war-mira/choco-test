@@ -17,8 +17,8 @@
                     </div>
                     <div style="text-align: center; width:100%;">
                         <div class="box-shadow-container" style="background-color:#ffffff;width: 200px; height: 200px; margin: auto;border-radius: 105px;overflow: hidden;border: 8px solid #ffffff;">
-                            <a href="https://idoctor.kz/almaty/doctor/1592-komarovskaya-marina-aleksandrovna">
-                                <img border="0" width="100%" src="https://idoctor.kz/images/optimized/xl6Jhbidj5PEB7MX94oPJ9ZPiNoZN6zY8UuAKVVN_140x200-q-85.jpeg" alt="iDoctor.kz - бесплатный сервис поиска врача">
+                            <a href="{{ route('doctor.item',['doctor'=>$doctor->alias]) }}">
+                                <img border="0" width="100%" src="{{$doctor->getAvatar(200,200)}}" alt="iDoctor.kz - бесплатный сервис поиска врача">
                             </a>
                         </div>
 
