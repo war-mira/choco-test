@@ -65,7 +65,11 @@ $(document).ready(function() {
         dropdownParent: ((window.innerWidth < 768)?'.main-header':null),
         create: false
     });
-
+    $(".js-form-selectize").selectize({
+        openOnFocus: false,
+        dropdownParent: ((window.innerWidth < 768)?'.main-header':null),
+        create: false
+    });
     $(".question-slider").slick({
         infinite: false,
         slidesToShow: 3,
@@ -863,13 +867,15 @@ $(document).ready(function() {
     }
         var form = $("#ask-doctor-modal-form");
     $("#question__form-send").click(function () {
+        $('#ask_form_loader').removeClass('hide');
         if (form[0].checkValidity()) {
             var data = form.serialize();
             $.post("/question/add", data)
                 .done(function (json) {
                     $('#user-birthday').removeClass('has-warning');
                     $('#user-gender').removeClass('has-warning');
-                    $('#user-answer').removeClass('has-warning');
+                    $('#user-email').removeClass('has-warning');
+                    $('#user-phone').removeClass('has-warning');
                     $('#question-text').removeClass('has-warning');
 
                     modalOpen('question__modal');
@@ -883,6 +889,7 @@ $(document).ready(function() {
                         $('#ask_doctor_mess_ok').show();
                         form[0].reset();
                     }
+                    $('#ask_form_loader').addClass('hide');
                 });
         }else {
             if(!$('#user-email').val()){
@@ -907,17 +914,12 @@ $(document).ready(function() {
                 $('#user-gender').addClass('has-warning');
             }
             
-            if ($('input[name=question_notify]:checked').length > 0) {
-                $('#user-answer').removeClass('has-warning');
-            }else{
-                $('#user-answer').addClass('has-warning');
-            }
-            
             if(!$('#question-text').val()){
                 $('#question-text').addClass('has-warning');
             }else{
                 $('#question-text').removeClass('has-warning');
             }
+            $('#ask_form_loader').addClass('hide');
         }
     });
 

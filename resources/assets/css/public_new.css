@@ -224,7 +224,7 @@
 .modal-hide {
     -webkit-transition-property: transform, opacity;
     -o-transition-property: transform, opacity;
-    transition-property: transform, opacity;
+    transition: transform, opacity;
     -webkit-transition-delay: 0s, 0.05s;
     -o-transition-delay: 0s, 0.05s;
     transition-delay: 0s, 0.05s;

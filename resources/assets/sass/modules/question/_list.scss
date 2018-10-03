@@ -10,6 +10,43 @@
     }
   }
 }
+     #ask-doctor-modal-form .loader {
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #b8b8b8;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 2s linear infinite;
+        position: absolute;
+        bottom: 100px;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+    }
+    .hide{
+        display:none;
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+.question-search-block{
+    display: flex;
+    
+    .btn_theme_usual{
+        height: 45px;
+        border-radius: 25px;
+        line-height: 45px;
+        margin-left: 10px;
+    }
+}
+.question_heading{
+    text-align: center;
+    font-family: "ProximaNova-Regular", sans-serif;
+    padding: 10px 0;
+}
 
 .questions__search--form {
   @media(max-width: 768px) {
