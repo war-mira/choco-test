@@ -475,7 +475,7 @@ img {
   position: inherit;
   top:80px;
   width: 100%;
-  z-index: 999;}
+  z-index: 10;}
 .sticky {
   position: -webkit-sticky;
   position: sticky;
@@ -824,6 +824,9 @@ img {
 }
 .show-question-form .form-row .form-group > label, .show-question-form .form-group > label{
   font-weight: bold;
+}
+#question__modal{
+    z-index:1000;
 }
 #question__modal .moodal-close-bg{
   top: 0;
