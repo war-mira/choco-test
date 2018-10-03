@@ -1,1 +1,0 @@
-Ваша ссылка подтверждения: <a href="{{route('auth.email.confirm',['token'=>$token])}}">Подтвердить email</a>
