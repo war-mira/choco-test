@@ -2,11 +2,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="yandex-verification" content="8c812ea2ffbaa038" />
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+@if(!empty($meta['robots']))
+    <!--Robots metadata /-->
+    <meta name="robots" content="{{ $meta['robots']}}" />
+@endif
+
 
 <!--Common metadata /-->
 @if(!empty($meta['title']))
-    <title>{{ $meta['title']}}</title>
+    <title>{{ $meta['title']}} @if(!is_null(request()->get('page')) && (request()->get('page') !== 1)) - Страница {{request()->get('page')}} @endif</title>
 @else
     <title>iDoctor.kz - Поиск врача в Алматы и Астане, бесплатная запись на прием</title>
 @endif
@@ -20,16 +27,15 @@
 
 @if(!empty($meta['description']))
     <meta name="description" content="{{$meta['description']}}"/>
-@else
-    <meta name="description"
-          content="iDoctor.kz - Сервис для поиска врача и бесплатной записи на прием. Мы собрали базу врачей в Алматы и Астане с рейтингами и отзывами наших клиентов."/>
+@elseif(!empty($meta['default_description']))
+    <meta name="description" content="{{$meta['default_description']}}"/>
 @endif
 
 <!--Facebook Metadata /-->
 @if(!empty($meta['image']))
     <meta property="og:image" content="{{ url($meta['image']) }}"/>
 @else
-    <meta property="og:image" content="{{asset('images/idoctor_newyear.jpg')}}"/>
+    <meta property="og:image" content="{{asset('images/idoc__logo_meta.png')}}"/>
 @endif
 
 @if(!empty($meta['description']))
@@ -60,7 +66,7 @@
 @if(!empty($meta['image']))
     <meta itemprop="image" content="{{ url($meta['image']) }}"/>
 @else
-    <meta itemprop="image" content="{{asset('images/idoctor_newyear.jpg')}}"/>
+    <meta itemprop="image" content="{{asset('images/idoc__logo_meta.png')}}"/>
 @endif
 
 <!-- Twitter Metadata /-->
@@ -83,5 +89,7 @@
 @if(!empty($meta['image']))
     <meta name="twitter:image" content="{{ url($meta['image']) }}"/>
 @else
-    <meta name="twitter:image" content="{{asset('images/idoctor_newyear.jpg')}}"/>
+    <meta name="twitter:image" content="{{asset('images/idoc__logo_meta.png')}}"/>
 @endif
+
+<meta name="csrf-token" content="{{ csrf_token() }}">

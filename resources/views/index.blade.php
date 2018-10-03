@@ -5,7 +5,7 @@
          data-image-src="images/parallax/mount.jpg">
 
         <div class="intro__text">
-            <h2 class="intro__title"><strong>Бесплатный -</strong> сервис поиска врачей</h2>
+            <h2 class="intro__title"><strong>Бесплатный</strong> сервис поиска врачей</h2>
             <p></p>
         </div>
 
@@ -49,39 +49,60 @@
 
     </div>
     <!-- end section -->
-    @if($topDoctors->count() > 0)
-        <!-- begin section -->
-        <div class="section">
 
-            <!-- begin container -->
-            <div class="container">
-
-                <h2 class="section-title">Топ врачей </h2>
-                <p class="text-center"></p>
-
-                <div class="slick-user">
-                    @foreach ($topDoctors as $doctor)
-                        <a href="{{ $doctor->href }}">
-                            <div class="slick-user__item">
-                                @component('components.rating-stars',['rating' => $doctor->avg_rate])
-                                @endcomponent
-                                <img class="slick-user__avatar" src="{{ asset($doctor->avatar) }}" width="120"
-                                     height="120"
-                                     alt="">
-                                <h4 class="slick-user__name">{{ $doctor['name'] }}</h4>
-                                <p>{{ isset($doctor['main_skill']) ? $doctor['main_skill']->name : ''  }}</p>
-                            </div>
-                        </a>
-                    @endforeach
-
-                </div>
-
-            </div>
-            <!-- end container -->
-
+    <!-- begin section -->
+    <div class="section questions">
+        <div class="container">
+            @component('components.bootstrap.row')
+                @component('components.bootstrap.column',['class'=>'col-md-4 col-md-offset-4'])
+                    <div class="show-question-form">
+                        {{--<button class="btn-block button">Задать вопрос врачу</button>--}}
+                        <h2 class="section-title">Задать вопрос врачу</h2>
+                    </div>
+                @endcomponent
+            @endcomponent
+            @component('components.bootstrap.row')
+                @component('components.bootstrap.column',['class'=>'col-md-8 col-md-offset-2'])
+                    @include('forms.public.question-form-old')
+                @endcomponent
+            @endcomponent
         </div>
-        <!-- end section -->
-    @endif
+    </div>
+    <!-- end section -->
+
+    {{--@if($topDoctors->count() > 0)--}}
+        {{--<!-- begin section -->--}}
+        {{--<div class="section">--}}
+
+            {{--<!-- begin container -->--}}
+            {{--<div class="container">--}}
+
+                {{--<h2 class="section-title">Топ врачей </h2>--}}
+                {{--<p class="text-center"></p>--}}
+
+                {{--<div class="slick-user">--}}
+                    {{--@foreach ($topDoctors as $doctor)--}}
+                        {{--<a href="{{ $doctor->href }}">--}}
+                            {{--<div class="slick-user__item">--}}
+                                {{--@component('components.rating-stars',['rating' => $doctor->avg_rate])--}}
+                                {{--@endcomponent--}}
+                                {{--<img class="slick-user__avatar" src="{{ asset($doctor->avatar) }}" width="120"--}}
+                                     {{--height="120"--}}
+                                     {{--alt="">--}}
+                                {{--<h4 class="slick-user__name">{{ $doctor['name'] }}</h4>--}}
+                                {{--<p>{{ isset($doctor['main_skill']) ? $doctor['main_skill']->name : ''  }}</p>--}}
+                            {{--</div>--}}
+                        {{--</a>--}}
+                    {{--@endforeach--}}
+
+                {{--</div>--}}
+
+            {{--</div>--}}
+            {{--<!-- end container -->--}}
+
+        {{--</div>--}}
+        {{--<!-- end section -->--}}
+    {{--@endif--}}
     <!-- begin section -->
     <div class="section top-clear">
 
@@ -111,7 +132,8 @@
                 @foreach($skillLinks->chunk(ceil($skillLinks->count()/4)) as $skillLinksColumn)
                     <ul class="list-unstyled list-unstyled--count">
                         @foreach($skillLinksColumn as $skillLink)
-                            <li><span>{{$skillLink['doctorsCount']}}</span>
+                            <li>
+                                <span>{{$skillLink['doctorsCount']}}</span>
                                 <a href="{{ $skillLink['href'] }}">{{$skillLink['name']}}</a>
                             </li>
                         @endforeach
@@ -278,5 +300,79 @@
 
     </div>
     <!-- end section -->
+    <div id="question__modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content modal-light">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h3 class="modal-title">Отправить вопрос врачу</h3>
+                </div>
+                <div style="display:none" id="save_comment_mess_ok" class="modal-body">
+                    <b>Спасибо! Ваш вопрос был отправлен!</b>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- begin section -->
+    <script type="text/javascript">
+        $('#search-bn').on('click', function () {
+            ga('send', 'event', {
+                eventCategory: 'poisk_glavnaya',
+                eventAction: 'click'
+            });
+        });
+        $(function () {
+            $('#user-birthday').datetimepicker({
+                format: 'yyyy'
+            });
+        });
 
+        $('.show-question-form button').on('click', function () {
+           $('.question__form').slideToggle(300);
+        });
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        var form = $("#question__form");
+        $("#question__form-send").click(function () {
+            if (form[0].checkValidity()) {
+                var data = form.serialize();
+                $.post("{{url('/question/add')}}", form.serialize())
+                    .done(function (json) {
+                        $('#user-email').removeClass('has-warning');
+                        $('#user-phone').removeClass('has-warning');
+                        $('#user-birthday').removeClass('has-warning');
+                        $('#user-gender').removeClass('has-warning');
+                        $('#text').removeClass('has-warning');
+                        $('#question__modal').addClass('in').show();
+                        if (json.error) {
+                            $('#save_comment_mess_ok').removeClass('access').addClass('error').html('<b>' + json.error + '</b>');
+                            $('#save_comment_mess_ok').show();
+                        }
+                        else if (json.id) {
+                            $('#save_comment_mess_ok').removeClass('error').addClass('access').html('<b>Спасибо! Ваш комментарий отправлен на модерацию</b>');
+                            $('#save_comment_mess_ok').show();
+                            form[0].reset();
+                        }
+                    });
+            }
+            else {
+                $('#user-email').addClass('has-warning');
+                $('#user-phone').addClass('has-warning');
+                $('#user-birthday').addClass('has-warning');
+                $('#user-gender').addClass('has-warning');
+                $('#text').addClass('has-warning');
+            }
+        });
+        
+        $('.close').on('click', function () {
+            $('#question__modal').removeClass('in').hide();
+        });
+
+    </script>
+    <!-- end section -->
 @endsection

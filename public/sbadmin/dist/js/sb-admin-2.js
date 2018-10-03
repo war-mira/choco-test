@@ -44,4 +44,34 @@ $(function () {
             break;
         }
     }
+
+    $('#doctor-select-input').on("keyup", function () {
+        let query = $(this).val();
+        let type = $(this).data('type');
+        if (query.length <= 0){
+            $("#doctors-results").hide();
+        }else {
+            $.get('/ajax/autocomplete', {query:query, type:type}, function (data) {
+                $("#doctors-results").html("").show();
+                $.each(data, function (index) {
+                    $("#doctors-results").append('<li class="autocomplite-result-li"><a data-id="'+ data[index].id +'">'+ data[index].lastname+' '+ data[index].firstname + ' '+ data[index].patronymic + '</a></li>');
+                });
+            });
+        }
+    });
+
+    $('#doctors-results').on('click', 'a', function () {
+        let id = $(this).data('id');
+        let name = $(this).text();
+        $('#doctor-real-input').val(id);
+        $('#doctor-select-input').val(name);
+        $("#doctors-results").hide();
+        $('#medcenter-select-input').html('');
+        $.get('/ajax/doctor/medcenters', {id:id}, function (data) {
+            console.log(data);
+            $.each(data, function (index) {
+                $('#medcenter-select-input').append('<option value="'+ data[index].id+'">'+data[index].name+'</option>')
+            })
+        });
+    });
 });

@@ -10,12 +10,19 @@ namespace App\Observers;
 
 
 use App\Doctor;
+use App\Traits\Observers\Slug;
 
 class DoctorObserver
 {
-    public function updating(Doctor $doctor)
+    use Slug;
+
+    public function creating(Doctor $doctor)
     {
-        $transName = \Slug::make($doctor->name);
-        $doctor->alias = $doctor->id . "-" . $transName;
+        $this->makeSlug($doctor);
+    }
+
+    public function saving(Doctor $doctor)
+    {
+        $this->makeSlug($doctor);
     }
 }

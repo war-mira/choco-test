@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\City;
+use App\Doctor;
 use App\Helpers\FormatHelper;
 use App\Http\Controllers\Controller;
 use App\Rules\PhoneNumber;
@@ -58,6 +59,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->where('email_confirmed', 1)],
             'phone' => ['required', new PhoneNumber, Rule::unique('users')->where('phone_verified', 1)],
             'password' => 'required|string|min:6|confirmed',
+            'role' =>'required'
         ]);
     }
 
@@ -69,18 +71,34 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $role = $data['role']==0?0:20;
+
+       $user = User::create([
             'name' => $data['name'],
+            'lastname' => $data['lastname'],
             'email' => $data['email'],
             'phone' => FormatHelper::phone($data['phone']),
             'city' => $data['city'],
+            'role' => $role,
             'password' => bcrypt($data['password']),
         ]);
+
+        if(!empty($user->phone) && $user->role == 20){
+
+            $doctor = $this->ifDoctorExist($user->phone);
+
+            if($doctor){
+                $this->setDoctorUser($doctor, $user);
+            }else{
+                $this->createDoctor($user);
+            }
+        }
+
+        return $user;
     }
 
     public function registerUser(Request $request)
     {
-        dd($request);
         if ($phone = $request->get('phone', false))
             $request->request->set('phone', preg_replace("/[^0-9]/", '', $phone));
 
@@ -93,4 +111,26 @@ class RegisterController extends Controller
         $cities = City::query()->orderBy('name')->get();
         return view('auth.register', compact('cities'));
     }
+
+    protected function ifDoctorExist($phone){
+        $doctor = Doctor::where('phone', $phone)->first();
+
+        return $doctor;
+    }
+
+    protected function setDoctorUser($doctor, $user){
+        $doctor->user_id = $user->id;
+        $doctor->update();
+    }
+
+    protected function createDoctor($user){
+        $doctor = new Doctor();
+        $doctor->firstname = $user->name;
+        $doctor->lastname = $user->lastname;
+        $doctor->city_id = $user->city_id;
+        $doctor->phone = $user->phone;
+        $doctor->user_id = $user->id;
+        $doctor->save();
+    }
+
 }

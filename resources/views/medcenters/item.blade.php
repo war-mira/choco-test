@@ -37,7 +37,7 @@
 
                 <div class="column column--right mbottom-20">
                     <h1 class="page-title">{{$meta['h1']}}</h1>
-                    <h3 class="profiles__short">Многопрофильное медицинское учреждение</h3>
+                     {{--<h3 class="profiles__short">Многопрофильное медицинское учреждение</h3>--}}
                     <p>
                         @component('components.rating-stars',['rating' => $medcenter['rate']])
                         @endcomponent
@@ -234,7 +234,7 @@
                                 @include('model.doctor.profile-short')
                             @endforeach
                         </div>
-                @endforeach
+                    @endforeach
                 <!-- end profiles -->
                 </div>
                 <!-- end sidebar -->

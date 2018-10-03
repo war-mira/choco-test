@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Helpers\FormatHelper;
 use App\Http\Controllers\Controller;
 use App\Model\Auth\PhoneVerification;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -100,12 +101,19 @@ class PhoneVerificationController extends Controller
                 $user->phone = $verification->phone;
                 $user->phone_verified = true;
                 $user->save();
+
+                if($user->role == User::ROLE_DOCTOR){
+                    $redirect = route('cabinet.doctor.personal.index');
+                } else {
+                    $redirect = route('user.profile');
+                }
+
                 $response = response(
                     ['success' =>
                          [
                              'message'  => 'Ваш аккаунт теперь под надежной защитой! Через несколько секунды вы будете '
                                  . 'перенаправлены в свой профиль. Благодарим за терпение.',
-                             'redirect' => route('user.profile')
+                             'redirect' => $redirect
                          ]], 200);
             } else {
                 $response = response(['error' => ['message' => 'Неверный код!']], 400);

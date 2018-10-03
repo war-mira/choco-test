@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\District;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -34,6 +35,8 @@ class City extends Model
     protected $table = 'cities';
 
     protected $appends = ['href'];
+    public $timestamps = false;
+    const ACTIVE = 1;
 
     public function parent()
     {
@@ -43,6 +46,11 @@ class City extends Model
     public function children()
     {
         return $this->hasMany(City::class, 'parent_id', 'id');
+    }
+
+    public function districts()
+    {
+        return $this->hasMany(District::class, 'parent_id', 'id');
     }
 
     public function getChildIdsAttribute()
@@ -57,6 +65,11 @@ class City extends Model
 
     public function getHrefAttribute()
     {
-        return "/doctors/" . $this->alias;
+        return route('doctors.list', ['city' => $this->alias]);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('status', self::ACTIVE);
     }
 }

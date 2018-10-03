@@ -18,16 +18,16 @@
         </div>
 
         <div class="nav-header-social">
-            <a href="https://t.me/idoctorkz_bot" target="_blank">
+            <a href="https://t.me/idoctorkz_bot" target="_blank" rel="nofollow">
                 <img src="{{asset('images/social/telegram.png')}}">
             </a>
-            <a href="https://vk.com/idoctorkz1" target="_blank">
+            <a href="https://vk.com/idoctorkz1" target="_blank" rel="nofollow">
                 <img src="{{asset('images/social/vk.png')}}">
             </a>
-            <a class="desktop-visible" href="https://www.instagram.com/idoctor_kz/" target="_blank">
+            <a class="desktop-visible" href="https://www.instagram.com/idoctor_kz/" target="_blank" rel="nofollow">
                 <img src="{{asset('images/social/instagram.png')}}">
             </a>
-            <a class="desktop-visible" href="https://www.facebook.com/kz.idoctor" target="_blank">
+            <a class="desktop-visible" href="https://www.facebook.com/kz.idoctor" target="_blank" rel="nofollow">
                 <img src="{{asset('images/social/facebook.png')}}">
             </a>
             <button type="button" class="btn-block button desktop-visible" style=" margin-top: 2px"
@@ -63,7 +63,9 @@
                     </ul>
                 @else
                     <div class="header__login m-collapsing-hide desktop-visible">
-                        <a href="{{route('user.profile')}}" id="login-dropdown-toggle">Профиль
+                        <a href="
+                            @if(Auth::user()->role == \App\User::ROLE_DOCTOR) {{route('cabinet.doctor.personal.index')}}
+                            @else {{route('user.profile')}} @endif" id="login-dropdown-toggle">Профиль
                         </a>
                     </div>
                 @endif
@@ -106,7 +108,7 @@
 
         </div>
         <div class="mobile-menu-item">
-            <a class="text-center" href="{{route('doctors.searchPage')}}" target="">
+            <a class="text-center" href="{{route('doctors.list')}}" target="">
                 <div class="menu-item-content">
                     <div><img src="{{asset('images/icons/icon_expert.png')}}">Врачи</div>
                     <div class="color-light-green">{{\App\Doctor::localPublic()->count()}}</div>
@@ -114,7 +116,7 @@
             </a>
         </div>
         <div class="mobile-menu-item">
-            <a class="text-center" href="/medcenters" target="">
+            <a class="text-center" href="{{route('medcenters.list')}}" target="">
                 <div class="menu-item-content">
                     <div><img src="{{asset('images/icons/icon_building.png')}}">Медцентры</div>
                     <div class="color-light-green">{{\App\Medcenter::localPublic()->count()}}</div>

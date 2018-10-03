@@ -17,7 +17,9 @@ class DoctorController extends Controller
         'ambulatory' => 0,
         'status'     => 0,
     ];
-    const SEARCH_FIELDS = ['firstname', 'lastname', 'medcenters' => ['name'], 'city' => ['name']];
+    const SEARCH_FIELDS = ['firstname', 'lastname', 'patronymic'
+//        'medcenters' => ['name'], 'city' => ['name']
+    ];
 
     public function getTableView(Request $request)
     {
@@ -33,7 +35,7 @@ class DoctorController extends Controller
         $seed = Doctor::with(['skills'])->findOrNew($id);
         $seed->load(['skills' => function ($query) {
             $query->orderBy('pivot_weight', 'desc');
-        }]);
+        }])->load('illnesses');
         $params = [];
         if ($id != null)
             $params['id'] = $id;
@@ -67,8 +69,10 @@ class DoctorController extends Controller
             return $this->update($id, $request);
         $redirectRoute = $request->query('redirect', null);
         $data = $this->processRequestData($request);
-        $doctor = (new Doctor($data));
+        $doctor = Doctor::create($data);
         $doctor->save();
+
+        $this->slug($doctor);
 
         $jobs = $data['jobs'] ?? false;
         if ($jobs !== false) {
@@ -78,6 +82,11 @@ class DoctorController extends Controller
         $skills = $data['skills'] ?? false;
         if ($skills !== false) {
             $doctor->skills()->sync($skills);
+        }
+
+        $illnesses = $data['illnesses'] ?? false;
+        if ($illnesses !== false) {
+            $doctor->illnesses()->sync($illnesses);
         }
 
         if ($redirectRoute != null) {
@@ -102,12 +111,20 @@ class DoctorController extends Controller
         }
 
         $doctor->save();
+
+        $this->slug($doctor);
+
         $skills = $data['skills'] ?? false;
         if ($skills !== false) {
             $skills = collect($skills)->mapWithKeys(function ($skill) {
                 return [$skill['id'] => ['weight' => $skill['weight']]];
             });
             $doctor->skills()->sync($skills);
+        }
+
+        $illnesses = $data['illnesses'] ?? false;
+        if ($illnesses !== false) {
+            $doctor->illnesses()->sync($illnesses);
         }
 
         if (isset($data['items'])) {
@@ -151,6 +168,13 @@ class DoctorController extends Controller
         }
 
         return $data;
+    }
+
+    private function slug(Doctor $doctor)
+    {
+        $transName = \Slug::make($doctor->name);
+        $doctor->alias = $doctor->id . "-" . $transName;
+        $doctor->update();
     }
 
     public function delete(Request $request, $id)

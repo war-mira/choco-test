@@ -1,3 +1,4 @@
+
 <!-- Google Analytics -->
 <script>
     (function (i, s, o, g, r, a, m) {
@@ -12,7 +13,7 @@
         m.parentNode.insertBefore(a, m)
     })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-    ga('create', 'UA-44507625-1', 'auto');
+    ga('create', 'UA-122041573-1', 'auto');
     ga('send', 'pageview');
 
 </script>

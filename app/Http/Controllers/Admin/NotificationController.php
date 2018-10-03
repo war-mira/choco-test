@@ -13,8 +13,6 @@ class NotificationController extends Controller
 {
     public function getForDate(Request $request)
     {
-
-
         $dateStr = $request->input('date', (Carbon::today())->format('Y-m-d'));
         $date = Carbon::createFromFormat('Y-m-d', $dateStr);
 

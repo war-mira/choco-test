@@ -63,7 +63,8 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+    <!-- jQuery -->
+    <script src="{{asset("sbadmin/vendor/jquery/jquery.min.js")}}"></script>
 </head>
 <div id="wrapper">
 
@@ -140,6 +141,20 @@
                         </ul>
                     </li>
                     <li>
+                        <a href="#"><i class="fa fa-ambulance fa-fw"></i> Медицинская библиотека<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="{{route('admin.illnesses-groups.table')}}"><i class="fa fa-stethoscope fa-fw"></i> Группы заболеваний</a>
+                            </li>
+                            <li>
+                                <a href="{{route('admin.illnesses.table')}}"><i class="fa fa-heartbeat fa-fw"></i> Заболевания</a>
+                            </li>
+                            <li>
+                                <a href="{{route('admin.illnesses-articles.table')}}"><i class="fa fa-medkit fa-fw"></i> Статьи</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
                         <a href="#"><i class="fa fa-th-list fa-fw"></i> Баннера<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
@@ -191,7 +206,13 @@
                                 <a href="{{route('admin.medcenter-reports.table')}}"><i
                                             class="fa fa-file-text-o fa-fw"></i> Для медцентров</a>
                             </li>
+                            <li>
+                                <a href="{{route('admin.report.doctorsClicks')}}">Найти врача</a>
+                            </li>
                         </ul>
+                    </li>
+                    <li>
+                        <a href="{{route('admin.settings.form')}}"><i class="fa fa-cog fa-fw"></i> Настройки</a>
                     </li>
                 </ul>
             </div>
@@ -204,8 +225,7 @@
     </div>
 </div>
 <body>
-<!-- jQuery -->
-<script src="{{asset("sbadmin/vendor/jquery/jquery.min.js")}}"></script>
+
 
 <!-- Bootstrap Core JavaScript -->
 <script src="{{asset("sbadmin/vendor/bootstrap/js/bootstrap.min.js")}}"></script>
@@ -219,7 +239,7 @@
 <script src="{{asset("sbadmin/vendor/datatables-responsive/dataTables.responsive.js")}}"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="{{asset("sbadmin/dist/js/sb-admin-2.js")}}"></script>
+<script src="{{asset("sbadmin/dist/js/sb-admin-2.js?v=0.0.1")}}"></script>
 
 <!-- Old scripts -->
 <script>

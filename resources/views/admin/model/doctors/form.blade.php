@@ -63,6 +63,13 @@
                                         @component('components.bootstrap.column',['class'=>'col-md-12'])
                                             @component('components.bootstrap.row')
                                                 @component('components.bootstrap.column',['class'=>'col-md-12'])
+                                                    @component('components.form.checkbox')
+                                                        @slot('field','partner')
+                                                        @slot('value',$seed['partner'] ?? null)
+                                                        @slot('label','Наш партнер')
+                                                    @endcomponent
+                                                @endcomponent
+                                                @component('components.bootstrap.column',['class'=>'col-md-12'])
                                                     @component('components.form.text')
                                                         @slot('field','firstname')
                                                         @slot('value', old('firstname',$seed['firstname']))
@@ -97,6 +104,20 @@
                                                             @slot('field','phone')
                                                             @slot('value', old('phone',$seed['phone']))
                                                             @slot('label','Phone')
+                                                        @endcomponent
+                                                    @endcomponent
+                                                    @component('components.bootstrap.column',['class'=>'col-md-12'])
+                                                        @component('components.form.text')
+                                                            @slot('field','showing_phone')
+                                                            @slot('value', old('showing_phone',$seed['showing_phone']))
+                                                            @slot('label','Телефон для отображения')
+                                                        @endcomponent
+                                                    @endcomponent
+                                                    @component('components.bootstrap.column',['class'=>'col-md-12'])
+                                                        @component('components.form.checkbox')
+                                                            @slot('field','show_phone')
+                                                            @slot('value',$seed['show_phone'] ?? null)
+                                                            @slot('label','Показать телефон')
                                                         @endcomponent
                                                     @endcomponent
                                                     @component('components.bootstrap.column',['class'=>'col-md-12'])
@@ -369,6 +390,17 @@
                                                     @slot('options',\App\Medcenter::orderBy('name')->get())
                                                     @slot('idField','id')
                                                     @slot('nameField','name_with_status')
+                                                @endcomponent
+                                            @endcomponent
+                                            @component('components.bootstrap.column',['class'=>'col-md-12'])
+                                                @component('components.form.multiselect')
+                                                    @slot('field','illnesses')
+                                                    @slot('value',array_pluck($seed['illnesses'] ?? [],'id'))
+                                                    @slot('placeholder','Болезни')
+                                                    @slot('label','Болезни')
+                                                    @slot('options',\App\Models\Library\Illness::orderBy('name')->get())
+                                                    @slot('idField','id')
+                                                    @slot('nameField','name')
                                                 @endcomponent
                                             @endcomponent
                                         @endcomponent

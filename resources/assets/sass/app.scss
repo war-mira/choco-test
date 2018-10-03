@@ -1,9 +1,42 @@
 
 // Fonts
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+//@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 
 // Variables
 @import "variables";
 
 // Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+
+@import "../../../node_modules/toastr/toastr";
+
+@import "../css/normalize.css";
+@import "../css/slick.css";
+@import "../css/lightbox.min.css";
+@import "../css/font-awesome.min.css";
+@import "../css/selectize.default.css";
+@import "../css/hover-icon.css";
+@import "../css/pickmeup.css";
+@import "../css/magnific-popup.css";
+@import "../css/main_new.css";
+@import "../css/public_new.css";
+
+
+@import "modules/breadcrumbs";
+@import "modules/doctor/image";
+@import "modules/doctor/profile";
+@import "modules/question/list";
+@import "partial/header";
+@import "partial/footer";
+@import "partial/btn";
+
+.blur {
+  -webkit-filter: url(#blur);
+  filter: url(#blur);
+  -webkit-filter: blur(3px);
+  filter: blur(3px);
+  filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius='4');
+  -webkit-transition: 0.3s -webkit-filter linear;
+  transition: 0.3s filter linear;
+}

@@ -27,7 +27,10 @@
             <td>{{$order->event_date}}</td>
             <td>{{$order->doctor['name'] ?? '-'}}</td>
             <td>{{$order->medcenter['name'] ?? '-'}}</td>
-            <td>{{$order->status_description }}</td>
+            @php
+                $array_key = array_search($order->status, array_column(\App\Order::STATUS, 'id'));
+            @endphp
+            <td>{{isset(\App\Helpers\HtmlHelper::getStatusName()[$order->status]) ? \App\Helpers\HtmlHelper::getStatusName()[$order->status]['name']:''}}</td>
         </tr>
     @endforeach
     </tbody>

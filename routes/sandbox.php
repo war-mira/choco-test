@@ -5,6 +5,11 @@
  * Date: 27.11.2017
  * Time: 15:24
  */
+
+use App\Doctor;
+use App\Skill;
+use Illuminate\Support\Facades\Redis;
+
 Route::group(['middleware' => 'role:superdev', 'as' => 'sandbox.', 'prefix' => 'sandbox'], function () {
     Route::get('/test', function () {
         return response('ok');
@@ -74,4 +79,203 @@ Route::group(['middleware' => 'role:superdev', 'as' => 'sandbox.', 'prefix' => '
         return $value;
     });
 
+
+    Route::get('comment-digest',function (){
+        $digest = \App\Comment::where([
+                'status'=>1,
+                'owner_type'=>'Doctor',
+                ['created_at','>',\Carbon\Carbon::now()->startOfWeek()->toDateTimeString()]
+            ])
+            ->get()
+            ->groupBy('owner_id')
+            ->transform(function ($item,$key){
+
+                $doc = Doctor::find($key);
+
+                $name = $doc->firstname . ' ' . $doc->lastname;
+                $mail = $doc->user ? $doc->user->email : $doc->email;
+
+                $mail = 'alex@fed.kz';
+
+                if(str_is('*@*.*',$mail))
+                    Mail::to($mail)->send(new \App\Mail\DoctorReviewsWeeklyMail($name, $item));
+
+                return  [
+                    'mail'=>$mail,
+                    'name'=>$name,
+                    'items'=>$item->toArray()
+                ];
+            })
+        ;
+
+//        Doctor::whereHas('comments',function ($q){
+//            return $q->where(['status'=>1])->whereDate('created_at','>',\Carbon\Carbon::now()->startOfWeek());
+//        });
+
+        dd( \Carbon\Carbon::now()->startOfWeek()->toDateTimeString(), $digest );
+    });
+
+
+
+
+    Route::get('search-index',function (){
+
+        $index_set = Doctor::public();
+        $per_page = 50;
+        $total_pages = $index_set->count()/$per_page;
+
+        $config = [
+            'model' => class_basename(Doctor::class),
+            'fields'=> [
+                'name',
+                'firstname',
+                'lastname',
+                'patronymic',
+                'skills'=>[
+                    'value'=>'name',
+                    'autocomplete'=>true,
+                    'dictionary'=>[]
+                ],
+                'illnesses'=>[
+                    'value'=>'name',
+                    'autocomplete'=>true,
+                    'dictionary'=>[]
+                ],
+                'qualifications'=>[
+                    'value'=>'name',
+                    'autocomplete'=>true,
+                    'dictionary'=>[]
+                ],
+                'medcenters'=>[
+                    'value'=>'name',
+                    'autocomplete'=>true,
+                    'dictionary'=>[]
+                ],
+                'additional'=>[
+                    'value'=>'name',
+                    'autocomplete'=>true,
+                    'dictionary'=>[]
+                ],
+                'city'=>[
+                    'value'=>'name',
+                    'autocomplete'=>true,
+                    'dictionary'=>[
+                        'Алматы'=>[
+                            'Алма-Ата',
+                            'Культурная столица'
+                        ]
+                    ]
+                ],
+            ]
+        ];
+
+        Redis::publish('search indexing pages',$total_pages);
+        Redis::publish('search indexing',$index_set->count());
+
+        for($page=0; $page<=$total_pages; $page++){
+
+            $data = $index_set->skip($per_page*$page)->take($per_page)->get();
+            \App\Jobs\SearchIndexJob::dispatch($config,$data);
+        }
+
+        dd(
+            $total_pages,
+            $index_set->count()
+        );
+    });
+
+
+
+
+    Route::any('search/{input?}/{modifier?}',function (\App\Http\Requests\Doctor\DoctorFilters $filters, $input = '', $modifier = ''){
+
+
+        $search = new \App\Helpers\DoctorSearcher([$input,$modifier]);
+
+        $search->lex()->context()->registerLog();
+
+        $filter = $search->filter->toArray();
+        $log = $search->log;
+        $undefined = $search->stack;
+        $processed = $search->input;
+
+
+        $dump = [
+            'unknown requests'=> Redis::zrangebyscore('documentSearcher:unrecoqnizedRequest','-inf','+inf','WITHSCORES'),
+            'unrecognized'=> collect(Redis::keys('documentSearcher:unrecoqnized:*'))
+                ->transform(function ($item){
+                   return [substr($item,30) => collect(Redis::smembers($item))
+                       ->transform(function ($record){
+                            return json_decode($record);
+                        })];
+                })
+        ];
+
+
+
+        $docs = \App\Doctor::filter($filters->add($filter))->count();
+
+        return (
+            [
+                'original'=>[
+                    $input,
+                    $modifier,
+                    $filters
+                ],
+                'processing'=>$processed,
+                'not recognized'=>$undefined,
+                'filter'=>$filter,
+                'log'=>$log,
+                'result'=>$docs,
+                'dump'=>$dump
+            ]
+        );
+    });
+
+    Route::view('sessions','sandbox.sessions');
+
+
+    Route::get('convert-blog',function (){
+
+        $ar = [];
+//        return '';
+        foreach ($ar as $id=>$group){
+            $post = \App\Post::find($id);
+            if(\App\Models\Library\IllnessesGroupArticle::create([
+                'name'=>$post->title,
+                'illnesses_group_id'=>$group,
+                'description' => $post->content,
+                'description-lite' => $post->content_lite,
+                'alias' => $post->alias,
+                'meta_title' => $post->meta_title??'',
+                'meta_key' => $post->meta_key??'',
+                'meta_desc' => $post->meta_desc??'',
+                'image' => $post->cover_image
+            ]))
+                $post->update(['status'=>0]);
+        }
+
+        return '';
+
+    });
+
+
+
+    Route::get('routes',function(){
+        return view('sandbox.redirects');
+    });
+    Route::get('routes/list',function(){
+
+        return [
+            'route'=> request()->path(),
+            'list'=>\App\Helpers\RoutePathfinder::getList()
+        ];
+    });
+
+    Route::post('routes',function(){
+        return \App\Helpers\RoutePathfinder::set(
+            request('from'),
+            request('to')
+        );
+    });
 });

@@ -2,12 +2,15 @@
 
 namespace App;
 
+use App\Helpers\SeoMetadataHelper;
 use App\Helpers\SessionContext;
 use App\Interfaces\IReferenceable;
 use App\Interfaces\ISeoMetadata;
 use App\Model\Location\District;
+use App\Model\ServiceItem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Ixudra\Curl\Facades\Curl;
 
 /**
  * App\Medcenters
@@ -77,6 +80,8 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
         3  => 'Статичный',
         4  => 'Системный'
     ];
+    const PARTNER = 1;
+    const NOT_PARTNER = 0;
     public $timestamps = false;
     protected $table = 'medcenters';
     protected $fillable = [
@@ -102,7 +107,15 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
         'geo_lon',
         'avatar',
         'email',
-        'seo_text'
+        'seo_text',
+        'partner',
+        'mond',
+        'tues',
+        'wedn',
+        'thur',
+        'frid',
+        'satu',
+        'sund'
     ];
 
     protected $attributes = [
@@ -119,6 +132,11 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
     public function city()
     {
         return $this->belongsTo(City::class, 'city_id', 'id');
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(\App\Models\District::class, '	district_id', 'id');
     }
 
     public function getAvatarAttribute()
@@ -155,6 +173,15 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
         return $this->attributes['name'];
     }
 
+    public function checkImageheight()
+    {
+        $height = false;
+        if(file_exists($this->avatar)) {
+            list($width, $height) = getimagesize($this->avatar);
+        }
+        return $height;
+    }
+
     public function publicComments()
     {
         return $this->comments()->where('comments.status', 1);
@@ -180,9 +207,41 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
         return $this->name . " (" . $this->status_name . ")";
     }
 
+    public function getCoordinatesAttribute()
+    {
+        $latitude = $this->geo_lat;
+        $longitude = $this->geo_lon;
+
+//        if(isset($latitude) && $latitude!= 0 && isset($longitude) && $longitude!=0){
+//            return  $latitude.','.$longitude;
+//        }
+            $city = City::find($this->city_id);
+            $address = $city->name.' '.$this->sms_address;
+
+        $response = \Cache::remember('coordinates_'.$this->id,60*24*7,function() use($address){
+            $client = new \GuzzleHttp\Client();
+            $response = $client->get('https://geocode-maps.yandex.ru/1.x/?format=json&geocode='.$address.'');
+            $response = $response->getBody();
+            $response = $response->getContents();
+            $response = json_decode($response, true);
+            return $response;
+        });
+        $firstObject = array_shift($response['response']['GeoObjectCollection']['featureMember']);
+        $points = $firstObject['GeoObject']['Point']['pos'];
+        $points = str_replace(' ', ', ', $points);
+        $points = implode(', ', array_reverse(explode(', ', $points)));;
+
+        return $points;
+    }
+
     public function orders()
     {
         return $this->hasMany(Order::class, 'med_id', 'id');
+    }
+
+    public function ordersVisited()
+    {
+        return $this->orders()->where('status', 2);
     }
 
     public function updateCommentRate()
@@ -235,26 +294,66 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
         });
     }
 
-    public function district()
+    public function work_days($from,$for)
     {
-        return $this->belongsTo(District::class, 'disctict_id', 'id');
+        $days = ['mond','tues','wedn','thur','frid','satu','sund'];
+        $min = 0;$max = 0; $bet = [];$tarray = [];
+        foreach($days as $i=>$day)
+        {
+            if($this->{$days[$i]}) {
+                if ($i <= $for && $i >= $from)
+                {
+                    $bet = unserialize($this->{$days[$i]});
+                    $tarray[] = strtotime($bet[0]);
+                    $tarray[] = strtotime($bet[1]);
+                }
+            }
+        }
+        $return = [];
+        if(!empty($tarray))
+        {
+            $return = ['min'=>date('H:i',min($tarray)),'max'=>date('H:i',max($tarray))];
+        }
+
+        return $return;
     }
 
     public function getMetaTitle()
     {
-        return empty($this->meta_title) ? ($this->name . ' - ' . $this->city->name) : $this->meta_title;
+        return empty($this->meta_title)
+            ? sprintf('%s на %s - %s - отзывы пациетов, фото - iDoctor.kz',
+                $this->name,
+                $this->map,
+                $this->city->name
+            )
+            : $this->meta_title;
     }
 
     public function getMetaDescription()
     {
-        return empty($this->meta_desc)
-            ? (substr(strip_tags(str_replace('\r\n', '', $this->content)), 0, 256))
-            : $this->meta_desc;
+        $desc = sprintf('%s на %s: отзывы, цены, рейтинг врачей, график работы. Оставьте отзыв о враче на iDoctor.kz! ',
+        $this->name,
+        $this->map
+        );
+        if(!empty($this->meta_desc)){
+            $desc = $this->meta_desc;
+        }
+        return $desc;
     }
 
     public function getMetaKeywords()
     {
-        return empty($this->meta_key) ? $this->name : $this->meta_key;
+        return empty($this->meta_key)
+            ? implode(',',[
+                $this->name." на ".$this->map,
+                $this->name." ".$this->city->name,
+                $this->name." {$this->city->name} цены",
+                $this->name." отзывы",
+                $this->name." адрес",
+                $this->name." {$this->city->name} врачи",
+                $this->name." {$this->city->name} отзывы"
+            ])
+            : $this->meta_key;
     }
 
     public function getMetaHeader()

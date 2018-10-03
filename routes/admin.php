@@ -6,11 +6,23 @@
  * Time: 16:39
  */
 //*******************Administrator
-Route::get('/', 'AdminController@dashboard');
+
+Route::any('/', 'AdminController@dashboard');
 Route::get('dashboard', 'AdminController@dashboard')->name('dashboard');
 
-
 Route::get('/clients/search', 'SearchController@searchClients');
+Route::get('/ajax/autocomplete','SearchController@autocomplete');
+Route::get('/ajax/doctor/medcenters','AdminController@getDoctorMedcenters');
+
+Route::group(['as' => 'settings.', 'prefix' => 'settings'], function () {
+    Route::get('/', 'Admin\SettingsController@form')->name("form");
+    Route::post('/form/update', 'Admin\SettingsController@update')->name("update");
+});
+
+Route::group(['as' => 'settings.', 'prefix' => 'settings'], function () {
+    Route::get('/', 'Admin\SettingsController@form')->name("form");
+    Route::post('/form/update', 'Admin\SettingsController@update')->name("update");
+});
 
 Route::group(['as' => 'dashboard.', 'prefix' => 'dashboard'], function () {
     Route::get('/getNotifications', 'Admin\DashboardNotificationController@getNotifications');
@@ -21,7 +33,6 @@ Route::group(['as' => 'notifications.'], function () {
     Route::get('notifications/for', 'Admin\NotificationController@getForDate')->name('forDate');
     Route::post('notifications/{id}/save', 'Admin\NotificationController@save')->name('save');
 });
-
 Route::group(['as' => 'medcenters.'], function () {
     Route::get('medcenter/setstatus', 'Admin\MedcenterController@setStatus')->name('setstatus');
     Route::get('medcenters/form/{id?}', 'Admin\MedcenterController@getFormView')->name('form');
@@ -34,11 +45,12 @@ Route::group(['as' => 'medcenters.'], function () {
     });
 });
 
+
 Route::group(['as' => 'doctors.'], function () {
     Route::get('doctors/form/{id?}', 'Admin\DoctorController@getFormView')->name('form');
     Route::get('doctors/forms/skill-row', 'Admin\DoctorController@getSkillRow')->name('forms.skill-row');
-    Route::get('doctors/table', 'Admin\DoctorController@getTableView')->name('table');
     Route::post('import/doctors/{id?}', 'Admin\DoctorImportController@importExcel')->name('import');
+    Route::get('doctors/table', 'Admin\DoctorController@getTableView')->name('table');
     Route::group(['as' => 'crud.', 'prefix' => 'crud'], function () {
         Route::get('doctors/{id?}', 'Admin\DoctorController@get')->name('get');
         Route::post('doctors', 'Admin\DoctorController@create')->name('create');
@@ -46,6 +58,7 @@ Route::group(['as' => 'doctors.'], function () {
         Route::delete('doctors/{id}', 'Admin\DoctorController@delete')->name('delete');
     });
 });
+
 
 Route::group(['as' => 'skills.'], function () {
     Route::get('skills/form/{id?}', 'Admin\SkillController@getFormView')->name('form');
@@ -58,7 +71,6 @@ Route::group(['as' => 'skills.'], function () {
         Route::delete('skills/{id}', 'Admin\SkillController@delete')->name('delete');
     });
 });
-
 Route::group(['as' => 'page_notifications.'], function () {
     Route::get('page_notifications/form/{id?}', 'PageNotificationController@getFormView')->name('form');
     Route::post('page_notifications/preview', 'PageNotificationController@getPreview')->name('preview');
@@ -72,7 +84,6 @@ Route::group(['as' => 'page_notifications.'], function () {
         Route::delete('page_notifications/{id}', 'PageNotificationController@delete')->name('delete');
     });
 });
-
 Route::group(['as' => 'orders.'], function () {
     Route::get('orders/notifications/{id}', 'Admin\OrderController@getNotifications')->name('notifications.get');
     Route::post('orders/notifications/{id}/create', 'Admin\OrderController@createNotification')->name('notifications.create');
@@ -98,6 +109,39 @@ Route::group(['as' => 'posts.'], function () {
         Route::post('posts', 'Admin\PostController@create')->name('create');
         Route::post('posts/{id}', 'Admin\PostController@update')->name('update');
         Route::delete('posts/{id}', 'Admin\PostController@delete')->name('delete');
+    });
+});
+
+Route::group(['as' => 'illnesses-groups.'], function () {
+    Route::get('illnesses-groups/form/{id?}', 'Admin\IllnessesGroupController@getFormView')->name('form');
+    Route::get('illnesses-groups/table', 'Admin\IllnessesGroupController@getTableView')->name('table');
+    Route::group(['as' => 'crud.', 'prefix' => 'crud'], function () {
+        Route::get('illnesses-groups/{id?}', 'Admin\IllnessesGroupController@get')->name('get');
+        Route::post('illnesses-groups', 'Admin\IllnessesGroupController@create')->name('create');
+        Route::post('illnesses-groups/{id}', 'Admin\IllnessesGroupController@update')->name('update');
+        Route::delete('illnesses-groups/{id}', 'Admin\IllnessesGroupController@delete')->name('delete');
+    });
+});
+
+Route::group(['as' => 'illnesses.'], function () {
+    Route::get('illnesses/form/{id?}', 'Admin\IllnessesController@getFormView')->name('form');
+    Route::get('illnesses/table', 'Admin\IllnessesController@getTableView')->name('table');
+    Route::group(['as' => 'crud.', 'prefix' => 'crud'], function () {
+        Route::get('illnesses/{id?}', 'Admin\IllnessesController@get')->name('get');
+        Route::post('illnesses', 'Admin\IllnessesController@create')->name('create');
+        Route::post('illnesses/{id}', 'Admin\IllnessesController@update')->name('update');
+        Route::delete('illnesses/{id}', 'Admin\IllnessesController@delete')->name('delete');
+    });
+});
+
+Route::group(['as' => 'illnesses-articles.'], function () {
+    Route::get('illnesses-articles/form/{id?}', 'Admin\IllnessesGroupArticlesController@getFormView')->name('form');
+    Route::get('illnesses-articles/table', 'Admin\IllnessesGroupArticlesController@getTableView')->name('table');
+    Route::group(['as' => 'crud.', 'prefix' => 'crud'], function () {
+        Route::get('illnesses-articles/{id?}', 'Admin\IllnessesGroupArticlesController@get')->name('get');
+        Route::post('illnesses-articles', 'Admin\IllnessesGroupArticlesController@create')->name('create');
+        Route::post('illnesses-articles/{id}', 'Admin\IllnessesGroupArticlesController@update')->name('update');
+        Route::delete('illnesses-articles/{id}', 'Admin\IllnessesGroupArticlesController@delete')->name('delete');
     });
 });
 
@@ -132,6 +176,8 @@ Route::group(['as' => 'report.'], function () {
     Route::get('reports/month/report', 'ReportController@reportForMonth')->name('reportForMonth');
     Route::get('reports/month/operator', 'ReportController@operatorForMonth')->name('operatorForMonth');
     Route::get('reports/month/medcenter', 'ReportController@medcenterForMonth')->name('medcenterForMonth');
+    Route::get('reports/doctors-clicks', 'ReportController@doctorsClicks')->name('doctorsClicks');
+    Route::get('reports/doctors-clicks-report', 'ReportController@makeDoctorsClickReports')->name('makeDoctorsClickReports');
 
     Route::get('reports/buyers', 'Admin\Report\BuyersReportController@page')->name('buyers.page');
     Route::post('reports/buyers', 'Admin\Report\BuyersReportController@report')->name('buyers.report');

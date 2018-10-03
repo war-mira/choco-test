@@ -6,6 +6,8 @@ use App\Helpers\SessionContext;
 use App\Interfaces\ISeoMetadata;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use morphos\Russian\GeographicalNamesInflection;
+use morphos\Russian\NounPluralization;
 
 /**
  * App\Skills
@@ -80,6 +82,7 @@ class Skill extends Model implements ISeoMetadata
     }
 
 
+
     public function noTopDoctors()
     {
         $allDoctors = $this->publicDoctors()->where('status', 1);
@@ -130,7 +133,7 @@ class Skill extends Model implements ISeoMetadata
     public function getMetaTitle()
     {
         return empty($this->meta_title)
-            ? ($this->name . ' :city_name.' . $this->name . ' - отзывы, рейтинг и запись прием онлайн iDoctor.kz.')
+            ? ($this->name . ' :city_name.' . $this->name . ' - отзывы о лучших врачах, фото, цены - iDoctor.kz')
             : $this->meta_title;
     }
 
@@ -146,11 +149,13 @@ class Skill extends Model implements ISeoMetadata
 
     public function getMetaHeader()
     {
-        return empty($this->seo_h1) ? $this->name : $this->seo_h1;
+        $city = SessionContext::city();
+        return empty($this->seo_h1) ?  NounPluralization::getCase($this->name, 'именительный').' в '. GeographicalNamesInflection::getCase($city->name, 'предложный'): $this->seo_h1;
     }
 
     public function getSeoText()
     {
         return empty($this->seo_text) ? '' : $this->seo_text;
     }
+
 }

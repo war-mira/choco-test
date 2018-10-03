@@ -60,10 +60,9 @@ class User extends Authenticatable implements CanResetPassword
 
     const OPERATORS = [
         33,//Кесиди
-        120,//Арай
         396,//Жулдыз
-        494,//Махида
-        2322//Виктория Казбековна
+        2322,//Виктория Казбековна
+        11024,//Альбина Тилепберди
     ];
     /**
      * The attributes that are mass assignable.
@@ -71,7 +70,15 @@ class User extends Authenticatable implements CanResetPassword
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'phone', 'city_id', 'avatar', 'birthday', 'role'
+        'name',
+        'lastname',
+        'email',
+        'password',
+        'phone',
+        'city_id',
+        'avatar',
+        'birthday',
+        'role'
     ];
     protected $dates = [
         'birthday'
@@ -127,7 +134,15 @@ class User extends Authenticatable implements CanResetPassword
     {
         $email = $this->email;
 
-
     }
 
+    public function doctor()
+    {
+        return $this->hasOne(Doctor::class);
+    }
+
+    public function isDoctor()
+    {
+        return $this->role == User::ROLE_DOCTOR;
+    }
 }

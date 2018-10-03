@@ -39,7 +39,7 @@ class MedcenterController extends Controller
         if ($id != null) {
             $result = Medcenter::find($id);
         } else {
-            $medcenters = Medcenter::query()->with(['city']);
+            $medcenters = Medcenter::query()->with(['city'])->with(['district']);
             $result = BootstrapTableHelper::processTableRequest($request, $medcenters, self::SEARCH_FIELDS);
         }
         return $result;
@@ -51,8 +51,7 @@ class MedcenterController extends Controller
             return $this->update($id, $request);
         $redirectRoute = $request->query('redirect', null);
         $data = $this->processRequestData($request);
-        $medcenter = new Medcenter();
-        $medcenter->fill($data);
+        $medcenter = Medcenter::create($data);
         $medcenter->save();
 
         if ($redirectRoute != null) {
@@ -70,7 +69,7 @@ class MedcenterController extends Controller
 
         $medcenter = Medcenter::find($id);
         $medcenter->fill($data);
-        $medcenter->save();
+        $medcenter->update();
 
         if ($redirectRoute != null) {
             $response = redirect(route($redirectRoute, ['id' => $medcenter->id]));

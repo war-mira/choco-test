@@ -1,3 +1,4 @@
+@if($comment->owner->status != 0)
 <div class="comment-container">
 
 
@@ -36,3 +37,4 @@
         </span>
     </div>
 </div>
+    @endif

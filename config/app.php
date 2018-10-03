@@ -171,6 +171,7 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Alexusmai\Ruslug\RuslugServiceProvider::class,
+        //Idoctor\Lvg\LVGServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -178,7 +179,7 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
 
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
@@ -189,8 +190,10 @@ return [
         \App\Providers\SmsServiceProvider::class,
         \App\Providers\EmailServiceProvider::class,
         App\Providers\GoogleDriveServiceProvider::class,
-        BenSampo\Enum\EnumServiceProvider::class
-
+        BenSampo\Enum\EnumServiceProvider::class,
+        DaveJamesMiller\Breadcrumbs\BreadcrumbsServiceProvider::class,
+        Ixudra\Curl\CurlServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class
     ],
 
     /*
@@ -248,6 +251,9 @@ return [
         'SmsService' => \App\Facades\SmsService::class,
         'EmailService' => \App\Facades\EmailService::class,
         'Slug' => Alexusmai\Ruslug\RuslugFacade::class,
+        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs::class,
+        'Curl' => Ixudra\Curl\Facades\Curl::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];

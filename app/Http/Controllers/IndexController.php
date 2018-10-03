@@ -3,102 +3,93 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Components\ToastrNotification;
 use App\Doctor;
+use App\Helpers\SeoMetadataHelper;
 use App\Helpers\SessionContext;
+use App\Models\District;
 use App\Order;
+use App\PageSeo;
 use App\Post;
 use App\Skill;
+use App\Uniqueip;
+use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Cache;
 
 class IndexController extends Controller
 {
     public function home()
     {
-        $topDoctors = Doctor::where('on_top', '=', 1)->where('status', '=', 1)->get();
 
-        $topPosts = Post::where('is_top', 1)->where('status', 1)->orderBy('created_at', 'desc')->limit(3)->get();
 
-        //Специальности по количесвам врачей
-        $skillLinks = Skill::query()
-            ->with(['doctors' => function ($query) {
-                $query->where('status', 1)->where('city_id', SessionContext::cityId());
-            }])
-            ->withCount(['doctors' => function ($query) {
-                $query->where('status', 1)->where('city_id', SessionContext::cityId());
-            }])
-            ->whereHas('doctors', function ($query) {
-                $query->where('status', 1)->where('city_id', SessionContext::cityId());
-            })
-            ->orderBy('name')
-            ->get()
-            ->map(function ($skill) {
-                $name = $skill->name;
-                $doctorsCount = $skill->doctors_count;
-                $href = $skill->href;
-                return compact('name', 'href', 'doctorsCount');
-            });
+        if (Cache::has('index:skills'))
+            $stats = Cache::get('index:stats');
+        else {
+            $stats = [
+                'doctors_count' => Doctor::localPublic()->count(),
+                'orders_count' => Order::whereIn('status', [1, 2])->count(),
+                'comments_count' => Comment::count()
+            ];
 
-        //Комментарии
-        $lastComments = Comment::whereStatus(1)->orderByDesc('created_at')->take(20)->get();
+            Cache::set('index:stats', $stats, 30);
+        }
 
-        $title = 'iDoctor.kz - Поиск врача в Алматы и Астане, бесплатная запись на прием';
-        $description = 'iDoctor.kz - Сервис для поиска врача и бесплатной записи на прием. Мы собрали базу врачей в Алматы и Астане с рейтингами и отзывами наших клиентов.';
-        $meta = compact('title', 'description');
-
-        return view('index')->with(
-            compact(
-                'meta',
-                'topDoctors',
-                'topPosts',
-                'skillLinks',
-                'lastComments')
-        );
-    }
-
-    public function r_home()
-    {
-        $stats = [
-            'doctors_count'  => Doctor::localPublic()->count(),
-            'orders_count'   => Order::whereIn('status', [1, 2])->count(),
-            'comments_count' => Comment::count()
-        ];
 
         $social = [
-            'fb'    => 'https://www.facebook.com/kz.idoctor',
+            'fb' => 'https://www.facebook.com/kz.idoctor',
             'insta' => 'https://www.instagram.com/idoctor_kz/',
-            'vk'    => 'https://vk.com/idoctorkz1',
+            'vk' => 'https://vk.com/idoctorkz1',
         ];
 
-        $topDoctors = Doctor::where('on_top', '=', 1)->where('status', '=', 1)->get();
+//        $topDoctors = Doctor::where('on_top', '=', 1)->where('status', '=', 1)->get();
 
-        $topPosts = Post::where('is_top', 1)->where('status', 1)->orderBy('date_create', 'desc')->limit(3)->get();
+        if (Cache::has('index:topPosts'))
+            $topPosts = Cache::get('index:topPosts');
+        else {
+            $topPosts = Post::where('is_top', 1)->where('status', 1)->orderBy('created_at', 'desc')->limit(3)->get();
+            Cache::set('index:topPosts', $topPosts, 120);
+        }
+
+
+        $answered_questions = \App\Question::wherehas('answers')->count();
+        $questions = \App\Question::take(4)
+            ->orderBy('created_at', 'desc')
+            ->whereHas('answers')
+            ->get();
+
 
         //Специальности по количесвам врачей
-        $skillsList = Skill::query()
-            ->with(['doctors' => function ($query) {
-                $query->where('status', 1)->where('city_id', SessionContext::cityId());
-            }])
-            ->withCount(['doctors' => function ($query) {
-                $query->where('status', 1)->where('city_id', SessionContext::cityId());
-            }])
-            ->whereHas('doctors', function ($query) {
-                $query->where('status', 1)->where('city_id', SessionContext::cityId());
-            })
-            ->orderBy('name')
-            ->get()
-            ->map(function ($skill) {
-                $name = $skill->name;
-                $doctorsCount = $skill->doctors_count;
-                $href = route('doctors.searchPage', ['skill' => $skill->id]);
-                return compact('name', 'href', 'doctorsCount');
-            });
+        $skillsList = Cache::remember('index:skills-'. SessionContext::cityId(),120,function(){
+            return Skill::query()
+                ->withCount(['doctors as doctorsCount' => function ($query) {
+                    $query->where('status', 1)->where('city_id', SessionContext::cityId());
+                }])
+                ->whereHas('doctors', function ($query) {
+                    $query->where('status', 1)->where('city_id', SessionContext::cityId());
+                })
+                ->orderBy('name')
+                ->get(['name', 'href', 'doctorsCount']);
+
+        });
+
+
+        if (Cache::has('index:districts'))
+            $districts = Cache::get('index:districts');
+        else {
+            $districts = District::all();
+            Cache::set('index:districts', $topPosts, 120);
+        }
+
 
         //Комментарии
         $topPromotions = collect([]);
 
-        $title = 'iDoctor.kz - Поиск врача в Алматы и Астане, бесплатная запись на прием';
-        $description = 'iDoctor.kz - Сервис для поиска врача и бесплатной записи на прием. Мы собрали базу врачей в Алматы и Астане с рейтингами и отзывами наших клиентов.';
-        $meta = compact('title', 'description');
+        $pageSeo = PageSeo::query()
+            ->where('class', 'Home')
+            ->where('action', 'index')
+            ->first();
+        $meta = SeoMetadataHelper::getMeta($pageSeo, SessionContext::city());
 
         return view('redesign.index')->with(
             compact(
@@ -108,8 +99,40 @@ class IndexController extends Controller
                 'topPromotions',
                 'skillsList',
                 'stats',
-                'social')
+                'social',
+                'districts',
+                'answered_questions',
+                'questions')
         );
+    }
+
+    public function ratings(Request $request)
+    {
+        $like = $request->get('likenot');
+        $doc = $request->get('doc');
+        $ip = $request->ip();
+        $status = null;
+
+        if (!Uniqueip::where('ip', '=', $ip)->where('doctor', '=', $doc)->count()) {
+            $cf = new Uniqueip();
+            $cf->doctor = $doc;
+            $cf->ip = $ip;
+            $cf->like_dis = $like;
+            $cf->save();
+
+            $doctor = Doctor::where('id', '=', $doc)->first();
+            if ($like == 1) {
+                $doctor->like += 1;
+            } else {
+                $doctor->dislike += 1;
+            }
+            $doctor->save();
+        }
+
+        return response()->json([
+            'status' => $status,
+            'rates' => view('components.ratemini', ['doctor' => $doctor])->render()
+        ]);
     }
 
     public function getBuyersReport()
@@ -230,5 +253,13 @@ class IndexController extends Controller
         $cout .= '</tr></table>';
 
         echo $cout;
+    }
+
+    public function testCurl()
+    {
+        $client = new \GuzzleHttp\Client();
+        $response = $client->get('https://geocode-maps.yandex.ru/1.x/?format=json&geocode=ул. Тайманова  блок 1');
+        $stream = $response->getBody();
+        dd($stream->getContents());
     }
 }

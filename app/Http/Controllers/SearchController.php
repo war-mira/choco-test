@@ -2,91 +2,254 @@
 
 namespace App\Http\Controllers;
 
-use App\Doctor;
+use App\City;
+use App\Models\Doctors\Doctor;
 use App\Helpers\SearchHelper;
 use App\Helpers\SessionContext;
 use App\Medcenter;
 use App\Skill;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class SearchController extends Controller
 {
+    public function livesearchIndex(Request $request)
+    {
+        $query = $request->query('q');
+        $type = $request->query('type');
+
+        switch ($type) {
+            case 'doctor':
+            default:
+                $groups = [
+                    'skills' => $this->searchSkills($query),
+                    'doctors' => $this->searchDoctors($query),
+                ];
+                $view = 'search.result.liveresults_index_new';
+                break;
+            case 'medcenter':
+                $groups = [
+                    'medcenters' => $this->searchMedcenters($query)
+                ];
+                $view = 'search.result.medcenters';
+                break;
+        }
+
+        return view($view, $groups);
+    }
+
+
+    public function autocomplete(Request $request)
+    {
+
+        $query = $request->query('query');
+        $type = $request->query('type');
+
+        switch ($type) {
+            case 'skill':
+                return $this->autocompleteSkill($query);
+                break;
+            case 'doctor':
+                return $this->autocompleteDoctor($query);
+                break;
+            case 'doctor-with-name':
+                return $this->autocompleteDoctorWithName($query);
+                break;
+            case 'city':
+                return $this->autocompleteCity($query);
+                break;
+            case 'medcenter':
+                return $this->autocompleteMedcenter($query);
+                break;
+            default:
+                return response()->json([]);
+                break;
+        }
+
+    }
+
+    public function autocompleteSkill($query)
+    {
+        $skills = $this->searchAllSkills($query);
+        $skills = $skills->map(function ($skill) {
+            return $skill->only(['id', 'name', 'alias']);
+        });
+        return response()->json($skills);
+    }
+
+    public function autocompleteDoctor($query)
+    {
+        $doctors = $this->searchAllDoctors($query);
+        $doctors = $doctors->map(function ($doctor) {
+            return $doctor->only([
+                'id',
+                'lastname',
+                'firstname',
+                'middlename',
+                'patronymic',
+                'skills'
+            ]);
+        });
+        return response()->json($doctors);
+    }
+
+    public function autocompleteDoctorWithName($query)
+    {
+        $doctors = $this->searchAllDoctorsWithName($query);
+        $doctors = $doctors->map(function ($doctor) {
+            return $doctor->only([
+                'id',
+                'lastname',
+                'firstname',
+                'middlename',
+                'patronymic',
+            ]);
+        });
+        return response()->json($doctors);
+    }
+
+    public function autocompleteMedcenter($query)
+    {
+        $medcenters = $this->searchMedcenters($query);
+        $medcenters = $medcenters->map(function ($medcenter) {
+            return $medcenter->only(['id', 'name', 'alias']);
+        });
+        return response()->json($medcenters);
+    }
+
+    public function autocompleteCity($query)
+    {
+        $cities = City::
+        where('name', 'like', "%$query%")
+            ->orderBy('name')
+            ->active()
+            ->limit(20)
+            ->get();
+        $cities = $cities->map(function ($city) {
+            return $city->only(['id', 'name', 'alias']);
+        });
+        return response()->json($cities);
+    }
+
     public function livesearch(Request $request)
     {
         $query = $request->query('q');
         $is_child = $request->query('child');
         $ambulatory = $request->query('ambulatory');
         $groups = [
-            $this->searchSkills($query),
-            $this->searchDoctors($query, $is_child, $ambulatory),
-            $this->searchMedcenters($query)
+            $this->old_searchSkills($query),
+            $this->old_searchDoctors($query, $is_child, $ambulatory),
+            $this->old_searchMedcenters($query)
         ];
         return view('search.liveresults', compact('groups'));
     }
 
-    private function searchMedcenters($query)
+    private function searchSkills($query)
     {
-        $medcenters = Medcenter::whereStatus(1)
-            ->where('name', 'like', "%$query%")
-            ->orderBy('name', 'asc')
+        $skills = Skill::
+        where('name', 'like', "%$query%")
+            ->with(['doctors' => function ($query) {
+                $query->where('status', 1)->where('city_id', SessionContext::cityId());
+            }])
+            ->withCount(['doctors' => function ($query) {
+                $query->where('status', 1)->where('city_id', SessionContext::cityId());
+            }])
+            ->whereHas('doctors', function ($query) {
+                $query->where('status', 1)->where('city_id', SessionContext::cityId());
+            })
+            ->orderBy('name')
             ->limit(20)
             ->get();
 
-        return [
-            'header' => 'Медцентры',
-            'results' => [
-                'view' => 'search.result.medcenter',
-                'data' => $medcenters
-            ]
-        ];
+        return $skills;
     }
 
-    private function searchDoctors($query, $is_child, $ambulatory)
+    private function searchAllDoctors($query)
     {
+        $doctors = \App\Doctor::
+        where('lastname', 'like', "%$query%")
+            ->where('status', 1)
+            ->with(['skills' => function ($skill) {
+                $skill->select('skills.name', 'skills.id', 'skills.alias');
+            }])
+            ->orderBy('lastname')
+            ->limit(20)
+            ->get();
 
+        return $doctors;
+    }
+
+    private function searchAllDoctorsWithName($query)
+    {
+        $doctors = \App\Doctor::
+            where('status', 1);
+
+        $fields = [
+          'lastname',
+          'firstname'
+        ];
+
+        foreach (explode(' ', $query) as $word) {
+            $word = trim($word);
+            if ($word != '') {
+                $doctors->where(function ($mainQuery) use ($fields, $word) {
+                    foreach ($fields as $index => $field) {
+                        $mainQuery->orWhere($field, 'like', '%' . $word . '%');
+                    }
+                });
+            }
+
+        }
+
+        $doctors = $doctors->orderBy('lastname')
+            ->limit(50)
+            ->get();
+
+        return $doctors;
+    }
+
+    private function searchAllSkills($query)
+    {
+        $skills = Skill::
+        where('name', 'like', "%$query%")
+            ->orderBy('name')
+            ->limit(20)
+            ->get();
+
+        return $skills;
+    }
+
+    private function searchDoctors($query)
+    {
         $doctors = Doctor::where('status', 1)->where('city_id', Session::get('cityid', 6));
-        if ($is_child == 'true')
-            $doctors = $doctors->where('child', 1);
-        if ($ambulatory == 'true')
-            $doctors = $doctors->where('ambulatory', 1);
         $doctors = $doctors->
-        where(function ($q) use ($query) {
+        where(function (Builder $q) use ($query) {
             $q->where('firstname', 'like', "%$query%")
-                ->orWhere('lastname', 'like', "%$query%");
+                ->orWhere('lastname', 'like', "%$query%")
+                ->orWhereHas('skills', function (Builder $skillsQuery) use ($query) {
+                    $skillsQuery->where('name', 'like', "%$query%");
+                });
         })
             ->orderBy('lastname', 'asc')
             ->limit(20)
             ->get();
 
 
-        return [
-            'header' => 'Доктора',
-            'results' => [
-                'view' => 'search.result.doctor',
-                'data' => $doctors
-            ]
-        ];
+        return $doctors;
     }
 
-    private function searchSkills($query)
+    private function searchMedcenters($query)
     {
-
-        $skills = Skill::
-        where('name', 'like', "%$query%")
+        $medcenters = Medcenter::where('status', 1)
+            ->where('name', 'like', "%$query%")
             ->orderBy('name', 'asc')
             ->limit(20)
             ->get();
 
-        return [
-            'header' => 'Специализации',
-            'results' => [
-                'view' => 'search.result.skill',
-                'data' => $skills
-            ]
-        ];
+        return $medcenters;
     }
 
     public function searchClients(Request $request)
@@ -110,6 +273,48 @@ class SearchController extends Controller
             ]
         ]];
         return view('search.liveresults', compact('groups'));
+    }
+
+    public function new_searchPage(Request $request, $primarySuffix = false, $secondarySuffix = false)
+    {
+        $type = $request->input('type', 'doctor');
+        $sort = $request->input('sort', 'rate');
+        $order = $request->input('order', 'desc');
+        $q = $request->input('q', false);
+        $child = $request->input('child', null);
+        $ambulatory = $request->input('ambulatory', null);
+
+        $doctors = Doctor::query()
+            ->withCommentsCount()
+            ->where('status', 1)->where('city_id', Session::get('cityid', 6));
+        if ($q) {
+            $doctors = $doctors->
+            where(function (Builder $query) use ($q) {
+                $query->where('firstname', 'like', "%$q%")
+                    ->orWhere('lastname', 'like', "%$q%")
+                    ->orWhereHas('skills', function (Builder $skillsQuery) use ($q) {
+                        $skillsQuery->where('name', 'like', "%$q%");
+                    });
+            });
+        }
+        if (isset($child)) {
+            $doctors->where('child', $child);
+        }
+        if (isset($ambulatory)) {
+            $doctors->where('ambulatory', $ambulatory);
+        }
+        $doctors = $doctors->orderBy($sort, $order)->paginate(10);
+        $doctors = $doctors->appends($request->query());
+
+        return view('redesign.search.doctors', compact(
+            'doctors',
+            'sort',
+            'order',
+            'child',
+            'type',
+            'ambulatory',
+            'q'
+        ));
     }
 
     public function searchPage(Request $request)
@@ -148,6 +353,66 @@ class SearchController extends Controller
 
         return view('search.page',
             compact('meta', 'doctors', 'skills', 'medcenters', 'filter'));
+    }
+
+    private function old_searchMedcenters($query)
+    {
+        $medcenters = Medcenter::where('status', 1)
+            ->where('name', 'like', "%$query%")
+            ->orderBy('name', 'asc')
+            ->limit(20)
+            ->get();
+
+        return [
+            'header' => 'Медцентры',
+            'results' => [
+                'view' => 'search.result.medcenter',
+                'data' => $medcenters
+            ]
+        ];
+    }
+
+    private function old_searchDoctors($query, $is_child, $ambulatory)
+    {
+        $doctors = Doctor::where('status', 1)->where('city_id', Session::get('cityid', 6));
+        if ($is_child == 'true')
+            $doctors = $doctors->where('child', 1);
+        if ($ambulatory == 'true')
+            $doctors = $doctors->where('ambulatory', 1);
+        $doctors = $doctors->
+        where(function ($q) use ($query) {
+            $q->where('firstname', 'like', "%$query%")
+                ->orWhere('lastname', 'like', "%$query%");
+        })
+            ->orderBy('lastname', 'asc')
+            ->limit(20)
+            ->get();
+
+        return [
+            'header' => 'Доктора',
+            'results' => [
+                'view' => 'search.result.doctor',
+                'data' => $doctors
+            ]
+        ];
+    }
+
+    private function old_searchSkills($query)
+    {
+
+        $skills = Skill::
+        where('name', 'like', "%$query%")
+            ->orderBy('name', 'asc')
+            ->limit(20)
+            ->get();
+
+        return [
+            'header' => 'Специализации',
+            'results' => [
+                'view' => 'search.result.skill',
+                'data' => $skills
+            ]
+        ];
     }
 
     public function searchResults(Request $request)
@@ -216,9 +481,9 @@ class SearchController extends Controller
 
         return [
             'doctorsCount' => $doctorsCount,
-            'page'         => $page,
-            'pagination'   => $pagination,
-            'view'         => view('search.doctors-page', compact('doctors', 'highlightSkill'))->render()];
+            'page' => $page,
+            'pagination' => $pagination,
+            'view' => view('search.doctors-page', compact('doctors', 'highlightSkill'))->render()];
     }
 
 }

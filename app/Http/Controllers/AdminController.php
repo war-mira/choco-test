@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Doctor;
 use App\Enums\OrderStatus;
 use App\Order;
+use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
@@ -18,4 +20,10 @@ class AdminController extends Controller
         return view('admin.dashboard')->with(compact('todayOrders', 'yesterdayOrders', 'tomorrowOrders'));
     }
 
+    public function getDoctorMedcenters(Request $request)
+    {
+        $doctor = Doctor::find($request->id);
+
+        return $doctor->medcenters;
+    }
 }

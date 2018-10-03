@@ -50,4 +50,16 @@ class FormatHelper
 
         return $strRep;
     }
+
+    public static function arrayToString($arr)
+    {
+      $string = str_replace(array('[', ']'), '', htmlspecialchars(json_encode($arr), ENT_NOQUOTES));
+
+      return $string;
+    }
+
+    public static function userShothDate($date){
+
+        return date('Y-m-d', strtotime($date));
+    }
 }

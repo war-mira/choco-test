@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Doctor;
 use App\Facades\NotificationService;
 use App\Helpers\BootstrapTableHelper;
+use App\Helpers\HtmlHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Admin\SmsNotificationResource;
 use App\Http\Resources\BootstrapTableResource;
@@ -71,6 +72,10 @@ class OrderController extends Controller
 
         $orders = Order::whereBetween($dateColumn, [$dateBegin, $dateEnd])
             ->get();
+        foreach ($orders as $order){
+            if($order->status['children'])
+                dd($order->status['children']);
+        }
         Excel::create($name, function ($excel) use ($orders, $dateBegin, $dateEnd) {
             /** @var Excel $excel */
             $excel->sheet('Отчет', function ($sheet) use ($orders) {
@@ -92,34 +97,8 @@ class OrderController extends Controller
         if (isset($fromInternet))
             $seed['from_internet'] = $fromInternet;
 
-        $doctorsMedcenters = Doctor::whereStatus(1)->get()->mapWithKeys(function ($doctor) {
-            return [$doctor['id'] => $doctor->medcenters()->pluck('medcenters.id')];
-        });
-
-        $data = [
-            'select2' => [
-                'medcenters' => \App\Medcenter::query()
-                    ->where('status', 1)
-                    ->get()->map(function (\App\Medcenter $medcenter) {
-                        return
-                            [
-                                'id'   => $medcenter->id,
-                                'text' => $medcenter->name,
-                                'bind' => $medcenter->doctors()->pluck('doctors.id')
-                            ];
-                    }),
-                'doctors'    => \App\Doctor::public ()->get()->map(function (\App\Doctor $doctor) {
-                    return
-                        [
-                            'id'   => $doctor->id,
-                            'text' => $doctor->name,
-                            'bind' => $doctor->medcenters()->pluck('medcenters.id')
-                        ];
-                })
-            ]
-        ];
         $action = route('admin.orders.crud.' . ($id == null ? 'create' : 'update'), ['id' => $id]);
-        return view('admin.model.orders.form', compact('seed', 'action', 'doctorsMedcenters', 'data'));
+        return view('admin.model.orders.form', compact('seed', 'action'));
     }
 
     public function get($id = null, Request $request)

@@ -2,15 +2,23 @@
 
 namespace App;
 
+use App\Components\Image\Resizer;
 use App\Helpers\FormatHelper;
 use App\Helpers\MathHelper;
+use App\Helpers\SeoMetadataHelper;
 use App\Helpers\SessionContext;
+use App\Helpers\votes;
+use App\Http\Requests\Filter;
 use App\Interfaces\IReferenceable;
 use App\Interfaces\ISeoMetadata;
 use App\Model\ServiceItem;
+use App\Models\Library\Illness;
 use App\Traits\Eloquent\FilterScopes;
 use Carbon\Carbon;
+use Idoctor\Lvg\Models\LvgDoctorCandidate;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Str;
 
 /**
  * App\Doctor
@@ -114,6 +122,9 @@ use Illuminate\Database\Eloquent\Model;
 class Doctor extends Model implements IReferenceable, ISeoMetadata
 {
     use FilterScopes;
+    use votes;
+    use Resizer;
+
     const STATUS = [
         -1 => 'Заблокирован',
         0  => 'Скрыт',
@@ -122,11 +133,36 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         3  => 'Статичный',
         4  => 'Системный'
     ];
+    const PARTNER = 1;
+    const NOT_PARTNER = 0;
+    const TYPE = [
+      0 => 'partner',
+      1 => 'not_partner_registered_with_phone',
+      2 => 'not_partner_not_registered_with_phone',
+      3 => 'not_partner_not_registered_without_phone',
+      4 => 'partner_without_phone',
+      5 => 'not_partner_registered_without_phone'
+    ];
+
+    const SHOW_PHONE_COUNT = 'show-phone';
+    const FIND_DOCTOR_COUNT = 'find-doctor';
+    const VIEW_PROFILE_COUNT = 'view-profile';
+    const SHOW_PHONES = [
+        '331',
+        '513',
+        '524',
+        '495'
+    ];
+
+    const SHOW_PHONE = 1;
+
+
     public $timestamps = true;
     protected $table = 'doctors';
     protected $fillable = [
         'firstname',
         'lastname',
+        'middlename',
         'avatar',
         'qualification',
         'alias',
@@ -176,8 +212,21 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         'preview_text',
         'timetable',
         'seo_text',
+        'partner',
 
+        'showing_phone',
+        'show_phone',
+
+//        'mond',
+//        'tues',
+//        'wedn',
+//        'thur',
+//        'frid',
+//        'satu',
+//        'sund',
+//        'comercial'
     ];
+
     protected $casts = [
         'child'   => 'int',
         'city_id' => 'int'
@@ -259,6 +308,28 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         return $this->attributes['avatar'] ?? asset('images/no-userpic.gif');
     }
 
+    public function getAvatar(int $width,int $height)
+    {
+        $height = $height == 0?'auto':$height;
+        $width = $width == 0?'auto':$width;
+        $src = $this->avatar;
+        if(!file_exists($src)){
+            return '/images/no-userpic.gif';
+        }
+        $src = $this->getNotThumb($src);
+        return $this->getImageUrl($src,$width,$height,85);
+    }
+
+    public function getNotThumb($src)
+    {
+        $path = pathinfo($src);
+        $filename = $path['filename'];
+        if(Str::endsWith($filename,'_thumb')){
+            $filename = Str::substr($filename,0,-6);
+            return $path['dirname'].'/'.$filename.'.'.$path['extension'];
+        };
+        return $src;
+    }
     public function city()
     {
         return $this->belongsTo(City::class, 'city_id', 'id');
@@ -268,6 +339,11 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     {
         return $this->hasMany(Order::class, 'doc_id', 'id');
     }
+
+//    public function medname()
+//    {
+//        return $this->belongsToMany(Medcenter::class,'doctors','id','med_id');
+//    }
 
     public function getMainSkillAttribute()
     {
@@ -284,6 +360,24 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
             ->withPivot(['weight']);
     }
 
+    public function illnesses()
+    {
+        return $this
+            ->belongsToMany(Illness::class,
+                'doctors_illnesses',
+                'doctor_id',
+                'illness_id');
+    }
+
+    public function qualifications()
+    {
+        return $this
+            ->belongsToMany(Qualification::class,
+                'doctors_qualifications',
+                'doctor_id',
+                'qualification_id');
+    }
+
     public function items()
     {
         return $this->morphMany(ServiceItem::class, 'vendor');
@@ -292,6 +386,13 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     public function scopeInCities($query, $city_id)
     {
         return $query->where('city_id', $city_id);
+    }
+
+    public function inDistrict($district_id)
+    {
+        return $this->whereHas('medcenters', function ($query) use($district_id){
+           $query->where('district_id', $district_id);
+        });
     }
 
     public function scopePublic($query, $status = true)
@@ -316,6 +417,11 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         });
     }
 
+    public function scopeFilter($query, Filter $filters)
+    {
+        return $filters->apply($query);
+    }
+
     public function medcenters()
     {
         return $this->hasManyThrough(Medcenter::class, DoctorJob::class, 'doctor_id', // Foreign key on users table...
@@ -323,6 +429,11 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
             'id', // Local key on countries table...
             'medcenter_id');
     }
+
+//    public function medc_map()
+//    {
+//        return $this->belongsTo(Medcenter::class,'med_id','id');
+//    }
 
     public function getExpFormattedAttribute()
     {
@@ -345,6 +456,28 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     public function getTypeAttribute()
     {
         return 'доктор';
+    }
+
+    public function getHumanAmbulatoryAttribute()
+    {
+        if ($this->ambulatory == 1){
+            $humanAmbulatory = 'Да';
+        } else {
+            $humanAmbulatory = 'Нет';
+        }
+
+        return $humanAmbulatory;
+    }
+
+    public function getHumanChildAttribute()
+    {
+        if ($this->child == 1){
+            $humanChild = 'Да';
+        } else {
+            $humanChild = 'Нет';
+        }
+
+        return $humanChild;
     }
 
     public function updateCommentRate()
@@ -388,6 +521,11 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
 
     public function getMetaTitle()
     {
+        $skills_result = [];
+        $skills = $this->skills()->get();
+        foreach ($skills as $skill) {
+            $skills_result[] = $skill->name;
+        }
         return empty($this->meta_title)
             ? ($this->firstname . ' ' . $this->lastname . ' - ' . $this->city->name)
             : $this->meta_title;
@@ -395,8 +533,13 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
 
     public function getMetaDescription()
     {
+        $skills_result = [];
+        $skills = $this->skills()->get();
+        foreach ($skills as $skill) {
+            $skills_result[] = $skill->name;
+        }
         return empty($this->meta_desc)
-            ? (substr(strip_tags(str_replace('\r\n', '', $this->content)), 0, 256))
+            ? ($this->firstname . ' ' . $this->lastname . ' - ' . implode(", ", $skills_result)) . ". " . SeoMetadataHelper::DEFAULT_DESCRIPTION
             : $this->meta_desc;
     }
 
@@ -413,5 +556,84 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     public function getSeoText()
     {
         return empty($this->seo_text) ? '' : $this->seo_text;
+    }
+
+    public function checkQualification($qualification)
+    {
+        return $this->qualifications->contains('id', $qualification->id);
+    }
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function whoIsIt()
+    {
+        if($this->partner == self::PARTNER){
+            if(!empty($this->showing_phone)){
+                return self::TYPE[0];
+            }else{
+                return self::TYPE[4];
+            }
+        } else{
+            $account = null;
+            if($this->user_id != 22)
+                $account = User::find($this->user_id);
+           if($account){
+               if($this->showing_phone){
+                   return self::TYPE[1];
+               }else{
+                   return self::TYPE[5];
+               }
+           }else{
+               if(!empty($this->showing_phone)){
+                   return self::TYPE[2];
+               }else{
+                   return self::TYPE[3];
+               }
+           }
+        }
+    }
+
+
+    public function getAdditionalAttribute()
+    {
+        $opts = collect([]);
+
+        // child
+        $opts->push(['name'=>$this->child?'детский':'для взрослых']);
+        $opts->push(['name'=>$this->child?'для детей':'для взрослых']);
+        // ambulatory
+        if($this->ambulatory)
+        $opts->push(['name'=>'на дом']);
+        $opts->push(['name'=>'на дому']);
+        //
+//        dd($opts);
+        return $opts;
+    }
+
+    public function clicksCount($dateFrom, $dateTo)
+    {
+        return Redis::ZCOUNT('doctor:'.$this->id.':clicks', $dateFrom->getTimestamp(), $dateTo->getTimestamp());
+    }
+
+    public function clicksCard()
+    {
+        return Redis::ZCARD('doctor:' . $this->id . ':clicks');
+    }
+    public function lvg_votes()
+    {
+        return $this->belongsToMany(LvgDoctorCandidate::class,'lvg_doctors_candidates','doctor_id','candidate_id');
+    }
+
+    public function hasLvgVotes()
+    {
+        if($this->lvg_votes->count() > 0){
+            return true;
+        }
+
+        return false;
     }
 }

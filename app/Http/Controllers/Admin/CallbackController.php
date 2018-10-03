@@ -39,9 +39,10 @@ class CallbackController extends Controller
         if ($id != null) {
             $result = Callback::find($id);
         } else {
-            $callbacks = Callback::query()->with(['target', 'order']);
+            $callbacks = Callback::query()->where('status', '!=', 6)->with(['target', 'order']);
             $result = BootstrapTableHelper::processTableRequest($request, $callbacks, self::SEARCH_FIELDS);
         }
+
         return $result;
     }
 

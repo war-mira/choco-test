@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <meta name="csrf-token" content="{{csrf_token()}}">
     @include('partials.meta')
-
     @include('partials.yandex-metrika')
+
+    {{--@include('partials.google-experiment')--}}
+
     @include('partials.google-analytics')
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -34,7 +37,7 @@
     <link rel="stylesheet" href="{{asset("vendor/bootstrap-slider/css/bootstrap-slider.min.css")}}">
 
     <link rel="stylesheet" href="{{asset("css/header.css?hw34h")}}">
-    <link rel="stylesheet" href="{{asset("css/styles.css?ewg4")}}">
+    <link rel="stylesheet" href="{{asset("css/styles.css?ewg5")}}">
     <link rel="stylesheet" href="{{asset("css/controls.css?hw34h")}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/comments.css?hw34h')}}">
     <link rel="stylesheet" href="{{asset("css/load-spinner.css?hw34h")}}">
@@ -44,7 +47,6 @@
     <script src="{{asset('js/infinite-paginator.js?2vg346gh')}}"></script>
 
     <link rel="stylesheet" href="{{asset("css/typography.css?cv23v46bh")}}">
-    <script src="{{asset('js/moment.min.js')}}"></script>
 
     <script>
         function copyToClipboard(id) {
@@ -106,9 +108,9 @@
                 <p>Все права защищены.</p>
             </div>
             <ul class="footer__social">
-                <li><a class="icon-facebook" target="_blank" href="https://www.facebook.com/kz.idoctor">fb</a></li>
-                <li><a class="icon-vk" target="_blank" href="https://vk.com/idoctorkz1">vk</a></li>
-                <li><a class="icon-instagram" target="_blank" href="https://www.instagram.com/idoctor_kz/">ins</a></li>
+                <li><a class="icon-facebook" target="_blank" href="https://www.facebook.com/kz.idoctor" rel="nofollow">fb</a></li>
+                <li><a class="icon-vk" target="_blank" href="https://vk.com/idoctorkz1" rel="nofollow">vk</a></li>
+                <li><a class="icon-instagram" target="_blank" href="https://www.instagram.com/idoctor_kz/" rel="nofollow">ins</a></li>
             </ul>
         </div>
         <div class="pull-right">
@@ -126,10 +128,17 @@
     @endif
 @endforeach
 
-
 <script type="text/javascript">
     $("#setskill").click(function () {
         $("#search_input").val($("#setskill").text());
+    });
+</script>
+<script type="text/javascript">
+    $('#search-bn').on('click', function () {
+        ga('send', 'event', {
+            eventCategory: 'poisk_glavnaya',
+            eventAction: 'click'
+        });
     });
 </script>
 

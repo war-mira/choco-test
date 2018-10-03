@@ -10,6 +10,7 @@ namespace App\Observers;
 
 
 use App\Doctor;
+use App\Events\NewDoctorReviewPublishedEvent;
 use App\Medcenter;
 
 class CommentObserver
@@ -35,6 +36,8 @@ class CommentObserver
                 /** @var Medcenter $medcenter */
                 $medcenter->updateCommentRate();
             });
+
+            event(new NewDoctorReviewPublishedEvent($comment));
         }
     }
 }

@@ -2,9 +2,11 @@
 
 namespace App\Exceptions;
 
+use App\Helpers\SessionContext;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use URL;
 
 class Handler extends ExceptionHandler
 {
@@ -32,6 +34,10 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
+        if (app()->bound('sentry') && $this->shouldReport($exception)) {
+            app('sentry')->captureException($exception);
+        }
+
         parent::report($exception);
     }
 
@@ -44,6 +50,16 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($this->isHttpException($exception)) {
+            $response_data = [];
+            $statusCode = $exception->getStatusCode();
+            $city = SessionContext::city();
+            URL::defaults(['city' => $city->alias]);
+            switch ($statusCode) {
+                case '404':
+                    return response()->view('errors.404', $response_data, 404);
+            }
+        }
         return parent::render($request, $exception);
     }
 

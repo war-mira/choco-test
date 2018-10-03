@@ -13,14 +13,18 @@ use Illuminate\Database\Eloquent\Model;
  * @property int                                                              $owner_id
  * @property int                                                              $id
  * @property int                                                              $user_rate
+ * @property int                                                              $recommended
  * @property int|null                                                         $parent_id
  * @property int|null                                                         $creator_id
  * @property string|null                                                      $user_name
+ * @property string|null                                                      $user_last_name
  * @property string|null                                                      $user_email
+ * @property int|null                                                         $user_ip
  * @property string|null                                                      $text
  * @property int|null                                                         $created_at
  * @property int|null                                                         $updated_at
  * @property int                                                              $status
+ * @property int                                                              $type
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Comment whereCommentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Comment whereCommentText($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Comment whereCreateTime($value)
@@ -57,6 +61,13 @@ class Comment extends Model
         1 => 'Допущенный',
         2 => 'Закрытый'
     ];
+
+    const typeCommon = 0;
+    const typeQR = 1;
+
+    const notRecommended = 0;
+    const recommended = 1;
+
     protected $table = 'comments';
     public $timestamps = true;
     protected $primaryKey = 'id';
@@ -65,10 +76,14 @@ class Comment extends Model
         'owner_type',
         'author_id',
         'user_rate',
+        'recommended',
         'user_id',
         'user_name',
+        'user_last_name',
         'user_email',
+        'user_ip',
         'text',
+        'type',
         'created_at',
         'updated_at'
     ];
@@ -139,5 +154,16 @@ class Comment extends Model
     public function rates()
     {
         return $this->hasMany(CommentRate::class, 'comment_id', 'id');
+    }
+
+    public function orders()
+    {
+        //TODO: check on search scopes - can load multiple queries
+        return $this->hasMany(Order::class,'phone','user_email')->where('doc_id',$this->owner_id)->whereNotIn('phone',['70000000000','','NULL']);
+    }
+
+    public function scopeLocalPublic($query)
+    {
+        return $query;
     }
 }

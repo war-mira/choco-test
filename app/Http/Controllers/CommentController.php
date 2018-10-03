@@ -8,6 +8,7 @@ use App\Order;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class CommentController extends Controller
 {
@@ -45,19 +46,100 @@ class CommentController extends Controller
             $data['user_email'] = $user->phone;
             $data['user_name'] = $user->name;
             $data['author_id'] = $user->id;
+        }else{
+            $code = random_int(1000,9999);
+            $hash = md5($code);
+            $phone = FormatHelper::phone($data['user_email']);
+            Redis::set('doctor-vote:'.$code.':'.$hash.':dump-form',json_encode($data));
+            Redis::expire('doctor-vote:'.$code.':'.$hash.':dump-form',120);
+
+            // TODO send sms code
+            Redis::publish('debug-sms',$code);
+            Redis::publish('debug-sms',$phone);
+
+            //TODO: throttle sms delivery for 1 min for number
+            $sms = \SmsService::send([
+                'recipient' => $phone,
+                'text'      => 'iDoctor код - ' . $code
+            ]);
+            if (!$sms)
+                return ['error'=>'На указанный номер не удалось отправить СМС!'];
+
+            return ['code'=>$hash];
         }
-        $data['user_email'] = FormatHelper::phone($data['user_email']);
+
+        return $this->publishNewComment($data);
+    }
+
+
+    public function confirmPhone(Request $request)
+    {
+        if(!$request->has('code'))
+            return ['error'=>'Введите код из СМС!'];
+
+        $key = Redis::keys('doctor-vote:'.$request->code.':*:dump-form');
+
+        if(count($key)>0)
+            $data = (array) json_decode(Redis::get($key[0]));
+
+        if(isset($data))
+            return $this->publishNewComment($data);
+
+        return ['error'=>'Введен не действительный код'];
+    }
+
+
+    public function requestPhoneCode(Request $request)
+    {
+        return ['status'=>'sent'];
+    }
+
+
+    public function publishNewComment($data)
+    {
+        $data['user_email'] = isset($data['user_email']) ? FormatHelper::phone($data['user_email']):'';
+
+        try{
+            $data['user_name'] = e($data['user_name']);
+            $data['text'] = e($data['text']);
+        } catch (\Exception $e){
+
+        }
         $authorize = $this->authorizeComment($data);
-        if ($authorize <= 0)
-            return ['error' => 'Комментарий можно оставлять только после посещения врача! Если вы уже посетили врача,'
-                . ' то проверьте совпадает ли номер телефона с использовавшимся при записи.'];
+        $ip = $this->getUserIp();
+
+        if($ip){
+            $data['user_ip'] = ip2long($ip);
+        }
+        $existCommentsCount = $this->existCommentsFromPhone($data['user_email'], $data['owner_id']);
+
+        if($existCommentsCount > 0)
+            return ['error' => 'Вы уже оставляли отзыв этому врачу.'];
+
+        if($authorize > 0)
+            $data['type'] = Comment::typeQR;
+
+//        if(isset($data['type'])) {
+//            if ($authorize <= 0 && $data['type'] != Comment::typeQR)
+//                return ['error' => 'Комментарий можно оставлять только после посещения врача! Если вы уже посетили врача,'
+//                    . ' то проверьте совпадает ли номер телефона с использовавшимся при записи.'];
+//        }
+
+        $rate = (int)$data['user_rate'];
+        $data['user_rate'] = $this->getUserRate($rate);
         $data['text'] = strip_tags($data['text'] ?? "");
         $comment = Comment::create($data);
-        $comment->created_at = Carbon::now()->timestamp;
-        $comment->updated_at = Carbon::now()->timestamp;
-        $comment->save();
+//        $comment->created_at = Carbon::now()->timestamp;
+//        $comment->updated_at = Carbon::now()->timestamp;
+//        $comment->save();
         return $comment;
     }
+
+
+
+
+
+
 
     private function authorizeComment($data)
     {
@@ -75,6 +157,43 @@ class CommentController extends Controller
         $authorize = $orders->count() > 0;
 
         return $authorize;
+    }
+
+    private function getUserIp(){
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+
+        return $ip;
+    }
+
+    /**
+     * @param $rate
+     * @return float|int
+     */
+    public function getUserRate(int $rate)
+    {
+        if($rate <= 5){
+            $rate = $rate*2;
+        }   else if($rate > 10){
+            $rate = 10;
+        }
+        return  $rate;
+    }
+
+    private function existCommentsFromIp($ip, $doctorId){
+        $comments = Comment::where('owner_id', $doctorId)->where('user_ip', $ip)->count();
+
+        return$comments;
+    }
+    private function existCommentsFromPhone($phone, $doctorId){
+        $comments = Comment::where('owner_id', $doctorId)->where('user_email', $phone)->count();
+
+        return$comments;
     }
 
     public function list(Request $request, $type = 'allow')
@@ -146,4 +265,6 @@ class CommentController extends Controller
         return ['up' => $comment->rates()->up()->count(), 'down' => $comment->rates()->down()->count()];
 
     }
+
+
 }
