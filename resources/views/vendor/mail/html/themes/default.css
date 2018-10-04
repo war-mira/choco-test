@@ -6,7 +6,7 @@ body, body *:not(html):not(style):not(br):not(tr):not(code) {
 }
 
 body {
-    background-color: #02a0f2;
+    background-color: #fcfcfc;
     color: #02a0f2;
     height: 100%;
     hyphens: auto;
@@ -82,7 +82,7 @@ img {
 /* Layout */
 
 .wrapper {
-    background-color: #02a0f2;
+    background-color: #fcfcfc;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -94,7 +94,7 @@ img {
 .content {
     margin: 0;
     padding: 0;
-    width: 100%;
+    width: 760px;
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 100%;
@@ -121,7 +121,6 @@ img {
 .body {
     background-color: #ffffff;
     border-bottom: 1px solid #717171;
-    border-top: 1px solid #717171;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -157,11 +156,12 @@ img {
 .footer {
     margin: 0 auto;
     padding: 0;
+    background: #02a0f2;
     text-align: center;
-    width: 570px;
+    width: 760px;
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
-    -premailer-width: 570px;
+    -premailer-width: 760px;
 }
 
 .footer p {
@@ -194,7 +194,7 @@ img {
 }
 
 .content-cell {
-    padding: 35px;
+    padding: 0;
 }
 
 /* Buttons */
