@@ -5,7 +5,7 @@
                     <tr>
                         <td id="logo" style="min-width: 160px;">
                             <a href="https://idoctor.kz/" style="text-decoration:none;">
-                                <img border="0" width="157" height="50" src="https://habrastorage.org/webt/p8/tu/ha/p8tuhav-qsbe08eaxbafigiatjw.png" alt="iDoctor.kz - бесплатный сервис поиска врача">
+                                <img border="0" width="157" height="50" style="padding: 10px;" src="https://habrastorage.org/webt/p8/tu/ha/p8tuhav-qsbe08eaxbafigiatjw.png" alt="iDoctor.kz - бесплатный сервис поиска врача">
                             </a>
                         </td>
                         <td style="width: 535px; background-color: #02A0F2;">
