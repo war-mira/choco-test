@@ -6,7 +6,7 @@
         @endcomponent
     @endslot
         {{-- Body --}}
-        <table>
+        <table style="width:100%;">
             <tr>
                 <div style="background-color: #ffffff;padding: 15px;">
                     <div style="text-align: center;width: 100%;">

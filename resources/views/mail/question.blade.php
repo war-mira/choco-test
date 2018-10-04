@@ -6,9 +6,9 @@
         @endcomponent
     @endslot
         {{-- Body --}}
-        <table>
+        <table style="width:100%;">
             <tr>
-                <div style="background-color: #02A0F2;padding: 15px;">
+                <div style="background-color: #02A0F2;padding: 15px; width:100%;">
                     <div style="text-align: center;width: 100%;">
                         <h1 style="font-size: 24px; color: #ffffff; font-weight: bold;text-align: center;">Вы получили ответ на вопрос!</h1>
                     </div>
