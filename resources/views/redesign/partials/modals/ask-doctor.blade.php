@@ -20,9 +20,9 @@
                     <div class="form-group col-md-6">
                         <label>Ваш пол *</label>
                         <div id="user-gender">
-                            <input type="radio" name="user[gender]" id="gender_m" value="0" required/>
+                            <input type="radio" name="user[gender]" id="gender_m" value="0" checked required/>
                             <label for="gender_m">Мужской</label>
-                            <input type="radio" name="user[gender]" id="gender_f"  value="1"/>
+                            <input type="radio" name="user[gender]" id="gender_f"  value="1" checked required/>
                             <label for="gender_f">Женский</label>
                         </div>
                     </div>

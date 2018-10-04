@@ -867,7 +867,7 @@ $(document).ready(function() {
     }else{
         desktop_datetime.remove();
     }
-        var form = $("#ask-doctor-modal-form");
+    var form = $("#ask-doctor-modal-form");
     $("#question__form-send").click(function () {
         $('#ask_form_loader').removeClass('hide');
         if (form[0].checkValidity()) {
@@ -875,11 +875,10 @@ $(document).ready(function() {
             $.post("/question/add", data)
                 .done(function (json) {
                     $('#user-birthday').removeClass('has-warning');
-                    $('#user-gender').removeClass('has-warning');
                     $('#user-email').removeClass('has-warning');
                     $('#user-phone').removeClass('has-warning');
                     $('#question-text').removeClass('has-warning');
-
+                    $('#ask-doctor-modal-form .js-form-selectize > div').removeClass('has-warning-selectized');
                     modalOpen('question__modal');
 
                     if (json.error) {
@@ -899,21 +898,10 @@ $(document).ready(function() {
             }else{
                 $('#user-email').removeClass('has-warning');
             }
-            if(!$('#user-phone').val()){
-                $('#user-phone').addClass('has-warning');
-            }else{
-                $('#user-phone').removeClass('has-warning');
-            }
             if(!$('#user-birthday').val() || !isValidDate($('#user-birthday').val())){
-                $('#user-birthday').addClass('has-warning');
+                $('#ask-doctor-modal-form .js-form-selectize > div').addClass('has-warning-selectized');
             }else{
-                $('#user-birthday').removeClass('has-warning');
-            }
-            
-            if ($('input[name=gender]:checked').length > 0) {
-                $('#user-gender').removeClass('has-warning');
-            }else{
-                $('#user-gender').addClass('has-warning');
+                $('#ask-doctor-modal-form .js-form-selectize > div').removeClass('has-warning-selectized');
             }
             
             if(!$('#question-text').val()){
