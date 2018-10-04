@@ -5,6 +5,7 @@
 /api/vendor
 /public/hot
 /public/storage
+/public/assets
 /public/uploads
 /public/import
 /public/images
@@ -13,6 +14,7 @@
 /public/mix-manifest.json
 /public/*.js
 /public/photos
+/public/vendor
 /public/idoctor.tar.gz
 /storage/*.key
 /vendor
