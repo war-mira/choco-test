@@ -314,4 +314,14 @@ class ReportController extends Controller
         }
 
     }
+
+    public function getDoctorsViewsById($id)
+    {
+        $key = 'doctor:'.$id.':'.Doctor::VIEW_PROFILE_COUNT;
+        $count = Redis::ZCOUNT($key, "-inf", "+inf");
+
+        return $count;
+    }
+        
+    
 }
