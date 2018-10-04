@@ -3,15 +3,7 @@
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 if (! function_exists('hotreload')) {
-    /**
-     * Get the path to a versioned Mix file.
-     *
-     * @param  string  $path
-     * @param  string  $manifestDirectory
-     * @return \Illuminate\Support\HtmlString
-     *
-     * @throws \Exception
-     */
+
     function hotreload($path, $manifestDirectory = '')
     {
        try{
@@ -24,15 +16,7 @@ if (! function_exists('hotreload')) {
 }
 
 if (! function_exists('version')) {
-    /**
-     * Get the path to a versioned Mix file.
-     *
-     * @param  string  $path
-     * @param  string  $manifestDirectory
-     * @return \Illuminate\Support\HtmlString
-     *
-     * @throws \Exception
-     */
+
     function version($path)
     {
         if(file_exists(public_path($path))){
