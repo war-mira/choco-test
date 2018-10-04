@@ -32,16 +32,10 @@ class DoctorReviewsWeeklyMail extends Mailable
      *
      * @return $this
      */
-    public function builded()
-    {
+    public function build(){
         $count = $this->reviews->count();
         $name = $this->name;
-        return $this->subject('Ваши отзывы за неделю')
-                    ->view('mail.doctor_reviews_weekly',compact('count','name'));
-    }
-    public function build(){
-        $name = $this->name;
             return $this->subject('Ваши отзывы за неделю')
-                        ->markdown('mail.doctor_reviews_weekly');
+                        ->markdown('mail.doctor_reviews_weekly', compact('count','name'));
     }
 }

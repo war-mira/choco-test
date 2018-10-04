@@ -185,11 +185,11 @@ class SearchController extends Controller
     private function searchAllDoctorsWithName($query)
     {
         $doctors = \App\Doctor::
-            where('status', 1);
+        where('status', 1);
 
         $fields = [
-          'lastname',
-          'firstname'
+            'lastname',
+            'firstname'
         ];
 
         foreach (explode(' ', $query) as $word) {
