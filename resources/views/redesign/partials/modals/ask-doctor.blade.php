@@ -1,3 +1,4 @@
+
 <div class="modal-window" id="question__modal">
     <div class="moodal-close-bg"></div>
     <div class="modal-close"></div>
@@ -94,5 +95,4 @@
     .show-question-form .form-row{
         margin-bottom: 10px;
     }
-
 </style>

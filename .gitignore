@@ -17,6 +17,7 @@
 /public/vendor
 /public/idoctor.tar.gz
 /storage/*.key
+/storage
 /vendor
 /.idea
 /.vagrant

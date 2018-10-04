@@ -1,17 +1,25 @@
-User-agent: *
+User-agent: Yandex
 Disallow: /*&
+Disallow: /*?
 Disallow: /login
 Disallow: /setcity/
 Disallow: /main-new/
-Allow: */uploads
-Allow: /*/*.js
-Allow: /*/*.css
-Sitemap: https://idoctor.kz/sitemap.xml
-
-User-agent: Yandex
-Disallow: /*&
-Disallow: /login
+Disallow: /*utm_expid
+Disallow: /*utm_referrer
 Allow: */uploads
 Allow: /*/*.js
 Allow: /*/*.css
 Host: https://idoctor.kz/
+
+User-agent: *
+Disallow: /*&
+Disallow: /*?
+Disallow: /login
+Disallow: /setcity/
+Disallow: /main-new/
+Disallow: /*utm_expid
+Disallow: /*utm_referrer
+Allow: */uploads
+Allow: /*/*.js
+Allow: /*/*.css
+Sitemap: https://idoctor.kz/sitemap.xml
