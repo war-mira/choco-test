@@ -78,12 +78,21 @@ class AutoComplete {
             }, 300)
         });
         this.dropdown.addEventListener('click', function (evt) {
-            _self.setInputValue(evt.target);
+            let target = event.target;
+            if (target.classList.contains('autocomplete__list--item')) {
+                _self.setInputValue(evt.target);
+            }
+
         });
     }
 
     closeDropdown() {
-        this.dropdown.querySelector('.list').scrollTo(0, 0);
+        try {
+            this.dropdown.querySelector('.list').scrollTo(0, 0);
+        } catch (e) {
+
+        }
+
         this.dropdown.classList.remove('show');
 
     }
