@@ -6,9 +6,9 @@
         @endcomponent
     @endslot
         {{-- Body --}}
-        <table style="width:100%;">
+        <table style="width:100%; background-color: #02A0F2;">
             <tr>
-                <div style="background-color: #02A0F2;padding: 15px; width:100%;">
+                <div style="background-color: #02A0F2;padding: 15px 0; width:100%;">
                     <div style="text-align: center;width: 100%;">
                         <h1 style="font-size: 24px; color: #ffffff; font-weight: bold;text-align: center;">Вы получили ответ на вопрос!</h1>
                     </div>
@@ -23,7 +23,7 @@
                 </div>
             </tr>
             <tr>
-                <div style="background-color:#ffffff; padding: 15px;">
+                <div style="background-color:#ffffff; padding: 15px 0;">
                     <h1 style="color: #4E4E4E; font-size: 19px; font-weight: bold; margin-top: 0; text-align: center;">
                         Доктор <span style="color:#02A0F2;">{{ $doctor->firstname }} {{ $doctor->lastname }} {{ $doctor->middlename }}</span> <br>ответил-(а) на Ваш вопрос:
                     </h1>
