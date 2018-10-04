@@ -108,6 +108,20 @@
                                                     @endcomponent
                                                     @component('components.bootstrap.column',['class'=>'col-md-12'])
                                                         @component('components.form.text')
+                                                            @slot('field','showing_phone')
+                                                            @slot('value', old('showing_phone',$seed['showing_phone']))
+                                                            @slot('label','Телефон для отображения')
+                                                        @endcomponent
+                                                    @endcomponent
+                                                    @component('components.bootstrap.column',['class'=>'col-md-12'])
+                                                        @component('components.form.checkbox')
+                                                            @slot('field','show_phone')
+                                                            @slot('value',$seed['show_phone'] ?? null)
+                                                            @slot('label','Показать телефон')
+                                                        @endcomponent
+                                                    @endcomponent
+                                                    @component('components.bootstrap.column',['class'=>'col-md-12'])
+                                                        @component('components.form.text')
                                                         @slot('field','alias')
                                                         @slot('value', old('alias',$seed['alias']))
                                                             @slot('readonly',true)

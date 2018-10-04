@@ -64,7 +64,7 @@
                                     @endcomponent
                                     @component('components.bootstrap.row')
                                         @component('components.bootstrap.column',['class'=>'col-md-8'])
-                                            @component('admin.model.orders.form.doc-med-select',$data['select2'] )
+                                            @component('admin.model.orders.form.doc-med-select' )
                                                 @slot('doctor',$seed['doc_id'] ?? null)
                                                 @slot('medcenter',$seed['med_id'] ?? null)
                                             @endcomponent
@@ -232,10 +232,7 @@
 
                             var inputTimeout = null;
 
-                            var doctorsMedcenters = {!! json_encode($doctorsMedcenters)!!};
-                            $('#doc_id').change(function () {
-                                $('#med_id').val(doctorsMedcenters[$(this).val()][0]).trigger('change');
-                            });
+
 
                             $("#client-search").on('input click', function () {
                                 var input = $(this).val();

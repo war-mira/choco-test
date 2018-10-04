@@ -55,6 +55,9 @@ class SearchController extends Controller
             case 'doctor':
                 return $this->autocompleteDoctor($query);
                 break;
+            case 'doctor-with-name':
+                return $this->autocompleteDoctorWithName($query);
+                break;
             case 'city':
                 return $this->autocompleteCity($query);
                 break;
@@ -88,6 +91,21 @@ class SearchController extends Controller
                 'middlename',
                 'patronymic',
                 'skills'
+            ]);
+        });
+        return response()->json($doctors);
+    }
+
+    public function autocompleteDoctorWithName($query)
+    {
+        $doctors = $this->searchAllDoctorsWithName($query);
+        $doctors = $doctors->map(function ($doctor) {
+            return $doctor->only([
+                'id',
+                'lastname',
+                'firstname',
+                'middlename',
+                'patronymic',
             ]);
         });
         return response()->json($doctors);
@@ -159,6 +177,35 @@ class SearchController extends Controller
             }])
             ->orderBy('lastname')
             ->limit(20)
+            ->get();
+
+        return $doctors;
+    }
+
+    private function searchAllDoctorsWithName($query)
+    {
+        $doctors = \App\Doctor::
+        where('status', 1);
+
+        $fields = [
+            'lastname',
+            'firstname'
+        ];
+
+        foreach (explode(' ', $query) as $word) {
+            $word = trim($word);
+            if ($word != '') {
+                $doctors->where(function ($mainQuery) use ($fields, $word) {
+                    foreach ($fields as $index => $field) {
+                        $mainQuery->orWhere($field, 'like', '%' . $word . '%');
+                    }
+                });
+            }
+
+        }
+
+        $doctors = $doctors->orderBy('lastname')
+            ->limit(50)
             ->get();
 
         return $doctors;
