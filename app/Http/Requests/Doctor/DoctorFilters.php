@@ -69,6 +69,12 @@ class DoctorFilters extends Filter{
     }
 
 
+    public function hash($hash = null)
+    {
+        return $this->builder->redisSearchSet($hash);
+    }
+
+
 
     public function tops($skill = [])
     {
