@@ -1,88 +1,101 @@
 @component('components.bootstrap.row')
     @component('components.bootstrap.column',['class'=>'col-md-6'])
-        <label for="doctor-select-input">Врач</label>
-        <select class="form-control" name="doc_id" id="doctor-select-input"></select>
+        <div class="doctor-search">
+            <label for="doctor-select-input">Врач</label>
+            <input class="form-control" autocomplete="off" data-type="doctor-with-name" value="{{ \App\Doctor::find($doctor)->name ?? '' }}" id="doctor-select-input" placeholder="Введите имя врача">
+            <input type="hidden"  name="doc_id" value="{{ $doctor }}" id="doctor-real-input">
+            <div id="doctors-results"
+                 class="dropdown-menu dropdown-menu-right scrollable-menu"
+                 style="padding: 0; margin-left: 10px; border-radius: 4px; border: none; overflow-y: scroll; max-height: 500px; width: 150%">
+            </div>
+        </div>
     @endcomponent
     @component('components.bootstrap.column',['class'=>'col-md-6'])
         <label for="medcenter-select-input">Медцентр</label>
-        <select class="form-control" name="med_id" id="medcenter-select-input"></select>
+        <select class="form-control" name="med_id" id="medcenter-select-input">
+            @if(isset($doctor) && \App\Doctor::find($doctor)->medcenters)
+                @foreach(\App\Doctor::find($doctor)->medcenters as $doctorMedcenter)
+                    <option value="{{$doctorMedcenter->id}}" {{$medcenter == $doctorMedcenter->id ? 'selected':''}}>{{ $doctorMedcenter->name }}</option>
+                @endforeach
+            @endif
+        </select>
     @endcomponent
 @endcomponent
 @push('component_scripts')
     <script>
-        $(function () {
-            var doctors = @json($doctors);
-            var medcenters = @json($medcenters);
+        {{--$(function () {--}}
+            {{--var doctors = @json($doctors);--}}
+            {{--var medcenters = @json($medcenters);--}}
 
-            var medSelect = $('#medcenter-select-input');
-            var docSelect = $('#doctor-select-input');
+            {{--var medSelect = $('#medcenter-select-input');--}}
+            {{--var docSelect = $('#doctor-select-input');--}}
 
-            var filterBindedOptions = function (matchIdCallback) {
-                return function (params, data) {
-                    var matchId = matchIdCallback();
-                    if (matchId && data.bind.indexOf(parseInt(matchId)) < 0)
-                        return null;
+            {{--var filterBindedOptions = function (matchIdCallback) {--}}
+                {{--return function (params, data) {--}}
+                    {{--var matchId = matchIdCallback();--}}
+                    {{--if (matchId && data.bind.indexOf(parseInt(matchId)) < 0)--}}
+                        {{--return null;--}}
 
-                    // If there are no search terms, return all of the data
-                    if ($.trim(params.term) === '') {
-                        return data;
-                    }
+                    {{--// If there are no search terms, return all of the data--}}
+                    {{--if ($.trim(params.term) === '') {--}}
+                        {{--return data;--}}
+                    {{--}--}}
 
-                    // Do not display the item if there is no 'text' property
-                    if (typeof data.text === 'undefined') {
-                        return null;
-                    }
-
-
-                    // `params.term` should be the term that is used for searching
-                    // `data.text` is the text that is displayed for the data object
-                    if (data.text.toLowerCase().indexOf(params.term.toLowerCase()) > -1) {
-                        var modifiedData = $.extend({}, data, true);
-                        modifiedData.text += ' (matched)';
-
-                        // You can return modified objects from here
-                        // This includes matching the `children` how you want in nested data sets
-                        return modifiedData;
-                    }
-
-                    // Return `null` if the term should not be displayed
-                    return null;
-                };
-            };
-
-            var doctorsMatcher = filterBindedOptions(function () {
-                return parseInt(medSelect.val());
-            });
-            var medcentersMatcher = filterBindedOptions(function () {
-                return parseInt(docSelect.val());
-            });
+                    {{--// Do not display the item if there is no 'text' property--}}
+                    {{--if (typeof data.text === 'undefined') {--}}
+                        {{--return null;--}}
+                    {{--}--}}
 
 
-            docSelect.select2({
-                data: doctors,
-                matcher: doctorsMatcher,
-                allowClear: true,
-                placeholder: "Выберите врача"
-            }).on('select2:select', function (e) {
-                var data = e.params.data;
-                if (data.bind.length <= 0)
-                    medSelect.val(null).trigger('change');
-                else if (data.bind.indexOf(parseInt(medSelect.val())) < 0)
-                    medSelect.val(data.bind[0]).trigger('change');
+                    {{--// `params.term` should be the term that is used for searching--}}
+                    {{--// `data.text` is the text that is displayed for the data object--}}
+                    {{--if (data.text.toLowerCase().indexOf(params.term.toLowerCase()) > -1) {--}}
+                        {{--var modifiedData = $.extend({}, data, true);--}}
+                        {{--modifiedData.text += ' (matched)';--}}
 
-            }).val({{$doctor ?? 'null'}}).trigger('change');
-            medSelect.select2({
-                data: medcenters,
-                matcher: medcentersMatcher,
-                allowClear: true,
-                placeholder: "Выберите медцентр"
-            }).on('select2:select', function (e) {
-                var data = e.params.data;
-                if (data.bind.length <= 0)
-                    docSelect.val(null).trigger('change');
-                else if (data.bind.indexOf(parseInt(docSelect.val())) < 0)
-                    docSelect.val(data.bind[0]).trigger('change');
-            }).val({{$medcenter ?? 'null'}}).trigger('change');
-        });
+                        {{--// You can return modified objects from here--}}
+                        {{--// This includes matching the `children` how you want in nested data sets--}}
+                        {{--return modifiedData;--}}
+                    {{--}--}}
+
+                    {{--// Return `null` if the term should not be displayed--}}
+                    {{--return null;--}}
+                {{--};--}}
+            {{--};--}}
+
+            {{--var doctorsMatcher = filterBindedOptions(function () {--}}
+                {{--return parseInt(medSelect.val());--}}
+            {{--});--}}
+            {{--var medcentersMatcher = filterBindedOptions(function () {--}}
+                {{--return parseInt(docSelect.val());--}}
+            {{--});--}}
+
+
+            {{--docSelect.select2({--}}
+                {{--data: doctors,--}}
+                {{--matcher: doctorsMatcher,--}}
+                {{--allowClear: true,--}}
+                {{--placeholder: "Выберите врача"--}}
+            {{--}).on('select2:select', function (e) {--}}
+                {{--var data = e.params.data;--}}
+                {{--if (data.bind.length <= 0)--}}
+                    {{--medSelect.val(null).trigger('change');--}}
+                {{--else if (data.bind.indexOf(parseInt(medSelect.val())) < 0)--}}
+                    {{--medSelect.val(data.bind[0]).trigger('change');--}}
+
+            {{--}).val({{$doctor ?? 'null'}}).trigger('change');--}}
+            {{--medSelect.select2({--}}
+                {{--data: medcenters,--}}
+                {{--matcher: medcentersMatcher,--}}
+                {{--allowClear: true,--}}
+                {{--placeholder: "Выберите медцентр"--}}
+            {{--}).on('select2:select', function (e) {--}}
+                {{--var data = e.params.data;--}}
+                {{--if (data.bind.length <= 0)--}}
+                    {{--docSelect.val(null).trigger('change');--}}
+                {{--else if (data.bind.indexOf(parseInt(docSelect.val())) < 0)--}}
+                    {{--docSelect.val(data.bind[0]).trigger('change');--}}
+            {{--}).val({{$medcenter ?? 'null'}}).trigger('change');--}}
+        {{--});--}}
     </script>
 @endpush
