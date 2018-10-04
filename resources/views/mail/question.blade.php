@@ -6,9 +6,9 @@
         @endcomponent
     @endslot
         {{-- Body --}}
-        <table style="width:100%;">
+        <table style="width:100%; background-color: #ffffff;">
             <tr>
-                <div style="background-color: #02A0F2;padding: 15px; width:100%;">
+                <div style="background-color: #02A0F2;padding: 15px 0; width:100%;">
                     <div style="text-align: center;width: 100%;">
                         <h1 style="font-size: 24px; color: #ffffff; font-weight: bold;text-align: center;">Вы получили ответ на вопрос!</h1>
                     </div>
@@ -23,7 +23,7 @@
                 </div>
             </tr>
             <tr>
-                <div style="background-color:#ffffff; padding: 15px;">
+                <div style="background-color:#ffffff; padding: 15px 0;">
                     <h1 style="color: #4E4E4E; font-size: 19px; font-weight: bold; margin-top: 0; text-align: center;">
                         Доктор <span style="color:#02A0F2;">{{ $doctor->firstname }} {{ $doctor->lastname }} {{ $doctor->middlename }}</span> <br>ответил-(а) на Ваш вопрос:
                     </h1>
@@ -34,10 +34,10 @@
             </tr>
             <tr>
                 <div style="background-color: #ffffff; width: 100%; text-align: center;">
-                    <a href="{{route('doctor.item',['alias'=>$doctor->alias])}}" target="_blank" style="background-color:#02A0F2; color: #ffffff; padding: 15px;border-radius: 25px;font-weight: bold; text-decoration: none;">Записаться на приём</a>
+                    <a href="{{route('doctor.item',['alias'=>$doctor->alias])}}" target="_blank" style="background-color:#02A0F2; color: #ffffff; font-size: 16px; padding: 15px;border-radius: 25px;font-weight: bold; text-decoration: none;">Записаться на приём</a>
                 </div>
-                <div style="background-color: #ffffff; width: 100%; text-align: center; margin-top: 30px;">
-                    <a href="{{route('doctor.item',['alias'=>$doctor->alias])}}" target="_blank" style="background-color:#ffffff; color: #02A0F2; font-weight: bold; text-decoration: none;">Оставить отзыв</a>
+                <div style="background-color: #ffffff; width: 100%; text-align: center; margin-top: 30px; margin-bottom: 15px;">
+                    <a href="{{route('doctor.item',['alias'=>$doctor->alias])}}" target="_blank" style="background-color:#ffffff; color: #02A0F2; font-size: 16px; font-weight: bold; text-decoration: none;">Оставить отзыв</a>
                 </div>
             </tr>
     </table>
