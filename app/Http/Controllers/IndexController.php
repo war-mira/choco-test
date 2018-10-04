@@ -16,6 +16,7 @@ use App\Uniqueip;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 
 class IndexController extends Controller
 {
@@ -104,6 +105,21 @@ class IndexController extends Controller
                 'answered_questions',
                 'questions')
         );
+    }
+
+    public function allowMyIp(Request $request)
+    {
+        if($request->my_ip){
+            $date = new \DateTime();
+            $date = $date->format('Y-m-d');
+
+            Redis::set('allowed-ip:'.$request->my_ip.'', $date);
+
+            return redirect()->route('home');
+        }
+        else{
+            return 'Введите свой IP в адресной строке';
+        }
     }
 
     public function ratings(Request $request)

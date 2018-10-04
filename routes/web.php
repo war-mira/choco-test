@@ -21,6 +21,8 @@ Route::get('resize', 'ImageController@resizeImages');
 
 Route::get('likes','IndexController@ratings')->name('rates');
 
+Route::get('allow-ip','IndexController@allowMyIp')->name('add-ip');
+
 Route::get('order/gotopay/{id}', 'OrderController@gotopay');
 Route::get('order/newFromSite', 'OrderController@newFromSite');
 Route::get('order/update/', 'OrderController@update');
