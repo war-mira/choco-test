@@ -5,6 +5,7 @@
 /api/vendor
 /public/hot
 /public/storage
+/public/assets
 /public/uploads
 /public/import
 /public/images
