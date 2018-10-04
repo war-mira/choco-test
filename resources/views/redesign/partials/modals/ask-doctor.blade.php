@@ -7,7 +7,7 @@
         </div>
         <form id="ask-doctor-modal-form" class="show-question-form">
                 <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6" id="ask-form-year">
                         <select name="user[birthday]" id="user-birthday" required class="form-control js-form-selectize">
                             <option>Год рождения *</option>
                             @foreach(range((int)date('Y'),1900) as $i)

@@ -878,7 +878,7 @@ $(document).ready(function() {
                     $('#user-email').removeClass('has-warning');
                     $('#user-phone').removeClass('has-warning');
                     $('#question-text').removeClass('has-warning');
-                    $('#ask-doctor-modal-form .js-form-selectize > div').removeClass('has-warning-selectized');
+                    $('#ask-form-year .js-form-selectize > div').removeClass('has-warning-selectized');
                     modalOpen('question__modal');
 
                     if (json.error) {
@@ -899,9 +899,9 @@ $(document).ready(function() {
                 $('#user-email').removeClass('has-warning');
             }
             if(!$('#user-birthday').val() || !isValidDate($('#user-birthday').val())){
-                $('#ask-doctor-modal-form .js-form-selectize > div').addClass('has-warning-selectized');
+                $('#ask-form-year .js-form-selectize > div').addClass('has-warning-selectized');
             }else{
-                $('#ask-doctor-modal-form .js-form-selectize > div').removeClass('has-warning-selectized');
+                $('#ask-form-year .js-form-selectize > div').removeClass('has-warning-selectized');
             }
             
             if(!$('#question-text').val()){
