@@ -239,7 +239,7 @@
 <script src="{{asset("sbadmin/vendor/datatables-responsive/dataTables.responsive.js")}}"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="{{asset("sbadmin/dist/js/sb-admin-2.js")}}"></script>
+<script src="{{asset("sbadmin/dist/js/sb-admin-2.js?v=0.0.1")}}"></script>
 
 <!-- Old scripts -->
 <script>

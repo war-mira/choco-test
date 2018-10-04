@@ -534,7 +534,9 @@
     background: none;
     border-color: #ff0000;
 }
-
+.has-warning-selectized{
+    border-bottom: 1px solid #ff0000!important;
+}
 .question__form .form-row{
     display: flex;
 }

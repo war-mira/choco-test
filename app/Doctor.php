@@ -308,6 +308,7 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         $height = $height == 0?'auto':$height;
         $width = $width == 0?'auto':$width;
         $src = $this->avatar;
+        $src = trim($src);
         if(!file_exists($src)){
             return '/images/no-userpic.gif';
         }

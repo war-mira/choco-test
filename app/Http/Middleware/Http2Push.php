@@ -18,8 +18,8 @@ class Http2Push
     {
 
         $response = $next($request);
+		//self::addJs('/build/js/app.js');
         $links = array_merge($this->assets,self::$custom);
-
         $response->headers->add([
             'Link'=>implode(',',$links)
         ]);

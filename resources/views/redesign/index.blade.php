@@ -1,5 +1,6 @@
 @extends('redesign.layouts.app')
 @section('content')
+
     <!-- section intro start -->
     <section class="index-intro pattern-bg">
         @include('redesign.partials.nav_line')
@@ -20,7 +21,8 @@
                     </div>
                     <div class="index-intro__stat-item">
                         <div class="index-intro__stat-img"><img src="{{asset('img/icon-stat-2.svg')}}" alt=""></div>
-                        <div class="index-intro__stat-val">{{\App\Callback::localPublic()->count()}}</div>
+                        {{--<div class="index-intro__stat-val">{{\App\Callback::localPublic()->count()}}</div>--}}
+                        <div class="index-intro__stat-val">7015</div>
                         <div class="index-intro__stat-text">Записались через нас</div>
                     </div>
                     <div class="index-intro__stat-item">

@@ -18,5 +18,3 @@
 
 </script>
 <!-- End Google Analytics -->
-
-<script> var ga = function(){}</script>

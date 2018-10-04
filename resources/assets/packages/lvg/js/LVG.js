@@ -87,7 +87,7 @@ class LVG {
         if (validate === true) {
             let form = document.querySelector('.form--register');
 
-            this.user.email = form.querySelector('.form--input input[name="email"]').value;
+            //this.user.email = form.querySelector('.form--input input[name="email"]').value;
             this.user.phone = form.querySelector('.form--input input[name="phone"]').value;
 
             this.sendSms(target);
@@ -183,7 +183,7 @@ class LVG {
                     if (goAuth) {
                         window.location.href = '/actions/best-doctor-2018/vote';
                     } else {
-
+ 
                     }
                 }
             })

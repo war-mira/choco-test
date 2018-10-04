@@ -1,3 +1,4 @@
+
 <div class="modal-window" id="question__modal">
     <div class="moodal-close-bg"></div>
     <div class="modal-close"></div>
@@ -7,7 +8,7 @@
         </div>
         <form id="ask-doctor-modal-form" class="show-question-form">
                 <div class="form-row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6" id="ask-form-year">
                         <select name="user[birthday]" id="user-birthday" required class="form-control js-form-selectize">
                             <option>Год рождения *</option>
                             @foreach(range((int)date('Y'),1900) as $i)
@@ -20,9 +21,9 @@
                     <div class="form-group col-md-6">
                         <label>Ваш пол *</label>
                         <div id="user-gender">
-                            <input type="radio" name="user[gender]" id="gender_m" value="0" required/>
+                            <input type="radio" name="user[gender]" id="gender_m" value="0" checked required/>
                             <label for="gender_m">Мужской</label>
-                            <input type="radio" name="user[gender]" id="gender_f"  value="1"/>
+                            <input type="radio" name="user[gender]" id="gender_f"  value="1" checked required/>
                             <label for="gender_f">Женский</label>
                         </div>
                     </div>
@@ -94,5 +95,4 @@
     .show-question-form .form-row{
         margin-bottom: 10px;
     }
-
 </style>
