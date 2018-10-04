@@ -1,6 +1,6 @@
 <tr style="width: 760px;">
     <td class="header">
-        <table bgcolor="#02A0F2" style="border-collapse: collapse;margin: auto;" border="0" cellpadding="0" cellspacing="0">
+        <table bgcolor="#02A0F2" style="border-collapse: collapse;margin: auto; width:100%;" border="0" cellpadding="0" cellspacing="0">
                 <tbody>
                     <tr>
                         <td id="logo" style="min-width: 160px;">

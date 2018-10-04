@@ -15,7 +15,7 @@
                 </div>
             </tr>
             <tr>
-                <div style="background-color:#ffffff; padding: 15px;">
+                <div style="background-color:#ffffff; padding: 15px 0;">
                     <p style="color: #4E4E4E; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: justify;">
                        На нашем сайте iDoctor.kz за эту неделю Вам было оставлено <strong>{{ $count }}</strong> отзывов. Ознакомиться с ними Вы можете в Вашем
                         <a href="{{ route('cabinet.doctor.feedback.index') }}">личном кабинете</a>.
