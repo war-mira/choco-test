@@ -13,6 +13,7 @@
 /public/mix-manifest.json
 /public/*.js
 /public/photos
+/public/vendor
 /public/idoctor.tar.gz
 /storage/*.key
 /storage
