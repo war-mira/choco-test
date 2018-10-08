@@ -18,6 +18,11 @@ class CheckForMaintenanceMode
      * @return mixed
      */
 
+    protected $except =
+        [
+            'allow-ip*',
+        ];
+
     protected $app;
 
     public function __construct(Application $app)
