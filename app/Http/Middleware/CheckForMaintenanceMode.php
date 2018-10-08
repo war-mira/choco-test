@@ -18,11 +18,6 @@ class CheckForMaintenanceMode
      * @return mixed
      */
 
-    protected $except =
-        [
-            'allow-ip*',
-        ];
-
     protected $app;
 
     public function __construct(Application $app)
@@ -38,7 +33,8 @@ class CheckForMaintenanceMode
         $allowedIps = $this->mergeAllowedIps($cacheIps, $envIps);
 
         if ($this->app->isDownForMaintenance() &&
-            !in_array($request->getClientIp(), $allowedIps))
+            !in_array($request->getClientIp(), $allowedIps)
+            && !$request->is('allow-ip*'))
         {
 
             $maintenanceMode = new MaintenanceMode($this->app);
