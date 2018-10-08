@@ -32,6 +32,11 @@ class IllnessesGroup extends Model
         return $this->hasMany('App\Models\Library\IllnessesGroupArticle', 'illnesses_group_id', 'id');
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('active',1);
+    }
+
     public function limitedArticles()
     {
         return $this->articles()->take(3)->get();

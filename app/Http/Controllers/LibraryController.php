@@ -27,14 +27,18 @@ class LibraryController
 
     public function groupArticles(IllnessesGroup $illnessesGroup)
     {
-        $articles = IllnessesGroupArticle::where('illnesses_group_id', $illnessesGroup->id)->orderBy('created_at', 'desc')->paginate(12);
+        $articles = IllnessesGroupArticle::where('illnesses_group_id', $illnessesGroup->id)
+            ->active()
+            ->orderBy('created_at', 'desc')->paginate(12);
 
         return view('library.articles.list', compact('articles', 'illnessesGroup'));
     }
 
     public function article( IllnessesGroup $illnessesGroup,  $article)
     {
-        $article = IllnessesGroupArticle::where('alias',$article)->firstOrFail();
+        $article = IllnessesGroupArticle::where('alias',$article)
+            ->active()
+            ->firstOrFail();
         $links = $this->getNavigationFromContent($article->description);
         $titleInDesc = $this->checkIfFirstTitleExist($article->description);
 
