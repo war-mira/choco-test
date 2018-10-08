@@ -67,6 +67,7 @@ class AutoComplete {
     }
 
     init() {
+
         let _self = this;
         this.input.addEventListener('input', function (evt) {
             _self.clearInputAttributes();
@@ -77,13 +78,23 @@ class AutoComplete {
                 _self.closeDropdown();
             }, 300)
         });
+
         this.dropdown.addEventListener('click', function (evt) {
-            _self.setInputValue(evt.target);
+            let target = event.target;
+            if (target.classList.contains('autocomplete__list--item')) {
+                _self.setInputValue(evt.target);
+            }
+
         });
     }
 
     closeDropdown() {
-        this.dropdown.querySelector('.list').scrollTo(0, 0);
+        try {
+            this.dropdown.querySelector('.list').scrollTo(0, 0);
+        } catch (e) {
+
+        }
+
         this.dropdown.classList.remove('show');
 
     }
@@ -95,4 +106,12 @@ class AutoComplete {
         }
         this.closeDropdown()
     }
+}
+if ('NodeList' in window && !NodeList.prototype.forEach) {
+    NodeList.prototype.forEach = function (callback, thisArg) {
+        thisArg = thisArg || window;
+        for (var i = 0; i < this.length; i++) {
+            callback.call(thisArg, this[i], i, this);
+        }
+    };
 }

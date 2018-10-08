@@ -16,7 +16,6 @@
                     <button class="btn">Найти</button>
                 </div>
             </form>
-            <a href="#question__modal" rel="modal-link" class="btn btn_theme_usual">Задать вопрос врачу</a>
         </div>
     </div>
 </section>

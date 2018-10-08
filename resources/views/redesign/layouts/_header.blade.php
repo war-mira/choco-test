@@ -26,6 +26,7 @@
     {{--<script src="{{URL::asset("js/jquery.min.js")}}"></script>--}}
     {{--<script src="{{URL::asset("js/jquery-masked-input.js")}}"></script>--}}
     {{--<script src="{{URL::asset("js/slick.min.js")}}"></script>--}}
+    {{--<script src="{{URL::asset("js/validation.js")}}"></script>--}}
     {{--<script src="{{URL::asset("js/lightbox.min.js")}}"></script>--}}
     {{--<script src="{{URL::asset("js/selectize.min.js")}}"></script>--}}
     {{--<script src="{{URL::asset("js/pickmeup.min.js")}}"></script>--}}

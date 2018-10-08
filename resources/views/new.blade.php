@@ -22,6 +22,7 @@
     <script src="{{asset('js/lightbox.min.js')}}"></script>
     <script src="{{asset('js/selectize.min.js')}}"></script>
     <script src="{{asset('js/pickmeup.min.js')}}"></script>
+    <script src="{{asset('js/validation.js')}}"></script>
     <script src="{{asset('js/jquery.magnific-popup.min.js')}}"></script>
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
     <script src="{{asset('js/scripts.js')}}"></script>
