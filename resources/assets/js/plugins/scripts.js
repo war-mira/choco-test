@@ -127,6 +127,7 @@ $(document).ready(function() {
     });
 
     $('input[name="client_phone"]').mask('+7 (999) 999-9999');
+    $('input[name="phone"]').mask('+7 (999) 999-9999');
 
     let popupDefaults = {
         type: 'inline',
