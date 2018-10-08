@@ -67,6 +67,7 @@ class AutoComplete {
     }
 
     init() {
+
         let _self = this;
         this.input.addEventListener('input', function (evt) {
             _self.clearInputAttributes();
@@ -77,6 +78,7 @@ class AutoComplete {
                 _self.closeDropdown();
             }, 300)
         });
+
         this.dropdown.addEventListener('click', function (evt) {
             let target = event.target;
             if (target.classList.contains('autocomplete__list--item')) {
@@ -104,4 +106,12 @@ class AutoComplete {
         }
         this.closeDropdown()
     }
+}
+if ('NodeList' in window && !NodeList.prototype.forEach) {
+    NodeList.prototype.forEach = function (callback, thisArg) {
+        thisArg = thisArg || window;
+        for (var i = 0; i < this.length; i++) {
+            callback.call(thisArg, this[i], i, this);
+        }
+    };
 }
