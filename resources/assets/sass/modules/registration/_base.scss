@@ -8,7 +8,7 @@ $width: 100%;
 @media(max-width: 768px){
 
 }
-.registration-block{
+.registration-block, .restore_block{
     padding: 40px 0;
     
     .section-heading__text{
@@ -56,5 +56,41 @@ $width: 100%;
             }
         }
     }
+}
+.restore_block {
+    .section-heading__text{
+        font-family: "ProximaNova-Regular", sans-serif;
+        text-align: center;
+    }
+    .restore_body{
+        width: $width;
+        max-width: 600px;
+        margin: auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 2px;
+        box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.09);
+        
+        .text-center{
+            font-size: 14px;
+            color: #989898;
+            margin: 5px;
+        }
+        .form-group{
+            width: $width;
+            margin: 10px 0;
+            
+            a{
+                font-size: 12px;
+                color: #989898;
+                margin: 5px;
+            }
+        }
+        .registration-btn-block{
+            margin-top: 20px;
+            text-align: center;
+        }
+    }
+    
 }
     
