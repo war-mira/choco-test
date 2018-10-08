@@ -5,55 +5,57 @@
 @section('form')
     <form action="{{$action}}" id="edit-form" method="post" enctype="multipart/form-data">
         {{csrf_field()}}
-        @component('components.bootstrap.column',['class'=>'col-md-8'])
-            @component('components.bootstrap.row')
-                @component('components.bootstrap.column',['class'=>'col-md-2'])
-                    @component('components.form.text')
-                        @slot('field','id')
-                        @slot('value',$seed['id'] ?? null)
-                        @slot('placeholder','Новый')
-                        @slot('label','Id')
-                        @slot('readonly',true)
-                    @endcomponent
+        @component('components.bootstrap.row')
+            @component('components.bootstrap.column',['class'=>'col-md-2'])
+                @component('components.form.text')
+                    @slot('field','id')
+                    @slot('value',$seed['id'] ?? null)
+                    @slot('placeholder','Новый')
+                    @slot('label','Id')
+                    @slot('readonly',true)
                 @endcomponent
-                @component('components.bootstrap.column',['class'=>'col-md-5'])
-                    @component('components.form.text')
-                        @slot('field','name')
-                        @slot('value',$seed['name'] ?? null)
-                        @slot('placeholder','Название')
-                        @slot('label','Заголовок')
-                        @slot('required',true)
-                    @endcomponent
+            @endcomponent
+            @component('components.bootstrap.column',['class'=>'col-md-5'])
+                @component('components.form.text')
+                    @slot('field','name')
+                    @slot('value',$seed['name'] ?? null)
+                    @slot('placeholder','Название')
+                    @slot('label','Заголовок')
+                    @slot('required',true)
                 @endcomponent
-                @component('components.bootstrap.column',['class'=>'col-md-5'])
-                    @component('components.form.text')
-                        @slot('field','alias')
-                        @slot('value',$seed['alias'] ?? null)
-                        @slot('placeholder','Транслит')
-                        @slot('label','Транслит')
-                        @slot('readonly',true)
-                    @endcomponent
+            @endcomponent
+            @component('components.bootstrap.column',['class'=>'col-md-3'])
+                @component('components.form.text')
+                    @slot('field','alias')
+                    @slot('value',$seed['alias'] ?? null)
+                    @slot('placeholder','Транслит')
+                    @slot('label','Транслит')
+                    @slot('readonly',true)
                 @endcomponent
-                    @component('components.bootstrap.column',['class'=>'col-md-2'])
-                        @component('components.form.checkbox')
-                            @slot('field','active')
-                            @slot('value',$seed['active'] ?? null)
-                            @slot('label','Опубликовано')
-                        @endcomponent
-                    @endcomponent
-                @component('components.bootstrap.column',['class'=>'col-md-12'])
-                    @component('components.form.select2.single')
-                        @slot('field','illnesses_group_id')
-                        @slot('value',$seed['illnesses_group_id'] ?? 0)
-                        @slot('placeholder','Группа')
-                        @slot('label','Группа')
-                        @slot('options',\App\Models\Library\IllnessesGroup::orderBy('name')->get())
-                        @slot('idField','id')
-                        @slot('nameField','name')
-                    @endcomponent
+            @endcomponent
+            @component('components.bootstrap.column',['class'=>'col-md-2'])
+                @component('components.form.checkbox')
+                    @slot('field','active')
+                    @slot('value',$seed['active'] ?? null)
+                    @slot('label','Опубликовано')
+                @endcomponent
+            @endcomponent
+
+        @endcomponent
+        @component('components.bootstrap.row')
+            @component('components.bootstrap.column',['class'=>'col-md-12'])
+                @component('components.form.select2.single')
+                    @slot('field','illnesses_group_id')
+                    @slot('value',$seed['illnesses_group_id'] ?? 0)
+                    @slot('placeholder','Группа')
+                    @slot('label','Группа')
+                    @slot('options',\App\Models\Library\IllnessesGroup::orderBy('name')->get())
+                    @slot('idField','id')
+                    @slot('nameField','name')
                 @endcomponent
             @endcomponent
         @endcomponent
+
         @component('components.bootstrap.row')
             @component('components.bootstrap.column',['class'=>'col-md-12'])
                 @component('components.form.summernote.textarea')
