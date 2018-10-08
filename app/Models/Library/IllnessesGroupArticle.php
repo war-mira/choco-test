@@ -19,6 +19,7 @@ class IllnessesGroupArticle extends Model implements ISeoMetadata
       'meta_key',
       'meta_desc',
       'created_at',
+        'active',
       'updated_at',
       'image'
     ];

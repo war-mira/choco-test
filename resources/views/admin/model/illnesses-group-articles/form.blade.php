@@ -34,6 +34,13 @@
                         @slot('readonly',true)
                     @endcomponent
                 @endcomponent
+                    @component('components.bootstrap.column',['class'=>'col-md-2'])
+                        @component('components.form.checkbox')
+                            @slot('field','active')
+                            @slot('value',$seed['active'] ?? null)
+                            @slot('label','Опубликовано')
+                        @endcomponent
+                    @endcomponent
                 @component('components.bootstrap.column',['class'=>'col-md-12'])
                     @component('components.form.select2.single')
                         @slot('field','illnesses_group_id')
