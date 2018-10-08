@@ -153,6 +153,10 @@ class Skill extends Model implements ISeoMetadata
         return empty($this->seo_h1) ?  NounPluralization::getCase($this->name, 'именительный').' в '. GeographicalNamesInflection::getCase($city->name, 'предложный'): $this->seo_h1;
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('active',1);
+    }
     public function getSeoText()
     {
         return empty($this->seo_text) ? '' : $this->seo_text;
@@ -162,6 +166,7 @@ class Skill extends Model implements ISeoMetadata
     {
       return   Skill::where('active',1)
           ->orderBy('name')
+          ->active()
             ->get();
     }
 
