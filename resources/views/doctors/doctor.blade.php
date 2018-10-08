@@ -101,7 +101,7 @@
                     @endif
                 </div>
 
-                {{--@if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])--}}
+                @if($doctor->partner == \App\Doctor::PARTNER)
                     <form action="#" class="appointment_form">
                         <div class="appointment-book-small__line">
                             <a href="#order_doctor" data-doc-id="{{$doctor->id}}" data-dname="{{$doctor['name']}}"
@@ -117,7 +117,7 @@
                             
                         </div>
                     </form>
-                    {{--@endif--}}
+                    @endif
                 <div class="entity-line__additional appointment-book-small">
                     {{--@if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])--}}
                     <div class="appointment-book-big__heading">Записаться на прием</div>

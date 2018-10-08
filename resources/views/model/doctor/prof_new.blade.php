@@ -134,7 +134,7 @@
                 @endif
             @endforeach
         @endif
-    {{--@if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])--}}
+    @if($doctor->partner == \App\Doctor::PARTNER)
             <form action="#" class="">
                 <div class="appointment-book-big__bot-line">
                     @if(!empty($doctor->price))
@@ -148,7 +148,7 @@
                                 class="hidden-xl"> онлайн</span></a>
                 </div>
             </form>
-    {{--@endif--}}
+    @endif
 
 
 </div>
