@@ -14,17 +14,20 @@
                           action="{{ route('password.phone.request') }}">
                         {{ csrf_field() }}
                         <div class="form-group{{ $errors->has('phone') ? ' has-error has-feedback' : '' }}">
-                            <label for="phone">Телефон:</label>
                             <input type="text" data-format="+7 (ddd) ddd-dddd" required
-                                   pattern="\+7 \(\d{3}\) \d{3}-\d{4}" class="form-control bfh-phone" name="phone"
+                                   pattern="\+7 \(\d{3}\) \d{3}-\d{4}" class="form-control bfh-phone" name="phone" 
+                                   title="Телефон в формате +7 (XXX) XXX XX-XX"
                                    id="phone-input"
-                                   value="{{old('phone')}}">
+                                   value="{{old('phone')}}"
+                                   placeholder="Телефон">
                             @if ($errors->has('phone'))
                                 <span class="glyphicon glyphicon-remove form-control-feedback"></span>
                                 <span class="help-block">{{$errors->first('phone')}}</span>
                             @endif
                         </div>
-                        <button type="submit" class="btn button button--light">Получить код</button>
+                        <div class="form-group phone-btn-block">
+                            <button type="submit" class="btn btn_theme_usual">Получить код</button>
+                        </div>
                     </form>
             </div>
         </div>
@@ -38,3 +41,30 @@
         );
     </script>
 @endsection
+<style>
+    .phone-request-block{
+        padding: 40px 0;
+    }
+    .phone-request-body{
+        width: 100%;
+        max-width: 600px;
+        margin: auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 2px;
+        box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.09);
+    }
+    .phone-request-block .section-heading__text{
+        font-family: "ProximaNova-Regular", sans-serif;
+        text-align: center;
+    }
+    .phone-request-block .text-center{
+        font-size: 14px;
+        color: #989898;
+        margin: 5px;
+    }
+    .phone-btn-block{
+        margin-top: 20px;
+        text-align: center;
+    }
+</style>
