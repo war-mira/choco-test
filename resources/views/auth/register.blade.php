@@ -25,7 +25,7 @@
                         @endif
                 </div>
                 <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                    <input id="name" type="text" class="form-control" name="name" placeholder="Имя" value="{{ old('name') }}" required autofocus>
+                    <input id="name" type="text" class="form-control" name="name" placeholder="Имя *" value="{{ old('name') }}" required autofocus>
                     @if ($errors->has('name'))
                         <span class="help-block">
                             <strong>{{ $errors->first('name') }}</strong>
@@ -33,7 +33,7 @@
                     @endif
                 </div>
                 <div class="form-group{{ $errors->has('lastname') ? ' has-error' : '' }}">
-                    <input id="lastname" type="text" class="form-control" name="lastname" placeholder="Фамилия" value="{{ old('lastname') }}" required autofocus>
+                    <input id="lastname" type="text" class="form-control" name="lastname" placeholder="Фамилия *" value="{{ old('lastname') }}" required autofocus>
                     @if ($errors->has('lastname'))
                         <span class="help-block">
                             <strong>{{ $errors->first('lastname') }}</strong>
@@ -41,7 +41,7 @@
                     @endif
                 </div>
                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                    <input id="email" type="email" class="form-control" name="email" placeholder="Email" value="{{ old('email') }}" required>
+                    <input id="email" type="email" class="form-control" name="email" placeholder="Email *" value="{{ old('email') }}" required>
                     @if ($errors->has('email'))
                         <span class="help-block">
                             <strong>{{ $errors->first('email') }}</strong>
@@ -60,7 +60,7 @@
                     @endif
                 </div>
                 <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}">
-                    <select id="city" type="city" class="form-control js-header-location" name="city" value="{{ old('city') }}" required>
+                    <select id="city" type="city" class="form-control js-form-selectize" name="city" value="{{ old('city') }}" required>
                         <option value="8">Город</option>
                         @foreach ($cities as $CityItem)
                             <option value="{{$CityItem->id}}">{{$CityItem->name}}</option>
