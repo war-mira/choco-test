@@ -179,6 +179,7 @@ Route::group(['as' => 'report.'], function () {
     Route::get('reports/doctors-clicks', 'ReportController@doctorsClicks')->name('doctorsClicks');
     Route::get('reports/doctors-clicks-report', 'ReportController@makeDoctorsClickReports')->name('makeDoctorsClickReports');
     Route::get('reports/doctor-views/{id}', 'ReportController@getDoctorsViewsById')->name('makeDoctorsClickReports');
+    Route::get('reports/doctors-views', 'ReportController@getDoctorsViews')->name('getDoctorsViews');
 
     Route::get('reports/buyers', 'Admin\Report\BuyersReportController@page')->name('buyers.page');
     Route::post('reports/buyers', 'Admin\Report\BuyersReportController@report')->name('buyers.report');
