@@ -13,6 +13,7 @@ Route::get('dashboard', 'AdminController@dashboard')->name('dashboard');
 Route::get('/clients/search', 'SearchController@searchClients');
 Route::get('/ajax/autocomplete','SearchController@autocomplete');
 Route::get('/ajax/doctor/medcenters','AdminController@getDoctorMedcenters');
+Route::post('/ajax/image/upload','Admin\ImageController@upload');
 
 Route::group(['as' => 'settings.', 'prefix' => 'settings'], function () {
     Route::get('/', 'Admin\SettingsController@form')->name("form");

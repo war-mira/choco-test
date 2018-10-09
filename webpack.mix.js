@@ -23,12 +23,43 @@ mix
     .sass('resources/assets/packages/lvg/scss/app.scss', 'public/projects/lvg/css/app.css')
     .copy('resources/assets/packages/lvg/img', 'public/projects/lvg/img')
 ;
+/**
+ * Admin panel editor
+ */
+mix
+    .babel([
+        'resources/assets/packages/longrid-js/js/helpers/*.js',
+        'resources/assets/packages/longrid-js/js/elements/*.js',
+        'resources/assets/packages/longrid-js/js/column.js',
+        'resources/assets/packages/longrid-js/js/row.js',
+        'resources/assets/packages/longrid-js/js/grid.js',
+        'resources/assets/packages/longrid-js/js/index.js',
+    ], 'public/projects/longrid-js/pre-build/app.js')
+    .sass('resources/assets/packages/longrid-js/scss/main.scss','public/projects/longrid-js/pre-build/editor.css')
+    .styles([
+        'node_modules/medium-editor/dist/css/medium-editor.css',
+        'node_modules/medium-editor/dist/css/themes/default.css',
+        'public/projects/longrid-js/pre-build/editor.css'
+    ], 'public/projects/longrid-js/css/editor.css')
+    .combine([
+        'node_modules/medium-editor/dist/js/medium-editor.min.js',
+        'node_modules/sortablejs/Sortable.min.js',
+        'public/projects/longrid-js/pre-build/app.js',
+    ],'public/projects/longrid-js/js/editor.js')
+    .copy('node_modules/dropzone/dist', 'public/projects/libs/dropzone/')
+;
+/**
+ * END
+ */
+
 
 
 mix
     .babel([
     'resources/assets/js/libs/Filters.js'
 ], 'public/build/js/libs/Filters.js');
+
+
 
 
 mix.js('resources/assets/js/app.js', 'public/build/js/vue_app.js')

@@ -1,0 +1,23 @@
+.grid{
+  &__column{
+    &--move{
+      i{
+        display: none;
+      }
+    }
+  }
+  &__item{
+
+    &[data-type="image"]{
+      .grid__item--control{
+        padding-top:8px;
+      }
+      .left{
+        text-align:center;
+      }
+    }
+  }
+}
+.dz-clickable{
+  height: 100%;
+}
