@@ -13,9 +13,9 @@ class CreateServicePricesTable extends Migration
      */
     public function up()
     {
-        Schema::create('service_prices', function (Blueprint $table) {
+        Schema::create('service_medcenter', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('group_id');
+            $table->integer('medcenter_id');
             $table->integer('service_id');
             $table->integer('price');
         });
@@ -28,6 +28,6 @@ class CreateServicePricesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('service_prices');
+        Schema::dropIfExists('service_medcenter');
     }
 }
