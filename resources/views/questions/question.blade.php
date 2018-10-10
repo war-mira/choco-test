@@ -42,7 +42,10 @@
             </div>
             <div class="article__aside-desktop">
                 <div class="entity-content__banner">
-                    <img src="{{asset('img/banner.jpg')}}" alt="">
+                    <div class="entity-content_askform">
+                        <div class="leave-review__heading">Задать вопрос врачу</div>
+                        @include('forms.public.ask_doctor_form')
+                    </div>
                 </div>
             </div>
         </section>
