@@ -28,7 +28,6 @@ class UserController extends Controller
     {
         $validator = \Validator::make($request->all(), [
             'name' => 'required|max:255',
-            'phone' => ['required', new PhoneNumber, Rule::unique('users')->where('phone_verified', 1)],
         ]);
         if ($validator->fails()) {
             $errors = (new ValidationException($validator))->errors();
