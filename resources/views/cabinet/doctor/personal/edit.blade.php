@@ -48,7 +48,8 @@
                                 <div class="account-data-item__val">
                                     <div class="date-text-input">
                                         <input type="text" name="birthday" placeholder="Выберите дату рождения"
-                                               data-pmu-date="{{ old('birthday') ? old('birthday'): $user->birthday }}">
+                                               data-pmu-date="{{ old('birthday') ? old('birthday'): $user->birthday->format('Y-m-d') }}" 
+                                               value="{{ old('birthday') ? old('birthday'): $user->birthday->format('Y-m-d')}}">
                                     </div>
                                 </div>
                             </div>
