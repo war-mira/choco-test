@@ -37,8 +37,15 @@
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
-.question-search-block{
-    display: flex;
+.question-search-block{    
+    .questions__search--form{
+        width: 100%;
+        display: flex;
+        
+        .search-bar__question{
+            width:85%;
+        }
+    }
     
     .btn_theme_usual{
         visibility: hidden;
