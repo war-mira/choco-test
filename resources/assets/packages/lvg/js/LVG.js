@@ -210,10 +210,9 @@ class LVG {
         let form = document.querySelector('.form--begin');
         let messages = [];
         let not_validate = [
+            'medcenter_name'
         ];
-        if(!this.container.querySelector('input[name="medcenter"]').checked){
-            not_validate.push('medcenter_name')
-        }
+
         form.querySelectorAll('.form--input').forEach(function (input) {
             let input__field = input.querySelector('input');
             let label = input.querySelector('label');
