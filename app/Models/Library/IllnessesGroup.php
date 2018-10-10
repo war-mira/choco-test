@@ -32,6 +32,8 @@ class IllnessesGroup extends Model
         return $this->hasMany('App\Models\Library\IllnessesGroupArticle', 'illnesses_group_id', 'id');
     }
 
+
+
     public function limitedArticles()
     {
         return $this->articles()->take(3)->get();

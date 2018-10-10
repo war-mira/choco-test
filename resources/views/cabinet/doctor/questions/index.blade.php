@@ -28,14 +28,16 @@
                                             <div class="account-data-item__name">Дата публикации</div>
                                             <div class="account-data-item__val">{{ \App\Helpers\FormatHelper::userShothDate($question->created_at) }}</div>
                                         </div>
-                                        <div class="reviews-list-item__data-item account-data-item">
-                                            <div class="account-data-item__name">Пол</div>
-                                            <div class="account-data-item__val">{{ \App\QuestionUser::GENDERS[$question->user->gender ]}}</div>
-                                        </div>
-                                        <div class="reviews-list-item__data-item account-data-item">
-                                            <div class="account-data-item__name">Дата рождения</div>
-                                            <div class="account-data-item__val">{{ $question->user->birthday }}</div>
-                                        </div>
+                                        @if(isset($question->user))
+                                            <div class="reviews-list-item__data-item account-data-item">
+                                                <div class="account-data-item__name">Пол</div>
+                                                <div class="account-data-item__val">{{ \App\QuestionUser::GENDERS[$question->user->gender ]}}</div>
+                                            </div>
+                                            <div class="reviews-list-item__data-item account-data-item">
+                                                <div class="account-data-item__name">Дата рождения</div>
+                                                <div class="account-data-item__val">{{ $question->user->birthday }}</div>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="reviews-list-item__action">

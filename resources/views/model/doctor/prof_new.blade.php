@@ -127,14 +127,14 @@
         {{--@endif--}}
         @if($doctor->medcenters)
             @foreach($doctor->medcenters as $medcenter)
-                @if(in_array($medcenter->id, \App\Doctor::SHOW_PHONES))
+                @if(in_array($medcenter->id, \App\Doctor::SHOW_PHONES) || $doctor->	show_phone == \App\Doctor::SHOW_PHONE)
                     <phone-show-btn model="{{ \App\Doctor::SHOW_PHONE_COUNT }}" id="{{ $doctor->id }}" phone="{{ \App\Helpers\HtmlHelper::phoneCode($doctor->showing_phone) }}">
                         <template slot="phone-number"></template>
                     </phone-show-btn>
                 @endif
             @endforeach
         @endif
-    {{--@if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])--}}
+    @if($doctor->partner == \App\Doctor::PARTNER)
             <form action="#" class="">
                 <div class="appointment-book-big__bot-line">
                     @if(!empty($doctor->price))
@@ -148,7 +148,7 @@
                                 class="hidden-xl"> онлайн</span></a>
                 </div>
             </form>
-    {{--@endif--}}
+    @endif
 
 
 </div>

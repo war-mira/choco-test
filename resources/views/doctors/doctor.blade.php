@@ -101,7 +101,7 @@
                     @endif
                 </div>
 
-                {{--@if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])--}}
+                @if($doctor->partner == \App\Doctor::PARTNER)
                     <form action="#" class="appointment_form">
                         <div class="appointment-book-small__line">
                             <a href="#order_doctor" data-doc-id="{{$doctor->id}}" data-dname="{{$doctor['name']}}"
@@ -117,7 +117,7 @@
                             
                         </div>
                     </form>
-                    {{--@endif--}}
+                    @endif
                 <div class="entity-line__additional appointment-book-small">
                     {{--@if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])--}}
                     <div class="appointment-book-big__heading">Записаться на прием</div>
@@ -139,7 +139,7 @@
                             {{--@if( $doctor->whoIsIt() != \App\Doctor::TYPE[4] && $doctor->whoIsIt() != \App\Doctor::TYPE[5])--}}
                             @if($doctor->medcenters)
                                 @foreach($doctor->medcenters as $medcenter)
-                                    @if(in_array($medcenter->id, \App\Doctor::SHOW_PHONES))
+                                    @if(in_array($medcenter->id, \App\Doctor::SHOW_PHONES) || $doctor->	show_phone == \App\Doctor::SHOW_PHONE)
                                         <phone-show-btn model="{{ \App\Doctor::SHOW_PHONE_COUNT }}"
                                                         id="{{ $doctor->id }}"
                                                         phone="{{ \App\Helpers\HtmlHelper::phoneCode($doctor->showing_phone) }}">

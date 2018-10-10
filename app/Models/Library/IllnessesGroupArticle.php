@@ -19,6 +19,7 @@ class IllnessesGroupArticle extends Model implements ISeoMetadata
       'meta_key',
       'meta_desc',
       'created_at',
+        'active',
       'updated_at',
       'image'
     ];
@@ -47,7 +48,10 @@ class IllnessesGroupArticle extends Model implements ISeoMetadata
     {
         return $this->name;
     }
-
+    public function scopeActive($query)
+    {
+        return $query->where('active',1);
+    }
     public function getSeoText()
     {
         return '';

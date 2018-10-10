@@ -16,6 +16,39 @@ use PhpParser\Comment\Doc;
 
 class ReportController extends Controller
 {
+
+    private $experimentDoctorsIds = [
+        '1957',
+        '145',
+        '1326',
+        '208',
+        '290',
+        '1183',
+        '85',
+        '1504',
+        '1280',
+        '869',
+        '1180',
+        '1290',
+        '1487',
+        '674',
+        '1373',
+        '869',
+        '871',
+        '1108',
+        '767',
+        '1400',
+        '1226',
+        '801',
+        '1426',
+        '1360',
+        '1163',
+        '1279',
+        '259',
+        '865',
+        '1359'
+    ];
+
     public function daily(Request $request)
     {
         $start = $request->input('start', false);
@@ -321,6 +354,19 @@ class ReportController extends Controller
         $count = Redis::ZCOUNT($key, "-inf", "+inf");
 
         return $count;
+    }
+
+    public function getDoctorsViews()
+    {
+        $doctors = $this->experimentDoctorsIds;
+        $dateFrom = new \DateTime('4.10.2018');
+        $dateTo = new \DateTime();
+
+        foreach ($doctors as $doctor){
+            $key = 'doctor:'.$doctor.':'.Doctor::VIEW_PROFILE_COUNT;
+            $count = Redis::ZCOUNT($key, $dateFrom->getTimestamp(), $dateTo->getTimestamp());
+            echo $doctor.':'.$count.'<br>';
+        }
     }
         
     
