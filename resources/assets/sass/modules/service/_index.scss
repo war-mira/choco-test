@@ -1,46 +1,46 @@
 .pages {
   &--service {
     &__index {
-        .service-list-block{
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            
-            @media(max-width: 768px) {
-                flex-wrap: wrap;
-            }
-            .service-list-column{
-                width: 100%;
-                
-                a{
-                    &:hover{
-                        text-decoration: none;
-                    }
-                }
-                
-                .entity-line__list{
-                    margin-top: 15px;
-                    
-                    ul li{
-                        &:before {
-                            color: #454545;
-                        }
-                        a{
-                            color: #00A8FF;
-                            font-size: 14px;
-                            display: inline-block;
-                            width: 100%;
-                            max-width: 400px;
-                            
-                            &:hover{
-                                color: #00A8FF;
-                                text-decoration: underline;
-                            }
-                        }
-                    }
-                }
-            }
+      .service-list-block {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+
+        @media(max-width: 768px) {
+          flex-wrap: wrap;
         }
+        .service-list-column {
+          width: 100%;
+
+          a {
+            &:hover {
+              text-decoration: none;
+            }
+          }
+
+          .entity-line__list {
+            margin-top: 15px;
+
+            ul li {
+              &:before {
+                color: #454545;
+              }
+              a {
+                color: #00A8FF;
+                font-size: 14px;
+                display: inline-block;
+                width: 100%;
+                max-width: 400px;
+
+                &:hover {
+                  color: #00A8FF;
+                  text-decoration: underline;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

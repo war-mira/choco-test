@@ -3,7 +3,13 @@
     {{-- @include('search.search_box_service')--}}
     <section class="pages--service pages--service__index">
 
-        @include('search.filtr_service',compact('service_count'))
+        @include('search.filtr_service',[
+            'service_count'=> $service_count,
+            'breadcrumb_route'=>'service.index',
+            'params' => [
+               'title'=> 'Медицинские услуги'
+               ]
+        ])
         <div class="container questions--list">
             @foreach($serviceGroups->chunk(2) as $group)
                 <div class="service-list-block">

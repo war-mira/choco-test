@@ -1,6 +1,6 @@
 <div class="entity-line__img">
     <div class="entity-thumb-img">
-        <div class="entity-thumb-img__img-wr">
+        <div class="entity-thumb-img__img-wr ">
             @component('components.medcenters-img',['width'=>$width??'200px','height'=>$height??'200px','class_min'=>$medcenter->checkImageheight()??'0', 'alt'=>$medcenter->name])
                 @slot('src')
                     {{$medcenter->avatar}}
@@ -44,10 +44,6 @@
     <div class="service-price__heading">
         Стоимость услуги:
         <p>{{$medcenter->pivot->price}} тг</p>
-        <p class="service-booking-btn">
-            <a href="#order_med" data-doc-id="" data-dname="" data-status="6" class="appointment-book-big__book-btn btn btn_theme_usual trigger-link popup-with-form">
-                Записаться<span class="hidden-xl"> онлайн</span>
-            </a>
-        </p>
+
     </div>
 </div>

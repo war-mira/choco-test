@@ -1,7 +1,15 @@
 @extends('redesign.layouts.inner-page')
 @section('content')
     <section class="pages--service pages--service__list">
-        @include('search.filtr_service',compact('$serviceGroup->services->count'))
+        @include('search.filtr_service',[
+                   'service_count'=> $serviceGroup->services->count(),
+                   'breadcrumb_route'=>'service.list',
+                   'params' => [
+                      'parent'=> 'Медицинские услуги',
+                      'parent_url'=>route('service.index'),
+                      'title' => $serviceGroup->name
+                      ]
+               ])
      <div class="container questions--list">
          <div class="entity-line__name">
             {{$serviceGroup->name}}

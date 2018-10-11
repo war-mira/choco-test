@@ -1,50 +1,49 @@
 .pages {
   &--service {
-      &__list {
-          .entity-line__name{
-              margin-bottom: 15px;
-          }
-          .service-list-block{
-              display: flex;
-              
-            @media(max-width: 768px) {
-                flex-wrap: wrap;
-            }
-            
-            
-            .service-list-column{
-                width: 100%;
-                padding: 0 15px;
-                
-                a{
-                    &:hover{
-                        text-decoration: none;
-                    }
-                }
-                
-                .entity-line__list{
-                    margin-top: 15px;
-                    
-                    ul li{
-                        &:before {
-                            color: #454545;
-                        }
-                        a{
-                            color: #00A8FF;
-                            font-size: 14px;
-                            display: inline-block;
-                            width: 100%;
-                            max-width: 400px;
-                            
-                            &:hover{
-                                color: #00A8FF;
-                                text-decoration: underline;
-                            }
-                        }
-                    }
-                }
-            }
-          }
+    &__list {
+      .entity-line__name {
+        margin-bottom: 15px;
       }
+      .service-list-block {
+        display: flex;
+
+        @media(max-width: 768px) {
+          flex-wrap: wrap;
+        }
+
+        .service-list-column {
+          width: 100%;
+          padding: 0 15px;
+
+          a {
+            &:hover {
+              text-decoration: none;
+            }
+          }
+
+          .entity-line__list {
+            margin-top: 15px;
+
+            ul li {
+              &:before {
+                color: #454545;
+              }
+              a {
+                color: #00A8FF;
+                font-size: 14px;
+                display: inline-block;
+                width: 100%;
+                max-width: 400px;
+
+                &:hover {
+                  color: #00A8FF;
+                  text-decoration: underline;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

@@ -45,6 +45,9 @@
                             <a href="{{route('medcenters.list')}}">Клиники</a>
                         </div>
                         <div class="footer-nav-column__item">
+                            <a href="{{route('service.index')}}">Услуги</a>
+                        </div>
+                        <div class="footer-nav-column__item">
                             <a href="/#doc-letter-search__result">Специализации</a>
                         </div>
                         {{--<div class="footer-nav-column__item">--}}

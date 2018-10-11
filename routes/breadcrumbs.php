@@ -21,7 +21,7 @@ Breadcrumbs::register('library.illnesses-group-articles', function ($breadcrumbs
 
 Breadcrumbs::register('library.illnesses-group-article', function ($breadcrumbs, $article) {
     $breadcrumbs->parent('library.illnesses-group-articles', $article->illnessesGroup);
-    $breadcrumbs->push($article->name, route('library.illnesses-group-article',['illnesses_group' => $article->illnessesGroup, 'article' => $article->alias]));
+    $breadcrumbs->push($article->name, route('library.illnesses-group-article', ['illnesses_group' => $article->illnessesGroup, 'article' => $article->alias]));
 });
 
 Breadcrumbs::register('illnesses.index', function ($breadcrumbs) {
@@ -50,31 +50,67 @@ Breadcrumbs::register('search.index', function ($breadcrumbs, $options) {
 
     $city = $options['city'];
     $title = $options['title'];
-    $city_title =  'Врачи в ' . (SeoMetadataHelper::CityPP[$city->id]??GeographicalNamesInflection::getCase($city->name, 'предложный'));
+    $city_title = 'Врачи в ' . (SeoMetadataHelper::CityPP[$city->id] ?? GeographicalNamesInflection::getCase($city->name, 'предложный'));
     $breadcrumbs->parent('home');
-    $breadcrumbs->push($city_title,  route('doctors.list',[
+    $breadcrumbs->push($city_title, route('doctors.list', [
         'city' => $city->alias
-    ],false));
-    if(!is_null($title)){
+    ], false));
+    if (!is_null($title)) {
         $breadcrumbs->push($title);
     }
 });
 Breadcrumbs::register('doctor.profile', function ($breadcrumbs, $doctor) {
 
-    $city_title =  'Врачи в ' . (SeoMetadataHelper::CityPP[$doctor->city->id]??GeographicalNamesInflection::getCase($doctor->city->name, 'предложный'));
+    $city_title = 'Врачи в ' . (SeoMetadataHelper::CityPP[$doctor->city->id] ?? GeographicalNamesInflection::getCase($doctor->city->name, 'предложный'));
     $breadcrumbs->parent('home');
-    $breadcrumbs->push($city_title,  route('doctors.list',[
+    $breadcrumbs->push($city_title, route('doctors.list', [
         'city' => $doctor->city->alias
-    ],false));
+    ], false));
 
 
-    if(!is_null($doctor->main_skill)){
+    if (!is_null($doctor->main_skill)) {
         $meta = SeoMetadataHelper::getMeta($doctor->main_skill, $doctor->city);
-        $breadcrumbs->push($meta['h1'],  route('doctors.list',[
+        $breadcrumbs->push($meta['h1'], route('doctors.list', [
             'city' => $doctor->city->alias,
             'input' => $doctor->main_skill->alias
-        ],false));
+        ], false));
     }
 
     $breadcrumbs->push($doctor->name);
+});
+
+
+Breadcrumbs::register('service.index', function ($breadcrumbs, $options) {
+
+
+    $title = $options['title'];
+    $breadcrumbs->parent('home');
+
+
+    $breadcrumbs->push($title);
+
+});
+Breadcrumbs::register('service.list', function ($breadcrumbs, $options) {
+
+
+    $parent = $options['parent'];
+    $title = $options['title'];
+    $breadcrumbs->parent('home');
+        $breadcrumbs->push($parent, $options['parent_url']);
+    $breadcrumbs->push($title);
+
+});
+Breadcrumbs::register('service.medcenter', function ($breadcrumbs, $options) {
+
+
+    $parent = $options['parent'];
+    $title = $options['title'];
+    $breadcrumbs->parent('home');
+    if(is_array($parent)){
+        $breadcrumbs->push($parent['parent'], $parent['parent_url']);
+    }
+     $breadcrumbs->push($parent['title'], $parent['url']);
+
+    $breadcrumbs->push($title);
+
 });
