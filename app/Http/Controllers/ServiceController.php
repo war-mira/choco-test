@@ -32,9 +32,8 @@ class ServiceController extends Controller
     public function groupList($alias)
     {
         $serviceGroup = ServiceGroup::whereAlias($alias)->active()->first();
-
         return view('redesign.pages.service.list',[
-            'serviceGroup' => $serviceGroup
+            'serviceGroup' => $serviceGroup,
         ]);
     }
     public function medcentersList($group,$alias)
@@ -51,7 +50,7 @@ class ServiceController extends Controller
             ]),301);
         }
         return view('redesign.pages.service.medcenters',[
-            'service' => $service
+            'service' => $service,
         ]);
     }
     public function seed()
