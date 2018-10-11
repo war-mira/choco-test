@@ -1,6 +1,5 @@
 @extends('redesign.layouts.inner-page')
 @section('content')
-    <section class="pages--service pages--service__list">
         @include('search.filtr_service',[
                    'service_count'=> $serviceGroup->services->count(),
                    'breadcrumb_route'=>'service.list',
@@ -10,6 +9,8 @@
                       'title' => $serviceGroup->name
                       ]
                ])
+    <section class="pages--service pages--service__list">
+
      <div class="container questions--list">
          <div class="entity-line__name">
             {{$serviceGroup->name}}

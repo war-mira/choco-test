@@ -44,6 +44,10 @@
     <div class="service-price__heading">
         Стоимость услуги:
         <p>{{$medcenter->pivot->price}} тг</p>
-
+        <p class="service-booking-btn">
+        <a href="#order_med" data-doc-id="" data-dname="" data-status="6" class="appointment-book-big__book-btn btn btn_theme_usual trigger-link popup-with-form">
+            Записаться<span class="hidden-xl"> онлайн</span>
+        </a> 
+        </p>
     </div>
 </div>
