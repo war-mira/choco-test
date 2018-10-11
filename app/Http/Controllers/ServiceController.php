@@ -21,9 +21,11 @@ class ServiceController extends Controller
 
         $serviceGroup = ServiceGroup::with('services')
             ->active()->get();
+        $service_count = Service::active()->count();
 
         return view('redesign.pages.service.index',[
-            'serviceGroups' => $serviceGroup
+            'serviceGroups' => $serviceGroup,
+            'service_count' => $service_count
         ]);
     }
 
