@@ -10,26 +10,19 @@
                     @foreach($group as $item)
                         <div class="service-list-column">
                             <div class="entity-line__name">
-                                <a href="{{route('service.group',[
-                            'alias' => $item->alias
-                            ])}}">{{$item->name}}</a>
+                                <a href="{{route('service.group',['alias' => $item->alias])}}">{{$item->name}}</a>
                             </div>
                             <div class="entity-line__list">
                                 <ul>
                                     @foreach($item->services()->limit(10)->get() as $service)
-                                        <li><a href={{route('service.medcenter-list',[
-                                    'group'=>$item->alias,
-                                    'alias'=>$service->alias
-                                ])}}>{{$service->name}}</a></li>
+                                        <li>
+                                            <a href={{route('service.medcenter-list',['group'=>$item->alias,'alias'=>$service->alias])}}>{{$service->name}}</a>
+                                        </li>
                                     @endforeach
                                 </ul>
                                 @if($item->services->count() > 10)
                                     <div class="service-list__more">
-                                        <a href="{{route('service.group',[
-                                    'alias'=>$item->alias
-                                ])}}" class=" btn btn_theme_usual ">
-                                            Показать еще
-                                        </a>
+                                        <a href="{{route('service.group',['alias'=>$item->alias])}}" class="library-list__btn btn transparent">Показать еще</a>
                                     </div>
                                 @endif
                             </div>

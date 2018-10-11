@@ -28,6 +28,9 @@
                         a{
                             color: #00A8FF;
                             font-size: 14px;
+                            display: inline-block;
+                            width: 100%;
+                            max-width: 400px;
                             
                             &:hover{
                                 color: #00A8FF;
