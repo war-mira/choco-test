@@ -13,8 +13,12 @@ use App\Observers\DoctorObserver;
 use App\Observers\MedcenterObserver;
 use App\Observers\OrderObserver;
 use App\Observers\OrdersObserver;
+use App\Observers\ServiceGroupObserver;
+use App\Observers\ServiceObserver;
 use App\Observers\SkillObserver;
 use App\Order;
+use App\Service;
+use App\ServiceGroup;
 use App\Skill;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
@@ -34,6 +38,8 @@ class AppServiceProvider extends ServiceProvider
         Doctor::observe(DoctorObserver::class);
         Medcenter::observe(MedcenterObserver::class);
         Skill::observe(SkillObserver::class);
+        ServiceGroup::observe(ServiceGroupObserver::class);
+        Service::observe(ServiceObserver::class);
 
         //Resources
         BootstrapTableResource::withoutWrapping();
