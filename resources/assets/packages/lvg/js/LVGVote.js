@@ -3,7 +3,7 @@ class LVGVote {
         this.container = document.querySelector('.page--lvg');
         this.autocompletes = [];
         this.users = [];
-        this.current = 5;
+        this.current = 3;
         this.limit = 5;
     }
 
@@ -45,15 +45,7 @@ class LVGVote {
             middlename.value = target.querySelector('.middlename').innerText;
             middlename.classList.remove('error');
 
-            for (let attr_name in target.dataset) {
-                if (attr_name == 'skill') {
-                    skill_input.value = target.dataset[attr_name];
-                    skill_input.setAttribute('data-id', target.dataset['skill_id']);
-                    skill_input.classList.remove('error');
-                } else {
-                    this.input.setAttribute(`data-${attr_name}`, target.dataset[attr_name]);
-                }
-            }
+
             this.closeDropdown()
         };
         autocomplete.init();
@@ -147,9 +139,20 @@ class LVGVote {
             let label = item.querySelector('label');
             let input = item.querySelector('input');
             if (!input.value.trim().length) {
+                errors.push(`${label === null ? input.getAttribute('name') : label.innerText} не заполнено`);
+            } else {
+
+            }
+        });
+        if(errors.length == 4){
+            return true;
+        }
+        row.querySelectorAll('.form--input').forEach(function (item) {
+            let label = item.querySelector('label');
+            let input = item.querySelector('input');
+            if (!input.value.trim().length) {
                 _self.markAsError(input);
                 input.placeholder = 'Заполните это поле';
-                errors.push(`${label === null ? input.getAttribute('name') : label.innerText} не заполнено`);
             } else {
                 if (input.getAttribute('data-id') !== null) {
                     user[input.getAttribute('name')] = {
@@ -173,6 +176,7 @@ class LVGVote {
 
             }
         }
+
         return errors.length ? false : true;
 
     }
@@ -198,7 +202,7 @@ class LVGVote {
             })
             .fail(function (data) {
                 data = data.responseJSON;
-                alert(data.msg);
+                alert('Что-то пошло не так, свяжитесь с iDoctor');
                 if (data.code == 419) {
                     _self.showEnd();
                 }

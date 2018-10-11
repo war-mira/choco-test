@@ -9,7 +9,7 @@
         <form id="ask-doctor-modal-form" class="show-question-form">
                 <div class="form-row">
                     <div class="form-group col-md-6" id="ask-form-year">
-                        <select name="user[birthday]" id="user-birthday" required class="form-control js-form-selectize">
+                        <select name="user[birthday]" id="user-birthday" required class="form-control js-simple-select">
                             <option>Год рождения *</option>
                             @foreach(range((int)date('Y'),1900) as $i)
                             <option value="{{$i}}">{{$i}}</option>
@@ -41,7 +41,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label>Специализация</label>
-                        <select name="question[skill_id]" class="form-control js-form-selectize">
+                        <select name="question[skill_id]" class="form-control js-simple-select">
                             <option value="40">Выберите специализацию</option>
                             @foreach(\App\Skill::getList() as $skill)
                                 <option value="{{$skill['id']}}">{{$skill['name']}}</option>

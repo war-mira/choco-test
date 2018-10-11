@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Api;
-
 use App\Helpers\FormatHelper;
 use App\Http\Controllers\Cabinet\Doctor\DoctorCabinetController;
 use App\Http\Controllers\Cabinet\Doctor\DoctorCabinetPersonalController;
@@ -14,18 +12,18 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
-
 class UserController extends Controller
 {
     const RETRY_TIMEOUT = 60;
-
+    private $user = null;
     public function __construct()
     {
-        $this->user = \Auth::user();
+  
     }
-
+ 
     public function update(Request $request)
     {
+        $this->user = \Auth::user();
         $validator = \Validator::make($request->all(), [
             'name' => 'required|max:255',
         ]);
@@ -39,11 +37,10 @@ class UserController extends Controller
                 'msg' => 'Сохранено'
             ]);
         }
-
     }
-
     public function updatePassword(Request $request)
     {
+        $this->user = \Auth::user();
         $validator = \Validator::make($request->all(), [
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -52,26 +49,23 @@ class UserController extends Controller
             return response()->json(['errors' => $errors
             ], 400);
         } else {
+           
             $this->user->password = bcrypt($request->get('password'));
             $this->user->save();
             return response()->json([
                 'msg' => 'Сохранено'
             ]);
         }
-
     }
     public function checkCode(Request $request)
     {
-        $user = $this->user;
+        $user = \Auth::user();
         $now = now();
         $code = $request->input('code');
-
         $verifications = PhoneVerification::query()
             ->where('status', 1)
             ->where('user_id', $user->id)
             ->where('expire_timestamp', '>=', $now);
-
-
         $verification = $verifications->first();
         if (isset($verification)) {
             if ($verification->phone == $user->phone && $user->phone_verified) {
@@ -81,13 +75,11 @@ class UserController extends Controller
                 $user->phone = $verification->phone;
                 $user->phone_verified = true;
                 $user->save();
-
                 if($user->role == User::ROLE_DOCTOR){
                     $redirect = route('cabinet.doctor.personal.index');
                 } else {
                     $redirect = route('user.profile');
                 }
-
                 $response = response(
                     ['success' =>
                         [
@@ -101,17 +93,13 @@ class UserController extends Controller
         } else {
             $response = response(['error' => ['message' => 'Вы еще не запрашивали код!']], 400);
         }
-
-
         return $response;
-
     }
     public function requestCode(Request $request)
     {
         $user = \Auth::user();
         $phone = FormatHelper::phone($request->input('phone'));
         $now = now();
-
         $verifications = PhoneVerification::query()
             ->whereIn('status', [0, 1])
             ->where(function (Builder $query) use ($user, $phone) {
@@ -120,9 +108,7 @@ class UserController extends Controller
             });
         $pendingVerifications = clone $verifications;
         $pendingVerifications->where('request_timestamp', '>', $now->subSeconds(self::RETRY_TIMEOUT));
-
         if ($pendingVerifications->count() > 0) {
-
             return response()->json(['phone' => 'Превышен лимит запросов. Подождите.'], 500);
         } else {
             $verifications->update(['status' => -1]);
@@ -134,9 +120,7 @@ class UserController extends Controller
                 'msg' => 'Смс отправлен'
             ]);
         }
-
     }
-
     private function createVerification($user, $phone, $expireTime)
     {
         $now = now();

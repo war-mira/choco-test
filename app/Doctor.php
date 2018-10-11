@@ -418,6 +418,17 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         return $filters->apply($query);
     }
 
+    public function scopeRedisSearchSet($query, $hash)
+    {
+        if($set = Redis::get('search.index4:Doctor-queryset:'.$hash))
+            $ids = json_decode($set);
+        else
+            return $query;
+
+        return $query->find($ids);
+    }
+
+
     public function medcenters()
     {
         return $this->hasManyThrough(Medcenter::class, DoctorJob::class, 'doctor_id', // Foreign key on users table...

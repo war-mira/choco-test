@@ -51,6 +51,17 @@ Route::group(['prefix'=>'phones'],function (){
 });
 
 
+Route::get('qr-list',function(){
+    $ids = explode(',',request('ids'));
+
+    $docs = Doctor::find($ids);
+
+    $list = $docs->transform(function ($doc){
+        return "https://0x.kz/pg/image/cert?f_name={$doc->firstname}&s_name={$doc->lastname}&url={$doc->href}/feedback";
+    })->implode("\n");
+
+    return response($list,200,["Content-type"=>"text/plain"]);
+});
 
 Route::get('metrics',function (){
     return [

@@ -51,7 +51,6 @@ mix.js('resources/assets/js/app.js', 'public/build/js/vue_app.js')
         'public/build/js/scripts.js',
         'public/build/js/vue_app.js',
         'resources/assets/js/plugins/validation.js',
-
     ],'public/build/js/app.js')
     .options({
         processCssUrls: false,

@@ -86,6 +86,12 @@ Route::group(['prefix' => 'library', 'as' => 'library.'], function () {
     Route::get('/{illnesses_group}', 'LibraryController@groupArticles')->name('illnesses-group-articles');
     Route::get('/{illnesses_group}/{article}', 'LibraryController@article')->name('illnesses-group-article');
 });
+Route::group(['prefix' => 'service', 'as' => 'service.'], function () {
+    Route::get('/', 'ServiceController@index')->name('index');
+   // Route::get('/seed', 'ServiceController@seed')->name('seed');
+    Route::get('/{alias}', 'ServiceController@groupList')->name('group');
+    Route::get('/{group}/{alias}', 'ServiceController@medcentersList')->name('medcenter-list');
+});
 
 Route::group(['prefix' => 'illnesses', 'as' => 'illnesses.'], function () {
     Route::get('/{letter?}', 'LibraryController@illnesses')->name('index');

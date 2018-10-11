@@ -1,0 +1,31 @@
+.pages {
+  &--service {
+    max-width: 1600px;
+    padding: 20px 0;
+
+    .result-control-bar {
+      border-bottom: none;
+      padding: 10px 0 25px;
+    }
+    .service-med-line {
+
+    }
+  }
+}
+
+.service-search-bar {
+
+  @media(min-width: 768px) {
+    .search-bar__item_search {
+      width: 80%;
+    }
+    .search-bar__item_submit {
+      width: 15%;
+    }
+  }
+  @media(max-width: 768px) {
+    .input-block__icon {
+      top: 30px;
+    }
+  }
+}

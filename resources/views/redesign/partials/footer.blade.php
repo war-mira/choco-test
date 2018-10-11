@@ -16,6 +16,9 @@
                             <a href="{{ route('library.index') }}">Медицинская библиотека</a>
                         </div>
                         <div class="footer-nav-column__item">
+                            <a href="{{ route('question.list') }}">Вопросы и ответы</a>
+                        </div>
+                        <div class="footer-nav-column__item">
                             <a href="{{ route('illnesses.index') }}">Справочник заболеваний</a>
                         </div>
                         <div class="footer-nav-column__item">
@@ -43,6 +46,9 @@
                         </div>
                         <div class="footer-nav-column__item">
                             <a href="{{route('medcenters.list')}}">Клиники</a>
+                        </div>
+                        <div class="footer-nav-column__item">
+                            <a href="{{route('service.index')}}">Услуги</a>
                         </div>
                         <div class="footer-nav-column__item">
                             <a href="/#doc-letter-search__result">Специализации</a>

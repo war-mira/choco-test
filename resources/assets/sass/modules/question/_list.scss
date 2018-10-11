@@ -10,32 +10,45 @@
     }
   }
 }
-#ask-doctor-modal-form .loader {
-   border: 5px solid #f3f3f3;
-   border-top: 5px solid #b8b8b8;
-   border-radius: 50%;
-   width: 30px;
-   height: 30px;
-   animation: spin 2s linear infinite;
-   position: absolute;
-   bottom: 100px;
-   margin-left: auto;
-   margin-right: auto;
-   left: 0;
-   right: 0;
-}
-.hide{
-   display:none;
-}
+.search-bar__question_submit{        
+        .fa-search{
+            display: none;
+        }
+    }
+     #ask-doctor-modal-form .loader {
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #b8b8b8;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 2s linear infinite;
+        position: absolute;
+        bottom: 100px;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+    }
+    .hide{
+        display:none;
+    }
     
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-.question-search-block{
-    display: flex;
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+.question-search-block{    
+    .questions__search--form{
+        width: 100%;
+        display: flex;
+        
+        .search-bar__question{
+            width:85%;
+        }
+    }
     
     .btn_theme_usual{
+        visibility: hidden;
         height: 45px;
         border-radius: 25px;
         line-height: 45px;
@@ -57,16 +70,45 @@
     text-align: center;
     font-size: 16px;
 }
-.questions__search--form {
-  @media(max-width: 768px) {
-    .js-search-input {
-      min-width: auto;
-    }
-    .input-block__icon{
-      display:none;
-    }
 
-  }
+ @media(max-width: 768px) {
+    .question-search-block{
+        display:block;
+        text-align: center; 
+        
+        .btn_theme_usual{
+            visibility: visible;
+            margin-top: 15px;
+        }
+       
+        .questions__search--form {
+            width: 100%;
+
+            .js-search-input {
+                min-width: auto;
+            }
+            .input-block__icon{
+                display:none;
+            }
+            .search-bar__question{
+                width: 80%;
+            }
+            .search-bar__question_submit{
+                width: 10%;
+                .btn{
+                    background: transparent;
+                    padding: 0;
+                    line-height: 5;
+
+                    .fa-search{
+                        display: block;
+                        color:#0290d9;
+                        margin-top: 10px;
+                    }
+                } 
+            }
+        }
+    }
 }
 .entity-content_askform{
     background: #fff;
@@ -75,3 +117,4 @@
     padding: 15px 8.8% 15px;
     margin-top: 15px;
 }
+

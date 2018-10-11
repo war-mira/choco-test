@@ -4,7 +4,7 @@
             <form action="{{route('question.list')}}" class="questions__search--form search-bar__line index-search-bar__line  question-search-bar">
                 <input type="hidden" name="sort" value="{{request()->get('sort')??'date'}}" />
                 <input type="hidden" name="order" value="{{request()->get('order')??'desc'}}" />
-                <div class="search-bar__item search-bar__item_search">
+                <div class="search-bar__item search-bar__item_search search-bar__question">
                     <input id="searchform" name="" value=""  placeholder="Введите ключевое слово" class="js-search-input"  autocomplete="off">
                     <label for="searchform" class="input-block__icon"><img src="{{asset('/img/icons/search-inactive.png')}}" alt=""></label>
                     <div class="live-search">
@@ -12,10 +12,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="search-bar__item search-bar__item_submit">
-                    <button class="btn">Найти</button>
+                <div class="search-bar__item search-bar__item_submit search-bar__question_submit">
+                    <button class="btn"><i class="fa fa-search"></i>Найти</button>
                 </div>
             </form>
+           <a href="#question__modal" rel="modal-link" class="btn btn_theme_usual">Задать вопрос врачу</a>
         </div>
+        
     </div>
 </section>

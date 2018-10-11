@@ -9,7 +9,7 @@ $("#ask-question__form-send").click(function () {
                 $('#ask-user-email').removeClass('has-warning');
                 $('#ask-user-phone').removeClass('has-warning');
                 $('#ask-question-text').removeClass('has-warning');
-                $('#form-year .js-form-selectize > div').removeClass('has-warning-selectized');
+                $('#form-year .js-simple-select > div').removeClass('has-warning-selectized');
                 if (json.error) {
                     $('#doctor_mess_ok').removeClass('access').addClass('error').html('<b>' + json.error + '</b>');
                     $('#doctor_mess_ok').show();
@@ -28,9 +28,9 @@ $("#ask-question__form-send").click(function () {
             $('#ask-user-email').removeClass('has-warning');
         }
         if(!$('#ask-user-birthday').val() || !isValidDate($('#ask-user-birthday').val())){
-            $('#form-year .js-form-selectize > div').addClass('has-warning-selectized');
+            $('#form-year .js-simple-select > div').addClass('has-warning-selectized');
         }else{
-            $('#form-year .js-form-selectize > div').removeClass('has-warning-selectized');
+            $('#form-year .js-simple-select > div').removeClass('has-warning-selectized');
         }
         if(!$('#ask-question-text').val()){
             $('#ask-question-text').addClass('has-warning');
