@@ -1,0 +1,20 @@
+.pages--service__medcenters{
+    
+    
+    .entity-line__additional{
+        background-color: #FCFCFC;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        
+        div{
+           flex-basis: 100%;
+        }
+        
+        .service-price__heading{
+            p{
+                font-family: "ProximaNova-bold", sans-serif;
+            }
+        }
+    }
+}

@@ -2,6 +2,7 @@
 @section('content')
 @include('search.search_box_service')
     <section class="pages--service pages--service__index">
+        
         @include('search.filtr_service')
         <div class="container questions--list">
             <div class="service-list-block">
