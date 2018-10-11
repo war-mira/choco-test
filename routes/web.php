@@ -88,7 +88,7 @@ Route::group(['prefix' => 'library', 'as' => 'library.'], function () {
 });
 Route::group(['prefix' => 'service', 'as' => 'service.'], function () {
     Route::get('/', 'ServiceController@index')->name('index');
-    Route::get('/seed', 'ServiceController@seed')->name('seed');
+   // Route::get('/seed', 'ServiceController@seed')->name('seed');
     Route::get('/{alias}', 'ServiceController@groupList')->name('service-group');
     Route::get('/{group}/{alias}', 'ServiceController@medcentersList')->name('service-list');
 });
