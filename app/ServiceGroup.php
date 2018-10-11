@@ -12,5 +12,9 @@ class ServiceGroup extends Model
     {
         return $this->hasMany(Service::class,'group_id');
     }
+    public function scopeActive($query)
+    {
+        return $query->where('active',1);
+    }
 
 }

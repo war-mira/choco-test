@@ -18,4 +18,8 @@ class Service extends Model
         return $this->belongsToMany(Medcenter::class,'service_medcenter','service_id','medcenter_id')
             ->withPivot(['price']);
     }
+    public function scopeActive($query)
+    {
+        return $query->where('active',1);
+    }
 }

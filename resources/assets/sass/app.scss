@@ -31,6 +31,10 @@
 @import "partial/header";
 @import "partial/footer";
 @import "partial/btn";
+@import "modules/service/base";
+@import "modules/service/index";
+@import "modules/service/list";
+@import "modules/service/medcenters"; 
 
 .blur {
   -webkit-filter: url(#blur);

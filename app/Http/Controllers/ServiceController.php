@@ -5,19 +5,59 @@ namespace App\Http\Controllers;
 use App\Service;
 use App\ServiceGroup;
 use Illuminate\Http\Request;
+use Intervention\Image\Exception\NotFoundException;
 
 class ServiceController extends Controller
 {
+
+    private $related = [
+        481 => 884,
+        581 => 657,
+        478 => 582,
+    ];
+
     public function index()
     {
 
-        $serviceGroup = ServiceGroup::with('services')->get();
+        $serviceGroup = ServiceGroup::with('services')
+            ->active()->get();
 
-        //dd($serviceGroup);
+        return view('redesign.pages.service.index',[
+            'serviceGroups' => $serviceGroup
+        ]);
+    }
 
-        $groups = $this->getFromJson();
-        $this->fillData($groups);
-        dd($groups);
+    public function groupList($alias)
+    {
+        $serviceGroup = ServiceGroup::whereAlias($alias)->active()->first();
+
+        return view('redesign.pages.service.list',[
+            'serviceGroup' => $serviceGroup
+        ]);
+    }
+    public function medcentersList($group,$alias)
+    {
+        $service = Service::whereAlias($alias)->active()->first();
+        if(is_null($service)){
+            throw new NotFoundException();
+        }
+
+        if($service->group->alias !== $group){
+            return redirect(route('service.service-list',[
+                'group'=>$service->group->alias,
+                'alias'=>$service->alias
+            ]),301);
+        }
+        return view('redesign.pages.service.medcenters',[
+            'service' => $service
+        ]);
+    }
+    public function seed()
+    {
+
+         $groups = $this->getFromJson();
+         $this->fillData($groups);
+         dd($groups);
     }
 
     /**
@@ -56,6 +96,7 @@ class ServiceController extends Controller
             if (is_null($exist)) {
                 $service_group = new ServiceGroup();
                 $service_group->name = $key;
+                $service->active = 1;
                 $service_group->save();
             } else {
                 $service_group = $exist;
@@ -67,19 +108,22 @@ class ServiceController extends Controller
                         $service = new Service();
                         $service->name = $item->{"Услуга"};
                         $service->group_id = $service_group->id;
+                        $service->active = 1;
                         $service->save();
                     } else {
                         $service = $service_exist;
                         $ids = clone $item;
                         unset($ids->{"Услуга"});
                         unset($ids->{"Группа услуги"});
-                        foreach ($ids as $key => $id){
-                            if(!empty($id)){
-
-                               // $service->medcenters()->attach(0,['price'=>(int)preg_replace("/[^0-9]/", "", $id)]);
+                        foreach ($ids as $key => $price) {
+                            if (!empty($price)) {
+                                if(array_key_exists($key,$this->related)){
+                                    $service->medcenters()->attach($this->related[$key],['price'=>(int)preg_replace("/[^0-9]/", "", $price)]);
+                                }
+                                $service->medcenters()->attach($key,['price'=>(int)preg_replace("/[^0-9]/", "", $price)]);
                             }
-
                         }
+
 
                     }
                 }
