@@ -5,6 +5,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @include('partials.meta')
     @include('partials.yandex-metrika')
+    @include('partials.async_hide')
     @include('partials.google-analytics')
     @include('partials.gtm')
 
