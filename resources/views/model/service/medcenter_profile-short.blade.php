@@ -42,13 +42,13 @@
     </div>
 </div>
 <div class="entity-line__additional">
-    <div class="service-price__heading">Стоимость услуги: <p>3500 тг</p></div>
-    <div class="service-booking">
-        <a href="#order_med" data-doc-id="" data-dname="" data-status="6" class="appointment-book-big__book-btn btn btn_theme_usual trigger-link popup-with-form">
-            Записаться<span class="hidden-xl"> онлайн</span>
-        </a>  
+    <div class="service-price__heading">
+        Стоимость услуги:
+        <p>3500 тг</p>
+        <p class="service-booking-btn">
+            <a href="#order_med" data-doc-id="" data-dname="" data-status="6" class="appointment-book-big__book-btn btn btn_theme_usual trigger-link popup-with-form">
+                Записаться<span class="hidden-xl"> онлайн</span>
+            </a> 
+        </p>
     </div>
 </div>
-<style>
-    
-</style>

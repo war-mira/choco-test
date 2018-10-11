@@ -9,6 +9,11 @@
         
         div{
            flex-basis: 100%;
+           text-align: center;
+           
+           .service-booking-btn{
+               padding-top: 10px;
+           }
         }
         
         .service-price__heading{
