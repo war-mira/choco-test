@@ -96,7 +96,7 @@ class ServiceController extends Controller
             if (is_null($exist)) {
                 $service_group = new ServiceGroup();
                 $service_group->name = $key;
-                $service->active = 1;
+                $service_group->active = 1;
                 $service_group->save();
             } else {
                 $service_group = $exist;
