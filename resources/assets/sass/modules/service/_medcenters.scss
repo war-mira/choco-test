@@ -1,7 +1,10 @@
 .pages--service__medcenters {
 
     .entity-line__main{
+      @media (min-width: 768px) {
         margin-left: 70px;
+      }
+
 
         .entity-line__about-text{
             margin-top: 20px;
