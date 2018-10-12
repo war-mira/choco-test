@@ -773,6 +773,7 @@ $(document).ready(function() {
                     $('#user_email').removeClass('has-warning');
                     $('#user_name').removeClass('has-warning');
                     $('#comment_text').removeClass('has-warning');
+                    $('.set-rating__btn').removeClass('has-warning');
                     _btn.removeClass('saving');
                     if (json.error) {
                         $('#user_email').addClass('has-warning');
@@ -798,6 +799,7 @@ $(document).ready(function() {
             $('#user_email').addClass('has-warning');
             $('#user_name').addClass('has-warning');
             $('#comment_text').addClass('has-warning');
+            $('.set-rating__btn').addClass('has-warning');
 
         }
     });
