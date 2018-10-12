@@ -44,7 +44,7 @@
                     <div class="leave-review__rate">
                         <div class="leave-review__rate-text">Оценка</div>
                         <div class="leave-review__rate-stars set-rating">
-                            <input type="hidden" name="user_rate" value="" class="set-rating__btn_highlight">
+                            <input type="text" name="user_rate" value="" class="set-rating__btn_highlight hidden-input" required>
                             <div class="set-rating__btn" data-rating="1"></div>
                             <div class="set-rating__btn" data-rating="2"></div>
                             <div class="set-rating__btn" data-rating="3"></div>

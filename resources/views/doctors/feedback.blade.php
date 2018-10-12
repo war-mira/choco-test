@@ -20,7 +20,7 @@
                     <p>Оцените данного врача</p>
                     <div class="rating">
                         <input type="radio" class="rating__input" id="rating-input-1-5" value="10" name="user_rate"
-                               checked/>
+                               required/>
                         <label for="rating-input-1-5" class="rating__star"> </label>
 
                         <input type="radio" class="rating__input" id="rating-input-1-4" value="8" name="user_rate"/>
@@ -156,6 +156,7 @@
                     .done(function (json) {
                         $('#user_name').removeClass('has-warning');
                         $('#text').removeClass('has-warning');
+                        $('.rating').removeClass('has-warning');
                         $('#feedback__modal').addClass('in').show();
                         if (json.error) {
                             $('#save_comment_mess_ok').removeClass('access').addClass('error').html('<b>' + json.error + '</b>');
@@ -176,6 +177,7 @@
                 $('#user_name').addClass('has-warning');
                 $('#user_phone').addClass('has-warning');
                 $('#text').addClass('has-warning');
+                $('.rating').addClass('has-warning');
 
             }
         });
