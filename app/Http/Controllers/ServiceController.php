@@ -17,11 +17,13 @@ class ServiceController extends Controller
         478 => 582,
     ];
 
+
     public function index()
     {
 
         $serviceGroup = ServiceGroup::with('services')
             ->active()->get();
+
         $service_count = Service::active()->count();
         $meta = [
             'title'=>'Медицинские услуги - цены в Алматы - iDoctor.kz',
