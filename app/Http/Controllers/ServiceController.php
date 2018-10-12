@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\SeoMetadataHelper;
 use App\Service;
 use App\ServiceGroup;
 use Illuminate\Http\Request;
@@ -22,9 +23,16 @@ class ServiceController extends Controller
         $serviceGroup = ServiceGroup::with('services')
             ->active()->get();
         $service_count = Service::active()->count();
+        $meta = [
+            'title'=>'Медицинские услуги - цены в Алматы - iDoctor.kz',
+            'h1'=>'Медицинские услуги в Алматы',
+            'keywords'=>'медицинские услуги, алматы, цена, стоимость, услуга, idoctor.kz',
+            'description' => 'Медицинские услуги - перечень медицинских услуг в Алматы с адресами. Стоимость услуг, запись на прием, отзывы пациентов на iDoctor.kz.'
+        ];
 
         return view('redesign.pages.service.index',[
             'serviceGroups' => $serviceGroup,
+            'meta'=>$meta,
             'service_count' => $service_count
         ]);
     }
@@ -32,7 +40,15 @@ class ServiceController extends Controller
     public function groupList($alias)
     {
         $serviceGroup = ServiceGroup::whereAlias($alias)->active()->first();
+        $meta = [
+            'title'=>$serviceGroup->name.' - цены в Алматы - iDoctor.kz',
+            'h1'=>$serviceGroup->name.' - цены в Алматы',
+            'keywords'=>$serviceGroup->name.' алматы, цена, стоимость, услуга, idoctor.kz',
+            'description' =>$serviceGroup->name.' - перечень медицинских услуг в Алматы с адресами. Стоимость услуг, запись на прием, отзывы пациентов на iDoctor.kz..
+'
+        ];
         return view('redesign.pages.service.list',[
+            'meta'=>$meta,
             'serviceGroup' => $serviceGroup,
         ]);
     }
@@ -49,7 +65,18 @@ class ServiceController extends Controller
                 'alias'=>$service->alias
             ]),301);
         }
+
+        $meta = [
+            'title'=>$service->name.' - цены в Алматы - iDoctor.kz',
+            'h1'=>$service->name.' цены в Алматы',
+            'keywords'=>$service->name.' алматы, цена, стоимость, услуга, idoctor.kz',
+            'description' =>$service->name.' - Список медцентров в Алматы с адресами,
+            где можно сделать '.$service->name.'. Стоимость услуги, запись на прием, отзывы пациентов на iDoctor.kz.
+'
+        ];
+
         return view('redesign.pages.service.medcenters',[
+            'meta'=>$meta,
             'service' => $service,
         ]);
     }
