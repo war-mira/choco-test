@@ -3045,6 +3045,12 @@ textarea:-moz-placeholder {
 .set-rating__btn {
   cursor: pointer;
   display: inline-block; }
+.set-rating__btn.has-warning{
+  color: red;
+}
+.set-rating__btn_highlight.hidden-input{
+  display: none;
+}
 .set-rating__btn:after {
   content: '\f006';
   font: normal normal normal 14px/1 FontAwesome;
