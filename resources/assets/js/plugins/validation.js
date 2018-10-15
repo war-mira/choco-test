@@ -17,6 +17,7 @@ $("#ask-question__form-send").click(function () {
                 else if (json.id) {
                     $('#doctor_mess_ok').removeClass('error').addClass('access').html('<b>Спасибо за вопрос! Когда врач ответит, мы Вам обязательно сообщим.</b>');
                     $('#doctor_mess_ok').show();
+                    form.hide();
                     form[0].reset();
                 }
                 $('#form_loader').addClass('hide');

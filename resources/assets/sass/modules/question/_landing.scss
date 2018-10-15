@@ -1,0 +1,103 @@
+$font-regular: "ProximaNova-Regular", sans-serif;
+$blue: #00A8FF;
+$white: #ffffff;
+
+.pages {
+  &--question-landing {
+      background-color: $blue;
+      overflow: hidden;
+      padding-bottom: 20px;
+      
+      .container{
+          
+          .index-intro__container{
+              .index-intro__heading{
+                  margin: 80px 0;
+                  @media(max-width: 768px){
+                      margin: 40px 0 28px;
+                  }
+              }
+              .landing-intro__heading{
+                  margin: 80px 0 28px;
+                  
+                  
+                  h1{
+                    font-size: 36px;
+                    width: 520px;
+                    margin: auto;
+                  }
+                  @media(max-width: 768px){
+                      margin: 40px 0 28px;
+                      
+                      h1{
+                         width: 100%; 
+                         text-align: left;
+                      }
+                  }
+              }
+              .question_landing_form-block{
+                  width: 100%;
+                  max-width: 520px;
+                  margin: auto;
+                  
+                  .landing-info{
+                      
+                      p{
+                        color: $white;
+                        text-align: center;
+                        margin-bottom: 28px;
+
+                        @media(max-width: 768px){
+                            text-align: left;
+                        }
+                      }
+                      
+                  }
+                  .question--landing_form{
+                      background-color: #F3F3F3;
+                      border-radius: 10px;
+                      padding: 30px 20px;
+                      
+                      #user-gender label{
+                          margin-right: 130px;
+                          @media(max-width: 768px){
+                            margin-right: 50px;
+                        }
+                      }
+                      #ask-question-text{
+                          margin-top: 12px;
+                      }
+                      #ask-question__form-send{
+                          margin-top: 24px;
+                      }
+                      #doctor_mess_ok{
+                          text-align: center;
+                      }
+                  }
+              }
+              .index-intro__stats{
+                  
+                  .index-intro__stat-item{
+                      margin: 20px 30px;
+                      
+                      .index-intro__stat-text{
+                          font-size: 16px;
+                      }
+                  }
+              }
+              
+              .footer-contacts__appointment{
+                  text-align: center;
+                  
+                  .btn{
+                        font-size: 20px;
+                        @media(max-width: 768px){
+                            background: #fff;
+                            color: #000;
+                        }
+                  }
+              }
+          }
+        } 
+    }
+}
