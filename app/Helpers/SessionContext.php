@@ -20,7 +20,9 @@ class SessionContext
     {
         $city_id = self::cityId();
         
-        return City::find($city_id);
+        return \Cache::tags(['cities'])->remember('city_by-id-'.$city_id,120,function() use ($city_id){
+            return  City::find($city_id);
+        });
     }
 
     public static function cityId()

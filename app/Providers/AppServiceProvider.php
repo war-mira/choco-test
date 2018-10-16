@@ -13,10 +13,12 @@ use App\Observers\DoctorObserver;
 use App\Observers\MedcenterObserver;
 use App\Observers\OrderObserver;
 use App\Observers\OrdersObserver;
+use App\Observers\QuestionObserver;
 use App\Observers\ServiceGroupObserver;
 use App\Observers\ServiceObserver;
 use App\Observers\SkillObserver;
 use App\Order;
+use App\Question;
 use App\Service;
 use App\ServiceGroup;
 use App\Skill;
@@ -40,6 +42,7 @@ class AppServiceProvider extends ServiceProvider
         Skill::observe(SkillObserver::class);
         ServiceGroup::observe(ServiceGroupObserver::class);
         Service::observe(ServiceObserver::class);
+        Question::observe(QuestionObserver::class);
 
         //Resources
         BootstrapTableResource::withoutWrapping();

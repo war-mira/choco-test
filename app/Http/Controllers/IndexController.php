@@ -24,18 +24,13 @@ class IndexController extends Controller
     {
 
 
-        if (Cache::has('index:skills'))
-            $stats = Cache::get('index:stats');
-        else {
-            $stats = [
+        $stats = Cache::remember('index:stats',120, function() {
+            return  [
                 'doctors_count' => Doctor::localPublic()->count(),
                 'orders_count' => Order::whereIn('status', [1, 2])->count(),
                 'comments_count' => Comment::count()
             ];
-
-            Cache::set('index:stats', $stats, 30);
-        }
-
+        });
 
         $social = [
             'fb' => 'https://www.facebook.com/kz.idoctor',
@@ -45,19 +40,21 @@ class IndexController extends Controller
 
 //        $topDoctors = Doctor::where('on_top', '=', 1)->where('status', '=', 1)->get();
 
-        if (Cache::has('index:topPosts'))
-            $topPosts = Cache::get('index:topPosts');
-        else {
-            $topPosts = Post::where('is_top', 1)->where('status', 1)->orderBy('created_at', 'desc')->limit(3)->get();
-            Cache::set('index:topPosts', $topPosts, 120);
-        }
+        $topPosts = Cache::tags(['questions'])->remember('index:topPosts',120, function(){
+            return Post::where('is_top', 1)->where('status', 1)->orderBy('created_at', 'desc')->limit(3)->get();
+        });
 
 
-        $answered_questions = \App\Question::wherehas('answers')->count();
-        $questions = \App\Question::take(4)
-            ->orderBy('created_at', 'desc')
-            ->whereHas('answers')
-            ->get();
+
+        $answered_questions = Cache::tags(['questions'])->remember('IndexController_answered_questions',120,function(){
+            return  \App\Question::wherehas('answers')->count();
+        });
+        $questions = Cache::tags(['questions'])->remember('IndexController_home-questions',120,function(){
+            return \App\Question::take(4)
+                ->orderBy('created_at', 'desc')
+                ->whereHas('answers')
+                ->get();
+        });
 
 
         //Специальности по количесвам врачей
@@ -75,21 +72,19 @@ class IndexController extends Controller
         });
 
 
-        if (Cache::has('index:districts'))
-            $districts = Cache::get('index:districts');
-        else {
-            $districts = District::all();
-            Cache::set('index:districts', $topPosts, 120);
-        }
+        $districts =  Cache::remember('index:districts',120, function(){
+            return District::all();
+        });
 
 
         //Комментарии
         $topPromotions = collect([]);
-
-        $pageSeo = PageSeo::query()
-            ->where('class', 'Home')
-            ->where('action', 'index')
-            ->first();
+        $pageSeo = Cache::remember('IndexController_home-pageSeo',120,function(){
+            return  PageSeo::query()
+                ->where('class', 'Home')
+                ->where('action', 'index')
+                ->first();
+        });
         $meta = SeoMetadataHelper::getMeta($pageSeo, SessionContext::city());
 
         return view('redesign.index')->with(
