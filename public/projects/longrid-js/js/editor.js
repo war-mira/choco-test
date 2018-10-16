@@ -525,18 +525,22 @@ var ImageElement = function (_AbstractElement3) {
     }, {
         key: 'initImageUpload',
         value: function initImageUpload() {
+            var _self = this;
             this.dropzone = new Dropzone(this.instance.querySelector('.image__placeholder .preview'), {
                 url: "/ajax/image/upload",
                 addRemoveLinks: true,
                 maxFilesize: 10,
                 maxFiles: 1,
+                success: function success(file, response) {
+                    _self.image = response.src;
+                },
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 }
             });
             /**
              *
-             $('.add-image').fileupload({
+              $('.add-image').fileupload({
                 dataType: 'json',
                 start: function (e) {
                     console.log('init');
@@ -1045,12 +1049,12 @@ var GridColumn = function () {
                 }
                 this.row.setWidth(-this.getWidth());
                 //Save Old Sorting
-                var oldSort = GridHelper.uniqueArray(this.row.sortable.toArray());
+                //let oldSort = GridHelper.uniqueArray(this.row.sortable.toArray());
 
                 var emptyColumn = this.row.addColumn(this.getWidth());
                 this.instance.parentNode.replaceChild(emptyColumn.instance, this.instance);
                 //Fix this.row.columns ordering
-                this.orderRowColumns(emptyColumn, oldSort, this.id, emptyColumn.id);
+                //this.orderRowColumns(emptyColumn, oldSort,this.id,emptyColumn.id);
             } else {
                 this.instance.remove();
             }

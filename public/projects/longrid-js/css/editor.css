@@ -2821,6 +2821,10 @@ body {
   display: none;
 }
 
+.grid__column--action[data-action="decreaseWidth"], .grid__column--action[data-action="increaseWidth"] {
+  display: none;
+}
+
 .grid__item[data-type="image"] .grid__item--control {
   padding-top: 8px;
 }

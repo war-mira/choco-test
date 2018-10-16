@@ -239,12 +239,12 @@ class GridColumn {
             }
             this.row.setWidth(-this.getWidth());
             //Save Old Sorting
-            let oldSort = GridHelper.uniqueArray(this.row.sortable.toArray());
+            //let oldSort = GridHelper.uniqueArray(this.row.sortable.toArray());
 
             let emptyColumn = this.row.addColumn(this.getWidth());
             this.instance.parentNode.replaceChild(emptyColumn.instance, this.instance);
             //Fix this.row.columns ordering
-            this.orderRowColumns(emptyColumn, oldSort,this.id,emptyColumn.id);
+            //this.orderRowColumns(emptyColumn, oldSort,this.id,emptyColumn.id);
         } else {
             this.instance.remove();
         }

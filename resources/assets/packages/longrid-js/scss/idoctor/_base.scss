@@ -5,6 +5,11 @@
         display: none;
       }
     }
+    &--action{
+      &[data-action="decreaseWidth"],&[data-action="increaseWidth"]{
+        display:none;
+      }
+    }
   }
   &__item{
 

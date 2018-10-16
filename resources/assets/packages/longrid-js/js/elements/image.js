@@ -78,11 +78,15 @@ class ImageElement extends AbstractElement {
     }
 
     initImageUpload() {
+        let _self = this;
         this.dropzone = new Dropzone(this.instance.querySelector('.image__placeholder .preview'), {
             url: "/ajax/image/upload",
             addRemoveLinks:true,
             maxFilesize: 10,
             maxFiles: 1,
+            success:function(file, response){
+                _self.image = response.src;
+            },
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             }
