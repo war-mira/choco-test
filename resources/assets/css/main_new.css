@@ -2616,6 +2616,11 @@ img {
   display: block; }
 .entity-about__tab-item_active:after {
   display: block; }
+.entity-about__tab-comments{
+    color: #00A8FF;
+    font-family: "ProximaNova-Semibold", sans-serif;
+    font-size: 18px;
+}
 .entity-about__tab-name {
   color: #00A8FF;
   font-family: "ProximaNova-Semibold", sans-serif;
@@ -2624,7 +2629,9 @@ img {
   color: #939393;
   font-size: 10px;
   vertical-align: top; }
-
+.fb-comments{
+    margin-bottom: 20px;
+}
 span.entity-about__tab-item {
   cursor: default; }
 

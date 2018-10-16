@@ -223,12 +223,15 @@
 
             <a href="#" data-tab="tab-2" class="entity-about__tab-item entity-about__tab-item_active">
                 <h2 class="entity-about__tab-name">Отзывы<span
-                            class="entity-about__tab-count">{{$doctor->publicComments()->count()}}</span>
+                    class="entity-about__tab-count">{{$doctor->publicComments()->count()}}</span>
                 </h2>
             </a>
             {{--<a href="#" data-tab="tab-3" class="entity-about__tab-item">--}}
             {{--<h2 class="entity-about__tab-name">Акции и скидки</h2>--}}
             {{--</a>--}}
+            <a href="#" data-tab="tab-4" class="entity-about__tab-item">
+                <h2 class="entity-about__tab-comments">Комментарии</h2>
+            </a>
         </div>
 
         <div class="entity-about__content entity-content">
@@ -317,6 +320,14 @@
             <div id="tab-3" class="entity-about-article">
                 <div class="entity-content__main">
 
+                </div>
+                <div class="entity-content__aside">
+                    @component('elements.side-banner',['position' => App\Banner::POSITION_EXT_C['id']])@endcomponent
+                </div>
+            </div>
+            <div id="tab-4" class="entity-about-article">
+                <div class="entity-content__main">
+                    <div class="fb-comments" data-href="" data-numposts="5"></div>
                 </div>
                 <div class="entity-content__aside">
                     @component('elements.side-banner',['position' => App\Banner::POSITION_EXT_C['id']])@endcomponent
