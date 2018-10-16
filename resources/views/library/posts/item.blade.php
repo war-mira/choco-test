@@ -21,5 +21,6 @@
                 @include('library.partials.content.aside')
             </div>
         </div>
+        <div class="fb-comments" data-href="" data-numposts="5"></div>
     </div>
 @endsection

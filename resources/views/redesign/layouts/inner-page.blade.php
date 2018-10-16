@@ -2,6 +2,7 @@
 
 <body>
 @include('partials.gtm-additionally')
+@include('partials.facebook')
 <div class="main-wrap" id="app">
 
     @include('redesign.partials.header')

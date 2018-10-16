@@ -93,3 +93,6 @@
 @endif
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
+<meta property="fb:admins" content="100002070522265"/>
+<meta property="fb:admins" content="1698412699"/>
+<meta property="fb:admins" content="1644649851"/>
