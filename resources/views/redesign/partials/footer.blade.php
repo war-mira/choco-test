@@ -90,7 +90,10 @@
     </div>
     <div class="make_order_fixed">
         <div class="footer-contacts__appointment">
-            <a href="#quick-order-modal" rel="modal-link" class="btn">Записаться на прием</a>
+            <a href="#question__modal" rel="modal-link" class="btn" onclick="ga('send', 'event', {
+                eventCategory: 'ask-doctor-mobile_btn',
+                eventAction: 'click'
+            });">Задать вопрос врачу</a>
         </div>
     </div>
 </footer>
