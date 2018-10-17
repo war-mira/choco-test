@@ -9,6 +9,7 @@
                 <div class="section-heading__text">Блог</div>
             </div>
             @foreach($posts as $post)
+            <a href="{{ route('post', [$post->alias])}}" style="height: 100%;">
                 <div class="blog-item blog-list__list-item toning"
                      style="background-image: url({{ URL::asset($post->cover_image)}});">
                     <div class="blog-item__name">{{$post->title}}</div>
@@ -23,6 +24,7 @@
                         </div>
                     </div>
                 </div>
+                </a>
             @endforeach
         </div>
     </div>
