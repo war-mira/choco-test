@@ -225,6 +225,7 @@ Route::get('/load', 'ExcelController@loadDoctors')->name('load.doctors');
 Route::get('/load-skills', 'ExcelController@loadSkills')->name('load.skills');
 Route::get('/add-phones', 'ExcelController@addPhones')->name('load.phones');
 
+Route::get('/clients-sms', 'SmsController@sendToClients')->name('sms.clients');
 
 // Telegram doctors bot
 Route::group(['as' => 'telegrambot.', 'prefix' => 'telegrambot'], function () {
