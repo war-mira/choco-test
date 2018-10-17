@@ -1,1 +1,1 @@
-git pull && php artisan config:cache && yarn prod
+git pull && yarn prod
