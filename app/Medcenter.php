@@ -91,6 +91,7 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
         'rate',
         'money_balans',
         'price',
+        'website',
         'map',
         'city_id',
         'content',
@@ -182,6 +183,10 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
         return $height;
     }
 
+    public function getWebsiteLink()
+    {
+        return e($this->website);
+    }
     public function publicComments()
     {
         return $this->comments()->where('comments.status', 1);
