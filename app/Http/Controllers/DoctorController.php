@@ -34,7 +34,7 @@ class DoctorController extends Controller
         $this->clicksCount($request);
 
         if ($city->id !== $doctor->city->id) {
-           // return redirect()->route('doctor.item', ['doctor' => $doctor->alias], 301);
+            // return redirect()->route('doctor.item', ['doctor' => $doctor->alias], 301);
         }
         $districts = District::all();
         $meta = SeoMetadataHelper::getMeta($doctor, $city);
@@ -48,7 +48,7 @@ class DoctorController extends Controller
 
         return view('doctors.item')
             ->with('meta', $meta)
-            ->with('districts',$districts)
+            ->with('districts', $districts)
             ->with('near', $near_docs)
             ->with('doctor', $doctor);
     }
@@ -56,7 +56,7 @@ class DoctorController extends Controller
     public function itemOld(City $city, Doctor $doctor)
     {
         if ($city->id !== $doctor->city->id) {
-           // return redirect()->route('doctor.item', ['doctor' => $doctor->alias], 301);
+            // return redirect()->route('doctor.item', ['doctor' => $doctor->alias], 301);
         }
         $districts = District::all();
         $meta = SeoMetadataHelper::getMeta($doctor, $city);
@@ -66,12 +66,13 @@ class DoctorController extends Controller
 
         return view('doctors.item_old')
             ->with('meta', $meta)
-            ->with('districts',$districts)
+            ->with('districts', $districts)
             ->with('near', $near_docs)
             ->with('doctor', $doctor);
     }
 
-    public function commonList(Skill $skill = null, Request $request){
+    public function commonList(Skill $skill = null, Request $request)
+    {
         return $this->list(City::find(1), $skill, $request);
     }
 
@@ -89,18 +90,18 @@ class DoctorController extends Controller
     {
         $skill = Skill::where('alias', $input)->first();
 
-        $search = new \App\Helpers\DoctorSearcher([$input,$modifier]);
+        $search = new \App\Helpers\DoctorSearcher([$input, $modifier]);
 
         $search->lex()->context()->registerLog();
 
         $searcher = $search->filter->toArray();
 
         $doctors = Doctor::where('doctors.status', 1)
-                         ->filter($filters->add([
-                             'city'=>$city->id,
+            ->filter($filters->add([
+                'city' => $city->id,
 //                             'skills'=>$skill->alias??null
-                         ])
-                         ->add($searcher));
+            ])
+                ->add($searcher));
 
 
         $query = request()->only([
@@ -117,61 +118,53 @@ class DoctorController extends Controller
         $filter = $query;
 
         // remove ?page=1 from url
-        if (isset($filter['page']) && $filter['page'] == 1){
+        if (isset($filter['page']) && $filter['page'] == 1) {
             return redirect()->route(((empty($city->id) || $city->id == 1) ? "all.doctors.list" : 'doctors.list'), array_merge(['city' => $city->alias ?? null, 'skill' => $skill->alias ?? null], array_except($filter, 'page')));
         }
 
         // TODO: cache
         $doctorsTop = null;
-        $comercial = Doctor::where('comercial',1)->orderBy('firstname','asc');
+        $comercial = Doctor::where('comercial', 1)->orderBy('firstname', 'asc');
         $districts = District::all();
 
 
         // TODO: multiple skills
-        if(isset($skill))
-        {
+        if (isset($skill)) {
             $top_doctors = FormatHelper::arrayToString($skill->top_doctors);
-            if($top_doctors && $skill->top_doctors){
-                $doctorsTop = Doctor::whereIn('id', $skill->top_doctors)->orderByRaw('FIELD(id,'.$top_doctors.')')->where('status', 1)->get();
+            if ($top_doctors && $skill->top_doctors) {
+                $doctorsTop = Doctor::whereIn('id', $skill->top_doctors)->orderByRaw('FIELD(id,' . $top_doctors . ')')->where('status', 1)->get();
             }
         }
 
 
-        if(isset($doctorsTop))
+        if (isset($doctorsTop))
             $doctors = $doctors->whereNotIn('id', $skill->top_doctors);
 
 
-        if(isset($comercial))
+        if (isset($comercial))
             $doctors = $doctors->whereNotIn('id', $comercial->pluck('id')->toArray());
-
 
 
         $this->applyDoctorsFilter($doctors, $filter);
 
 
-
-
-
-
-
-
         /**
          *
-        $doctors = \Cache::tags(['doctors'])->remember(CacheHelper::getKeyFromUrl(),24*7*60,function() use($doctors,$query){
-           return  $doctors->paginate(10)->appends($query);
-        });
+         * $doctors = \Cache::tags(['doctors'])->remember(CacheHelper::getKeyFromUrl(),24*7*60,function() use($doctors,$query){
+         * return  $doctors->paginate(10)->appends($query);
+         * });
          */
-        $doctors =  $doctors->paginate(10)->appends($query);
-        if($doctors->lastPage() < ($filter['page'] ?? 1))
+        $doctors = $doctors->paginate(10)->appends($query);
+        if ($doctors->lastPage() < ($filter['page'] ?? 1))
             return redirect($doctors->url(1));
 
-        if(!isset($skill))
-            $pageSeo = PageSeo::where(['class'=>'Doctor','action'=>'list'])->first();
+        if (!isset($skill))
+            $pageSeo = PageSeo::where(['class' => 'Doctor', 'action' => 'list'])->first();
 
-        $meta = SeoMetadataHelper::getMeta($skill??$pageSeo, $city);
+        $meta = SeoMetadataHelper::getMeta($skill ?? $pageSeo, $city);
 
         return view('search.page',
-            compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage', 'skill', 'comercial','districts'));
+            compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage', 'skill', 'comercial', 'districts'));
 
     }
 
@@ -200,17 +193,17 @@ class DoctorController extends Controller
                 $skillsQuery->where('skills.id', $skill->id);
             });
             $top_doctors = FormatHelper::arrayToString($skill->top_doctors);
-            if($top_doctors && $skill->top_doctors){
-                $doctorsTop = Doctor::whereIn('id', $skill->top_doctors)->orderByRaw('FIELD(id,'.$top_doctors.')')->where('status', 1)->get();
+            if ($top_doctors && $skill->top_doctors) {
+                $doctorsTop = Doctor::whereIn('id', $skill->top_doctors)->orderByRaw('FIELD(id,' . $top_doctors . ')')->where('status', 1)->get();
             }
 
         }
 
-        if(isset($doctorsTop)){
+        if (isset($doctorsTop)) {
             $doctors = $doctors->whereNotIn('id', $skill->top_doctors);
         }
 
-        if (isset($filter['page']) && $filter['page'] == 1){
+        if (isset($filter['page']) && $filter['page'] == 1) {
             return redirect()->route(((empty($city->id) || $city->id == 1) ? "all.doctors.list" : 'doctors.list'), array_merge(['city' => $city->alias ?? null, 'skill' => $skill->alias ?? null], array_except($filter, 'page')));
         }
 
@@ -221,7 +214,7 @@ class DoctorController extends Controller
             $doctors = $doctors->where('doctors.city_id', $city->id);
             $actionKey = $city->id != 1 ? 'list' : 'list_all';
             $pageSeo = PageSeo::query()
-                ->where('class','Doctor')
+                ->where('class', 'Doctor')
                 ->where('action', $actionKey)
                 ->first();
             $meta = SeoMetadataHelper::getMeta($pageSeo, $city);
@@ -232,7 +225,7 @@ class DoctorController extends Controller
         }
         $doctors = $doctors->paginate(10)->appends($query);
 
-        if ($doctors->lastPage() < ($filter['page'] ?? 1)){
+        if ($doctors->lastPage() < ($filter['page'] ?? 1)) {
             return redirect($doctors->url(1));
         }
 
@@ -258,34 +251,28 @@ class DoctorController extends Controller
 
     public function get_dt(Request $request)
     {
-        if($request->ajax())
-        {
+        if ($request->ajax()) {
             $day = $request->get('day');
 
-            if($day == 'tomorrow')
-            {
-                $day = date('D',strtotime('+1 days'));
+            if ($day == 'tomorrow') {
+                $day = date('D', strtotime('+1 days'));
             }
 
             $array = [
-              'Mon'=> 1,'Tue'=>2,'Wed'=>3,'Thu'=>4,'Fri'=>5,'Sat'=>6,'Sun'=>7
+                'Mon' => 1, 'Tue' => 2, 'Wed' => 3, 'Thu' => 4, 'Fri' => 5, 'Sat' => 6, 'Sun' => 7
             ];
 
-            foreach ($array as $u=>$k)
-            {
-                if($day == $u)
-                {
+            foreach ($array as $u => $k) {
+                if ($day == $u) {
                     $day = $k;
                 }
             }
 
-            if($day == 'today')
-            {
+            if ($day == 'today') {
                 $day = date('n');
             }
 
-            if($day == 'custom')
-            {
+            if ($day == 'custom') {
                 $day = $request->get('day');
             }
 
@@ -294,10 +281,10 @@ class DoctorController extends Controller
                 ->first();
 
             return response()->json([
-               'times'=>view('doctors.times')->with([
-                   'doctor'=>$doc,
-                   'day'=>$day
-               ])->render()
+                'times' => view('doctors.times')->with([
+                    'doctor' => $doc,
+                    'day'    => $day
+                ])->render()
             ]);
         }
     }
@@ -323,11 +310,11 @@ class DoctorController extends Controller
         if (isset($filter['ambulatory']) && $filter['ambulatory']) {
             $doctors->where('ambulatory', $filter['ambulatory']);
         }
-        if(isset($filter['district']) && $filter['district']){
+        if (isset($filter['district']) && $filter['district']) {
             $doctors->leftJoin('medcenters', 'medcenters.id', '=', 'doctors.med_id')->where('medcenters.district_id', $filter['district']);
         }
         if (isset($filter['q']) && $filter['q'] && trim($filter['q']) != '')
-            SearchHelper::searchByFields($doctors, ['firstname', 'lastname','patronymic', 'skills' => ['name']], $filter['q']);
+            SearchHelper::searchByFields($doctors, ['firstname', 'lastname', 'patronymic', 'skills' => ['name']], $filter['q']);
 
         $order = [$filter['sort'] ?? 'rate', $filter['order'] ?? 'desc'];
         if ($order[0] == 'rate')
@@ -424,12 +411,10 @@ class DoctorController extends Controller
     {
         $doto = [];
 
-        if($request->ajax())
-        {
+        if ($request->ajax()) {
             $type = $request->post('ttype');
-            if($type == 'all')
-            {
-                if($request->post('query') && !empty($request->post('query'))) {
+            if ($type == 'all') {
+                if ($request->post('query') && !empty($request->post('query'))) {
                     $data = Doctor::where('firstname', 'like', $request->post('query'))
                         ->Orwhere('lastname', 'like', $request->post('query'))
                         ->Orwhere('patronymic', 'like', $request->post('query'))
@@ -437,16 +422,14 @@ class DoctorController extends Controller
 
                     foreach ($data as $o => $dt) {
                         $doto[$o] = [
-                            'text' => $dt->lastname . ' ' . $dt->firstname . ' ' . $dt->patronymic,
-                            'img' => ($dt->avatar ? $dt->avatar : URL::asset('images/no-userpic.gif')),
-                            'spec' => $dt->getMainSkillAttribute()->name,
-                            'value' => $dt->id,
+                            'text'     => $dt->lastname . ' ' . $dt->firstname . ' ' . $dt->patronymic,
+                            'img'      => ($dt->avatar ? $dt->avatar : URL::asset('images/no-userpic.gif')),
+                            'spec'     => $dt->getMainSkillAttribute()->name,
+                            'value'    => $dt->id,
                             'optgroup' => 'Врачи'
                         ];
                     }
-                }
-                else
-                {/*
+                } else {/*
                     $data = Doctor::where('')
                         ->orderBy('firstname', 'ASC')->get();
 
@@ -460,18 +443,15 @@ class DoctorController extends Controller
                         ];
                     }*/
                 }
-            }
-            else
-            {
-                $data = Skill::select('*')->orderBy('name','ASC')->get();
+            } else {
+                $data = Skill::select('*')->orderBy('name', 'ASC')->get();
 
-                foreach ($data as $o=>$dt)
-                {
+                foreach ($data as $o => $dt) {
                     $doto[$o] = [
-                        'text'=>$dt->name,
-                        'count' => $dt->doctors()->count(),
-                        'value'=>$dt->alias,
-                        'optgroup'=>'Специализации'
+                        'text'     => $dt->name,
+                        'count'    => $dt->doctors()->count(),
+                        'value'    => $dt->alias,
+                        'optgroup' => 'Специализации'
                     ];
                 }
             }
@@ -481,7 +461,7 @@ class DoctorController extends Controller
 
     public function loadComs($city, $doctor, Request $request)
     {
-        if($request->ajax()) {
+        if ($request->ajax()) {
             $offset = $request->query('offset', 0);
             $limit = $request->query('limit', 10);
             $comments = $doctor->comments()
@@ -495,15 +475,15 @@ class DoctorController extends Controller
 
             $comment = $comments;
 
-            $view = view('model.comments.ajax-list',['comments'=>$comments])->render();
+            $view = view('model.comments.ajax-list', ['comments' => $comments])->render();
             $offset = $offset + $limit;
             $left = $total - $offset;
             $left = $left < 0 ? 0 : $left;
             //return compact('view', 'offset', 'left');
             return response()->json([
                 'offset' => $offset,
-                'left' => $left,
-                'view' => $view
+                'left'   => $left,
+                'view'   => $view
             ]);
         }
     }
@@ -517,37 +497,34 @@ class DoctorController extends Controller
             ->orderByDesc('updated_at');
         $total = $comments->count();
 
-        if($offset == 0)
-        {
+        if ($offset == 0) {
             $comments = $comments//->offset($offset)
-                //->limit($limit)
-                ->get();
-        }
-        else{
+            //->limit($limit)
+            ->get();
+        } else {
             $comments = $comments->offset($offset)
                 ->limit($limit)
                 ->get();
         }
 
         $comment = $comments;
-        $view = view('model.comments.ajax-list',['comments'=>$comments])->render();
+        $view = view('model.comments.ajax-list', ['comments' => $comments])->render();
         $offset = $offset + $limit;
         $left = $total - $offset;
         $left = $left < 0 ? 0 : $left;
-        if($offset == 0)
-        {
+        if ($offset == 0) {
             return response()->json([
                 'offset' => $offset,
-                'left' => $left,
-                'view' => $view
+                'left'   => $left,
+                'view'   => $view
             ]);
-        }
-        else{
+        } else {
             return compact('view', 'offset', 'left');
         }
     }
 
-    public function feedback(City $city, Doctor $doctor){
+    public function feedback(City $city, Doctor $doctor)
+    {
         if (isset($doctor->city) && $city->id !== $doctor->city->id) {
             return redirect()->route('doctor.item', ['doctor' => $doctor->alias]);
         }
@@ -555,51 +532,69 @@ class DoctorController extends Controller
         $type = Comment::typeQR;
         $source = Comment::VISITED_SENDING;
 
-        if(request()->has('source')){
+        if (request()->has('source')) {
             $source = request()->get('source');
-            if($source == Comment::MASS_SENDING)
+            if ($source == Comment::MASS_SENDING)
                 $type = Comment::typeCommon;
         }
 
         $hash = Cookie::get('uid');
         $meta = SeoMetadataHelper::getMeta($doctor, $city);
 
-        if(request()->has('uid'))
-            if(request()->get('uid') == $hash)
+        if (request()->has('uid'))
+            if (request()->get('uid') == $hash)
                 return view('doctors.feedback', compact('city', 'doctor', 'meta', 'type'));
             else
-               return redirect()->route('doctor.item',['city'=>$city->alias,'doctor'=>$doctor->alias]);
+                return redirect()->route('doctor.item', ['city' => $city->alias, 'doctor' => $doctor->alias]);
 
         $hash = md5(str_random());
         Cookie::queue('uid', $hash, 120);
 
-        return redirect()->route('doctor.feedback',['city'=>$city->alias,'doctor'=>$doctor->alias,'uid'=>$hash, 'source' => $source]);
+        return redirect()->route('doctor.feedback',
+            [
+                'city' => $city->alias,
+                'doctor' => $doctor->alias,
+                'uid' => $hash,
+                'source' => $source,
+                'utm_source' => request()->get('utm_source'),
+                'utm_medium' => request()->get('utm_medium'),
+                'utm_campaign' => request()->get('utm_campaign')
+            ]);
     }
 
-    public function massFeedback(City $city, Doctor $doctor){
-        return redirect()->route('doctor.feedback',['city'=>$city->alias,'doctor'=>$doctor->alias, 'source' => Comment::MASS_SENDING ]);
+    public function massFeedback(City $city, Doctor $doctor)
+    {
+        return redirect()->route('doctor.feedback',
+            [
+                'city'   => $city->alias,
+                'doctor' => $doctor->alias,
+                'source' => Comment::MASS_SENDING,
+                'utm_source' => request()->get('utm_source'),
+                'utm_medium' => request()->get('utm_medium'),
+                'utm_campaign' => request()->get('utm_campaign')
+            ]);
     }
 
     public function clicksCount(Request $request)
     {
         $doctor = Doctor::find($request->id);
-        if($doctor){
+        if ($doctor) {
             $date = new \DateTime();
             $data = [];
-            if($request->data)
+            if ($request->data)
                 $data['phone'] = $request->data;
 
             $data['date'] = $date->format('Y-m-d');
             $data['token'] = $request->session()->token();
 
-            switch ($request->model){
+            switch ($request->model) {
                 default:
 
                 case Doctor::FIND_DOCTOR_COUNT:
 
-                    Redis::ZREM('doctor:'.$doctor->id.':clicks', '{"date":"'.$data['date'].'","token":"'.$data['token'].'"}');
+                    Redis::ZREM('doctor:' . $doctor->id . ':clicks', '{"date":"' . $data['date'] . '","token":"' . $data['token'] . '"}');
 
-                    Redis::zadd('doctor:'.$doctor->id.':clicks', $date->getTimestamp(), json_encode($data));
+                    Redis::zadd('doctor:' . $doctor->id . ':clicks', $date->getTimestamp(), json_encode($data));
 
                     $data = '<strong>Спасибо!</strong> Ваша заявка была принята. Мы обязательно свяжемся с вами!';
 
@@ -607,7 +602,7 @@ class DoctorController extends Controller
 
                 case Doctor::SHOW_PHONE_COUNT:
 
-                    Redis::zadd('doctor:'.$doctor->id.':'.Doctor::SHOW_PHONE_COUNT.'', $date->getTimestamp(), json_encode($data));
+                    Redis::zadd('doctor:' . $doctor->id . ':' . Doctor::SHOW_PHONE_COUNT . '', $date->getTimestamp(), json_encode($data));
 
                     $phone = substr($doctor->showing_phone, 4);
 
@@ -616,13 +611,13 @@ class DoctorController extends Controller
 
                 case Doctor::VIEW_PROFILE_COUNT:
 
-                    Redis::zadd('doctor:'.$doctor->id.':'.Doctor::VIEW_PROFILE_COUNT.'', $date->getTimestamp(), json_encode($data));
+                    Redis::zadd('doctor:' . $doctor->id . ':' . Doctor::VIEW_PROFILE_COUNT . '', $date->getTimestamp(), json_encode($data));
 
                     break;
             }
 
 
-            if($data)
+            if ($data)
                 return $data;
         }
     }
@@ -631,30 +626,28 @@ class DoctorController extends Controller
     protected function getFilterforSeo($skill, $flag)
     {
         $rules = [
-            'v-voskresenye'=>[''],
-            'bez-vyhodnykh'=>['work_days'=>'all'],
+            'v-voskresenye' => [''],
+            'bez-vyhodnykh' => ['work_days' => 'all'],
             'kruglosutochno',
 
-            'na-dom'=>['ambulatory'=>1],
-            'na-domu'=>['ambulatory'=>1],
-            'dlya-detey'=>['child'=>1],
-            'dlya-vzroslykh'=>['child'=>0],
+            'na-dom'         => ['ambulatory' => 1],
+            'na-domu'        => ['ambulatory' => 1],
+            'dlya-detey'     => ['child' => 1],
+            'dlya-vzroslykh' => ['child' => 0],
             'na-kazakhskom',
 
 
-            'auezovskiy-rayon'=>['district'=>3],
-            'turksibkiy-rayon'=>['district'=>8],
-            'almalinkiy-rayon'=>['district'=>2],
-            'almalinskiy-rayon'=>['district'=>2],
-            'bostandykskiy-rayon'=>['district'=>4],
-            'medeuskiy-rayon'=>['district'=>6],
+            'auezovskiy-rayon'    => ['district' => 3],
+            'turksibkiy-rayon'    => ['district' => 8],
+            'almalinkiy-rayon'    => ['district' => 2],
+            'almalinskiy-rayon'   => ['district' => 2],
+            'bostandykskiy-rayon' => ['district' => 4],
+            'medeuskiy-rayon'     => ['district' => 6],
             'levyi-bereg',
 
             'zaikanie',
             'posle-insulta',
             'dlya-autista',
-
-
 
 
             'akusher-ginekolog-reproduktolog',
