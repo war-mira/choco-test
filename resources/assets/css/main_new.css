@@ -3598,6 +3598,12 @@ span.tab-line__item {
 .doc-personal-data__data-item {
   margin: 10px 4.16667%; }
 
+.account-data-item__link #copyLink{
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
 .doc-personal-data__edit-data {
   margin-top: 15px;
   text-align: center; }
@@ -3609,6 +3615,9 @@ span.tab-line__item {
 
 .account-data-item__val {
   font-size: 16px; }
+.account-data-item__val#linkToFeedback{
+  padding-bottom: 10px;
+}
 .account-data-item__val + .account-data-item__val {
   margin-top: 10px; }
 

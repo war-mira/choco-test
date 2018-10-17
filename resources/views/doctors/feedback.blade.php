@@ -15,7 +15,7 @@
                 {{ csrf_field() }}
                 <input type="hidden" id="owner_type" value="Doctor">
                 <input type="hidden" id="owner_id" value="{{$doctor->id}}">
-                <input type="hidden" id="type" value="{{ \App\Comment::typeQR }}">
+                <input type="hidden" id="type" value="{{ $type }}">
                 <div class="feedback__rating">
                     <p>Оцените данного врача</p>
                     <div class="rating">
