@@ -63,6 +63,7 @@ Route::group(['prefix' => '{city}'], function () {
     Route::group(['prefix' => 'doctor', 'as' => 'doctor.'], function () {
         Route::get('/{doctor}', 'DoctorController@item')->name('item');
         Route::get('/{doctor}/feedback', 'DoctorController@feedback')->name('feedback');
+        Route::get('/{doctor}/mass-feedback', 'DoctorController@massFeedback')->name('mass-feedback');
         Route::get('/{doctor}/comments', 'DoctorController@loadComments')->name('comments');
     });
     Route::group(['prefix' => 'doctor_old', 'as' => 'doctor_old.'], function () {

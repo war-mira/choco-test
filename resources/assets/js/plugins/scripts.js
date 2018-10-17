@@ -836,6 +836,11 @@ $(document).ready(function() {
         }
     });
 
+    $('#copyLink').click(function () {
+        let element = $('#linkToFeedback');
+        copyToClipboard(element);
+    });
+
     /**
      * END
      */
@@ -972,6 +977,15 @@ function updateAllMessageForms(){
         ClassicEditor.instances[instance].updateElement();
     }
 }
+
+function copyToClipboard(element) {
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val($(element).text()).select();
+    document.execCommand("copy");
+    $temp.remove();
+}
+
 
 //returns element markup
 jQuery.fn.outerHTML = function() {

@@ -64,6 +64,8 @@ class Comment extends Model
 
     const typeCommon = 0;
     const typeQR = 1;
+    const MASS_SENDING = 'mass';
+    const VISITED_SENDING = 'visited';
 
     const notRecommended = 0;
     const recommended = 1;

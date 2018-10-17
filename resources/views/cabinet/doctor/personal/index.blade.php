@@ -19,6 +19,13 @@
                         <div class="doc-personal-data__data-lines">
                             <div class="doc-personal-data__data-line">
                                 <div class="doc-personal-data__data-item account-data-item">
+                                    <div class="account-data-item__name">Ссылка для отзывов</div>
+                                    <div class="account-data-item__val" id="linkToFeedback">{{ route('doctor.mass-feedback', ['doctor' => $doctor->alias]) }}</div>
+                                    <div class="account-data-item__link"><a id="copyLink">Скопировать ссылку</a></div>
+                                </div>
+                            </div>
+                            <div class="doc-personal-data__data-line">
+                                <div class="doc-personal-data__data-item account-data-item">
                                     <div class="account-data-item__name">ФИО</div>
                                     <div class="account-data-item__val">{{ $doctor->firstname }} {{ $doctor->lastname }} {{ $doctor->middlename }}</div>
                                 </div>

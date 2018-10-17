@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\City;
+use App\Comment;
 use App\Doctor;
 use App\Helpers\CacheHelper;
 use App\Helpers\FormatHelper;
@@ -547,26 +548,36 @@ class DoctorController extends Controller
     }
 
     public function feedback(City $city, Doctor $doctor){
-        if ($city->id !== $doctor->city->id) {
+        if (isset($doctor->city) && $city->id !== $doctor->city->id) {
             return redirect()->route('doctor.item', ['doctor' => $doctor->alias]);
         }
 
+        $type = Comment::typeQR;
+        $source = Comment::VISITED_SENDING;
+
+        if(request()->has('source')){
+            $source = request()->get('source');
+            if($source == Comment::MASS_SENDING)
+                $type = Comment::typeCommon;
+        }
 
         $hash = Cookie::get('uid');
         $meta = SeoMetadataHelper::getMeta($doctor, $city);
 
         if(request()->has('uid'))
             if(request()->get('uid') == $hash)
-                return view('doctors.feedback', compact('city', 'doctor', 'meta'));
+                return view('doctors.feedback', compact('city', 'doctor', 'meta', 'type'));
             else
                return redirect()->route('doctor.item',['city'=>$city->alias,'doctor'=>$doctor->alias]);
-
 
         $hash = md5(str_random());
         Cookie::queue('uid', $hash, 120);
 
+        return redirect()->route('doctor.feedback',['city'=>$city->alias,'doctor'=>$doctor->alias,'uid'=>$hash, 'source' => $source]);
+    }
 
-        return redirect()->route('doctor.feedback',['city'=>$city->alias,'doctor'=>$doctor->alias,'uid'=>$hash]);
+    public function massFeedback(City $city, Doctor $doctor){
+        return redirect()->route('doctor.feedback',['city'=>$city->alias,'doctor'=>$doctor->alias, 'source' => Comment::MASS_SENDING ]);
     }
 
     public function clicksCount(Request $request)
