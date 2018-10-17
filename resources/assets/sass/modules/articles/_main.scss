@@ -1,0 +1,39 @@
+.section-article__article-header{
+    
+    .article__title{
+        
+        h1{
+            font-weight: bold;
+            font-size: 36px;
+            line-height: 44px;
+        }
+    }
+    
+}
+.section-article__content{
+    padding-top: 40px;
+    
+    .article-content__main{
+        
+        p{
+            margin-bottom: 20px;
+            margin-left: 10px;
+        }
+        blockquote{
+            margin-left: 0!important;
+            position: relative;
+            
+            &:before{
+                content: "\2022";
+                position: absolute;
+                color: #00A8FF;
+                top: -4px;
+                font-size: 25px;
+            }
+            p{
+                margin-left: 20px;
+                margin-bottom: 10px;
+            }
+        }
+    }
+}
