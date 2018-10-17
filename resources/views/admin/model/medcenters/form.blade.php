@@ -89,35 +89,35 @@
                     @endcomponent
                 @endcomponent
                 @component('components.bootstrap.row')
-                        @component('components.bootstrap.column',['class'=>'col-md-3'])
-                            @component('components.form.text')
-                                @slot('field','email')
-                                @slot('value',$seed['email'] ?? null)
-                                @slot('label','Email')
-                            @endcomponent
+                    @component('components.bootstrap.column',['class'=>'col-md-3'])
+                        @component('components.form.text')
+                            @slot('field','email')
+                            @slot('value',$seed['email'] ?? null)
+                            @slot('label','Email')
                         @endcomponent
-                        @component('components.bootstrap.column',['class'=>'col-md-3'])
+                    @endcomponent
+                    @component('components.bootstrap.column',['class'=>'col-md-3'])
                         @component('components.form.number')
                             @slot('field','money_balans')
                             @slot('value',$seed['money_balans'] ?? null)
                             @slot('label','Баланс')
                         @endcomponent
                     @endcomponent
-                        @component('components.bootstrap.column',['class'=>'col-md-3'])
+                    @component('components.bootstrap.column',['class'=>'col-md-3'])
                         @component('components.form.text')
                             @slot('field','map')
                             @slot('value',$seed['map'] ?? null)
                             @slot('label','Адрес')
                         @endcomponent
                     @endcomponent
-                            @component('components.bootstrap.column',['class'=>'col-md-3'])
-                                @component('components.form.text')
-                                    @slot('field','sms_address')
-                                    @slot('value',$seed['sms_address'] ?? null)
-                                    @slot('label','SMS адрес')
-                                @endcomponent
-                            @endcomponent
-                        @component('components.bootstrap.column',['class'=>'col-md-3'])
+                    @component('components.bootstrap.column',['class'=>'col-md-3'])
+                        @component('components.form.text')
+                            @slot('field','sms_address')
+                            @slot('value',$seed['sms_address'] ?? null)
+                            @slot('label','SMS адрес')
+                        @endcomponent
+                    @endcomponent
+                    @component('components.bootstrap.column',['class'=>'col-md-3'])
                         @component('components.form.select2.single')
                             @slot('field','city_id')
                             @slot('value',$seed['city_id'] ?? null)
@@ -129,7 +129,7 @@
                             @slot('search',true)
                         @endcomponent
                     @endcomponent
-                        @component('components.bootstrap.column',['class'=>'col-md-3'])
+                    @component('components.bootstrap.column',['class'=>'col-md-3'])
                         @component('components.form.select2.single')
                             @slot('field','district_id')
                             @slot('value',$seed['district_id'] ?? null)
@@ -141,6 +141,13 @@
                             @slot('search',true)
                         @endcomponent
                     @endcomponent
+                        @component('components.bootstrap.column',['class'=>'col-md-6'])
+                            @component('components.form.text')
+                                @slot('field','website')
+                                @slot('value',$seed['website'] ?? null)
+                                @slot('label','Сайт')
+                            @endcomponent
+                        @endcomponent
                 @endcomponent
             @endcomponent
             @component('components.bootstrap.column',['class'=>'col-md-3'])
@@ -181,20 +188,20 @@
                                 @endcomponent
                             @endcomponent
                             @component('components.bootstrap.row')
-                                    @component('components.bootstrap.column',['class'=>'col-md-12'])
-                                        @component('components.form.text')
-                                            @slot('field','meta_h1')
+                                @component('components.bootstrap.column',['class'=>'col-md-12'])
+                                    @component('components.form.text')
+                                        @slot('field','meta_h1')
                                         @slot('value',$seed['meta_h1'] ?? "")
-                                            @slot('label','SEO H1')
-                                        @endcomponent
+                                        @slot('label','SEO H1')
                                     @endcomponent
-                                    @component('components.bootstrap.column',['class'=>'col-md-12'])
-                                        @component('components.form.text')
-                                            @slot('field','meta_title')
+                                @endcomponent
+                                @component('components.bootstrap.column',['class'=>'col-md-12'])
+                                    @component('components.form.text')
+                                        @slot('field','meta_title')
                                         @slot('value',$seed['meta_title'] ?? "")
-                                            @slot('label','SEO заголовок')
-                                        @endcomponent
+                                        @slot('label','SEO заголовок')
                                     @endcomponent
+                                @endcomponent
                                 @component('components.bootstrap.column',['class'=>'col-md-6'])
                                     @component('components.form.summernote.textarea')
                                         @slot('field','meta_key')
