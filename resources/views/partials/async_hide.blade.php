@@ -13,5 +13,5 @@
             h.end = null
         }, c);
         h.timeout = c;
-    })(window, document.documentElement, 'async-hide', 'dataLayer', 2000,
+    })(window, document.documentElement, 'async-hide', 'dataLayer', 300,
         {'GTM-KWZ3H68': true});</script>
