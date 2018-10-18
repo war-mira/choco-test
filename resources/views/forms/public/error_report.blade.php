@@ -2,6 +2,8 @@
     <form id="error-report__form">
         <div class="error-report__heading">Сообщение об ошибке</div><br/>
         <div class="error-report__input-line">
+            <input type="hidden" name="current_url" value="{{url()->current()}}">
+
             <div>
                 <input type="email" class="form-control " placeholder="*Email" name="error_email" required>
             </div>
@@ -11,7 +13,7 @@
                 </div>
             </div>
             <div class="error-report__submit">
-                <button type="submit" class="btn btn_theme_usual" onclick="sendAboutError();">Отправить</button>
+                <button class="btn btn_theme_usual" onclick="sendAboutError(event);">Отправить</button>
             </div>
         </div>
     </form>

@@ -1,4 +1,5 @@
-function sendAboutError(){
+function sendAboutError(e){
+    e.preventDefault();
     var errorForm = $('form#error-report__form');
     var data = errorForm.serialize();
     $.post('/error-inform', data)
