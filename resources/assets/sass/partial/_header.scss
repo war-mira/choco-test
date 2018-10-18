@@ -38,6 +38,12 @@
 }
 
 @media (max-width: 768px) {
+  .additional_number{
+    font-size: 14px;
+  }
+  .header_phone_block{
+    padding: 11px 0;
+  }
   .main-header {
     background-image: url(/img/pattern.png);
     background-color: $light_blue;
