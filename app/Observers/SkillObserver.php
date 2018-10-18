@@ -21,6 +21,19 @@ class SkillObserver
     {
         $this->makeSlug($skill);
         $skill->save();
+        $this->invalidateCache();
+    }
+    public function updated(Skill $skill)
+    {
+        $this->invalidateCache();
+    }
+    public function saved(Skill $skill)
+    {
+        $this->invalidateCache();
+    }
+    public function invalidateCache()
+    {
+        \Cache::tags(['skills'])->flush();
     }
 
 }

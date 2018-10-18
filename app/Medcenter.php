@@ -110,6 +110,7 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
         'email',
         'seo_text',
         'partner',
+        'geo_id',
         'mond',
         'tues',
         'wedn',
@@ -212,10 +213,14 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
         return $this->name . " (" . $this->status_name . ")";
     }
 
+    public function getCoordinates()
+    {
+        return \Cache::remember('medcenter_coordinates-'.$this->id,120,function(){
+            return $this->coordinates;
+        });
+    }
     public function getCoordinatesAttribute()
     {
-        $latitude = $this->geo_lat;
-        $longitude = $this->geo_lon;
 
 //        if(isset($latitude) && $latitude!= 0 && isset($longitude) && $longitude!=0){
 //            return  $latitude.','.$longitude;
@@ -223,20 +228,38 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
             $city = City::find($this->city_id);
             $address = $city->name.' '.$this->sms_address;
 
-        $response = \Cache::remember('coordinates_'.$this->id,60*24*7,function() use($address){
-            $client = new \GuzzleHttp\Client();
-            $response = $client->get('https://geocode-maps.yandex.ru/1.x/?format=json&geocode='.$address.'');
-            $response = $response->getBody();
-            $response = $response->getContents();
-            $response = json_decode($response, true);
-            return $response;
-        });
-        $firstObject = array_shift($response['response']['GeoObjectCollection']['featureMember']);
-        $points = $firstObject['GeoObject']['Point']['pos'];
-        $points = str_replace(' ', ', ', $points);
-        $points = implode(', ', array_reverse(explode(', ', $points)));;
+            if(is_null($this->geo)){
+                $address_hash = md5($address);
+                $geo  = Geolocation::whereHash($address_hash)->first();
+                if(is_null($geo)){
+                    $points = Geolocation::getFromYandexMapApi($address,$address_hash);
+                    $longitude = $points[0];
+                    $latitude = $points[1];
+                    $geo = new Geolocation();
+                    $geo->address = $address;
+                    $geo->hash = $address_hash;
+                    $geo->longitude = $longitude;
+                    $geo->latitude = $latitude;
+                    $geo->save();
+                    $this->update(['geo_id'=>$geo->id]);
 
-        return $points;
+                    return  implode(', ', array_reverse($points));
+                } else{
+
+                    $this->update(['geo_id'=>$geo->id]);
+                    return $geo->getPointsForMap();
+                }
+
+            } else{
+
+                return $this->geo->getPointsForMap();
+            }
+
+    }
+
+    public function geo()
+    {
+        return $this->hasOne(Geolocation::class,'id','geo_id');
     }
 
     public function orders()
@@ -370,4 +393,6 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
     {
         return empty($this->seo_text) ? '' : $this->seo_text;
     }
+
+
 }

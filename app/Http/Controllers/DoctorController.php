@@ -16,6 +16,7 @@ use App\Medcenter;
 use App\PageSeo;
 use App\Skill;
 use App\Models\District;
+use Cache;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
@@ -32,15 +33,23 @@ class DoctorController extends Controller
         $request->query->add(['model' => 'view-profile', 'id' => $doctor->id]);
 
         $this->clicksCount($request);
+        /**
+         *
 
         if ($city->id !== $doctor->city->id) {
             // return redirect()->route('doctor.item', ['doctor' => $doctor->alias], 301);
         }
-        $districts = District::all();
-        $meta = SeoMetadataHelper::getMeta($doctor, $city);
+        */
 
-        $near_docs = Doctor::query()->where('doctors.status', 1)
-            ->where('doctors.city_id', $doctor->city->id)->whereNotNull('avatar')->limit(9)->get();
+        $districts  =  Cache::remember('index:districts',120, function(){
+            return District::all();
+        });
+        $meta = SeoMetadataHelper::getMeta($doctor, $city);
+        $city_id = $doctor->city->id;
+        $near_docs = Cache::tags(['doctors'])->remember('near_doctors-city_id-'.$city_id,120,function() use ($city_id){
+            return Doctor::query()->where('doctors.status', 1)
+                ->where('doctors.city_id', $city_id)->whereNotNull('avatar')->limit(9)->get();
+        });
 //        foreach ($near_docs as $doc){
 //            dd($doc);
 //        }
@@ -542,7 +551,7 @@ class DoctorController extends Controller
 
     public function clicksCount(Request $request)
     {
-        $doctor = Doctor::find($request->id);
+        $doctor = Doctor::getInstance($request->id);
         if ($doctor) {
             $date = new \DateTime();
             $data = [];
