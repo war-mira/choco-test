@@ -42,7 +42,10 @@ class Illness extends Model implements ISeoMetadata
       return $illnesses;
     }
 
-
+    public function scopeActive($query)
+    {
+        return $query->where('active',1);
+    }
 
     public function getMetaTitle()
     {
