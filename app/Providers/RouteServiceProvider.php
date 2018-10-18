@@ -6,6 +6,7 @@ use App\City;
 use App\Doctor;
 use App\Http\Middleware\RedirectManager;
 use App\Medcenter;
+use App\Models\Library\Illness;
 use App\Skill;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,9 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::bind('medcenter', function ($value) {
             return Medcenter::where('alias', $value)->where('status', 1)->first() ?? abort(404);
+        });
+        Route::bind('illness', function ($value) {
+            return Illness::where('alias', $value)->active()->first() ?? abort(404);
         });
     }
 
