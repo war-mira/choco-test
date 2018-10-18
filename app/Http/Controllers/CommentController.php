@@ -113,8 +113,13 @@ class CommentController extends Controller
         }
         $existCommentsCount = $this->existCommentsFromPhone($data['user_email'], $data['owner_id']);
 
+        if($data['owner_id'] == Comment::modelDoctor)
+            $message = 'Вы уже оставляли отзыв этому врачу.';
+        else
+            $message = 'Вы уже оставляли отзыв этому медцентру.';
+
         if($existCommentsCount > 0)
-            return ['error' => 'Вы уже оставляли отзыв этому врачу.'];
+            return ['error' => $message];
 
         if($authorize > 0)
             $data['type'] = Comment::typeQR;
@@ -266,5 +271,48 @@ class CommentController extends Controller
 
     }
 
+    public function loadComments($modelName, $id, Request $request)
+    {
+        $offset = $request->query('offset', 0);
+        $limit = $request->query('limit', 10);
+        $model = app("App\\".$modelName);
+        $model = $model->find($id);
+
+        $comments = $model->comments()
+            ->where('comments.status', 1)
+            ->orderByDesc('updated_at');
+        $total = $comments->count();
+
+        if ($offset == 0) {
+            $comments = $comments//->offset($offset)
+            //->limit($limit)
+            ->get();
+        } else {
+            $comments = $comments->offset($offset)
+                ->limit($limit)
+                ->get();
+        }
+
+        if($modelName == 'Medcenter')
+            $about = 'о медцентре';
+        else
+            $about = 'о враче';
+
+        $comment = $comments;
+        $view = view('model.comments.ajax-list', ['comments' => $comments, 'about' => $about])->render();
+        $offset = $offset + $limit;
+        $left = $total - $offset;
+        $left = $left < 0 ? 0 : $left;
+        if ($offset == 0) {
+            return response()->json([
+                'offset' => $offset,
+                'left'   => $left,
+                'view'   => $view,
+                'about' => $about
+            ]);
+        } else {
+            return compact('view', 'offset', 'left', 'about');
+        }
+    }
 
 }

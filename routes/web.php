@@ -64,7 +64,6 @@ Route::group(['prefix' => '{city}'], function () {
         Route::get('/{doctor}', 'DoctorController@item')->name('item');
         Route::get('/{doctor}/feedback', 'DoctorController@feedback')->name('feedback');
         Route::get('/{doctor}/mass-feedback', 'DoctorController@massFeedback')->name('mass-feedback');
-        Route::get('/{doctor}/comments', 'DoctorController@loadComments')->name('comments');
     });
     Route::group(['prefix' => 'doctor_old', 'as' => 'doctor_old.'], function () {
         Route::get('/{doctor}', 'DoctorController@itemOld')->name('item_old');
@@ -77,11 +76,13 @@ Route::group(['prefix' => '{city}'], function () {
     Route::group(['prefix' => 'medcenter', 'as' => 'medcenter.'], function () {
         Route::get('/{medcenter}', 'MedcenterController@item')->name('item');
         Route::get('/{medcenter}/doctors', 'MedcenterController@loadDoctors')->name('doctors');
-        Route::get('/{medcenter}/comments', 'MedcenterController@loadComments')->name('comments');
         Route::get('/{medcenter}/feedback', 'MedcenterController@feedback')->name('feedback');
     });
 
 });
+
+Route::get('/{modelName}/{id}/comments', 'CommentController@loadComments')->name('load-comments');
+
 
 Route::group(['prefix' => 'library', 'as' => 'library.'], function () {
     Route::get('/', 'LibraryController@index')->name('index');

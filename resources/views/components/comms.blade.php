@@ -10,14 +10,14 @@
         <!-- begin reviews -->
         <div class="reviews">
             @foreach($comments->slice(0,$visible) as $comment)
-                @component('model.comm',compact('comment'))
+                @component('model.comm',compact('comment', 'about'))
                 @endcomponent
             @endforeach
-            <div id="hidden-comments">
+            <div class="hidden-comments">
             </div>
             @if(count($comments) > 5)
                 <div class="entity-reviews__more">
-                    <a href="#" id="loadMoreComments" data-url="{{$url ?? ""}}" class="btn btn_theme_more">Все отзывы</a>
+                    <a href="#" data-url="{{$url ?? ""}}" class="btn btn_theme_more loadMoreComments">Все отзывы</a>
                 </div>
             @endif
         </div>

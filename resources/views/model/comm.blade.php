@@ -31,7 +31,7 @@
 
                 <div class="entity-review__bot-line">
                     <div class="entity-review__who">От: <b>{{$comment['user_name']}}</b></div>
-                    <div class="entity-review__about-who">Отзыв о враче: <a href="{{asset($comment->owner->href)}}">{{$comment->owner->name}}</a></div>
+                    <div class="entity-review__about-who">Отзыв {{$about}}: <a href="{{asset($comment->owner->href)}}">{{$comment->owner->name}}</a></div>
                 </div>
             </div>
 

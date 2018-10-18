@@ -280,7 +280,8 @@
                                 @component('components.comms',['comments'=>$doctor->publicComments()->get(),'owner'=>['type'=>'Doctor','id'=>$doctor->id]])
                                     @slot('title') @endslot
                                     @slot('visible',5)
-                                    @slot('url',route('doctor.comments',['doctor'=>$doctor->alias]))
+                                    @slot('about','о враче')
+                                    @slot('url',route('load-comments',['modelName' => 'Doctor','id'=>$doctor->id]))
                                 @endcomponent
                             </div>
 
@@ -290,7 +291,8 @@
                                 @component('components.comms',['comments'=>$doctor->publicComments()->where('user_rate','>',5)->get(),'owner'=>['type'=>'Doctor','id'=>$doctor->id]])
                                     @slot('title') @endslot
                                     @slot('visible',5)
-                                    @slot('url',route('doctor.comments',['doctor'=>$doctor->alias]))
+                                    @slot('about','о враче')
+                                    @slot('url',route('load-comments',['modelName' => 'Doctor','id'=>$doctor->id]))
                                 @endcomponent
                             </div>
                         </div>
@@ -299,7 +301,8 @@
                                 @component('components.comms',['comments'=>$doctor->publicComments()->where('user_rate','<=',5)->get(),'owner'=>['type'=>'Doctor','id'=>$doctor->id]])
                                     @slot('title') @endslot
                                     @slot('visible',5)
-                                    @slot('url',route('doctor.comments',['doctor'=>$doctor->alias]))
+                                    @slot('about','о враче')
+                                    @slot('url',route('load-comments',['modelName' => 'Doctor','id'=>$doctor->id]))
                                 @endcomponent
                             </div>
                         </div>
@@ -311,7 +314,8 @@
                         @component('components.comform',['comments'=>$doctor->publicComments()->get(),'owner'=>['type'=>'Doctor','id'=>$doctor->id]])
                             @slot('title') @endslot
                             @slot('visible',5)
-                            @slot('url',route('doctor.comments',['doctor'=>$doctor->alias]))
+                            @slot('about','о враче')
+                            @slot('url',route('load-comments',['modelName' => 'Doctor','id'=>$doctor->id]))
                         @endcomponent
                     </div>
                 </div>

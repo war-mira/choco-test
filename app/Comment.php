@@ -67,6 +67,9 @@ class Comment extends Model
     const MASS_SENDING = 'mass';
     const VISITED_SENDING = 'visited';
 
+    const modelDoctor = 'Doctor';
+    const madelMedcenter = 'Medcenter';
+
     const notRecommended = 0;
     const recommended = 1;
 

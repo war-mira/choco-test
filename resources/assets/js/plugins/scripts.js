@@ -718,12 +718,12 @@ $(document).ready(function() {
 
     var offset = 5;
     var limit = 10;
-    $('#loadMoreComments').click(function (e) {
+    $('.loadMoreComments').on('click', function (e) {
         e.preventDefault();
         var source = $(this).data('url');
+        let appendBlock = $(this).parents('.entity-reviews__list').find('.hidden-comments');
         $.get(source, {offset: offset}, function (comments){
-            //console.log(comments);
-            $('#hidden-comments').append($(comments.view));
+            appendBlock.append($(comments.view));
             offset = comments.offset;
             //console.log(comments.left);
             $('#commentsLeftText').text(comments.left);

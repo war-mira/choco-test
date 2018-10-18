@@ -151,9 +151,9 @@
                 <a href="#" data-tab="tab-2" class="entity-about__tab-item">
                     <span class="entity-about__tab-name">Врачи клиники</span>
                 </a>
-                {{--<a href="#" data-tab="tab-3" class="entity-about__tab-item">--}}
-                {{--<span class="entity-about__tab-name">Услуги и цены</span>--}}
-                {{--</a>--}}
+                <a href="#" data-tab="tab-3" class="entity-about__tab-item">
+                <span class="entity-about__tab-name">Отзывы</span>
+                </a>
                 {{--<a href="#" data-tab="tab-3" class="entity-about__tab-item">--}}
                 {{--<span class="entity-about__tab-name">Акции и скидки</span>--}}
                 {{--</a>--}}
@@ -261,33 +261,74 @@
                 </div>
                 <div id="tab-3" class="entity-about-article">
                     <div class="entity-content__main">
-                        <div class="">
-                            <div class="entity-about-article__service-list entity-service-list">
-                                @foreach($skils->get() as $tr)
-                                    <div class="entity-service-list__item service-item">
-                                        <div class="service-item__name">
-                                            <div class="service-item__name-text">{{$tr['name']}}</div>
-                                            <div class="service-item__name-descr">(органы мошонки, предстательная
-                                                железа, мочевой пузырь)
-                                            </div>
-                                        </div>
-                                        <div class="service-item__price">
-                                            <div class="service-item__price-val">5000 тг</div>
-                                            <a href="#" class="service-item__price-book btn btn_theme_usual">Записаться
-                                                онлайн</a>
-                                        </div>
-                                    </div>
-                                @endforeach
+
+                        <div class="entity-reviews">
+                            <div class="entity-reviews__top-line">
+                                <div class="entity-reviews__filter filter-line tabz">
+                                    <a href="#" data-tab="taz1"
+                                       class="filter-line__item btn btn_theme_radio filter-btn btn_theme_radio_active">
+                                        Все отзывы
+                                    </a>
+                                    <a href="#" data-tab="taz2" class="filter-line__item btn btn_theme_radio filter-btn">
+                                        <span>Положительные</span>
+                                        <span class="filter-btn__count">{{\App\Comment::where('owner_id', $medcenter->id)->where('user_rate','>',5)->where('owner_type', 'Medcenter')->where('status', 1)->count()}}</span>
+                                    </a>
+
+                                    <a data-tab="taz3" href="#"
+                                       class="filter-line__item btn btn_theme_radio filter-btn"><span>Отрицательные<span
+                                                    class="filter-btn__count">
+                                            {{\App\Comment::where('owner_id', $medcenter->id)->where('user_rate','<=',5)->where('owner_type', 'Medcenter')->where('status', 1)->count()}}
+                                        </span></span></a>
+                                </div>
+                                {{--<div class="entity-reviews__about">--}}
+                                {{--<div class="entity-reviews__about-text">У нас только реальные отзывы</div>--}}
+                                {{--<a href="#" class="entity-reviews__about-link">Как формируется рейтинг?</a>--}}
+                                {{--</div>--}}
+                            </div>
+                            <div id="taz1" class="entity-about-articl current">
+                                <div class="entity-reviews__list">
+                                    @component('components.comms',['comments'=>$medcenter->publicComments()->get(),'owner'=>['type'=>'Medcenter','id'=>$medcenter->id]])
+                                        @slot('title') @endslot
+                                        @slot('visible',5)
+                                        @slot('about', 'о медцентре')
+                                        @slot('url',route('load-comments',['modelName' => 'Medcenter','id'=>$medcenter->id]))
+                                    @endcomponent
+                                </div>
+
+                            </div>
+                            <div id="taz2" class="entity-about-articl">
+                                <div class="entity-reviews__list">
+                                    @component('components.comms',['comments'=>$medcenter->publicComments()->where('user_rate','>',5)->get(),'owner'=>['type'=>'Medcenter','id'=>$medcenter->id]])
+                                        @slot('title') @endslot
+                                        @slot('visible',5)
+                                        @slot('about', 'о медцентре')
+                                        @slot('url',route('load-comments',['modelName' => 'Medcenter','id'=>$medcenter->id]))
+                                    @endcomponent
+                                </div>
+                            </div>
+                            <div id="taz3" class="entity-about-articl">
+                                <div class="entity-reviews__list">
+                                    @component('components.comms',['comments'=>$medcenter->publicComments()->where('user_rate','<=',5)->get(),'owner'=>['type'=>'Medcenter','id'=>$medcenter->id]])
+                                        @slot('title') @endslot
+                                        @slot('visible',5)
+                                        @slot('about', 'о медцентре')
+                                        @slot('url',route('load-comments',['modelName' => 'Medcenter','id'=>$medcenter->id]))
+                                    @endcomponent
+                                </div>
                             </div>
                         </div>
+
                     </div>
                     <div class="entity-content__aside">
                         <div class="entity-content__banner">
-                            <img src="{{asset('img/banner.jpg')}}" alt="">
+                            @component('components.comform',['comments'=>$medcenter->publicComments()->get(),'owner'=>['type'=>'Medcenter','id'=>$medcenter->id]])
+                                @slot('title') @endslot
+                                @slot('visible',5)
+                                @slot('about', 'о медцентре')
+                                @slot('url',route('load-comments',['modelName' => 'Medcenter','id'=>$medcenter->id]))
+                            @endcomponent
                         </div>
                     </div>
-                </div>
-                <div id="tab-4" class="entity-about-article">
                 </div>
             </div>
         </div>
