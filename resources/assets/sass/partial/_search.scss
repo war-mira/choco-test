@@ -1,0 +1,25 @@
+.search-bar-container {
+  &.search-bar-default {
+    background-color: #fff;
+    padding: 0;
+    .search-bar__item_search{
+      flex:1 auto;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .search-bar-container {
+    &.search-bar-default {
+      input {
+        padding: 10px 0;
+      }
+      .search-bar {
+        padding: 10px 0;
+      }
+      .input-block__icon {
+        display: none;
+      }
+    }
+  }
+}

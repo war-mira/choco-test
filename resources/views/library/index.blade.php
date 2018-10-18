@@ -1,6 +1,9 @@
 @extends('redesign.layouts.inner-page')
 @include('library.partials.navigation')
 @section('breadcrumbs')
+    @include('search.default',[
+        'route'=>route('library.search') 
+    ])
     {{ Breadcrumbs::render('library.index') }}
 @endsection
 @section('content')
