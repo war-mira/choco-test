@@ -78,6 +78,7 @@ Route::group(['prefix' => '{city}'], function () {
         Route::get('/{medcenter}', 'MedcenterController@item')->name('item');
         Route::get('/{medcenter}/doctors', 'MedcenterController@loadDoctors')->name('doctors');
         Route::get('/{medcenter}/comments', 'MedcenterController@loadComments')->name('comments');
+        Route::get('/{medcenter}/feedback', 'MedcenterController@feedback')->name('feedback');
     });
 
 });

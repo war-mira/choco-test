@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\City;
+use App\Comment;
 use App\Doctor;
 use App\Helpers\SearchHelper;
 use App\Http\Requests\Doctor\DoctorFilters;
@@ -13,6 +14,7 @@ use App\Model\ServiceItem;
 use App\PageSeo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cookie;
 
 class MedcenterController extends Controller
 {
@@ -245,5 +247,37 @@ class MedcenterController extends Controller
         $left = $total - $offset;
         $left = $left < 0 ? 0 : $left;
         return compact('view', 'offset', 'left');
+    }
+
+    public function feedback(City $city, Medcenter $medcenter)
+    {
+        $type = Comment::typeQR;
+        $source = Comment::VISITED_SENDING;
+
+        if (request()->has('source')) {
+            $source = request()->get('source');
+            if ($source == Comment::MASS_SENDING)
+                $type = Comment::typeCommon;
+        }
+
+        $hash = Cookie::get('uid');
+        $meta = SeoMetadataHelper::getMeta($medcenter, $city);
+
+        if (request()->has('uid'))
+            if (request()->get('uid') == $hash)
+                return view('medcenters.feedback', compact('city', 'medcenter', 'meta', 'type'));
+            else
+                return redirect()->route('medcenter.item', ['city' => $city->alias, 'medcenter' => $medcenter->alias]);
+
+        $hash = md5(str_random());
+        Cookie::queue('uid', $hash, 120);
+
+        return redirect()->route('medcenter.feedback',
+            [
+                'city' => $city->alias,
+                'medcenter' => $medcenter->alias,
+                'uid' => $hash,
+                'source' => $source
+            ]);
     }
 }
