@@ -110,17 +110,21 @@
                             </a>
                             @if(!empty($doctor->price))
                                 <div class="appointment-book-small__price">
-                                    <div class="appointment-book-small__price-text">Стоимость приёма от:</div>
+                                    <div class="appointment-book-small__price-text">Стоимость приёма:</div>
                                     <div class="appointment-book-small__price-val">от {{$doctor->price}} тг</div>
+                                   
                                 </div>
                             @endif
-                            
+                             
+                        </div>
+                        <div class="profiles__desc clinic-line__brief-descr get_info_error">
+                            <a href="#error_report" class="trigger-link popup-with-form">Есть ошибка? Сообщите нам</a>
                         </div>
                     </form>
                     @endif
                 <div class="entity-line__additional appointment-book-small">
                     {{--@if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])--}}
-                    <div class="appointment-book-big__heading">Записаться на прием</div>
+                    <div class="appointment-book-big__heading">График работы</div>
                     {{--@endif--}}
                     <div class="appointment-book-small-header-block">
                         <div class="appointment-book-small__line">
@@ -337,3 +341,4 @@
     </div>
 </section>
 @include('forms.public.order_doc')
+@include('forms.public.error_report')

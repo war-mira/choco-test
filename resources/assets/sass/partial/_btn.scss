@@ -20,6 +20,20 @@
     }
   }
 }
+.btn_cancel{
+    background-color: transparent;
+    line-height: 30px;
+    border-radius: 15px;
+    border: 1px solid;
+    border-color: #B2B2B2;
+    padding: 0 12px;
+    color: #454545;
+    
+    &:hover{
+        background-color: #454545;
+        color: #ffffff;
+    }
+}
 @keyframes spin {
   0% {
     transform: rotate(0deg);

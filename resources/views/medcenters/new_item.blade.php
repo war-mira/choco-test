@@ -84,15 +84,18 @@
                                            target="_blank">{{$medcenter->getWebsiteLink()}}</a>
                                     </div>
                                 @endif
+                                <div class="clinic-line__brief-name">
+                                    @if($medcenter->price && $medcenter->price != 0)
+                                        Прием от: <span>{{$medcenter['price']}} тг.</span>
+                                    @endif
+                                </div>
+                                <div class="profiles__desc clinic-line__brief-descr get_info_error">
+                                    <a href="#error_report" class="trigger-link popup-with-form">Есть ошибка? Сообщите нам</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="entity-line__appointment-mini appointment-mini">
-                        <div class="appointment-mini__heading">
-                            @if($medcenter->price && $medcenter->price != 0)
-                                Прием от: <span>{{$medcenter['price']}} тг.</span>
-                            @endif
-                        </div>
+                    <div class="entity-line__appointment-mini">
                         {{--<div class="appointment-mini__book">--}}
                         {{--<button class="btn btn_theme_usual">Записаться онлайн</button>--}}
                         {{--</div>--}}
@@ -337,6 +340,7 @@
         <!-- end section -->
     @endif
     @include('forms.public.order_doc')
+    @include('forms.public.error_report')
 @endsection
 @push('custom.js')
     <script type="text/javascript">
