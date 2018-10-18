@@ -7,17 +7,16 @@
             </div>
             <div class="error-report__textarea-item">
                 <div class="collapse">
-                    <textarea class="form-control" id="error_text" placeholder="*Текст ошибки" required></textarea>
+                    <textarea class="form-control" id="error_text" placeholder="*Текст ошибки" name="error_text" required></textarea>
                 </div>
             </div>
             <div class="error-report__submit">
-                <button type="submit" class="btn btn_theme_usual">Отправить</button>
-                <button type="submit" class="btn btn_cancel">Отмена</button>
+                <button type="submit" class="btn btn_theme_usual" onclick="sendAboutError();">Отправить</button>
             </div>
         </div>
     </form>
 </div>
-<div id="callback_mess_ok" class="white-popup mfp-hide">
+<div id="error_mess_ok" class="white-popup mfp-hide">
     <p>
         <strong>Спасибо!</strong> за Ваше сообщение!
     </p>

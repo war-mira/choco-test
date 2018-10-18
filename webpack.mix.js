@@ -40,6 +40,7 @@ mix.js('resources/assets/js/app.js', 'public/build/js/vue_app.js')
         'resources/assets/js/plugins/pickmeup.min.js',
         'resources/assets/js/plugins/jquery.magnific-popup.min.js',
         'resources/assets/js/plugins/validation.js',
+        'resources/assets/js/plugins/form_sender.js',
         'node_modules/toastr/build/toastr.min.js',
     ], 'public/build/js/all.js')
     .babel([
@@ -51,6 +52,7 @@ mix.js('resources/assets/js/app.js', 'public/build/js/vue_app.js')
         'public/build/js/scripts.js',
         'public/build/js/vue_app.js',
         'resources/assets/js/plugins/validation.js',
+        'resources/assets/js/plugins/form_sender.js',
     ],'public/build/js/app.js')
     .options({
         processCssUrls: false,
