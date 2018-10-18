@@ -16,7 +16,11 @@ Breadcrumbs::register('library.index', function ($breadcrumbs) {
 
 Breadcrumbs::register('library.illnesses-group-articles', function ($breadcrumbs, $group) {
     $breadcrumbs->parent('library.index');
-    $breadcrumbs->push($group->name, route('library.illnesses-group-articles', $group->alias));
+    if ($group instanceof \App\Models\Library\IllnessesGroup) {
+        $breadcrumbs->push($group->name, route('library.illnesses-group-articles', $group->alias));
+    } else {
+        $breadcrumbs->push('Поиск по запросу: ' . $group);
+    }
 });
 
 Breadcrumbs::register('library.illnesses-group-article', function ($breadcrumbs, $article) {
@@ -24,9 +28,13 @@ Breadcrumbs::register('library.illnesses-group-article', function ($breadcrumbs,
     $breadcrumbs->push($article->name, route('library.illnesses-group-article', ['illnesses_group' => $article->illnessesGroup, 'article' => $article->alias]));
 });
 
-Breadcrumbs::register('illnesses.index', function ($breadcrumbs) {
+Breadcrumbs::register('illnesses.index', function ($breadcrumbs, $query = '') {
+
     $breadcrumbs->parent('home');
     $breadcrumbs->push('Справочник заболеваний', route('illnesses.index'));
+    if (!empty($query)) {
+        $breadcrumbs->push('Поиск по запросу: ' . $query);
+    }
 });
 
 Breadcrumbs::register('illness', function ($breadcrumbs, $illness) {
@@ -96,7 +104,7 @@ Breadcrumbs::register('service.list', function ($breadcrumbs, $options) {
     $parent = $options['parent'];
     $title = $options['title'];
     $breadcrumbs->parent('home');
-        $breadcrumbs->push($parent, $options['parent_url']);
+    $breadcrumbs->push($parent, $options['parent_url']);
     $breadcrumbs->push($title);
 
 });
@@ -106,10 +114,10 @@ Breadcrumbs::register('service.medcenter', function ($breadcrumbs, $options) {
     $parent = $options['parent'];
     $title = $options['title'];
     $breadcrumbs->parent('home');
-    if(is_array($parent)){
+    if (is_array($parent)) {
         $breadcrumbs->push($parent['parent'], $parent['parent_url']);
     }
-     $breadcrumbs->push($parent['title'], $parent['url']);
+    $breadcrumbs->push($parent['title'], $parent['url']);
 
     $breadcrumbs->push($title);
 

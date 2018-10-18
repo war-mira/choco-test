@@ -86,6 +86,7 @@ Route::get('/{modelName}/{id}/comments', 'CommentController@loadComments')->name
 
 Route::group(['prefix' => 'library', 'as' => 'library.'], function () {
     Route::get('/', 'LibraryController@index')->name('index');
+    Route::get('/search', 'LibraryController@searchLibrary')->name('search');
     Route::get('/{illnesses_group}', 'LibraryController@groupArticles')->name('illnesses-group-articles');
     Route::get('/{illnesses_group}/{article}', 'LibraryController@article')->name('illnesses-group-article');
 });
@@ -99,6 +100,7 @@ Route::group(['prefix' => 'service', 'as' => 'service.'], function () {
 Route::group(['prefix' => 'illnesses', 'as' => 'illnesses.'], function () {
     Route::get('/{letter?}', 'LibraryController@illnesses')->name('index');
 });
+Route::get('illness/search', 'LibraryController@searchIllness')->name('illness.search');
 Route::get('illness/{illness}', 'LibraryController@illness')->name('illness');
 
 //Drugs **********************************************
