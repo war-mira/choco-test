@@ -19,7 +19,7 @@
                 <div id="tab-1" class="entity-about-article current">
                     <div class="entity-content__main">
                         @foreach($illness->doctors as $doctor)
-                            @component('model.doctor.prof_new',['doctor'=>$doctor,'width'=>'250px','highlightSkill'=>null,'comercial'=>true])
+                            @component('model.doctor.profile-short',['doctor'=>$doctor,'width'=>'250px','highlightSkill'=>null,'comercial'=>true])
                             @endcomponent
                         @endforeach
                     </div>
