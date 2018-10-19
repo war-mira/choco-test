@@ -18,9 +18,11 @@
             <div class="entity-about__content entity-content">
                 <div id="tab-1" class="entity-about-article current">
                     <div class="entity-content__main">
-                        @foreach($illness->doctors as $doctor)
-                            @component('model.doctor.profile-short',['doctor'=>$doctor,'width'=>'250px','highlightSkill'=>null,'comercial'=>true])
-                            @endcomponent
+                            @foreach($illness->doctors as $doctor)
+                            <div class="entity-line">
+                                @component('model.doctor.prof_article',['doctor'=>$doctor,'width'=>'250px','highlightSkill'=>null,'comercial'=>true])
+                                @endcomponent
+                            </div>
                         @endforeach
                     </div>
                 </div>
