@@ -35,6 +35,11 @@ class Illness extends Model implements ISeoMetadata
         return $this->belongsToMany(Doctor::class, 'doctors_illnesses', 'illness_id', 'doctor_id');
     }
 
+    public function publisedDoctors()
+    {
+        return $this->doctors()->where('status', 1);
+    }
+
     public function scopeGetByLetter($query, $letter)
     {
       $illnesses = $query->where('active', 1)->where('name', 'like', $letter.'%');
