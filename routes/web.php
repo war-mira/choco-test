@@ -228,6 +228,7 @@ Route::get('/{city}/specializacii/{skill}', 'SkillController@showSkillDoctors')-
 
 Route::get('/load', 'ExcelController@loadDoctors')->name('load.doctors');
 Route::get('/load-skills', 'ExcelController@loadSkills')->name('load.skills');
+Route::get('/load-skills-illnesses-group', 'ExcelController@loadSkillsIllnessesGroup')->name('load.load-skills-illnesses-group');
 Route::get('/add-phones', 'ExcelController@addPhones')->name('load.phones');
 
 Route::get('/clients-sms', 'SmsController@sendToClients')->name('sms.clients');

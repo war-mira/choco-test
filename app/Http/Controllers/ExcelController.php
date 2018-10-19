@@ -110,6 +110,25 @@ class ExcelController extends Controller
         });
     }
 
+    public function loadSkillsIllnessesGroup()
+    {
+        Excel::load('files/skills.xlsx', function ($reader) {
+            $results = $reader->toArray();
+
+            foreach ($results as $rows) {
+                foreach ($rows as $row) {
+                    $existSkill = Skill::find($row[0]);
+                    if ($existSkill) {
+                        $existSkill->illnesses_group_id = $row[2];
+                        $existSkill->update();
+                    }
+                }
+            }
+
+            return 'ok';
+        });
+    }
+
     public function addPhones()
     {
         Excel::load('files/med_phones.xlsx', function ($reader) {
