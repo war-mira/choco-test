@@ -68,6 +68,12 @@ class City extends Model
         return route('doctors.list', ['city' => $this->alias]);
     }
 
+    public static function getAllActive()
+    {
+       return \Cache::tags(['cities'])->remember('active_cities_all',120,function(){
+           return City::active()->get();
+        });
+    }
     public function scopeActive($query)
     {
         return $query->where('status', self::ACTIVE);

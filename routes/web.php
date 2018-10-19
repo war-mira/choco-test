@@ -18,6 +18,7 @@ Route::get('/cabinet/user/edit', function () {
 Route::get('/', 'IndexController@home')->name('home');
 
 Route::get('resize', 'ImageController@resizeImages');
+Route::post('error-inform', 'IndexController@errorInform');
 
 Route::get('likes','IndexController@ratings')->name('rates');
 

@@ -236,6 +236,12 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         'name'
     ];
 
+    public static function getInstance($id)
+    {
+        return \Cache::tags(['doctors'])->remember('doctor_id-'.$id,120,function() use($id){
+            return Doctor::find($id);
+        });
+    }
     public function getRateAttribute()
     {
         $rate = $this->attributes['rate'];
@@ -343,7 +349,9 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
 
     public function getMainSkillAttribute()
     {
-        return $this->skills()->first();
+        return \Cache::tags(['doctors','skills'])->remember('doctor_'.$this->id.'-main_skill',120,function(){
+            return $this->skills()->first();
+        });
     }
 
     public function skills()
@@ -529,7 +537,7 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     public function getMetaTitle()
     {
         $skills_result = [];
-        $skills = $this->skills()->get();
+        $skills = $this->getSkillsList();
         foreach ($skills as $skill) {
             $skills_result[] = $skill->name;
         }
@@ -541,7 +549,7 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     public function getMetaDescription()
     {
         $skills_result = [];
-        $skills = $this->skills()->get();
+        $skills = $this->getSkillsList();
         foreach ($skills as $skill) {
             $skills_result[] = $skill->name;
         }
@@ -635,6 +643,14 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         return $this->belongsToMany(LvgDoctorCandidate::class,'lvg_doctors_candidates','doctor_id','candidate_id');
     }
 
+    public function getMedcenterCoordinates()
+    {
+        if(count($this->medcenters)){
+            return $this->medcenters->first()->getCoordinates();
+        } else{
+            return \App\Medcenter::find($this->med_id)->getCoordinates();
+        }
+    }
     public function hasLvgVotes()
     {
         if($this->lvg_votes->count() > 0){
@@ -642,5 +658,16 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         }
 
         return false;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSkillsList()
+    {
+        $skills = \Cache::tags(['doctors', 'skills'])->remember('doctor_' . $this->id . '-skills', 120, function () {
+            return $this->skills()->get();
+        });
+        return $skills;
     }
 }

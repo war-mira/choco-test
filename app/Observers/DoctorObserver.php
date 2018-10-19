@@ -25,4 +25,20 @@ class DoctorObserver
     {
         $this->makeSlug($doctor);
     }
+    public function updated(Doctor $doctor)
+    {
+        $this->invalidateCache();
+    }
+    public function created(Doctor $doctor)
+    {
+        $this->invalidateCache();
+    }
+    public function saved(Doctor $doctor)
+    {
+        $this->invalidateCache();
+    }
+    public function invalidateCache()
+    {
+        \Cache::tags(['doctors'])->flush();
+    }
 }

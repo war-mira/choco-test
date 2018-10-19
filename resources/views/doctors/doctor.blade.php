@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div class="entity-line__main">
-                <div class="entity-line__name"><h1>{{$doctor['name']}}</h1></div>
+                <div class="entity-line__name"><h1> {{$doctor['name']}}</h1></div>
                 <div class="entity-line__descr">@foreach ($doctor['skills'] as $i=>$skill)<a href="{{$skill->href}}"
                                                                                              style="text-decoration: none">{{$skill->name }}</a>
                     @if(count($doctor['skills']) > 1 && $i!=(count($doctor['skills'])-1)) / @endif  @endforeach</div>
@@ -112,16 +112,16 @@
                                 <div class="appointment-book-small__price">
                                     <div class="appointment-book-small__price-text">Стоимость приёма:</div>
                                     <div class="appointment-book-small__price-val">от {{$doctor->price}} тг</div>
-                                   
+
                                 </div>
                             @endif
-                             
+
                         </div>
                         <div class="profiles__desc clinic-line__brief-descr get_info_error">
                             <a href="#error_report" class="trigger-link popup-with-form">Есть ошибка? Сообщите нам</a>
                         </div>
                     </form>
-                    @endif
+                @endif
                 <div class="entity-line__additional appointment-book-small">
                     {{--@if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])--}}
                     <div class="appointment-book-big__heading">График работы</div>
@@ -155,7 +155,7 @@
                             {{--@endif--}}
                         </div>
                     </div>
-                    
+
                 </div>
 
             </div>
@@ -178,27 +178,20 @@
                             <div class="entity-map__address-descr">({{$doctor['address']}})</div>@endif
                     </div>
                 </div>
-                @if(count($doctor->medcenters))
-                    @php
-                        $center = $doctor->medcenters->first()->coordinates;
-                    @endphp
-                @else
-                    @php
-                        $center = \App\Medcenter::find($doctor->med_id)->coordinates;
-                    @endphp
-                @endif
                 @push('custom.js')
                     <script type="text/javascript">
                         ymaps.ready(function () {
 
                             var myMap = new ymaps.Map("entity-map", {
-                                center: [{{ $center }}],
+                                center: [{{ $doctor->getMedcenterCoordinates() }}],
                                 zoom: 15
                             });
 
-                                    @foreach($doctor->medcenters as $med)
-                            var pl = new ymaps.Placemark([{{ $med->coordinates }}]);
+                            @foreach($doctor->medcenters as $med)
+
+                            var pl = new ymaps.Placemark([{{ $med->getCoordinates() }}]);
                             myMap.geoObjects.add(pl);
+
                             @endforeach
 
                             $('.js-select-medcenter').on('change', function () {
@@ -227,7 +220,7 @@
 
             <a href="#" data-tab="tab-2" class="entity-about__tab-item entity-about__tab-item_active">
                 <h2 class="entity-about__tab-name">Отзывы<span
-                    class="entity-about__tab-count">{{$doctor->publicComments()->count()}}</span>
+                            class="entity-about__tab-count">{{$doctor->publicComments()->count()}}</span>
                 </h2>
             </a>
             {{--<a href="#" data-tab="tab-3" class="entity-about__tab-item">--}}

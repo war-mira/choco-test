@@ -32,10 +32,12 @@ class Kernel extends ConsoleKernel
             (new SmsNotificationsJob())->handle();
         })->everyMinute();
 
+        /**
+         * @deprecated
         $schedule->call(function () {
             (new GaEcommerceJob())->handle();
         })->everyMinute();
-
+        */
         $schedule->job(new SendDoctorReviewWeeklyDigest)->fridays()->at('10:00');
 
         $schedule->call(function() {

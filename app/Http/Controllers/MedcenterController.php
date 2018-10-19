@@ -100,6 +100,9 @@ class MedcenterController extends Controller
         if (isset($filter['district']) && $filter['district']) {
             $medcenters->where('district_id', $filter['district']);
         }
+        if(!isset($filter['type'])){
+            $filter['type'] = 'medcenter';
+        }
         if(isset($filter['q']) && $filter['q'] && trim($filter['q']) != '' && $filter['type'] == 'medcenter')
             SearchHelper::searchByFields($medcenters, ['name', 'content'], $filter['q']);
 

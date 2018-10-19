@@ -266,6 +266,21 @@ class IndexController extends Controller
         echo $cout;
     }
 
+    public function errorInform(Request $request)
+    {
+        $email =  e($request->get('error_email'));
+        $text =  e($request->get('error_text'));
+        $current_url =  e($request->get('current_url'));
+
+        \Mail::send('mail.reports.error',compact('email','current_url','text'), function ($message){
+            $message->to('support@idoctor.kz');
+            $message->subject('Ошибка на сайте');
+        });
+        return response()->json([
+            'code'=>200,
+            'msg' => 'ok'
+        ]);
+    }
     public function testCurl()
     {
         $client = new \GuzzleHttp\Client();
