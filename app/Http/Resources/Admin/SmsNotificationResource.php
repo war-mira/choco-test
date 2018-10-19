@@ -16,7 +16,7 @@ class SmsNotificationResource extends Resource
     {
         return [
             'id'                         => $this->resource->id,
-            'client_name'                => $this->order->client->name,
+            'client_name'                => $this->order->client->name??'',
             'client_phone'               => $this->recipient,
             'doctor_name'                => $this->order->doctor->name,
             'medcenter_name'             => $this->order->medcenter->name,
