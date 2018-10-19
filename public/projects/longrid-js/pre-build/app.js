@@ -450,8 +450,10 @@ var ImageElement = function (_AbstractElement3) {
         _this3.instance = null;
         _this3.id = id;
         _this3.type = 'image';
-        _this3.content = '';
+        _this3.desc = '';
+        _this3.alt = '';
         _this3.state = 'default';
+        _this3.editors = new Map();
         _this3.image = null;
         _this3.states = {
             default: "Обычный",
@@ -471,14 +473,28 @@ var ImageElement = function (_AbstractElement3) {
                 'id': this.id,
                 'state': this.state,
                 'image': this.image,
-                'content': this.content
+                'desc': this.desc,
+                'alt': this.alt
 
             };
         }
     }, {
         key: 'addFromRaw',
         value: function addFromRaw(item) {
-            //TODO: implement
+            var id = this.column.getNewElementId();
+            console.log(item);
+            //  let content = (new Unescape).do(item.content);
+            this.alt = Unescape(item.alt);
+            this.desc = Unescape(item.desc);
+            this.image = item.image;
+            this.state = item.state;
+            //let content = GridHelper.decodeHtml(item.content);
+            var block = this.getHtmlBlock(id);
+            var container = this.column.instance.querySelector('.grid__column--container');
+            container.innerHTML = '';
+            container.appendChild(block);
+            this.instance = block;
+            this.init();
         }
     }, {
         key: 'init',
@@ -489,14 +505,10 @@ var ImageElement = function (_AbstractElement3) {
         key: 'initControlButtons',
         value: function initControlButtons() {
             var _self = this;
-            this.initMedium();
+            this.initMedium('.image_alt', 'Alt,title etc.');
+            this.initMedium('.image_desc', 'Описание');
             this.initImageUpload();
-            document.addEventListener('click', function (event) {
-                var target = event.target;
-                if (target.matches('.grid__item--image .image__placeholder .remove')) {
-                    _self.removeImage(target.closest('.grid__item--image'));
-                }
-            });
+
             this.instance.addEventListener('click', function (event) {
                 var target = event.target;
                 if (target.matches('.grid__item--control_item')) {
@@ -504,15 +516,15 @@ var ImageElement = function (_AbstractElement3) {
                         return item.classList.remove('active');
                     });
                     target.classList.add('active');
+                    _self.state = target.getAttribute('data-type');
                 }
+                Grid.triggerSave();
             });
         }
     }, {
         key: 'getHtmlBlock',
         value: function getHtmlBlock(id) {
-            var content = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
-            var block = this.getTemplate(id, content);
+            var block = this.getTemplate(id);
             block = GridHelper.parseHTML(block);
             return block[0];
         }
@@ -520,49 +532,33 @@ var ImageElement = function (_AbstractElement3) {
         key: 'initImageUpload',
         value: function initImageUpload() {
             var _self = this;
+
             this.dropzone = new Dropzone(this.instance.querySelector('.image__placeholder .preview'), {
                 url: "/ajax/image/upload",
                 addRemoveLinks: true,
                 maxFilesize: 10,
+                thumbnailWidth: 300,
                 maxFiles: 1,
                 success: function success(file, response) {
                     _self.image = response.src;
+                    Grid.triggerSave();
                 },
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 }
             });
-            /**
-             *
-              $('.add-image').fileupload({
-                dataType: 'json',
-                start: function (e) {
-                    console.log('init');
-                    $(this).closest('.grid__item').find('.image__placeholder').addClass('__loading');
-                },
-                done: function (e, data) {
-                    // $(this).parent().find('input').hide();
-                    let container = $(this).closest('.grid__item').find('.image__placeholder');
-                    container.removeClass('__loading');
-                    container.addClass('imageAdded');
-                    container.find('.preview').html('');
-                    container.find('.preview').append('<img src="' + data.result + '" />');
-                },
-                fail: function (e, data) {
-                    alert('failed');
-                    console.log(data);
-                }
-            })
-             */
+            if (this.image !== null) {
+                var mock = { name: "", size: 1, accepted: true };
+                this.dropzone.emit("addedfile", mock);
+                this.dropzone.emit("thumbnail", mock, this.image);
+                this.dropzone.emit("complete", mock);
+                this.dropzone.files.push(mock);
+                this.dropzone._updateMaxFilesReachedClass();
+            }
         }
     }, {
         key: 'removeImage',
-        value: function removeImage(container) {
-            var src = container.find('img').attr('src');
-            container.find('.image__placeholder').removeClass('imageAdded');
-            container.find('.preview').html('');
-            $.get("/admin.php/pages/longrid/remove-media?url=" + src, function (data) {});
-        }
+        value: function removeImage(container) {}
     }, {
         key: 'addIcon',
         value: function addIcon() {
@@ -590,9 +586,6 @@ var ImageElement = function (_AbstractElement3) {
     }, {
         key: 'getTemplate',
         value: function getTemplate(id) {
-            var image = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-            var content = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-
             return '\n            <div class="grid__item" data-type="image"  data-id="' + id + '">\n                <div class="grid__item--control">\n                    <div class="left">\n                                 \n                    </div>\n                    <div class="main">\n                        ' + this.getStates() + '\n                    </div>\n                </div>\n                <div class="grid__item--image ">\n                  ' + this.getImageTemplate() + '\n                </div>\n            </div>';
         }
     }, {
@@ -600,9 +593,9 @@ var ImageElement = function (_AbstractElement3) {
         value: function getImageTemplate() {
             var template = '';
             if (this.image !== null) {
-                template += '\n                        <div class="image__placeholder imageAdded dropzone">\n                            <div class="preview">\n                                <img src="' + this.image + '"> \n                            </div>\n                        </div>\n                        <div class="editable">\n                            ' + this.content + ' \n                        </div>\n\n                ';
+                template += '\n                        <div class="image__placeholder dropzone">\n                            <div class="preview">\n                               \n                            </div>\n                        </div>\n                        <div class="editable image_alt">\n                            ' + this.alt + ' \n                        </div>\n                        <div class="editable image_desc">\n                            ' + this.desc + '  \n                        </div>\n\n                ';
             } else {
-                template += ' \n                        <div class="image__placeholder dropzone">\n                            <div class="preview"></div>\n                        </div>\n                        <div class="editable">\n                        </div>';
+                template += ' \n                        <div class="image__placeholder dropzone">\n                            <div class="preview"></div>\n                        </div> \n                        <div class="editable image_alt">\n                        </div>\n                        <div class="editable image_desc">\n                        </div>';
             }
 
             return template;
@@ -610,10 +603,12 @@ var ImageElement = function (_AbstractElement3) {
     }, {
         key: 'initMedium',
         value: function initMedium() {
-            var placeholder = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'Введите текст...';
+            var class_name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '.editable';
+            var placeholder = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'Введите текст...';
 
-            var selector = this.instance.querySelector('.editable');
-            this.editor = new MediumEditor(selector, {
+            var _self = this;
+            var selector = this.instance.querySelector(class_name);
+            var editor = new MediumEditor(selector, {
                 toolbar: {
                     /* These are the default options for the toolbar,
                      if nothing is passed this is what is used */
@@ -637,6 +632,16 @@ var ImageElement = function (_AbstractElement3) {
                 },
                 imageDragging: false
             });
+            editor.subscribe('editableInput', function (event, editorElement) {
+                var content = editor.getContent();
+                if (class_name == '.image_alt') {
+                    _self.alt = content;
+                } else {
+                    _self.desc = content;
+                }
+                Grid.triggerSave();
+            });
+            this.editors.set(class_name, editor);
         }
     }], [{
         key: 'getIcon',
@@ -790,6 +795,9 @@ var TextElement = function (_AbstractElement5) {
                 },
                 imageDragging: false
             });
+            this.editor.subscribe('editableInput', function (event, editorElement) {
+                Grid.triggerSave();
+            });
         }
     }], [{
         key: 'getIcon',
@@ -851,6 +859,7 @@ var GridColumn = function () {
 
             this.id = id;
             this.init();
+            Grid.triggerSave();
         }
     }, {
         key: 'addFromRaw',
@@ -1025,6 +1034,7 @@ var GridColumn = function () {
                         }
                     }
                 }
+                Grid.triggerSave();
                 //_self.row.updateColumnsOrder();
             });
         }
@@ -1053,6 +1063,7 @@ var GridColumn = function () {
                 this.instance.remove();
             }
             this.row.columns.delete(this.id);
+            Grid.triggerSave();
         }
     }, {
         key: 'orderRowColumns',
@@ -1079,7 +1090,7 @@ var GridColumn = function () {
 var GridRow = function () {
     function GridRow() {
         var grid = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-        var maxWidth = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4;
+        var maxWidth = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 6;
 
         _classCallCheck(this, GridRow);
 
@@ -1529,7 +1540,9 @@ var GridRow = function () {
             if (removeConfirm) {
                 this.instance.remove();
                 this.grid.rows.delete(this.id);
+                Grid.triggerSave();
             }
+
             return false;
         }
     }, {
@@ -1588,7 +1601,7 @@ var Grid = function () {
         this.raw = options.raw;
         this.sortable = null;
         this.options = {
-            columns: 5,
+            columns: 6,
             defaultItem: 'text'
         };
         Object.assign(this.options, options.other);
@@ -1618,15 +1631,17 @@ var Grid = function () {
     }, {
         key: 'addRowBlockAfter',
         value: function addRowBlockAfter(item) {
-            var row = new GridRow(this);
+            var row = new GridRow(this, this.options.columns);
             var id = this.getNewElementId();
             row.add(this.container, item, id);
             this.addRowToGrid(id, row);
+            this.sortRows(GridHelper.arrayToSortPattern(this.sortable.toArray()));
         }
     }, {
         key: 'addRowToGrid',
         value: function addRowToGrid(id, row) {
             this.rows.set(id, row);
+            Grid.triggerSave();
         }
     }, {
         key: 'getCleanClone',
@@ -1746,11 +1761,17 @@ var Grid = function () {
             this.rows = new Map([].concat(_toConsumableArray(this.rows.entries())).sort(function (x, y) {
                 return pattern[x[0]] - pattern[y[0]];
             }));
+            Grid.triggerSave();
         }
     }, {
         key: 'toJson',
         value: function toJson() {
             return JSON.stringify(this.getCleanClone());
+        }
+    }], [{
+        key: 'triggerSave',
+        value: function triggerSave() {
+            document.dispatchEvent(new CustomEvent('updateGridTextarea'));
         }
     }]);
 
@@ -1772,17 +1793,25 @@ var Longread = function () {
     }, {
         key: 'init',
         value: function init() {
+            var _this6 = this;
+
+            Dropzone.autoDiscover = false;
+
             this.grid = new Grid({
                 container: document.getElementById('grid__container'),
                 raw: this.textarea.innerHTML
             });
             this.grid.init();
             this.initButtons();
+            document.addEventListener("updateGridTextarea", function (e) {
+                return _this6.save();
+            });
         }
     }, {
         key: 'save',
         value: function save() {
             var _self = this;
+            this.textarea.innerHTML = this.grid.toJson();
         }
     }]);
 

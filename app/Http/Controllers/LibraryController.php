@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\City;
+use App\Components\Longrid\Grid;
 use App\Helpers\SeoMetadataHelper;
 use App\Models\Library\Illness;
 use App\Models\Library\IllnessesGroup;
@@ -41,7 +42,8 @@ class LibraryController
             ->firstOrFail();
         $links = $this->getNavigationFromContent($article->description);
         $titleInDesc = $this->checkIfFirstTitleExist($article->description);
-
+        $grid = new Grid($article->content->rows);
+        dd($grid);
         $meta = SeoMetadataHelper::getMeta($article);
 
         return view('library.articles.item', compact('meta','article', 'links', 'illnessesGroup', 'titleInDesc'));
@@ -72,6 +74,7 @@ class LibraryController
         $titleInDesc = $this->checkIfFirstTitleExist($illness->description);
 
         $meta = SeoMetadataHelper::getMeta($illness);
+
 
         return view('library.illnesses.item', compact('illness', 'links','meta', 'titleInDesc'));
     }

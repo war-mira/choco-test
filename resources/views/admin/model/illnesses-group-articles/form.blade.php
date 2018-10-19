@@ -70,13 +70,22 @@
         @endcomponent
         @component('components.bootstrap.row')
             @component('components.bootstrap.column',['class'=>'col-md-12'])
-                @component('components.form.textarea')
+                @component('components.form.summernote.textarea')
                     @slot('field','description')
                     @slot('value',$seed['description'] ?? null)
                     @slot('placeholder','Описание')
                     @slot('formId','edit-form')
                     @slot('label','Описание')
                     @slot('required',true)
+                @endcomponent
+            @endcomponent
+        @endcomponent
+        @component('components.bootstrap.row')
+            @component('components.bootstrap.column',['class'=>'col-md-12'])
+                @component('components.form.textarea')
+                    @slot('field','content')
+                    @slot('value',$seed['content'] ?? null)
+                    @slot('formId','edit-form')
                     @slot('id','grid__textarea')
                 @endcomponent
             @endcomponent

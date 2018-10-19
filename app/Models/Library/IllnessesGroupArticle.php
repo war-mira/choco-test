@@ -12,6 +12,7 @@ class IllnessesGroupArticle extends Model implements ISeoMetadata
     protected $fillable = [
       'name',
       'illnesses_group_id',
+      'content',
       'description',
       'description-lite',
       'alias',
@@ -23,7 +24,9 @@ class IllnessesGroupArticle extends Model implements ISeoMetadata
       'updated_at',
       'image'
     ];
-
+    protected $casts = [
+        'content' => 'object'
+    ];
     public function illnessesGroup()
     {
         return $this->belongsTo('App\Models\Library\IllnessesGroup', 'illnesses_group_id', 'id');

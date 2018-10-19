@@ -1,5 +1,5 @@
 class GridRow {
-    constructor(grid = null, maxWidth = 4) {
+    constructor(grid = null, maxWidth = 6) {
         this.columns = new Map();
         this.instance = null; // DOMElement
         this.grid = grid;
@@ -31,6 +31,7 @@ class GridRow {
         this.id = id;
         this.init();
         this.addColumn(this.maxWidth);
+
     }
     addFromRaw(container,row){
         let block = this.getTemplate(row.id, this.maxWidth);
@@ -380,7 +381,9 @@ class GridRow {
         if (removeConfirm) {
             this.instance.remove();
             this.grid.rows.delete(this.id);
+            Grid.triggerSave();
         }
+
         return false;
     }
 

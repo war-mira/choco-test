@@ -5,8 +5,10 @@ class ImageElement extends AbstractElement {
         this.instance = null;
         this.id = id;
         this.type = 'image';
-        this.content = '';
+        this.desc = '';
+        this.alt = '';
         this.state = 'default';
+        this.editors = new Map();
         this.image = null;
         this.states = {
             default: "Обычный",
@@ -31,14 +33,28 @@ class ImageElement extends AbstractElement {
             'id': this.id,
             'state': this.state,
             'image': this.image,
-            'content': this.content,
+            'desc': this.desc,
+            'alt': this.alt,
 
         }
 
     }
 
     addFromRaw(item) {
-        //TODO: implement
+        let id = this.column.getNewElementId();
+        console.log(item);
+        //  let content = (new Unescape).do(item.content);
+        this.alt = Unescape(item.alt);
+        this.desc = Unescape(item.desc);
+        this.image = item.image;
+        this.state = item.state;
+        //let content = GridHelper.decodeHtml(item.content);
+        let block = this.getHtmlBlock(id);
+        let container = this.column.instance.querySelector('.grid__column--container');
+        container.innerHTML = '';
+        container.appendChild(block);
+        this.instance = block;
+        this.init();
     }
 
     init() {
@@ -47,26 +63,24 @@ class ImageElement extends AbstractElement {
 
     initControlButtons() {
         let _self = this;
-        this.initMedium();
+        this.initMedium('.image_alt','Alt,title etc.');
+        this.initMedium('.image_desc','Описание');
         this.initImageUpload();
-        document.addEventListener('click', function (event) {
-            let target = event.target;
-            if (target.matches('.grid__item--image .image__placeholder .remove')) {
-                _self.removeImage(target.closest('.grid__item--image'));
-            }
-        });
+
         this.instance.addEventListener('click',function(event){
             let target  = event.target;
             if (target.matches('.grid__item--control_item')) {
                 target.parentNode.querySelectorAll('.grid__item--control_item').forEach((item) => item.classList.remove('active'));
                 target.classList.add('active');
+                _self.state = target.getAttribute('data-type');
             }
+            Grid.triggerSave();
         });
 
     }
 
-    getHtmlBlock(id, content = '') {
-        let block = this.getTemplate(id, content);
+    getHtmlBlock(id) {
+        let block = this.getTemplate(id);
         block = GridHelper.parseHTML(block);
         return block[0];
     }
@@ -79,49 +93,33 @@ class ImageElement extends AbstractElement {
 
     initImageUpload() {
         let _self = this;
+
         this.dropzone = new Dropzone(this.instance.querySelector('.image__placeholder .preview'), {
             url: "/ajax/image/upload",
             addRemoveLinks:true,
             maxFilesize: 10,
+            thumbnailWidth:300,
             maxFiles: 1,
             success:function(file, response){
                 _self.image = response.src;
+                Grid.triggerSave();
             },
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             }
         });
-        /**
-         *
+        if(this.image !== null){
+            let mock = {name:"",size:1,accepted:true};
+            this.dropzone.emit("addedfile", mock);
+            this.dropzone.emit("thumbnail", mock, this.image);
+            this.dropzone.emit("complete", mock);
+            this.dropzone.files.push(mock);
+            this.dropzone._updateMaxFilesReachedClass();
+        }
 
-        $('.add-image').fileupload({
-            dataType: 'json',
-            start: function (e) {
-                console.log('init');
-                $(this).closest('.grid__item').find('.image__placeholder').addClass('__loading');
-            },
-            done: function (e, data) {
-                // $(this).parent().find('input').hide();
-                let container = $(this).closest('.grid__item').find('.image__placeholder');
-                container.removeClass('__loading');
-                container.addClass('imageAdded');
-                container.find('.preview').html('');
-                container.find('.preview').append('<img src="' + data.result + '" />');
-            },
-            fail: function (e, data) {
-                alert('failed');
-                console.log(data);
-            }
-        })
-         */
     }
 
     removeImage(container) {
-        let src = container.find('img').attr('src');
-        container.find('.image__placeholder').removeClass('imageAdded');
-        container.find('.preview').html('');
-        $.get("/admin.php/pages/longrid/remove-media?url=" + src, function (data) {
-        });
 
     }
 
@@ -145,7 +143,7 @@ class ImageElement extends AbstractElement {
         }
         return states;
     }
-    getTemplate(id, image = '',content = '') {
+    getTemplate(id) {
         return `
             <div class="grid__item" data-type="image"  data-id="${id}">
                 <div class="grid__item--control">
@@ -165,13 +163,16 @@ class ImageElement extends AbstractElement {
         let template = '';
             if(this.image !== null){
                 template +=`
-                        <div class="image__placeholder imageAdded dropzone">
+                        <div class="image__placeholder dropzone">
                             <div class="preview">
-                                <img src="${this.image}"> 
+                               
                             </div>
                         </div>
-                        <div class="editable">
-                            ${this.content} 
+                        <div class="editable image_alt">
+                            ${this.alt} 
+                        </div>
+                        <div class="editable image_desc">
+                            ${this.desc}  
                         </div>
 
                 `;
@@ -179,17 +180,20 @@ class ImageElement extends AbstractElement {
                 template +=` 
                         <div class="image__placeholder dropzone">
                             <div class="preview"></div>
+                        </div> 
+                        <div class="editable image_alt">
                         </div>
-                        <div class="editable">
+                        <div class="editable image_desc">
                         </div>`;
             }
 
             return template;
     }
 
-    initMedium(placeholder = 'Введите текст...'){
-        let selector = this.instance.querySelector('.editable');
-        this.editor = new MediumEditor(selector,{
+    initMedium(class_name ='.editable',placeholder = 'Введите текст...'){
+        let _self =this;
+        let selector = this.instance.querySelector(class_name);
+        let editor = new MediumEditor(selector,{
             toolbar: {
                 /* These are the default options for the toolbar,
                  if nothing is passed this is what is used */
@@ -221,5 +225,16 @@ class ImageElement extends AbstractElement {
             },
             imageDragging: false
         });
+        editor.subscribe('editableInput', function (event, editorElement) {
+            let content = editor.getContent();
+            if(class_name == '.image_alt'){
+                _self.alt = content;
+            } else{
+                _self.desc = content;
+            }
+            Grid.triggerSave();
+        });
+        this.editors.set(class_name,editor)
     }
+
 }

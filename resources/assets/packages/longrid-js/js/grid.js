@@ -8,7 +8,7 @@ class Grid {
         this.raw = options.raw;
         this.sortable = null;
         this.options = {
-            columns: 5,
+            columns: 6,
             defaultItem: 'text'
         };
         Object.assign(this.options, options.other);
@@ -35,14 +35,16 @@ class Grid {
     }
 
     addRowBlockAfter(item) {
-        let row = new GridRow(this);
+        let row = new GridRow(this, this.options.columns);
         let id = this.getNewElementId();
         row.add(this.container, item, id);
         this.addRowToGrid(id, row);
+        this.sortRows(GridHelper.arrayToSortPattern(this.sortable.toArray()));
     }
 
     addRowToGrid(id, row) {
         this.rows.set(id, row);
+        Grid.triggerSave();
     }
 
     getCleanClone() {
@@ -140,6 +142,7 @@ class Grid {
             draggable: ".grid__row", // Specifies which items inside the element should be sortable
             onSort: function (evt) {
                 _self.sortRows(GridHelper.arrayToSortPattern(_self.sortable.toArray()));
+
             }
         });
         this.sortable = sort;
@@ -151,8 +154,11 @@ class Grid {
         this.rows = new Map([...this.rows.entries()].sort(function (x, y) {
             return pattern[x[0]] - pattern[y[0]];
         }));
+        Grid.triggerSave();
     }
-
+    static triggerSave(){
+        document.dispatchEvent(new CustomEvent('updateGridTextarea'));
+    }
     toJson() {
         return JSON.stringify(this.getCleanClone());
     }

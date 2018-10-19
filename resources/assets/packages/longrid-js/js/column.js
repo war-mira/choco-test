@@ -33,6 +33,7 @@ class GridColumn {
 
         this.id = id;
         this.init();
+        Grid.triggerSave();
 
     }
     addFromRaw(column){
@@ -223,6 +224,7 @@ class GridColumn {
                     }
                 }
             }
+            Grid.triggerSave();
             //_self.row.updateColumnsOrder();
         });
     }
@@ -249,6 +251,7 @@ class GridColumn {
             this.instance.remove();
         }
         this.row.columns.delete(this.id);
+        Grid.triggerSave();
     }
 
     orderRowColumns(emptyColumn, oldSort,removedIndex,newIndex) {

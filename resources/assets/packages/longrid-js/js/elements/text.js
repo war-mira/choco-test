@@ -97,5 +97,8 @@ class TextElement extends AbstractElement {
             },
             imageDragging: false
         });
+        this.editor.subscribe('editableInput', function (event, editorElement) {
+           Grid.triggerSave();
+        });
     }
 }

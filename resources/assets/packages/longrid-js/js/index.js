@@ -8,16 +8,20 @@ class Longread{
 
     }
     init(){
+        Dropzone.autoDiscover = false;
+
         this.grid =  new Grid({
             container:document.getElementById('grid__container'),
             raw:this.textarea.innerHTML
         });
         this.grid.init();
         this.initButtons();
+        document.addEventListener("updateGridTextarea", (e) => this.save())
     }
 
     save(){
         let _self = this;
+        this.textarea.innerHTML = this.grid.toJson();
 
     }
 }
