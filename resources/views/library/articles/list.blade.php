@@ -11,7 +11,7 @@
                     <div class="section-heading__text">{{ isset($query)?"Поиск по запросу: ".$query:$illnessesGroup->name }}</div>
                 </div>
                 @foreach($articles as $article)
-                    @include('library.partials.article_preview', ['article' => $article, 'group' => $article->illnessesGroup])
+                    @include('library.partials.article_preview', ['article' => $article, 'group' => $article->group])
                 @endforeach
             </div>
         </div>

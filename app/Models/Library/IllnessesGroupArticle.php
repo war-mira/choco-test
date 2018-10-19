@@ -24,7 +24,7 @@ class IllnessesGroupArticle extends Model implements ISeoMetadata
       'image'
     ];
 
-    public function illnessesGroup()
+    public function group()
     {
         return $this->belongsTo('App\Models\Library\IllnessesGroup', 'illnesses_group_id', 'id');
     }

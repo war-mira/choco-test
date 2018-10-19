@@ -42,7 +42,7 @@
             <select name="question[skill_id]" class="form-control js-simple-select">
                 <option value="40">Выберите специализацию</option>
                 @foreach(\App\Skill::getList() as $skill)
-                    <option value="{{$skill['id']}}">{{$skill['name']}}</option>
+                    <option value="{{$skill['id']}}" {{ isset($selectedSkill) && $selectedSkill->id === $skill['id'] ? 'selected':'' }}>{{$skill['name']}}</option>
                 @endforeach
             </select>
         </div>

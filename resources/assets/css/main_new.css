@@ -4708,13 +4708,13 @@ label .week-days-select__btn {
     width: 100%;
     display: block;
   }
-  .section__aside-mobile, .section-article__content{
+  .section__aside-mobile, .article-nav__block{
     display: block;
   }
   .section__aside-mobile{
     padding-top: 20px;
   }
-  .article__aside-desktop{
+  .article__aside-desktop .article-nav__block{
     display: none;
   }
   .entity-about-article.current,

@@ -164,12 +164,17 @@ class Skill extends Model implements ISeoMetadata
 
     public static function getList()
     {
-      return \Cache::tags(['skills'])->remember('skills_active_list',120,function(){
-          return Skill::where('active',1)
-              ->orderBy('name')
-              ->active()
-              ->get();
-      });
+//      return \Cache::tags(['skills'])->remember('skills_active_list',120,function(){
+//          return Skill::where('active',1)
+//              ->orderBy('name')
+//              ->active()
+//              ->get();
+//      });
+
+      return  Skill::where('active',1)
+            ->orderBy('name')
+            ->get();
+
     }
 
 }

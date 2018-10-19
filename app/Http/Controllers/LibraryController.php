@@ -43,9 +43,13 @@ class LibraryController
         $links = $this->getNavigationFromContent($article->description);
         $titleInDesc = $this->checkIfFirstTitleExist($article->description);
 
+        $skill = null;
+        if($article->group)
+            $skill = $article->group->skills->first();
+
         $meta = SeoMetadataHelper::getMeta($article);
 
-        return view('library.articles.item', compact('meta', 'article', 'links', 'illnessesGroup', 'titleInDesc'));
+        return view('library.articles.item', compact('meta', 'article', 'links', 'illnessesGroup', 'titleInDesc', 'skill'));
     }
 
     public function illnesses($letter = null)
@@ -74,7 +78,11 @@ class LibraryController
 
         $meta = SeoMetadataHelper::getMeta($illness);
 
-        return view('library.illnesses.item', compact('illness', 'links', 'meta', 'titleInDesc'));
+        $skill = null;
+        if($illness->group)
+            $skill = $illness->group->skills->first();
+
+        return view('library.illnesses.item', compact('illness', 'links', 'meta', 'titleInDesc', 'skill'));
     }
 
     private function getAlphabet()

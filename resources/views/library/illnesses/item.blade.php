@@ -8,29 +8,24 @@
         @include('library.partials.content.content', ['content' => $illness, 'links' => $links])
     </div>
     @if(count($illness->doctors))
-        <section class="docs-slider docs-slider_bg-white">
-            <div class="container">
-                <div class="docs-slider__heading">Врачи поблизости</div>
-                <div class="docs-slider__slider entity-slider">
-                    @foreach($illness->doctors as $doctor)
-                        <div class="entity-slider__item">
-                        <div class="entity-slider__item-img entity-thumb-img">
-                            <div class="entity-thumb-img__img-wr">
-                                <img src="{{ url($doctor->avatar) }}" alt="" class="entity-thumb-img__img profiles__img profiles__img--circle">
-                                <div class="entity-thumb-img__rating">{{ $doctor->avg_rate }}</div>
-                            </div>
-                        </div>
-                        <a href="#" class="docs-slider__item-link">
-                            <div class="docs-slider__item-name">{{ $doctor->firtsname }}{{ $doctor->lastname }}</div>
-                            <div class="docs-slider__item-spec">
-                                @foreach ($doctor->skills as $i=>$skill)<a href="{{$skill->href}}" style="text-decoration: none">{{$skill->name}}</a>
-                                @if(count($doctor->skills) > 1 && $i!=(count($doctor->skills)-1)) / @endif  @endforeach
-                            </div>
-                        </a>
+        <section class="entity-about">
+        <div class="container">
+            <div class="entity-about__tab-line tabs">
+                <a href="#" data-tab="tab-1" class="entity-about__tab-item entity-about__tab-item_active">
+                    <h2 class="entity-about__tab-name">Врачи, лечащие данное заболевание</h2>
+                </a>
+            </div>
+            <div class="entity-about__content entity-content">
+                <div id="tab-1" class="entity-about-article current">
+                    <div class="entity-content__main">
+                        @foreach($illness->doctors as $doctor)
+                            @component('model.doctor.prof_new',['doctor'=>$doctor,'width'=>'250px','highlightSkill'=>null,'comercial'=>true])
+                            @endcomponent
+                        @endforeach
                     </div>
-                    @endforeach
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
     @endif
 @endsection
