@@ -36,16 +36,32 @@
             }
         }
     }
-
-    //.entity-content_askform{
-    //    display: none;
-    //}
-}
-@media (max-width: 767.98px) {
-    .section-article__content{
-        display: block;
-    }
     .article__aside-desktop{
-        width: 100%;
+        @media(max-width: 768px){
+            display:none;
+        }
+    }
+}
+
+.blog-list__list-item{
+    a{
+        &:hover ~ .blog-item__bot-line{
+            a{
+                &:first-child{
+                    display: none;
+                }
+                background: #00A8FF;
+                border-color: #00A8FF;
+                text-decoration: none;
+            }
+            
+        }
+    }
+    .blog-item__bot-line{
+        a{
+            &:first-child{
+                display: none;
+            }
+        }
     }
 }

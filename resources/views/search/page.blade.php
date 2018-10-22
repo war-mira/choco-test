@@ -9,13 +9,16 @@
             <div class="search-result">
                 <div class="container">
                     <div class="search-result__list">
-
                         <div class="search-result__city-name">
                             <h1>
                                 @if(!empty($meta['h1']))
                                     {{$meta['h1']}}
                                 @endif
                             </h1>
+                        </div>
+                        <div class="search-result__spec-descr">
+                            <p>Топ лучших специалистов в {{ $city->name }}. Список {{ isset($skill) ? mb_strtolower($skill->name).'ов' : '' }} с фото, отзывами, рейтингом и проверенными контактами.</p>
+                            <p>Быстрый поиск и запись на прием к {{isset($skill) ? mb_strtolower($skill->name).'у':'' }} на iDoctor.kz.</p>
                         </div>
                         @if($comercial)
                             @foreach($comercial->get() as $doctor)

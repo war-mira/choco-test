@@ -9,7 +9,7 @@
                 <div class="section-heading__text">Блог</div>
             </div>
             @foreach($posts as $post)
-            <a href="{{ route('post', [$post->alias])}}" style="height: 100%;">
+            <a href="{{ route('post', [$post->alias])}}" style="height: 100%;" class="article_link">
                 <div class="blog-item blog-list__list-item toning"
                      style="background-image: url({{ URL::asset($post->cover_image)}});">
                     <div class="blog-item__name">{{$post->title}}</div>
