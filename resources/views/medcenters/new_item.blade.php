@@ -96,12 +96,15 @@
                         </div>
                     </div>
                     <div class="entity-line__appointment-mini">
-                        {{--<div class="appointment-mini__book">--}}
-                        {{--<button class="btn btn_theme_usual">Записаться онлайн</button>--}}
-                        {{--</div>--}}
+                        @if(in_array($medcenter->id, \App\Medcenter::SHOW_GALLERY))
+                            <phone-show-btn model="{{ \App\Doctor::MED_SHOW_PHONE_COUNT }}"
+                                            id="{{ $medcenter->id }}"
+                                            phone="{{ \App\Helpers\HtmlHelper::phoneCode($medcenter->showing_phone) }}">
+                                <template slot="phone-number"></template>
+                            </phone-show-btn>
+                        @endif
                     </div>
                 </div>
-
                 <div class="entity-line__additional">
 
                     <div class="entity-line__map entity-map" id="entity-map">
@@ -141,6 +144,9 @@
                     @endpush
                 </div>
             </div>
+            @if(in_array($medcenter->id, \App\Medcenter::SHOW_GALLERY))
+                @include('medcenters.photo-gallery')
+            @endif
         </div>
     </section>
 

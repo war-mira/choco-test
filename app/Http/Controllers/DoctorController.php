@@ -552,7 +552,10 @@ class DoctorController extends Controller
     public function clicksCount(Request $request)
     {
         $doctor = Doctor::getInstance($request->id);
-        if ($doctor) {
+
+        if($request->model == Doctor::MED_SHOW_PHONE_COUNT)
+            $medcenter = Medcenter::find($request->id);
+        if ($doctor || $medcenter) {
             $date = new \DateTime();
             $data = [];
             if ($request->data)
@@ -588,6 +591,14 @@ class DoctorController extends Controller
                     Redis::zadd('doctor:' . $doctor->id . ':' . Doctor::VIEW_PROFILE_COUNT . '', $date->getTimestamp(), json_encode($data));
 
                     break;
+
+                case Doctor::MED_SHOW_PHONE_COUNT:
+
+                    Redis::zadd('medcenter:' . $medcenter->id . ':' . Doctor::MED_SHOW_PHONE_COUNT . '', $date->getTimestamp(), json_encode($data));
+
+                    $phone = substr($medcenter->showing_phone, 4);
+
+                    $data = $phone;
             }
 
 

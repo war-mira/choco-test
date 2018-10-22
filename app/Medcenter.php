@@ -82,6 +82,14 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
     ];
     const PARTNER = 1;
     const NOT_PARTNER = 0;
+    const SHOW_GALLERY = [
+        '535',
+        '437',
+        '495',
+        '531',
+        '657',
+        '320',
+    ];
     public $timestamps = false;
     protected $table = 'medcenters';
     protected $fillable = [

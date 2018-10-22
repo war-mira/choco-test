@@ -15,6 +15,7 @@ use App\PageSeo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Storage;
 
 class MedcenterController extends Controller
 {
@@ -184,6 +185,8 @@ class MedcenterController extends Controller
 
         $meta = SeoMetadataHelper::getMeta($medcenter, $city);
 
+        $photos = Storage::files('/images/medcenters/'.$medcenter->id);
+
         return view('medcenters.new_item')
             ->with('meta', $meta)
             ->with('medcenter', $medcenter)
@@ -193,7 +196,8 @@ class MedcenterController extends Controller
             ->with('skils',$skills)
             ->with('ost',(($medcenter->doctors()->where('doctors.status', 1)->count() - 5) > 0) ? $medcenter->doctors()->where('doctors.status', 1)->count() - 5 : 0 )
             ->with('doctors', $doctors->keyBy('id'))
-            ->with('comments', $comments);
+            ->with('comments', $comments)
+            ->with('photos', $photos);
     }
 
     public function loadComments($city, $medcenter, Request $request)
