@@ -2,16 +2,19 @@
 
 namespace App\Models\Library;
 
+use App\Components\Longrid\GridModel;
 use App\Doctor;
 use App\Interfaces\ISeoMetadata;
 use Illuminate\Database\Eloquent\Model;
 
 class Illness extends Model implements ISeoMetadata
 {
+    use GridModel;
     protected $fillable = [
         'group_id',
         'name',
         'alias',
+        'content',
         'description-lite',
         'description',
         'meta_title',

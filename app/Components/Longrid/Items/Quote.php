@@ -12,4 +12,9 @@ namespace  App\Components\Longrid\Items;
 class Quote extends BaseItem
 {
 
+
+    public function isEmptyCredits()
+    {
+        return empty(trim(strip_tags($this->credits)));
+    }
 }

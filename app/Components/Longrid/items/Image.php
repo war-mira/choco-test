@@ -79,6 +79,10 @@ class Image extends BaseItem
     {
         return strip_tags($this->alt);
     }
+    public function getDesc()
+    {
+        return strip_tags($this->desc,'<p><a><i>');
+    }
     public function getSizesForPhotoSwipe()
     {
         list($width,$height) = $this->getOriginalSizes();

@@ -74,13 +74,23 @@ class LibraryController
 
     public function illness( Illness $illness)
     {
+        $illnesses = Illness::get();
+        foreach ($illnesses as $illness){
+           if(strpos($illness->description, '<img') !== false){
+                var_dump($illness->id);
+            }
+        }
         $links = $this->getNavigationFromContent($illness->description);
         $titleInDesc = $this->checkIfFirstTitleExist($illness->description);
 
         $meta = SeoMetadataHelper::getMeta($illness);
+        if(!empty($illness->content)){
+            $grid = new Grid($illness->json_content->rows);
+            $text = $grid->prepare();
+        }
 
 
-        return view('library.illnesses.item', compact('illness', 'links','meta', 'titleInDesc'));
+        return view('library.illnesses.item', compact('illness', 'links','meta', 'titleInDesc','text'));
     }
 
     private function getAlphabet() {

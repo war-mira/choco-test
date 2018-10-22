@@ -16,7 +16,7 @@
             @endif
         </div>
         <div class="section section-article__content">
-            <div class="article-content__main">{!! $post->content !!}</div>
+            <div class="article-content__main ">{!! $post->content !!}</div>
             <div class="article__aside-desktop">
                 @include('library.partials.content.aside')
             </div>

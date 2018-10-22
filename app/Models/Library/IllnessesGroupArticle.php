@@ -2,11 +2,13 @@
 
 namespace App\Models\Library;
 
+use App\Components\Longrid\GridModel;
 use App\Interfaces\ISeoMetadata;
 use Illuminate\Database\Eloquent\Model;
 
 class IllnessesGroupArticle extends Model implements ISeoMetadata
 {
+    use GridModel;
     protected $table = 'illnesses_group_articles';
 
     protected $fillable = [
@@ -24,18 +26,12 @@ class IllnessesGroupArticle extends Model implements ISeoMetadata
       'updated_at',
       'image'
     ];
-    protected $casts = [
-        'json_content' => 'object'
-    ];
+
     public function illnessesGroup()
     {
         return $this->belongsTo('App\Models\Library\IllnessesGroup', 'illnesses_group_id', 'id');
     }
 
-    public function getJsonContentAttribute()
-    {
-        return json_decode($this->content);
-    }
     public function getMetaTitle()
     {
         return $this->meta_title;

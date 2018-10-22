@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddJsonContentToIllnessesGroupArticle extends Migration
+class AddContentToIlnesses extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddJsonContentToIllnessesGroupArticle extends Migration
      */
     public function up()
     {
-        Schema::table('illnesses_group_articles', function (Blueprint $table) {
+        Schema::table('illnesses', function (Blueprint $table) {
             $table->json('content')->nullable();
         });
     }
@@ -25,7 +25,7 @@ class AddJsonContentToIllnessesGroupArticle extends Migration
      */
     public function down()
     {
-        Schema::table('illnesses_group_articles', function (Blueprint $table) {
+        Schema::table('illnesses', function (Blueprint $table) {
             $table->dropColumn('content');
         });
     }
