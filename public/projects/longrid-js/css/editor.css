@@ -2843,12 +2843,16 @@ body {
   display: none;
 }
 
-.grid__item[data-type="image"] .grid__item--control {
+.grid__item .grid__item--control {
   padding-top: 8px;
 }
 
 .grid__item[data-type="image"] .left {
   text-align: center;
+}
+
+.grid blockquote {
+  border-left: 4px solid #333;
 }
 
 #grid__textarea {
@@ -2898,4 +2902,21 @@ body {
 
 .grid__item--image .image__placeholder .preview .dz-preview .dz-error-message:after {
   display: none;
+}
+
+.grid__item--quote {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.grid__item--quote .content {
+  width: 69%;
+}
+
+.grid__item--quote .credits {
+  width: 30%;
 }

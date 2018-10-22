@@ -72,8 +72,11 @@ class TextElement extends AbstractElement {
                 buttons: [
                     'bold',
                     'italic',
+                    'h2',
                     'h3',
+                    'h4',
                     'anchor',
+                    'quote',
                     'justifyLeft',
                     'justifyCenter',
                     'justifyRight',
@@ -94,6 +97,15 @@ class TextElement extends AbstractElement {
             placeholder: {
                 text: placeholder,
                 hideOnClick: true
+            },
+            paste: {
+                /* This example includes the default options for paste,
+                   if nothing is passed this is what it used */
+                forcePlainText: false,
+                cleanPastedHTML: true,
+                cleanReplacements: [],
+                cleanAttrs: ['class', 'style', 'dir','rel','src'],
+                cleanTags: ['br', 'meta', 'body', 'script']
             },
             imageDragging: false
         });

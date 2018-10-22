@@ -156,5 +156,13 @@ class ImageResize
             . '.' . $this->extension;
     }
 
-
+    public static function getImageUrl($src, $width, $height, $quality = 85)
+    {
+        if (substr($src, 0, 1) !== '/') {
+            $src = '/' . $src;
+        }
+        return (new self($src, $quality))
+            ->setRootDir(public_path())
+            ->getImage($width, $height);
+    }
 }

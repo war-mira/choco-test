@@ -6,16 +6,23 @@ class FrameElement extends AbstractElement{
         this.id = id;
         this.type = 'frame';
         this.content = null;
+        this.state = 'default';
+        this.states = {
+            default: "Обычный",
+            youtube : 'Youtube',
+        };
     }
     static getIcon() {
         return '<i class="fa fa-code"></i>';
     }
     addFromRaw(item){
         let id = this.column.getNewElementId();
+        this.content = item.content;
+        this.state = item.state;
         //  let content = (new Unescape).do(item.content);
         let content = Unescape(item.content);
-        //let content = GridHelper.decodeHtml(item.content);
         let block = this.getHtmlBlock(id,content);
+
         let container = this.column.instance.querySelector('.grid__column--container');
         container.innerHTML = '';
         container.appendChild(block);
@@ -35,7 +42,14 @@ class FrameElement extends AbstractElement{
     }
 
     getTemplate(id,content = ''){
+
         return `<div class="grid__item" data-type="frame" data-id="${id}">
+                <div class="grid__item--control">
+                   
+                    <div class="main">
+                        ${this.getStates()}
+                    </div>
+                </div>
             <div class="grid__item--frame">
                 <textarea>${content}</textarea>
             </div>
@@ -45,12 +59,20 @@ class FrameElement extends AbstractElement{
         return "iFrame/HTML";
     }
     init() {
+        let _self = this;
+        this.instance.querySelector('textarea').addEventListener('input',function(){
+           Grid.triggerSave();
+        });
+        this.instance.addEventListener('click',function(event){
+            _self.updateState(event);
+        });
 
     }
     getObject() {
         return {
             type:'frame',
             id:this.id,
+            state:this.state,
             content:this.instance.querySelector('textarea').value
         }
     }

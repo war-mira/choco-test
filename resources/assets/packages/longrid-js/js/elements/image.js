@@ -42,7 +42,6 @@ class ImageElement extends AbstractElement {
 
     addFromRaw(item) {
         let id = this.column.getNewElementId();
-        console.log(item);
         //  let content = (new Unescape).do(item.content);
         this.alt = Unescape(item.alt);
         this.desc = Unescape(item.desc);
@@ -68,16 +67,11 @@ class ImageElement extends AbstractElement {
         this.initImageUpload();
 
         this.instance.addEventListener('click',function(event){
-            let target  = event.target;
-            if (target.matches('.grid__item--control_item')) {
-                target.parentNode.querySelectorAll('.grid__item--control_item').forEach((item) => item.classList.remove('active'));
-                target.classList.add('active');
-                _self.state = target.getAttribute('data-type');
-            }
-            Grid.triggerSave();
+            _self.updateState(event);
         });
 
     }
+
 
     getHtmlBlock(id) {
         let block = this.getTemplate(id);
@@ -134,15 +128,7 @@ class ImageElement extends AbstractElement {
         return 'imageBlock';
     }
 
-    getStates(){
-        let states = '';
-        let _self = this;
-        for(let state in this.states){
 
-            states += `<div class="grid__item--control_item ${(state == _self.state)?'active':''}" data-type="${state}">${this.states[state]}</div>`;
-        }
-        return states;
-    }
     getTemplate(id) {
         return `
             <div class="grid__item" data-type="image"  data-id="${id}">
@@ -199,12 +185,11 @@ class ImageElement extends AbstractElement {
                  if nothing is passed this is what is used */
                 allowMultiParagraphSelection: true,
                 buttons: [
-                    'h2',
-                    'h3',
-                    'h4',
+                    'italic',
                     'anchor',
-                    'h5',
-                    'h6',
+                    'justifyLeft',
+                    'justifyCenter',
+                    'justifyRight',
                     'removeFormat'
                 ],
                 diffLeft: 0,

@@ -25,13 +25,17 @@ class IllnessesGroupArticle extends Model implements ISeoMetadata
       'image'
     ];
     protected $casts = [
-        'content' => 'object'
+        'json_content' => 'object'
     ];
     public function illnessesGroup()
     {
         return $this->belongsTo('App\Models\Library\IllnessesGroup', 'illnesses_group_id', 'id');
     }
 
+    public function getJsonContentAttribute()
+    {
+        return json_decode($this->content);
+    }
     public function getMetaTitle()
     {
         return $this->meta_title;

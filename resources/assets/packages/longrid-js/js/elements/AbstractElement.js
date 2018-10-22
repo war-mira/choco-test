@@ -32,4 +32,22 @@ class AbstractElement{
     getTemplateId(){
         throw new Error(`getTemplateId должен быть реализован`)
     }
+
+    updateState(event) {
+        let target = event.target;
+        if (target.matches('.grid__item--control_item')) {
+            target.parentNode.querySelectorAll('.grid__item--control_item').forEach((item) => item.classList.remove('active'));
+            target.classList.add('active');
+            this.state = target.getAttribute('data-type');
+        }
+        Grid.triggerSave();
+    }
+    getStates(){
+        let states = '';
+        let _self = this;
+        for(let state in this.states){
+            states += `<div class="grid__item--control_item ${(state == _self.state)?'active':''}" data-type="${state}">${this.states[state]}</div>`;
+        }
+        return states;
+    }
 }

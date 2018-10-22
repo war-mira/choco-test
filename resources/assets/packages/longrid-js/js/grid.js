@@ -15,6 +15,8 @@ class Grid {
         this.items = {
             'text': TextElement,
             'image': ImageElement,
+            'frame': FrameElement,
+            'quote': QuoteElement,
         };
 
     }

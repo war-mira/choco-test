@@ -11,7 +11,7 @@ namespace App\Components\Longrid;
 
 /**
  * Class Grid
- * @package app\components\longrid
+ * @package App\Components\Longrid
  *
  *
  * Убрать доступ к родителям
@@ -74,7 +74,7 @@ class Grid
     }
     public static function renderBlock($type,$data,$template = 'default')
     {
-        return view('longrid.'.$template.'.blocks._'.$type,$data);
+        return view('longrid.'.$template.'.blocks._'.$type,$data) ;
     }
 
 }

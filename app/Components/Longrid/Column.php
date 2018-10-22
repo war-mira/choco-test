@@ -8,7 +8,7 @@
 
 namespace App\Components\Longrid;
 
-use App\Components\Longrid\items\BaseItem;
+use App\Components\Longrid\Items\BaseItem;
 
 class Column
 {
@@ -40,7 +40,7 @@ class Column
          */
 
         foreach($this->items as $key => $item){
-            $name = "app\components\longrid\items\\".ucfirst($item->type);
+            $name = "App\Components\Longrid\Items\\".ucfirst($item->type);
 
             $item = new $name($item,$item->column);
             $item->inspectSelf();

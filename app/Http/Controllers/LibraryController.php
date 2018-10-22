@@ -42,11 +42,15 @@ class LibraryController
             ->firstOrFail();
         $links = $this->getNavigationFromContent($article->description);
         $titleInDesc = $this->checkIfFirstTitleExist($article->description);
-        $grid = new Grid($article->content->rows);
-        dd($grid);
+
+        if(!empty($article->content)){
+            $grid = new Grid($article->json_content->rows);
+            $text = $grid->prepare();
+        }
+
         $meta = SeoMetadataHelper::getMeta($article);
 
-        return view('library.articles.item', compact('meta','article', 'links', 'illnessesGroup', 'titleInDesc'));
+        return view('library.articles.item', compact('meta','article', 'text', 'links', 'illnessesGroup', 'titleInDesc'));
     }
 
     public function illnesses( $letter = null)

@@ -6,7 +6,7 @@
  * Time: 14:34
  */
 
-namespace  App\Components\Longrid\items;
+namespace  App\Components\Longrid\Items;
 
 
 class Audio extends BaseItem

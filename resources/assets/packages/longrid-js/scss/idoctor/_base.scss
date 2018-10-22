@@ -27,15 +27,18 @@
     }
   }
   &__item{
-
+    .grid__item--control{
+      padding-top:8px;
+    }
     &[data-type="image"]{
-      .grid__item--control{
-        padding-top:8px;
-      }
+
       .left{
         text-align:center;
       }
     }
+  }
+  blockquote {
+    border-left: 4px solid #333;
   }
 }
 #grid__textarea{

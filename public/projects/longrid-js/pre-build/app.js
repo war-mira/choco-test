@@ -201,6 +201,29 @@ var AbstractElement = function () {
         value: function getTemplateId() {
             throw new Error('getTemplateId \u0434\u043E\u043B\u0436\u0435\u043D \u0431\u044B\u0442\u044C \u0440\u0435\u0430\u043B\u0438\u0437\u043E\u0432\u0430\u043D');
         }
+    }, {
+        key: 'updateState',
+        value: function updateState(event) {
+            var target = event.target;
+            if (target.matches('.grid__item--control_item')) {
+                target.parentNode.querySelectorAll('.grid__item--control_item').forEach(function (item) {
+                    return item.classList.remove('active');
+                });
+                target.classList.add('active');
+                this.state = target.getAttribute('data-type');
+            }
+            Grid.triggerSave();
+        }
+    }, {
+        key: 'getStates',
+        value: function getStates() {
+            var states = '';
+            var _self = this;
+            for (var state in this.states) {
+                states += '<div class="grid__item--control_item ' + (state == _self.state ? 'active' : '') + '" data-type="' + state + '">' + this.states[state] + '</div>';
+            }
+            return states;
+        }
     }], [{
         key: 'initButtons',
         value: function initButtons() {
@@ -227,6 +250,11 @@ var FrameElement = function (_AbstractElement) {
         _this.id = id;
         _this.type = 'frame';
         _this.content = null;
+        _this.state = 'default';
+        _this.states = {
+            default: "Обычный",
+            youtube: 'Youtube'
+        };
         return _this;
     }
 
@@ -234,10 +262,12 @@ var FrameElement = function (_AbstractElement) {
         key: 'addFromRaw',
         value: function addFromRaw(item) {
             var id = this.column.getNewElementId();
+            this.content = item.content;
+            this.state = item.state;
             //  let content = (new Unescape).do(item.content);
             var content = Unescape(item.content);
-            //let content = GridHelper.decodeHtml(item.content);
             var block = this.getHtmlBlock(id, content);
+
             var container = this.column.instance.querySelector('.grid__column--container');
             container.innerHTML = '';
             container.appendChild(block);
@@ -266,17 +296,27 @@ var FrameElement = function (_AbstractElement) {
         value: function getTemplate(id) {
             var content = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 
-            return '<div class="grid__item" data-type="frame" data-id="' + id + '">\n            <div class="grid__item--frame">\n                <textarea>' + content + '</textarea>\n            </div>\n        </div>';
+
+            return '<div class="grid__item" data-type="frame" data-id="' + id + '">\n                <div class="grid__item--control">\n                   \n                    <div class="main">\n                        ' + this.getStates() + '\n                    </div>\n                </div>\n            <div class="grid__item--frame">\n                <textarea>' + content + '</textarea>\n            </div>\n        </div>';
         }
     }, {
         key: 'init',
-        value: function init() {}
+        value: function init() {
+            var _self = this;
+            this.instance.querySelector('textarea').addEventListener('input', function () {
+                Grid.triggerSave();
+            });
+            this.instance.addEventListener('click', function (event) {
+                _self.updateState(event);
+            });
+        }
     }, {
         key: 'getObject',
         value: function getObject() {
             return {
                 type: 'frame',
                 id: this.id,
+                state: this.state,
                 content: this.instance.querySelector('textarea').value
             };
         }
@@ -482,7 +522,6 @@ var ImageElement = function (_AbstractElement3) {
         key: 'addFromRaw',
         value: function addFromRaw(item) {
             var id = this.column.getNewElementId();
-            console.log(item);
             //  let content = (new Unescape).do(item.content);
             this.alt = Unescape(item.alt);
             this.desc = Unescape(item.desc);
@@ -510,15 +549,7 @@ var ImageElement = function (_AbstractElement3) {
             this.initImageUpload();
 
             this.instance.addEventListener('click', function (event) {
-                var target = event.target;
-                if (target.matches('.grid__item--control_item')) {
-                    target.parentNode.querySelectorAll('.grid__item--control_item').forEach(function (item) {
-                        return item.classList.remove('active');
-                    });
-                    target.classList.add('active');
-                    _self.state = target.getAttribute('data-type');
-                }
-                Grid.triggerSave();
+                _self.updateState(event);
             });
         }
     }, {
@@ -573,17 +604,6 @@ var ImageElement = function (_AbstractElement3) {
             return 'imageBlock';
         }
     }, {
-        key: 'getStates',
-        value: function getStates() {
-            var states = '';
-            var _self = this;
-            for (var state in this.states) {
-
-                states += '<div class="grid__item--control_item ' + (state == _self.state ? 'active' : '') + '" data-type="' + state + '">' + this.states[state] + '</div>';
-            }
-            return states;
-        }
-    }, {
         key: 'getTemplate',
         value: function getTemplate(id) {
             return '\n            <div class="grid__item" data-type="image"  data-id="' + id + '">\n                <div class="grid__item--control">\n                    <div class="left">\n                                 \n                    </div>\n                    <div class="main">\n                        ' + this.getStates() + '\n                    </div>\n                </div>\n                <div class="grid__item--image ">\n                  ' + this.getImageTemplate() + '\n                </div>\n            </div>';
@@ -613,7 +633,7 @@ var ImageElement = function (_AbstractElement3) {
                     /* These are the default options for the toolbar,
                      if nothing is passed this is what is used */
                     allowMultiParagraphSelection: true,
-                    buttons: ['h2', 'h3', 'h4', 'anchor', 'h5', 'h6', 'removeFormat'],
+                    buttons: ['italic', 'anchor', 'justifyLeft', 'justifyCenter', 'justifyRight', 'removeFormat'],
                     diffLeft: 0,
                     diffTop: -10,
                     firstButtonClass: 'medium-editor-button-first',
@@ -668,24 +688,141 @@ var ImageElement = function (_AbstractElement3) {
 var QuoteElement = function (_AbstractElement4) {
     _inherits(QuoteElement, _AbstractElement4);
 
-    function QuoteElement() {
+    function QuoteElement(id, column) {
         _classCallCheck(this, QuoteElement);
 
-        return _possibleConstructorReturn(this, (QuoteElement.__proto__ || Object.getPrototypeOf(QuoteElement)).apply(this, arguments));
+        var _this4 = _possibleConstructorReturn(this, (QuoteElement.__proto__ || Object.getPrototypeOf(QuoteElement)).call(this));
+
+        _this4.column = column;
+        _this4.instance = null;
+        _this4.id = id;
+        _this4.type = 'quote';
+        _this4.editors = new Map();
+        _this4.state = 'citate';
+        _this4.states = {
+            citate: "Цитата",
+            important: 'Важно!'
+        };
+        _this4.content = '';
+        _this4.credits = '';
+        return _this4;
     }
 
     _createClass(QuoteElement, [{
+        key: 'addFromRaw',
+        value: function addFromRaw(item) {
+            var id = this.column.getNewElementId();
+            this.state = item.state;
+            this.content = Unescape(item.content);
+            this.credits = Unescape(item.credits);
+            //  let content = (new Unescape).do(item.content);
+            //let content = GridHelper.decodeHtml(item.content);
+            var block = this.getHtmlBlock(id);
+            var container = this.column.instance.querySelector('.grid__column--container');
+            container.innerHTML = '';
+            container.appendChild(block);
+            this.instance = block;
+            this.init();
+        }
+    }, {
+        key: 'getObject',
+        value: function getObject() {
+            return {
+                type: 'quote',
+                id: this.id,
+                state: this.state,
+                content: this.content,
+                credits: this.credits
+            };
+        }
+    }, {
+        key: 'addIcon',
+        value: function addIcon() {
+            var icon = TextElement.getIcon();
+            var html = GridHelper.parseHTML('<div class="grid__row--icon">' + icon + '</div>')[0];
+            var controls = this.instance.closest('.grid__column').querySelector('.grid__column--control');
+            controls.insertBefore(html, controls.firstChild);
+        }
+    }, {
         key: 'getTemplateId',
         value: function getTemplateId() {
             return 'quoteBlock';
         }
     }, {
-        key: 'getObject',
-        value: function getObject(item) {
-            return {
-                'type': item.data('type'),
-                'content': item.find('.editable').html()
-            };
+        key: 'getHtmlBlock',
+        value: function getHtmlBlock(id) {
+            var block = this.getTemplate(id);
+            block = GridHelper.parseHTML(block);
+            return block[0];
+        }
+    }, {
+        key: 'getTemplate',
+        value: function getTemplate(id) {
+            return '<div class="grid__item" data-type="quote" data-id="' + id + '">\n            <div class="grid__item--control">\n                    <div class="main">\n                        ' + this.getStates() + '\n                    </div> \n                </div>\n            <div class="grid__item--quote">\n                <div class="editable content">\n                ' + this.content + '\n                </div> \n                <div class="editable credits">\n                ' + this.credits + '\n                </div>\n            </div>\n        </div>';
+        }
+    }, {
+        key: 'init',
+        value: function init() {
+            var _this5 = this;
+
+            this.initMedium('.content', 'Текст цитаты');
+            this.initMedium('.credits', 'Автор цитаты');
+            this.instance.addEventListener('click', function () {
+                _this5.updateState(event, _this5);
+            });
+        }
+    }, {
+        key: 'initMedium',
+        value: function initMedium() {
+            var class_name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '.editable';
+            var placeholder = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'Введите текст...';
+
+            var _self = this;
+            var selector = this.instance.querySelector(class_name);
+            var editor = new MediumEditor(selector, {
+                toolbar: {
+                    /* These are the default options for the toolbar,
+                     if nothing is passed this is what is used */
+                    allowMultiParagraphSelection: true,
+                    buttons: ['italic', 'anchor', 'justifyLeft', 'justifyCenter', 'justifyRight', 'removeFormat'],
+                    diffLeft: 0,
+                    diffTop: -10,
+                    firstButtonClass: 'medium-editor-button-first',
+                    lastButtonClass: 'medium-editor-button-last',
+                    standardizeSelectionStart: false,
+                    static: false,
+                    relativeContainer: null,
+                    /* options which only apply when static is true */
+                    align: 'center',
+                    sticky: false,
+                    updateOnEmptySelection: false
+                },
+                placeholder: {
+                    text: placeholder,
+                    hideOnClick: true
+                },
+                imageDragging: false
+            });
+            editor.subscribe('editableInput', function (event, editorElement) {
+                var content = editor.getContent();
+                if (class_name == '.content') {
+                    _self.content = content;
+                } else {
+                    _self.credits = content;
+                }
+                Grid.triggerSave();
+            });
+            this.editors.set(class_name, editor);
+        }
+    }], [{
+        key: 'getIcon',
+        value: function getIcon() {
+            return '<i class="fa fa-quote-right"></i>';
+        }
+    }, {
+        key: 'getTitle',
+        value: function getTitle() {
+            return "Цитата/Важно";
         }
     }]);
 
@@ -698,14 +835,14 @@ var TextElement = function (_AbstractElement5) {
     function TextElement(id, column) {
         _classCallCheck(this, TextElement);
 
-        var _this5 = _possibleConstructorReturn(this, (TextElement.__proto__ || Object.getPrototypeOf(TextElement)).call(this));
+        var _this6 = _possibleConstructorReturn(this, (TextElement.__proto__ || Object.getPrototypeOf(TextElement)).call(this));
 
-        _this5.column = column;
-        _this5.instance = null;
-        _this5.id = id;
-        _this5.type = 'text';
-        _this5.editor = null;
-        return _this5;
+        _this6.column = column;
+        _this6.instance = null;
+        _this6.id = id;
+        _this6.type = 'text';
+        _this6.editor = null;
+        return _this6;
     }
 
     _createClass(TextElement, [{
@@ -776,7 +913,7 @@ var TextElement = function (_AbstractElement5) {
                     /* These are the default options for the toolbar,
                      if nothing is passed this is what is used */
                     allowMultiParagraphSelection: true,
-                    buttons: ['bold', 'italic', 'h3', 'anchor', 'justifyLeft', 'justifyCenter', 'justifyRight', 'removeFormat'],
+                    buttons: ['bold', 'italic', 'h2', 'h3', 'h4', 'anchor', 'quote', 'justifyLeft', 'justifyCenter', 'justifyRight', 'removeFormat'],
                     diffLeft: 0,
                     diffTop: -10,
                     firstButtonClass: 'medium-editor-button-first',
@@ -792,6 +929,15 @@ var TextElement = function (_AbstractElement5) {
                 placeholder: {
                     text: placeholder,
                     hideOnClick: true
+                },
+                paste: {
+                    /* This example includes the default options for paste,
+                       if nothing is passed this is what it used */
+                    forcePlainText: false,
+                    cleanPastedHTML: true,
+                    cleanReplacements: [],
+                    cleanAttrs: ['class', 'style', 'dir', 'rel', 'src'],
+                    cleanTags: ['br', 'meta', 'body', 'script']
                 },
                 imageDragging: false
             });
@@ -1607,7 +1753,9 @@ var Grid = function () {
         Object.assign(this.options, options.other);
         this.items = {
             'text': TextElement,
-            'image': ImageElement
+            'image': ImageElement,
+            'frame': FrameElement,
+            'quote': QuoteElement
         };
     }
 
@@ -1793,7 +1941,7 @@ var Longread = function () {
     }, {
         key: 'init',
         value: function init() {
-            var _this6 = this;
+            var _this7 = this;
 
             Dropzone.autoDiscover = false;
 
@@ -1804,7 +1952,7 @@ var Longread = function () {
             this.grid.init();
             this.initButtons();
             document.addEventListener("updateGridTextarea", function (e) {
-                return _this6.save();
+                return _this7.save();
             });
         }
     }, {
