@@ -10,6 +10,8 @@ namespace  App\Components\Longrid\Items;
 
 
 
+use App\Components\Image\ImageResize;
+
 class Image extends BaseItem
 {
 
@@ -49,30 +51,7 @@ class Image extends BaseItem
 
     public function isEmptyCaption()
     {
-        return empty(trim(strip_tags($this->content)));
-    }
-    public function getOriginalSizes()
-    {
-        $filepath = ImageResize::getRootDir().'/'.$this->image;
-        list($width,$height,$type1, $attr1) = getimagesize($filepath);
-
-        return [ $width, $height ];
-    }
-
-    public function getSizes($filename)
-    {
-        $filepath = ImageResize::getRootDir().'/'.$filename;
-        list($width,$height,$type1, $attr1) = getimagesize($filepath);
-
-        return (object)[ 'width'=>$width, 'height'=>$height ];
-    }
-
-    public static function getSizesForAmp($filename)
-    {
-        $filepath = ImageResize::getRootDir().'/'.$filename;
-        list($width,$height,$type1, $attr1) = getimagesize($filepath);
-
-        return 'width="'.$width.'" height="'.$height.'"';
+        return empty(trim(strip_tags($this->desc)));
     }
 
     public function getAlt()

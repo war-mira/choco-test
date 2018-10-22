@@ -40,13 +40,13 @@ class LibraryController
         $article = IllnessesGroupArticle::where('alias',$article)
             ->active()
             ->firstOrFail();
-        $links = $this->getNavigationFromContent($article->description);
-        $titleInDesc = $this->checkIfFirstTitleExist($article->description);
 
         if(!empty($article->content)){
             $grid = new Grid($article->json_content->rows);
             $text = $grid->prepare();
         }
+        $titleInDesc = $this->checkIfFirstTitleExist($text??$article->description);
+        $links = $this->getNavigationFromContent($text??$article->description);
 
         $meta = SeoMetadataHelper::getMeta($article);
 
@@ -74,12 +74,7 @@ class LibraryController
 
     public function illness( Illness $illness)
     {
-        $illnesses = Illness::get();
-        foreach ($illnesses as $illness){
-           if(strpos($illness->description, '<img') !== false){
-                var_dump($illness->id);
-            }
-        }
+
         $links = $this->getNavigationFromContent($illness->description);
         $titleInDesc = $this->checkIfFirstTitleExist($illness->description);
 
@@ -92,6 +87,7 @@ class LibraryController
 
         return view('library.illnesses.item', compact('illness', 'links','meta', 'titleInDesc','text'));
     }
+
 
     private function getAlphabet() {
         $letters = array();
