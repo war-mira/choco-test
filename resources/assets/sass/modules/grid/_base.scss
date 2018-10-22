@@ -1,5 +1,16 @@
+.section-article__article-header .article__title{
+  @media(max-width:768px){
+    margin-bottom: 0px;
+  }
+}
 .grid {
   padding: 0;
+  &.article-content__main{
+    @media(max-width:768px){
+      margin-right:0;
+    }
+  }
+
   a{
     color:#00A8FF;
   }
@@ -104,15 +115,15 @@
             flex-wrap: wrap;
             .blockquote-content{
               font-family:$font-semibold;
-              font-size: 18px;
-              line-height: 24px;
+              font-size: 16px;
+              line-height: 22px;
               font-style:italic;
-              padding-left: 20px;
+              padding-left: 10px;
               flex-basis: 100%;
               p{
                 font-family:$font-semibold;
-                font-size: 18px;
-                line-height: 24px;
+                font-size: 16px;
+                line-height: 22px;
                 font-style:italic;
               }
             }
@@ -123,6 +134,10 @@
               flex-basis: 33.3333%;
               margin-left: auto;
               width: 33.3333%;
+              @media  (max-width: 768px){
+                width: 80%;
+                flex-basis: 80%;
+              }
               p{
                 line-height: 19px;
               }
@@ -132,17 +147,16 @@
       }
       &__image{
         figure{
-          display: flex;
-          flex-wrap: wrap;
+
           img{
             width:100%;
-            flex-basis: 100%;
+            display:block;
           }
           figcaption{
             font-family: $font-semibold;
             font-size:14px;
             padding-top: 16px;
-            flex-basis: 100%;
+            display:block;
             width: 100%;
             p{
               font-family: $font-semibold;
