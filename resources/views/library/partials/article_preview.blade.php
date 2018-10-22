@@ -1,4 +1,4 @@
-<a href="{{  route('library.illnesses-group-article', [$group->alias, $article->alias])}}" style="height: 100%;">
+<a href="{{  route('library.illnesses-group-article', [$group->alias, $article->alias])}}" style="height: 100%;" class="article_link">
     <div class="blog-item blog-list__list-item toning"
          style="background-image: url({{ URL::asset($article->image)}});">
         <div class="blog-item__name">{{$article->name}}</div>
