@@ -13,7 +13,7 @@ class AddDescLiteToSkills extends Migration
      */
     public function up()
     {
-        Schema::table('skills', function (Blueprint $table) { 
+        Schema::table('skills', function (Blueprint $table) {
             $table->mediumText('description-lite')->nullable();
         });
     }
@@ -26,7 +26,7 @@ class AddDescLiteToSkills extends Migration
     public function down()
     {
         Schema::table('skills', function (Blueprint $table) {
-            $table->dropColumn('description-lite')
+            $table->dropColumn('description-lite');
         });
     }
 }
