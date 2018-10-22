@@ -70,14 +70,23 @@
         @endcomponent
         @component('components.bootstrap.row')
             @component('components.bootstrap.column',['class'=>'col-md-12'])
-                @component('components.form.summernote.textarea')
-                    @slot('field','description')
-                    @slot('value',$seed['description'] ?? null)
-                    @slot('placeholder','Описание')
+                @component('components.form.textarea')
+                    @slot('field','content')
+                    @slot('value',$seed['content'] ?? null)
                     @slot('formId','edit-form')
-                    @slot('label','Описание')
-                    @slot('required',true)
+                    @slot('id','grid__textarea')
                 @endcomponent
+            @endcomponent
+        @endcomponent
+        @component('components.bootstrap.row')
+            @component('components.bootstrap.column',['class'=>'col-md-12'])
+                <div class="grid__maker">
+                    <div id="grid__container" class="grid">
+                    </div>
+                    <div class="grid__maker--buttons">
+                        <div class="btn add-block" data-type="row"><i class="fa fa-plus"></i> Добавить ряд</div>
+                    </div>
+                </div>
             @endcomponent
         @endcomponent
         @component('components.bootstrap.row')
@@ -118,4 +127,14 @@
         @endcomponent
         <input type="submit" class="btn btn-primary btn-block" value="Сохранить">
     </form>
+
+    @push('custom.css')
+        <link  rel="stylesheet" type="text/css" href="/projects/longrid-js/css/editor.css">
+        <link  rel="stylesheet" type="text/css" href="/projects/libs/dropzone/min/basic.min.css">
+        <link  rel="stylesheet" type="text/css" href="/projects/libs/dropzone/min/dropzone.min.css">
+    @endpush
+    @push('component_scripts')
+        <script src="/projects/libs/dropzone/min/dropzone.min.js"></script>
+        <script src="/projects/longrid-js/js/editor.js"></script>
+    @endpush
 @endsection

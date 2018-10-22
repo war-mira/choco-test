@@ -5,6 +5,6 @@
 @endsection
 @section('content')
     <div class="container">
-        @include('library.partials.content.content', ['content' => $article])
+        @include('library.partials.content.content', ['content' => $article,'text'=>$text??null])
     </div>
 @endsection

@@ -8,12 +8,12 @@
         </div>
     @endif
 
-    @if(!empty($content->image) && file_exists($content->image))
-        <img src="{{ URL::asset($content->image) }}">
-    @endif
+@if(!empty($content->image) && file_exists($content->image))
+    <img src="{{ URL::asset($content->image) }}">
+@endif
 </div>
 <div class="section section-article__content">
-    <div class="article-content__main">{!! $content->description !!}</div>
+    <div class="article-content__main grid">{!! $text??$content->description !!}</div>
     <div class="article__aside-desktop">
         <div class="article-content__aside">
             @include('library.partials.content.aside', ['skill' => $skill ?? null])

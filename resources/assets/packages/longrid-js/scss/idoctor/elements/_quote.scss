@@ -1,0 +1,14 @@
+.grid{
+  &__item{
+    &--quote{
+      display: flex;
+      justify-content: space-between;
+      .content{
+        width:69%;
+      }
+      .credits{
+      width:30%;
+      }
+    }
+  }
+}
