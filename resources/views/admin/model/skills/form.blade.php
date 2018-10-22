@@ -37,6 +37,18 @@
         @component('components.bootstrap.row')
             @component('components.bootstrap.column',['class'=>'col-md-12'])
                 @component('components.form.summernote.textarea')
+                    @slot('field','description-lite')
+                    @slot('value',$seed['description-lite'] ?? null)
+                    @slot('placeholder','Короткое описание')
+                    @slot('formId','edit-form')
+                    @slot('label','Короткое описание')
+                    @slot('required',true)
+                @endcomponent
+            @endcomponent
+        @endcomponent
+        @component('components.bootstrap.row')
+            @component('components.bootstrap.column',['class'=>'col-md-12'])
+                @component('components.form.summernote.textarea')
                     @slot('field','description')
                     @slot('value',$seed['description'] ?? null)
                     @slot('placeholder','Описание')
