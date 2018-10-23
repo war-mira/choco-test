@@ -9,6 +9,7 @@ use App\Models\Library\Illness;
 use App\Models\Library\IllnessesGroup;
 use App\Models\Library\IllnessesGroupArticle;
 use App\PageSeo;
+use Illuminate\Http\Request;
 
 class LibraryController
 {
@@ -70,6 +71,41 @@ class LibraryController
         }
 
         return view('library.illnesses.list', compact('letters', 'letter', 'illnesses','meta'));
+    }
+    public function searchIllness(Request $request)
+    {
+        $query = e($request->get('query'));
+        $illnesses = Illness::
+        where('name', 'like', "%$query%")
+            ->orderBy('name')
+            ->limit(50)
+            ->paginate();
+        $meta = [
+            'h1' => 'Поиск по запросу: '.$query,
+            'title' => 'Поиск по запросу: '.$query,
+        ];
+
+
+        return view('library.illnesses.list', compact('illnesses', 'meta','query'));
+    }
+
+    public function searchLibrary(Request $request)
+    {
+        $query = e($request->get('query'));
+        $articles = IllnessesGroupArticle::
+        where('name', 'like', "%$query%")
+            ->orWhere('description', 'like', "%$query%")
+            ->orderBy('name')
+            ->active()
+            ->limit(12)
+            ->paginate();
+        $meta = [
+            'h1' => 'Поиск по запросу: '.$query,
+            'title' => 'Поиск по запросу: '.$query,
+        ];
+
+
+        return view('library.articles.list', compact('articles','meta','query'));
     }
 
     public function illness( Illness $illness)
