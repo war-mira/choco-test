@@ -20,7 +20,7 @@
                     <div class="entity-content__main">
                             @foreach($illness->publisedDoctors as $doctor)
                             <div class="entity-line">
-                                @component('model.doctor.prof_article',['doctor'=>$doctor,'width'=>'250px','highlightSkill'=>null,'comercial'=>true])
+                                @component('model.doctor.prof_article',['doctor'=>$doctor,'width'=>'250px','highlightSkill'=>null])
                                 @endcomponent
                             </div>
                         @endforeach
