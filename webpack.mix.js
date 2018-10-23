@@ -66,6 +66,7 @@ mix.js('resources/assets/js/app.js', 'public/build/js/vue_app.js')
     .scripts([
         'resources/assets/js/plugins/jquery.min.js',
         'resources/assets/js/plugins/jquery-masked-input.js',
+        'resources/assets/js/plugins/infinite-scroll.min.js',
         'resources/assets/js/plugins/slick.min.js',
         'resources/assets/js/plugins/selectize.min.js',
         'resources/assets/js/plugins/pickmeup.min.js',

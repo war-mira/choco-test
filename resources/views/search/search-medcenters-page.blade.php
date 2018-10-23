@@ -11,16 +11,18 @@
             <div class="search-result">
                 <div class="container">
                     <div class="search-result__list">
-                    @foreach($Medcenters as $medcenter)
-                        <div class="results d-result search-result__item entity-line clinic-line" data-type="doctor" data-id="{{$medcenter->id}}"
-                             id="doctor-result-{{$medcenter->id}}"
-                             style="">
+                        <div class="medcenter_list content_scroll__block">
+                            @foreach($Medcenters as $medcenter)
+                                <div class="results d-result search-result__item entity-line clinic-line" data-type="doctor" data-id="{{$medcenter->id}}"
+                                     id="doctor-result-{{$medcenter->id}}"
+                                     style="">
 
-                            @component('model.medcenter.new_profile-short',['medcenter'=>$medcenter,'width'=>'250px','highlightSkill'=>$highlightSkill??null])
-                            @endcomponent
-
+                                    @component('model.medcenter.new_profile-short',['medcenter'=>$medcenter,'width'=>'250px','highlightSkill'=>$highlightSkill??null])
+                                    @endcomponent
+                                </div>
+                            @endforeach
                         </div>
-                    @endforeach
+                        @include('partials.loader')
                     </div>
 
                     @if($Medcenters->links() != "")
@@ -125,5 +127,10 @@
             });
 
         });
+    $('.doctor_list').infiniteScroll({
+        path: '.pagination_next',
+        append: '.doc-line',
+        history: false,
+    });
     </script>
 @endpush
