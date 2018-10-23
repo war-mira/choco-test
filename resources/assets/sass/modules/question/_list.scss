@@ -109,6 +109,12 @@
             }
         }
     }
+    .section-question__content{
+        flex-wrap: wrap;
+    }
+    .article__aside-desktop{
+        width: 100%;
+    }
 }
 .entity-content_askform{
     background: #fff;
