@@ -3,6 +3,9 @@
     margin-bottom: 0px;
   }
 }
+.section-article__content{
+
+}
 .grid {
   padding: 0;
   &.article-content__main{
@@ -10,6 +13,7 @@
       margin-right:0;
     }
   }
+
 
   a{
     color:#00A8FF;
@@ -39,6 +43,7 @@
       flex-wrap: wrap;
     }
     &--item {
+      width: 100%;
       & *:first-child {
         margin-top: 0 !important;
       }
@@ -98,7 +103,7 @@
             opacity: 0.3;
             padding-right: 20px;
             min-width: 40px;
-            line-height: 0;
+            line-height: 80px;
           }
           blockquote{
             font-size: 15px;
@@ -144,6 +149,10 @@
             }
           }
         }
+      }
+      &__frame{
+        display: flex;
+        width: 100%;
       }
       &__image{
         figure{
