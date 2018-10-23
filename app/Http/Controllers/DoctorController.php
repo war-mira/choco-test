@@ -46,14 +46,17 @@ class DoctorController extends Controller
         });
         $meta = SeoMetadataHelper::getMeta($doctor, $city);
         $city_id = $doctor->city->id;
-        $near_docs = Cache::tags(['doctors'])->remember('near_doctors-city_id-'.$city_id,120,function() use ($city_id){
-            return Doctor::query()->where('doctors.status', 1)
-                ->where('doctors.city_id', $city_id)->whereNotNull('avatar')->limit(9)->get();
-        });
-//        foreach ($near_docs as $doc){
-//            dd($doc);
-//        }
 
+        $near_docs = Cache::tags(['doctors'])->remember('near_doctors-city_id-'.$city_id.'-skill-'.$doctor->main_skill->id??0,120,function() use ($city_id,$doctor){
+            //   return Doctor::query()->where('doctors.status', 1)
+            //                ->where('doctors.city_id', $city_id)->whereNotNull('avatar')->limit(9)->get();
+            return Doctor::query()->with('skills')->where('doctors.status', 1)
+                ->where('doctors.city_id', $city_id)
+                ->whereHas('skills', function($q) use ($doctor){
+                    $q->where('skills.id', $doctor->main_skill->id);
+                })
+                ->whereNotNull('avatar')->limit(9)->get();
+        });
 
         return view('doctors.item')
             ->with('meta', $meta)
