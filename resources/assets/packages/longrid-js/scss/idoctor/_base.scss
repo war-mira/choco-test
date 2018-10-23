@@ -1,0 +1,50 @@
+.grid{
+  &__row{
+    &--icon{
+      margin-right: 0;
+    }
+  }
+  &__column{
+    border: 1px solid transparent;
+    border-radius: 6px;
+    overflow: hidden;
+    &.empty{
+      .grid__column--move{
+        display:none;
+      }
+    }
+    &--move{
+      cursor: default;
+      i{
+        display: none;
+      }
+    }
+    &--action{
+
+      &[data-action="decreaseWidth"],&[data-action="increaseWidth"]{
+        display:none;
+      }
+    }
+  }
+  &__item{
+    .grid__item--control{
+      padding-top:8px;
+    }
+    &[data-type="image"]{
+
+      .left{
+        text-align:center;
+      }
+    }
+  }
+  blockquote {
+    border-left: 4px solid #333;
+  }
+}
+#grid__textarea{
+  display: none;;
+}
+.dz-clickable{
+  height: 100%;
+}
+

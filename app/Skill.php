@@ -47,7 +47,7 @@ class Skill extends Model implements ISeoMetadata
         'id',
         'alias',
         'description',
-        'description-lite',
+        'description_lite',
         'name',
         'meta_title',
         'meta_key',

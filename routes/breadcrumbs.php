@@ -18,7 +18,7 @@ Breadcrumbs::register('library.illnesses-group-articles', function ($breadcrumbs
     $breadcrumbs->parent('library.index');
     if ($group instanceof \App\Models\Library\IllnessesGroup) {
         $breadcrumbs->push($group->name, route('library.illnesses-group-articles', $group->alias));
-    } else {
+    } else if(!empty($group)) {
         $breadcrumbs->push('Поиск по запросу: ' . $group);
     }
 });

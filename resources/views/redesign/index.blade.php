@@ -123,8 +123,8 @@
                         <div class="blog-item__name">{{$post['title']}}</div>
                         <div class="blog-item__bot-line">
                             <a href="{{url('post/'.$post['alias'])}}"
-                               class="blog-item__link"><span>Читать целиком</span><i class="fa fa-chevron-right"
-                                                                                     aria-hidden="true"></i></a>
+                               class="blog-item__link"><span>Читать целиком</span>
+                                <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
                             <div class="blog-item__date">
                                 <div>Дата публикации</div>
                                 <div>{{$post['created_at']->format('Y-m-d')}}</div>

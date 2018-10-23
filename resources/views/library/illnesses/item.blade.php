@@ -5,7 +5,7 @@
 @endsection
 @section('content')
     <div class="container">
-        @include('library.partials.content.content', ['content' => $illness, 'links' => $links])
+        @include('library.partials.content.content', ['content' => $illness, 'links' => $links,'text'=>$text??null])
     </div>
     @if(count($illness->doctors))
         <section class="entity-about">
