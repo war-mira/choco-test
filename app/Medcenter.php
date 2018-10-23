@@ -89,7 +89,9 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
         '531',
         '657',
         '320',
-        '481'
+        '481',
+        '478',
+        '542'
     ];
     public $timestamps = false;
     protected $table = 'medcenters';
