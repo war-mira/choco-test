@@ -273,8 +273,8 @@ class IndexController extends Controller
         $current_url =  e($request->get('current_url'));
 
         \Mail::send('mail.reports.error',compact('email','current_url','text'), function ($message){
-            $message->to('support@idoctor.kz');
-            $message->subject('Ошибка на сайте');
+            $message->to('feedback@idoctor.kz');
+            $message->subject('Ошибка на сайте'); 
         });
         return response()->json([
             'code'=>200,
