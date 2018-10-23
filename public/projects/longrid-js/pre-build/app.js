@@ -633,7 +633,10 @@ var ImageElement = function (_AbstractElement3) {
                     /* These are the default options for the toolbar,
                      if nothing is passed this is what is used */
                     allowMultiParagraphSelection: true,
-                    buttons: ['italic', 'anchor', 'justifyLeft', 'justifyCenter', 'justifyRight', 'removeFormat'],
+                    buttons: ['italic', {
+                        name: 'anchor',
+                        contentDefault: '<i class="fa fa-link"></i>'
+                    }, 'justifyLeft', 'justifyCenter', 'justifyRight', 'removeFormat'],
                     diffLeft: 0,
                     diffTop: -10,
                     firstButtonClass: 'medium-editor-button-first',
@@ -784,7 +787,10 @@ var QuoteElement = function (_AbstractElement4) {
                     /* These are the default options for the toolbar,
                      if nothing is passed this is what is used */
                     allowMultiParagraphSelection: true,
-                    buttons: ['italic', 'anchor', 'justifyLeft', 'justifyCenter', 'justifyRight', 'removeFormat'],
+                    buttons: ['italic', {
+                        name: 'anchor',
+                        contentDefault: '<i class="fa fa-link"></i>'
+                    }, 'justifyLeft', 'justifyCenter', 'justifyRight', 'removeFormat'],
                     diffLeft: 0,
                     diffTop: -10,
                     firstButtonClass: 'medium-editor-button-first',
@@ -913,7 +919,10 @@ var TextElement = function (_AbstractElement5) {
                     /* These are the default options for the toolbar,
                      if nothing is passed this is what is used */
                     allowMultiParagraphSelection: true,
-                    buttons: ['bold', 'italic', 'h2', 'h3', 'h4', 'anchor', 'quote', 'justifyLeft', 'justifyCenter', 'justifyRight', 'removeFormat'],
+                    buttons: ['bold', 'italic', 'h2', 'h3', 'h4', {
+                        name: 'anchor',
+                        contentDefault: '<i class="fa fa-link"></i>'
+                    }, 'quote', 'justifyLeft', 'justifyCenter', 'justifyRight', 'removeFormat'],
                     diffLeft: 0,
                     diffTop: -10,
                     firstButtonClass: 'medium-editor-button-first',

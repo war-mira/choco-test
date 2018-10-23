@@ -186,7 +186,10 @@ class ImageElement extends AbstractElement {
                 allowMultiParagraphSelection: true,
                 buttons: [
                     'italic',
-                    'anchor',
+                    {
+                        name: 'anchor',
+                        contentDefault: '<i class="fa fa-link"></i>'
+                    },
                     'justifyLeft',
                     'justifyCenter',
                     'justifyRight',

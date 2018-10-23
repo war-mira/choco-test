@@ -75,7 +75,10 @@ class TextElement extends AbstractElement {
                     'h2',
                     'h3',
                     'h4',
-                    'anchor',
+                    {
+                        name: 'anchor',
+                        contentDefault: '<i class="fa fa-link"></i>'
+                    },
                     'quote',
                     'justifyLeft',
                     'justifyCenter',
