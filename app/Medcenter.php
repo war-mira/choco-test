@@ -405,5 +405,10 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
         return empty($this->seo_text) ? '' : $this->seo_text;
     }
 
+    public function types()
+    {
+        return $this->belongsToMany(MedcenterType::class,'medcenter_type','medcenter_id','type_id');
+    }
+
 
 }
