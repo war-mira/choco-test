@@ -390,6 +390,16 @@
     @include('forms.public.error_report')
 @endsection
 @push('custom.js')
+    @include('jsond.place',[
+  'logo'=>url()->to($medcenter['avatar']),
+  'name' => $medcenter->name,
+  'city' => $medcenter->city->name,
+  'address' => $medcenter->sms_address,
+  'phone' =>  $medcenter->showing_phone,
+  'geo'=>$medcenter->geo,
+  'url'=>route('medcenter.item',['medcenter'=>$medcenter->alias, 'city' => $medcenter->city->alias])
+
+  ])
     <script type="text/javascript">
         $(function () {
             {{--var offset = {{$visible}};--}}

@@ -41,3 +41,8 @@ $("#ask-question__form-send").click(function () {
         $('#form_loader').addClass('hide');
     }
 });
+$('.content_scroll__block').infiniteScroll({
+    path: '.pagination_next',
+    append: '.entity-line',
+    history: false
+});

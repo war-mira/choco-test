@@ -45,10 +45,12 @@ class DoctorCabinetQuestionsController extends DoctorCabinetController
 
         if($answer){
             $user = $question->user;
-            \SmsService::send([
-                'recipient' => $user->phone,
-                'text'      => 'Доктор ответил на ваш вопрос на сайте iDoctor. Вы можете посмотреть ответ на вашем электронном ящике.'
-            ]);
+            if($user->phone){
+                \SmsService::send([
+                    'recipient' => $user->phone,
+                    'text'      => 'Доктор ответил на ваш вопрос на сайте iDoctor. Вы можете посмотреть ответ на вашем электронном ящике.'
+                ]);
+            }
 
             $subject = 'Новый ответ на вопрос';
 

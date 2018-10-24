@@ -27,12 +27,6 @@ class QuestionController extends Controller
         $question = $this->model::create($dataQuestion);
         //$question->save();
 
-        if (isset($dataUser['birthday'])) {
-            $dataUser['birthday'] = Carbon::createFromDate( $dataUser['birthday'],1,1);
-
-        }
-
-        $dataUser['phone'] = isset($dataUser['phone']) ? FormatHelper::phone($dataUser['phone']) : '';
         $dataUser['question_id'] = $question->id;
 
         QuestionUser::create($dataUser);
