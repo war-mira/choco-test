@@ -337,5 +337,15 @@
         </div>
     </div>
 </section>
+@include('jsond.person',[
+'image'=>url()->to($doctor->getAvatar(300,0)),
+'jobTitle' => $doctor->main_skill->name,
+'name' => $doctor->name,
+'city' => $doctor->city->name,
+'address' => $doctor->medcenters->first() ? $doctor->medcenters->first()->sms_address:null,
+'phone' =>  $doctor->showing_phone,
+'url'=>route('doctor.item',['alias'=>$doctor->alias])
+
+])
 @include('forms.public.order_doc')
 @include('forms.public.error_report')
