@@ -1,4 +1,4 @@
-@extends('redesign.layouts.inner-page')
+@extends('app')
 @section('content')
     <section class="section error--section__container">
         <div class="container">
@@ -16,7 +16,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </section>
 @endsection
