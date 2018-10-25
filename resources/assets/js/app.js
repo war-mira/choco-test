@@ -35,37 +35,42 @@ Vue.component('live-search', require('./components/block_dvsearch.vue'));
 window.socket = Echo.connector.socket;
 // window.socket = {};
 
-var app = new Vue({
-    el: '#app',
-    data:{
-
-    },
-
-    watch:{
-
-    },
-    mounted:function(){
-
-        let tabID = sessionStorage.tabID ? sessionStorage.tabID : sessionStorage.tabID = Math.random();
-        socket.emit('handshake',Echo.connector.csrfToken(),tabID);
-        socket.on('state',function (message) {
-            // socket.emit('join','for-all-dummies');
-        });
-
-        socket.on('command redirect',function (msg) {
-            console.log('redirect to:', msg);
-            location.href = msg;
-        });
 
 
-        socket.on('command notify',function (msg) {
-            // toastr message
-            toastr.success(msg)
-        });
+window.runVue = function() {
+    window.app = new Vue({
+        el: '#app',
+        data:{
 
-    },
-    methods:{
+        },
 
-    }
-});
+        watch:{
 
+        },
+        mounted:function(){
+
+            let tabID = sessionStorage.tabID ? sessionStorage.tabID : sessionStorage.tabID = Math.random();
+            socket.emit('handshake',Echo.connector.csrfToken(),tabID);
+            socket.on('state',function (message) {
+                // socket.emit('join','for-all-dummies');
+            });
+
+            socket.on('command redirect',function (msg) {
+                console.log('redirect to:', msg);
+                location.href = msg;
+            });
+
+
+            socket.on('command notify',function (msg) {
+                // toastr message
+                toastr.success(msg)
+            });
+
+        },
+        methods:{
+
+        }
+    });
+}
+
+runVue();

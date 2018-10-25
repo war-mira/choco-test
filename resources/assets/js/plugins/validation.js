@@ -45,4 +45,7 @@ $('.content_scroll__block').infiniteScroll({
     path: '.pagination_next',
     append: '.entity-line',
     history: false
-});
+}).on( 'append.infiniteScroll', function( event, response, path, items ) {
+    console.log( 'Loaded: ' + path );
+    runVue();
+});;
