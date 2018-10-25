@@ -12,7 +12,7 @@
                         <a href="/" class="btn btn_theme_usual">На главную</a>
                     </div>
                     <div class="error--image__img_container">
-                        <img src="/images/ambulance.png" alt="Такой страницы нет.">
+                        <img src="/img/ambulance.png" alt="Такой страницы нет.">
                     </div>
                 </div>
             </div>

@@ -4,7 +4,7 @@
         <div class="container">
             <div class="errors_block">
                 <div class="error--image__img_container">
-                    <img src="/images/plaster.png" alt="Кажется, что-то пошло не так ...">
+                    <img src="/img/plaster.png" alt="Кажется, что-то пошло не так ...">
                 </div>
                 <h2 class="intro__title">
                     <strong>500</strong>
