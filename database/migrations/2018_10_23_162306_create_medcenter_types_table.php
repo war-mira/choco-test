@@ -16,7 +16,7 @@ class CreateMedcenterTypesTable extends Migration
         Schema::create('medcenter_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('alias');
+            $table->string('alias')->nullable();
             $table->string('h1')->nullable();
             $table->string('description')->nullable();
             $table->string('keywords')->nullable();

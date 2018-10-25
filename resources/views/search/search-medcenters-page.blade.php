@@ -6,10 +6,19 @@
 
     <div id="app" class="app">
         <form id="search-form">
-            @include('search.filtr_med')
+
+            @include('search.filtr_med',compact('city'))
+
 
             <div class="search-result">
                 <div class="container">
+                    <div class="search-result__city-name">
+                        <h1>
+                            @if(!empty($meta['h1']))
+                                {{$meta['h1']}}
+                            @endif
+                        </h1>
+                    </div>
                     <div class="search-result__list">
                     @foreach($Medcenters as $medcenter)
                         <div class="results d-result search-result__item entity-line clinic-line" data-type="doctor" data-id="{{$medcenter->id}}"

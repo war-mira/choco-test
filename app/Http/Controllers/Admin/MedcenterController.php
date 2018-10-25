@@ -53,6 +53,12 @@ class MedcenterController extends Controller
         $data = $this->processRequestData($request);
         $medcenter = Medcenter::create($data);
         $medcenter->save();
+        $types = $data['types'] ?? false;
+        if ($types !== false) {
+            $medcenter->types = $types;
+        }
+
+        $medcenter->save();
 
         if ($redirectRoute != null) {
             $response = redirect(route($redirectRoute, ['id' => $medcenter->id]));
@@ -69,6 +75,11 @@ class MedcenterController extends Controller
 
         $medcenter = Medcenter::find($id);
         $medcenter->fill($data);
+        $types = $data['types'] ?? false;
+        if ($types !== false) {
+            $medcenter->types = $types;
+        }
+
         $medcenter->update();
 
         if ($redirectRoute != null) {

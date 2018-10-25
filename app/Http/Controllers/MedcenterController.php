@@ -10,6 +10,7 @@ use App\Helpers\SearchHelper;
 use App\Http\Requests\Doctor\DoctorFilters;
 use App\Medcenter;
 use App\Helpers\SeoMetadataHelper;
+use App\MedcenterType;
 use App\Model\ServiceItem;
 use App\PageSeo;
 use Illuminate\Http\Request;
@@ -83,6 +84,33 @@ class MedcenterController extends Controller
             ->with('Medcenters', $medcenters)
             ->with('Pagination', $medcenters)
             ->with(compact('filter', 'sortOptions'));
+    }
+
+    public function typeList(City $city,MedcenterType $medcenterType)
+    {
+
+        $medcenters = $medcenterType->medcenters()->paginate(10);
+        $pageSeo = PageSeo::query()
+            ->where('class','MedcenterType')
+            ->where('action', 'typeList')
+            ->first();
+
+        if(!is_null($pageSeo)){
+
+            $meta = SeoMetadataHelper::getMeta($pageSeo, $city,$medcenterType);
+        } else{
+            $title = 'iDoctor.kz - Врачи-специалисты. Список врачей-специалистов в Казахстане';
+            $description = 'iDoctor.kz - Список врачей-специалистов по всему Казахстану. Поиск и бесплатная запись на прием к врачу любой специальности. У нас собрана большая база врачей различных специализаций по всему Казахстану';
+            $meta = compact('title', 'description');
+        }
+
+        return view("search.search-medcenters-page")
+            ->with('meta', $meta)
+            ->with('city', $city)
+            ->with('Medcenters', $medcenters)
+            ->with('Pagination', $medcenters)
+            ->with(compact('filter', 'sortOptions'));
+
     }
 
     private function applyMedcentersFilter($medcenters, $filter)
