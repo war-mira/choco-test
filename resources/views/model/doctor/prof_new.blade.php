@@ -135,19 +135,23 @@
             @endforeach
         @endif
     @if($doctor->partner == \App\Doctor::PARTNER)
-            <form action="#" class="">
-                <div class="appointment-book-big__bot-line">
-                    @if(!empty($doctor->price))
-                        <div class="appointment-book-big__price">
-                            <div class="appointment-book-big__price-text">Прием от:</div>
-                            <div class="appointment-book-big__price-val">от {{$doctor->price}} тг</div>
-                        </div>
-                    @endif
-                    <a href="#order_doctor" data-doc-id="{{$doctor->id}}" data-dname="{{$doctor['name']}}"
-                       class="appointment-book-big__book-btn btn btn_theme_usual trigger-link popup-with-form">Записаться<span
-                                class="hidden-xl"> онлайн</span></a>
-                </div>
-            </form>
+        <form action="#" class="">
+            <div class="appointment-book-big__bot-line">
+                @if(!empty($doctor->price))
+                    <div class="appointment-book-big__price">
+                        <div class="appointment-book-big__price-text">Прием от:</div>
+                        <div class="appointment-book-big__price-val">от {{$doctor->price}} тг</div>
+                    </div>
+                @endif
+                <a href="#order_doctor" data-doc-id="{{$doctor->id}}" data-dname="{{$doctor['name']}}"
+                   class="appointment-book-big__book-btn btn btn_theme_usual trigger-link popup-with-form">Записаться<span
+                            class="hidden-xl"> онлайн</span></a>
+            </div>
+        </form>
+    @elseif($doctor->show_phone != \App\Doctor::SHOW_PHONE)
+            <send-review-btn user="{{ Auth::guest() ? 'guest':'user'}}" type="{{ \App\Comment::typeCommon }}" owner_type="Doctor" owner_id="{{$doctor->id}}">
+                <template slot="send-review-btn"></template>
+            </send-review-btn>
     @endif
 
 
