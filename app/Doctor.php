@@ -613,6 +613,24 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         }
     }
 
+    public function checkForShowPhone(){
+        if($this->show_phone == \App\Doctor::SHOW_PHONE){
+            $showPhone = true;
+        }elseif ($this->medcenters){
+            foreach($this->medcenters as $medcenter){
+                if(in_array($medcenter->id, \App\Doctor::SHOW_PHONES)){
+                    $showPhone = true;
+                }else{
+                    $showPhone = false;
+                }
+            }
+        }else{
+            $showPhone = false;
+        }
+
+        return $showPhone;
+    }
+
 
     public function getAdditionalAttribute()
     {
