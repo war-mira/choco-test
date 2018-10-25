@@ -20,19 +20,22 @@ class MedcenterTypeObserver
     public function created(MedcenterType $medcenterType)
     {
         $this->makeSlug($medcenterType);
-        $medcenterType->save();
+        $this->invalidateCache();
     }
 
     public function saved(MedcenterType $medcenterType)
     {
-        $this->makeSlug($medcenterType);
-        $medcenterType->save();
+        //$this->makeSlug($medcenterType);
+        $this->invalidateCache();
     }
 
     public function updated(MedcenterType $medcenterType)
     {
-        $this->makeSlug($medcenterType);
-        $medcenterType->save();
+        $this->invalidateCache();
+    }
+    public function invalidateCache()
+    {
+        \Cache::tags(['medcenter_types'])->flush();
     }
 
 }

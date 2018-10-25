@@ -10,7 +10,7 @@ class MedcenterType extends Model implements Replaceable
     public $timestamps = false;
     protected $fillable = [
         'name',
-        'h1',
+        'title',
         'alias',
         'active',
         'description',

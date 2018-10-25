@@ -75,7 +75,7 @@ class MedcenterController extends Controller
 
         $medcenter = Medcenter::find($id);
         $medcenter->fill($data);
-        $types = $data['types'] ?? false;
+        $types = $data['types'] ?? [];
         if ($types !== false) {
             $medcenter->types = $types;
         }

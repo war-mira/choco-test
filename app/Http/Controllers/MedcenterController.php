@@ -89,13 +89,27 @@ class MedcenterController extends Controller
     public function typeList(City $city,MedcenterType $medcenterType)
     {
 
-        $medcenters = $medcenterType->medcenters()->paginate(10);
+        $page = request()->get('page')??'1';
+        $medcenters = \Cache::tags(['medcenter_types'])->remember('medcenter_type_'.$medcenterType->alias.'-page_'.$page,120,function() use($medcenterType){
+            var_dump('s');
+            return   $medcenterType->medcenters()->paginate(15);
+        });
+
         $pageSeo = PageSeo::query()
             ->where('class','MedcenterType')
             ->where('action', 'typeList')
             ->first();
 
         if(!is_null($pageSeo)){
+            if(!empty(trim($medcenterType->title))){
+                $pageSeo->title = $medcenterType->title;
+            }
+            if(!empty(trim($medcenterType->description))){
+                $pageSeo->description = $medcenterType->description;
+            }
+            if(!empty(trim($medcenterType->keywords))){
+                $pageSeo->keywords = $medcenterType->keywords;
+            }
 
             $meta = SeoMetadataHelper::getMeta($pageSeo, $city,$medcenterType);
         } else{
@@ -104,7 +118,9 @@ class MedcenterController extends Controller
             $meta = compact('title', 'description');
         }
 
+
         return view("search.search-medcenters-page")
+            ->with('medcenterType', $medcenterType)
             ->with('meta', $meta)
             ->with('city', $city)
             ->with('Medcenters', $medcenters)

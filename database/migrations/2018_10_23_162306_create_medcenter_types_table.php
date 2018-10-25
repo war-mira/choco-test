@@ -17,7 +17,7 @@ class CreateMedcenterTypesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('alias')->nullable();
-            $table->string('h1')->nullable();
+            $table->string('title')->nullable();
             $table->string('description')->nullable();
             $table->string('keywords')->nullable();
             $table->integer('active')->default(0);

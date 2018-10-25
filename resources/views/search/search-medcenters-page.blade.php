@@ -25,7 +25,9 @@
                              id="doctor-result-{{$medcenter->id}}"
                              style="">
 
-                            @component('model.medcenter.new_profile-short',['medcenter'=>$medcenter,'width'=>'250px','highlightSkill'=>$highlightSkill??null])
+                            @component('model.medcenter.new_profile-short',['medcenter'=>$medcenter,'width'=>'250px',
+                            'medcenterType' => $medcenterType??null,
+                            'highlightSkill'=>$highlightSkill??null])
                             @endcomponent
 
                         </div>

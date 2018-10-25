@@ -406,6 +406,7 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
     }
     public function setTypesAttribute($value)
     {
+     //   dd($value);
         $this->types()->sync($value);
     }
     public function types()

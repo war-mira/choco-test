@@ -44,8 +44,8 @@
                     @endcomponent
                     @component('components.bootstrap.column',['class'=>'col-md-6'])
                         @component('components.form.text')
-                            @slot('field','h1')
-                            @slot('value',$seed['h1'] ?? null)
+                            @slot('field','title')
+                            @slot('value',$seed['title'] ?? null)
                             @slot('label','SEO заголовок')
                         @endcomponent
                     @endcomponent
