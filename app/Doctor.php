@@ -237,6 +237,18 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         'name'
     ];
 
+    protected $checkingFields = [
+        'works_since_year',
+        'about_text',
+        'treatment_text',
+        'exp_text',
+        'grad_text',
+        'certs_text',
+        'showing_phone'
+    ];
+    protected $dynamicFieldsQuantity = 2;
+    protected $validLength = 4;
+
     public static function getInstance($id)
     {
         return \Cache::tags(['doctors'])->remember('doctor_id-'.$id,120,function() use($id){
@@ -647,6 +659,30 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
 //        dd($opts);
         return $opts;
     }
+
+   public function getFillingPercentageAttribute()
+   {
+       $requiredFieldCount = count($this->checkingFields) + $this->dynamicFieldsQuantity;
+
+       $fullFieldCount = 0;
+        foreach ($this->checking_fields as $field){
+          if(!empty($this[$field]) && strlen($this[$field]) >= $this->validLength){
+              ++$fullFieldCount;
+          }
+        }
+
+        if(count($this->skills) > 0){
+            ++$fullFieldCount;
+        }
+
+        if(count($this->qualifications) > 0 || strlen($this->qualification) > 0){
+            ++$fullFieldCount;
+        }
+
+        $percent = round(($fullFieldCount * 100) / $requiredFieldCount);
+
+        return $percent;
+   }
 
     public function clicksCount($dateFrom, $dateTo)
     {
