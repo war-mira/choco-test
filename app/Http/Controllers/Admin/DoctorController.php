@@ -72,7 +72,7 @@ class DoctorController extends Controller
         $doctor = Doctor::create($data);
         $doctor->save();
 
-        $this->slug($doctor);
+        //$this->slug($doctor);
 
         $jobs = $data['jobs'] ?? false;
         if ($jobs !== false) {
@@ -112,7 +112,7 @@ class DoctorController extends Controller
 
         $doctor->save();
 
-        $this->slug($doctor);
+        //$this->slug($doctor);
 
         $skills = $data['skills'] ?? false;
         if ($skills !== false) {

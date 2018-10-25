@@ -22,7 +22,6 @@ class ServiceObserver
     public function created(Service $service)
     {
         $this->makeSlug($service);
-        $service->save();
     }
 
 }

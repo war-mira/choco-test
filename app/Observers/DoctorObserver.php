@@ -18,15 +18,16 @@ class DoctorObserver
 
     public function creating(Doctor $doctor)
     {
-        $this->makeSlug($doctor);
+        //$this->makeSlug($doctor);
     }
 
     public function saving(Doctor $doctor)
     {
-        $this->makeSlug($doctor);
+       // $this->makeSlug($doctor);
     }
     public function updated(Doctor $doctor)
     {
+        $this->makeSlug($doctor);
         $this->invalidateCache();
     }
     public function created(Doctor $doctor)

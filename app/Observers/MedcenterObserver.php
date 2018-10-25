@@ -16,14 +16,14 @@ class MedcenterObserver
 {
     use Slug;
 
-    public function creating(Medcenter $medcenter)
+    public function created(Medcenter $medcenter)
     {
         $this->makeSlug($medcenter);
     }
 
     public function saving(Medcenter $medcenter)
     {
-        $this->makeSlug($medcenter);
+        //$this->makeSlug($medcenter);
     }
 
 }
