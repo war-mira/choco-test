@@ -141,16 +141,12 @@
                             {{--</div>--}}
                             {{--@else--}}
                             {{--@if( $doctor->whoIsIt() != \App\Doctor::TYPE[4] && $doctor->whoIsIt() != \App\Doctor::TYPE[5])--}}
-                            @if($doctor->medcenters)
-                                @foreach($doctor->medcenters as $medcenter)
-                                    @if(in_array($medcenter->id, \App\Doctor::SHOW_PHONES) || $doctor->	show_phone == \App\Doctor::SHOW_PHONE)
-                                        <phone-show-btn model="{{ \App\Doctor::SHOW_PHONE_COUNT }}"
-                                                        id="{{ $doctor->id }}"
-                                                        phone="{{ \App\Helpers\HtmlHelper::phoneCode($doctor->showing_phone) }}">
-                                            <template slot="phone-number"></template>
-                                        </phone-show-btn>
-                                    @endif
-                                @endforeach
+                            @if($doctor->checkForShowPhone())
+                                <phone-show-btn model="{{ \App\Doctor::SHOW_PHONE_COUNT }}"
+                                                id="{{ $doctor->id }}"
+                                                phone="{{ \App\Helpers\HtmlHelper::phoneCode($doctor->showing_phone) }}">
+                                    <template slot="phone-number"></template>
+                                </phone-show-btn>
                             @endif
                             {{--@endif--}}
                         </div>

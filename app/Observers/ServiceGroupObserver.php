@@ -21,7 +21,6 @@ class ServiceGroupObserver
     public function created(ServiceGroup $serviceGroup)
     {
         $this->makeSlug($serviceGroup);
-        $serviceGroup->save();
     }
 
 }

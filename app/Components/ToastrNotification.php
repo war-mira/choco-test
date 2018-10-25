@@ -33,8 +33,10 @@ class ToastrNotification
 
     public static function pushErrors($errors)
     {
-        if(($errors->has('email'))){
-            self::push($errors->first('email') );
+        if(!empty($errors)){
+            if(($errors->has('email'))){
+                self::push($errors->first('email') );
+            }
         }
     }
 }

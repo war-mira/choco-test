@@ -68,7 +68,7 @@ class IllnessesGroupController extends Controller
         $illnessesGroup->fill($data);
         $illnessesGroup->save();
 
-        $this->postProcessIllnessesGroup($illnessesGroup);
+        //$this->postProcessIllnessesGroup($illnessesGroup);
 
             if ($redirectRoute != null) {
                 $response = redirect(route($redirectRoute, ['id' => $illnessesGroup->id]));
