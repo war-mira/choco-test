@@ -46,6 +46,8 @@ $('.content_scroll__block').infiniteScroll({
     append: '.entity-line',
     history: false
 }).on( 'append.infiniteScroll', function( event, response, path, items ) {
-    console.log( 'Loaded: ' + path );
-    runVue();
-});;
+
+    if($('#'+items[0].id).text().length>0)
+        runVue();
+    // setTimeout(runVue,5000)
+});
