@@ -35,6 +35,11 @@
             {!! $medcenter['content_lite'] !!}
         </p>
     </div>
+    @if(isset($medcenterType))
+    <div class="clinic-line__brief">
+        <b>{{$medcenterType->name??''}}</b>
+    </div>
+    @endif
     <div class="clinic-line__brief">
         <div class="clinic-line__brief-line">
             <div class="clinic-line__brief-item">

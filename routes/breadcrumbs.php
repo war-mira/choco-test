@@ -67,6 +67,19 @@ Breadcrumbs::register('search.index', function ($breadcrumbs, $options) {
         $breadcrumbs->push($title);
     }
 });
+Breadcrumbs::register('search.medcenter_type', function ($breadcrumbs, $options) {
+
+    $city = $options['city'];
+    $title = $options['title'];
+    $city_title = 'Медцентры в ' . (SeoMetadataHelper::CityPP[$city->id] ?? GeographicalNamesInflection::getCase($city->name, 'предложный'));
+    $breadcrumbs->parent('home');
+    $breadcrumbs->push($city_title, route('medcenters.list', [
+        'city' => $city->alias
+    ], false));
+    if (!is_null($title)) {
+        $breadcrumbs->push($title);
+    }
+});
 Breadcrumbs::register('doctor.profile', function ($breadcrumbs, $doctor) {
 
     $city_title = 'Врачи в ' . (SeoMetadataHelper::CityPP[$doctor->city->id] ?? GeographicalNamesInflection::getCase($doctor->city->name, 'предложный'));

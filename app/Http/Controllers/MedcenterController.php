@@ -10,6 +10,7 @@ use App\Helpers\SearchHelper;
 use App\Http\Requests\Doctor\DoctorFilters;
 use App\Medcenter;
 use App\Helpers\SeoMetadataHelper;
+use App\MedcenterType;
 use App\Model\ServiceItem;
 use App\PageSeo;
 use Illuminate\Http\Request;
@@ -83,6 +84,49 @@ class MedcenterController extends Controller
             ->with('Medcenters', $medcenters)
             ->with('Pagination', $medcenters)
             ->with(compact('filter', 'sortOptions'));
+    }
+
+    public function typeList(City $city,MedcenterType $medcenterType)
+    {
+
+        $page = request()->get('page')??'1';
+        $medcenters = \Cache::tags(['medcenter_types'])->remember('medcenter_type_'.$medcenterType->alias.'-page_'.$page,120,function() use($medcenterType){
+            var_dump('s');
+            return   $medcenterType->medcenters()->paginate(15);
+        });
+
+        $pageSeo = PageSeo::query()
+            ->where('class','MedcenterType')
+            ->where('action', 'typeList')
+            ->first();
+
+        if(!is_null($pageSeo)){
+            if(!empty(trim($medcenterType->title))){
+                $pageSeo->title = $medcenterType->title;
+            }
+            if(!empty(trim($medcenterType->description))){
+                $pageSeo->description = $medcenterType->description;
+            }
+            if(!empty(trim($medcenterType->keywords))){
+                $pageSeo->keywords = $medcenterType->keywords;
+            }
+
+            $meta = SeoMetadataHelper::getMeta($pageSeo, $city,$medcenterType);
+        } else{
+            $title = 'iDoctor.kz - Врачи-специалисты. Список врачей-специалистов в Казахстане';
+            $description = 'iDoctor.kz - Список врачей-специалистов по всему Казахстану. Поиск и бесплатная запись на прием к врачу любой специальности. У нас собрана большая база врачей различных специализаций по всему Казахстану';
+            $meta = compact('title', 'description');
+        }
+
+
+        return view("search.search-medcenters-page")
+            ->with('medcenterType', $medcenterType)
+            ->with('meta', $meta)
+            ->with('city', $city)
+            ->with('Medcenters', $medcenters)
+            ->with('Pagination', $medcenters)
+            ->with(compact('filter', 'sortOptions'));
+
     }
 
     private function applyMedcentersFilter($medcenters, $filter)

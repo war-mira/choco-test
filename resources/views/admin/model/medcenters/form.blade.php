@@ -6,7 +6,7 @@
     <form action="{{$action}}" id="edit-form" method="post" enctype="multipart/form-data">
         {{csrf_field()}}
         @component('components.bootstrap.row')
-            @component('components.bootstrap.column',['class'=>'col-md-9'])
+            @component('components.bootstrap.column',['class'=>'col-md-8'])
                 @component('components.bootstrap.row')
                     @component('components.bootstrap.column',['class'=>'col-md-2'])
                         @component('components.form.text')
@@ -141,21 +141,37 @@
                             @slot('search',true)
                         @endcomponent
                     @endcomponent
-                        @component('components.bootstrap.column',['class'=>'col-md-6'])
-                            @component('components.form.text')
-                                @slot('field','website')
-                                @slot('value',$seed['website'] ?? null)
-                                @slot('label','Сайт')
-                            @endcomponent
+                    @component('components.bootstrap.column',['class'=>'col-md-6'])
+                        @component('components.form.text')
+                            @slot('field','website')
+                            @slot('value',$seed['website'] ?? null)
+                            @slot('label','Сайт')
                         @endcomponent
+                    @endcomponent
                 @endcomponent
             @endcomponent
-            @component('components.bootstrap.column',['class'=>'col-md-3'])
-                @component('components.form.image')
-                    @slot('field','avatar')
-                    @slot('value',$seed['avatar'] ?? '')
-                    @slot('placeholder','Аватар')
-                    @slot('label','Аватар')
+            @component('components.bootstrap.column',['class'=>'col-md-4'])
+                @component('components.bootstrap.row')
+                    @component('components.bootstrap.column',['class'=>'col-md-12'])
+                        @component('components.form.image')
+                            @slot('field','avatar')
+                            @slot('value',$seed['avatar'] ?? '')
+                            @slot('placeholder','Аватар')
+                            @slot('label','Аватар')
+                        @endcomponent
+                    @endcomponent
+
+                    @component('components.bootstrap.column',['class'=>'col-md-12'])
+                        @component('components.form.multiselect')
+                            @slot('field','types')
+                            @slot('value',array_pluck($seed['types'] ?? [],'id'))
+                            @slot('placeholder','Медцентры')
+                            @slot('label','Медцентры')
+                            @slot('options',\App\MedcenterType::orderBy('name')->get())
+                            @slot('idField','id')
+                            @slot('nameField','name')
+                        @endcomponent
+                    @endcomponent
                 @endcomponent
             @endcomponent
         @endcomponent
