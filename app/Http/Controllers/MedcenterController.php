@@ -91,7 +91,6 @@ class MedcenterController extends Controller
 
         $page = request()->get('page')??'1';
         $medcenters = \Cache::tags(['medcenter_types'])->remember('medcenter_type_'.$medcenterType->alias.'-page_'.$page,120,function() use($medcenterType){
-            var_dump('s');
             return   $medcenterType->medcenters()->paginate(15);
         });
 

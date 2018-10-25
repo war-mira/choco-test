@@ -137,7 +137,7 @@
                 var skillUrl = url + '/' + $(this).val() + query;
                 window.location.assign(skillUrl);
             });
- 
+
         });
         $('.doctor_list').infiniteScroll({
                   path: '.pagination_next',
