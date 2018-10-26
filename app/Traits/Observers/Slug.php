@@ -16,5 +16,6 @@ trait Slug
         $newName =  preg_replace('~[\\*?"<>|]~', '', $model->name);
         $transName = \Slug::make($newName);
         $model->alias = $model->id . "-" . $transName;
+        $model->save();
     }
 }

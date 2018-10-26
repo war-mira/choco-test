@@ -16,14 +16,25 @@ class MedcenterObserver
 {
     use Slug;
 
-    public function creating(Medcenter $medcenter)
+    public function created(Medcenter $medcenter)
     {
         $this->makeSlug($medcenter);
+        $this->invalidateCache();
     }
 
     public function saving(Medcenter $medcenter)
     {
-        $this->makeSlug($medcenter);
+        //$this->makeSlug($medcenter);
+    }
+
+    public function updated()
+    {        $this->invalidateCache();
+
+    }
+
+    public function invalidateCache()
+    {
+        \Cache::tags(['medcenters','medcenter_types'])->flush();
     }
 
 }

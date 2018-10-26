@@ -133,6 +133,10 @@
                                     Медцентры</a>
                             </li>
                             <li>
+                                <a href="{{route('admin.medcenter_types.table')}}"><i class="fa fa-list-ul fa-fw"></i>
+                                    Типы медцентров</a>
+                            </li>
+                            <li>
                                 <a href="{{route('admin.skills.table')}}"><i class="fa fa-plus-square fa-fw"></i>
                                     Специализации</a>
                             </li>

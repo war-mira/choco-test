@@ -70,7 +70,7 @@ class IllnessesGroupArticlesController extends Controller
         $illnessesArticle->fill($data);
         $illnessesArticle->save();
 
-        $this->postProcessIllnessesGroup($illnessesArticle);
+        //$this->postProcessIllnessesGroup($illnessesArticle);
 
             if ($redirectRoute != null) {
                 $response = redirect(route($redirectRoute, ['id' => $illnessesArticle->id]));

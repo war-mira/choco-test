@@ -20,7 +20,6 @@ class SkillObserver
     public function created(Skill $skill)
     {
         $this->makeSlug($skill);
-        $skill->save();
         $this->invalidateCache();
     }
     public function updated(Skill $skill)
