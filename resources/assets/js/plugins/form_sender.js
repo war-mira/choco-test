@@ -21,6 +21,7 @@
                     
                 }).fail(function (data) {
                     target.classList.remove('saving');
+                    toastr.error('Извините, произошла ошибка');
             });
     });
     
