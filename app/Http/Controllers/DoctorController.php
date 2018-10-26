@@ -61,7 +61,7 @@ class DoctorController extends Controller
 
 
             return $query->whereNotNull('avatar')->limit(9)->get();
-        }); 
+        });
         return view('doctors.item')
             ->with('meta', $meta)
             ->with('districts', $districts)
