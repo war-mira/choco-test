@@ -1,25 +1,24 @@
 <div id="error_report" class="white-popup mfp-hide">
-    <form id="error-report__form">
+    <form>
         <div class="error-report__heading">Сообщение об ошибке</div><br/>
         <div class="error-report__input-line">
             <input type="hidden" name="current_url" value="{{url()->current()}}">
-
             <div>
                 <input type="email" class="form-control " placeholder="*Email" name="error_email" required>
             </div>
             <div class="error-report__textarea-item">
                 <div class="collapse">
-                    <textarea class="form-control" id="error_text" placeholder="*Текст ошибки" name="error_text" required></textarea>
+                    <textarea class="form-control" placeholder="*Текст ошибки" name="error_text" required></textarea>
                 </div>
             </div>
             <div class="error-report__submit">
-                <button class="btn btn_theme_usual" onclick="sendAboutError(event);">Отправить</button>
+                <button class="btn btn_theme_usual">Отправить</button>
             </div>
         </div>
     </form>
-</div>
-<div id="error_mess_ok" class="white-popup mfp-hide">
-    <p>
-        <strong>Спасибо!</strong> за Ваше сообщение!
-    </p>
+    <div class="response__block white-popup hide">
+        <p>
+            <strong>Спасибо</strong> за Ваше сообщение!
+        </p>
+    </div>
 </div>
