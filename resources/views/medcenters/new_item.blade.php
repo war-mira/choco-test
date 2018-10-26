@@ -53,7 +53,7 @@
 
                     <div class="entity-line__about-text">
                         <p>
-                            {!! $medcenter->content !!}
+                            {!! $medcenter->content_lite !!}
                         </p>
                     </div>
                     @if(!empty($medcenter->types->count() > 0))
