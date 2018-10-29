@@ -73,6 +73,8 @@ Route::group(['prefix' => '{city}'], function () {
     });
     Route::group(['prefix' => 'medcenters', 'as' => 'medcenters.'], function () {
         Route::get('/', 'MedcenterController@list')->name('list');
+        Route::get('/type/{medcenterType}', 'MedcenterController@typeList')->name('type');
+
     });
     Route::group(['prefix' => 'medcenter', 'as' => 'medcenter.'], function () {
         Route::get('/{medcenter}', 'MedcenterController@item')->name('item');

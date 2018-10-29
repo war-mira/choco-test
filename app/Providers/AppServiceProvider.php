@@ -7,10 +7,12 @@ use App\Comment;
 use App\Doctor;
 use App\Http\Resources\BootstrapTableResource;
 use App\Medcenter;
+use App\MedcenterType;
 use App\Observers\CallbacksObserver;
 use App\Observers\CommentObserver;
 use App\Observers\DoctorObserver;
 use App\Observers\MedcenterObserver;
+use App\Observers\MedcenterTypeObserver;
 use App\Observers\OrderObserver;
 use App\Observers\OrdersObserver;
 use App\Observers\QuestionObserver;
@@ -43,6 +45,7 @@ class AppServiceProvider extends ServiceProvider
         ServiceGroup::observe(ServiceGroupObserver::class);
         Service::observe(ServiceObserver::class);
         Question::observe(QuestionObserver::class);
+        MedcenterType::observe(MedcenterTypeObserver::class);
 
         //Resources
         BootstrapTableResource::withoutWrapping();

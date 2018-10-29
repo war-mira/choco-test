@@ -1,10 +1,11 @@
 @include('redesign.layouts._header')
 <body>
 @include('partials.gtm-additionally')
-<div class="main-wrap" >
-    <div id="app"></div>
+<div class="main-wrap">
     @include('redesign.partials.header')
-    @yield('content')
+    {{--<div id="app">--}}
+        @yield('content')
+    {{--</div>--}}
     @include('redesign.partials.footer')
     <div class="modal-container">
         @include('redesign.partials.modals.modal-login')
@@ -13,7 +14,6 @@
         @include('redesign.partials.modals.ask-doctor',['skillsList'=> $skillsList??[]])
     </div>
 </div>
-
 @include('redesign.layouts._footer')
 
 </body>
