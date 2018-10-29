@@ -409,6 +409,11 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
      //   dd($value);
         $this->types()->sync($value);
     }
+
+    public function services(){
+        return $this->belongsToMany(Service::class,'service_medcenter','medcenter_id','service_id')
+            ->withPivot(['price']);
+    }
     public function types()
     {
         return $this->belongsToMany(MedcenterType::class,'medcenter_type','medcenter_id','type_id');

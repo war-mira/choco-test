@@ -15,6 +15,7 @@
             @foreach($serviceGroups->chunk(2) as $group)
                 <div class="service-list-block">
                     @foreach($group as $item)
+
                         <div class="service-list-column">
                             <div class="entity-line__name">
                                 <a href="{{route('service.group',['alias' => $item->alias])}}">{{$item->name}}</a>
@@ -22,9 +23,11 @@
                             <div class="entity-line__list">
                                 <ul>
                                     @foreach($item->services()->limit(10)->get() as $service)
+                                        @if($service->medcenters()->count() > 0)
                                         <li>
                                             <a href={{route('service.medcenter-list',['group'=>$item->alias,'alias'=>$service->alias])}}>{{$service->name}}</a>
                                         </li>
+                                        @endif
                                     @endforeach
                                 </ul>
                                 @if($item->services->count() > 10)
@@ -34,6 +37,7 @@
                                 @endif
                             </div>
                         </div>
+
                     @endforeach
                 </div>
             @endforeach
