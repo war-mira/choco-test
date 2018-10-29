@@ -41,6 +41,14 @@
                             <template slot="dislikes">{{ $doctor->dislikes }}</template>
                         </inp-rate>
                     </div>
+                    <div class="entity-thumb-img__scale">
+                        <div class="percent-color {{$doctor->fillingPercentage['class']}}">
+                            <div class="filling-scale">
+                                <div class="progress-bar" style="width: {{ $doctor->fillingPercentage['percent'] }}%"></div>
+                            </div>
+                            <div class="progress-text">Заполнено на: <span>{{ $doctor->fillingPercentage['percent'] }}%</span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="entity-line__main">
