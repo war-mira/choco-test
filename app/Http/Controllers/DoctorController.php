@@ -206,7 +206,9 @@ class DoctorController extends Controller
 
     public function listByIllness(City $city,Illness $illness)
     {
-        $doctors = $illness->doctors()->paginate(10);
+        $doctors = $illness->doctors()
+            ->where('doctors.city_id',$city->id)
+            ->paginate(10);
         $pageSeo = PageSeo::query()
             ->where('class','DoctorByIllness')
             ->where('action', 'list')
