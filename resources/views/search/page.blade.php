@@ -20,17 +20,20 @@
                             <p>Топ лучших специалистов в {{ $city->name }}. Список {{ isset($skill) ? mb_strtolower($skill->name).'ов' : '' }} с фото, отзывами, рейтингом и проверенными контактами.</p>
                             <p>Быстрый поиск и запись на прием к {{isset($skill) ? mb_strtolower($skill->name).'у':'' }} на iDoctor.kz.</p>
                         </div>
-                        @if($comercial)
-                            @foreach($comercial->get() as $doctor)
-                                <div class="search-result__item entity-line doc-line" data-type="doctor"
-                                     data-id="{{$doctor->id}}"
-                                     id="doctor-result-{{$doctor->id}}">
-                                    @component('model.doctor.prof_new',['doctor'=>$doctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'comercial'=>true])
-                                    @endcomponent
-                                </div>
-                            @endforeach
+                        @if(isset($comercial))
+                            @if($comercial)
+                                @foreach($comercial->get() as $doctor)
+                                    <div class="search-result__item entity-line doc-line" data-type="doctor"
+                                         data-id="{{$doctor->id}}"
+                                         id="doctor-result-{{$doctor->id}}">
+                                        @component('model.doctor.prof_new',['doctor'=>$doctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'comercial'=>true])
+                                        @endcomponent
+                                    </div>
+                                @endforeach
+                            @endif
                         @endif
 
+                        @if(isset($doctorsTop))
                         @if($doctorsTop)
                             @foreach($doctorsTop as $doctor)
                                 <div class="search-result__item entity-line doc-line" data-type="doctor"
@@ -40,6 +43,7 @@
                                     @endcomponent
                                 </div>
                             @endforeach
+                        @endif
                         @endif
                         @if(isset($doubleActiveDoctor))
                             <div class="search-result__item entity-line doc-line" data-type="doctor"

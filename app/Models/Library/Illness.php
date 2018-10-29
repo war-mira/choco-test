@@ -5,9 +5,11 @@ namespace App\Models\Library;
 use App\Components\Longrid\GridModel;
 use App\Doctor;
 use App\Interfaces\ISeoMetadata;
+use App\Interfaces\Replaceable;
 use Illuminate\Database\Eloquent\Model;
+use morphos\Russian\GeographicalNamesInflection;
 
-class Illness extends Model implements ISeoMetadata
+class Illness extends Model implements ISeoMetadata,Replaceable
 {
     use GridModel;
     protected $fillable = [
@@ -78,5 +80,14 @@ class Illness extends Model implements ISeoMetadata
     public function getSeoText()
     {
         return '';
+    }
+
+    public function mergeWithCustomPlaceholders($phs){
+        $title = GeographicalNamesInflection::getCase($this->name, 'родительный');
+        $placeholder = [
+            ':title' =>$title
+        ];
+
+        return array_merge($phs,$placeholder);
     }
 }

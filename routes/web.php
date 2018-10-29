@@ -56,6 +56,7 @@ Route::get('medcenter/{medcenter}', function (\App\Medcenter $medcenter) {
 
 Route::group(['prefix' => '{city}'], function () {
     Route::group(['prefix' => 'doctors', 'as' => 'doctors.'], function () { //Добавил z - удалить
+        Route::get('/illness/{illness}', 'DoctorController@listByIllness')->name('list_illness');
         Route::get('/{input?}/{modifier?}', 'DoctorController@list')->name('list');
     });
     Route::group(['prefix' => 'doctors_old', 'as' => 'doctors_old.'], function () { //Добавил z - удалить
