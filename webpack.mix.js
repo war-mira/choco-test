@@ -43,6 +43,7 @@ mix
     ], 'public/projects/longrid-js/css/editor.css')
     .combine([
         'node_modules/medium-editor/dist/js/medium-editor.min.js',
+        'node_modules/medium-editor-autolist/dist/autolist.min.js',
         'node_modules/sortablejs/Sortable.min.js',
         'public/projects/longrid-js/pre-build/app.js',
     ],'public/projects/longrid-js/js/editor.js')

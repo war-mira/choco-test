@@ -914,6 +914,7 @@ var TextElement = function (_AbstractElement5) {
             var placeholder = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'Введите текст...';
 
             var selector = this.instance.querySelector('.editable');
+            var autolist = new AutoList();
             this.editor = new MediumEditor(selector, {
                 toolbar: {
                     /* These are the default options for the toolbar,
@@ -922,7 +923,13 @@ var TextElement = function (_AbstractElement5) {
                     buttons: ['bold', 'italic', 'h2', 'h3', 'h4', {
                         name: 'anchor',
                         contentDefault: '<i class="fa fa-link"></i>'
-                    }, 'quote', 'justifyLeft', 'justifyCenter', 'justifyRight', 'removeFormat'],
+                    }, 'quote', 'justifyLeft', 'justifyCenter', 'justifyRight', {
+                        name: 'unorderedlist',
+                        contentDefault: '<i class="fa fa-list-ul"></i>'
+                    }, {
+                        name: 'orderedlist',
+                        contentDefault: '<i class="fa fa-list-ol"></i>'
+                    }, 'removeFormat'],
                     diffLeft: 0,
                     diffTop: -10,
                     firstButtonClass: 'medium-editor-button-first',
@@ -934,6 +941,9 @@ var TextElement = function (_AbstractElement5) {
                     align: 'center',
                     sticky: false,
                     updateOnEmptySelection: false
+                },
+                extensions: {
+                    'autolist': autolist
                 },
                 placeholder: {
                     text: placeholder,
