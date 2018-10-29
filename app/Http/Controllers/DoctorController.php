@@ -142,7 +142,7 @@ class DoctorController extends Controller
             $activeAnswersDoctor = clone $doctors;
 
             $activeCommentsDoctor = Cache::remember('active-comments-doctor:' . $skill->id, 120, function () use ($activeCommentsDoctor, $dateStart, $dateEnd) {
-                return $activeCommentsDoctor->table('doctors')->select(['*', DB::raw('count(comments.id) as total')])
+                return $activeCommentsDoctor->select(['*', DB::raw('count(comments.id) as total')])
                     ->leftJoin('comments', 'doctors.id', '=', 'comments.owner_id')
                     ->whereBetween('comments.created_at', [$dateStart, $dateEnd])
                     ->groupBy('doctors.id')
@@ -151,9 +151,8 @@ class DoctorController extends Controller
             });
 
             $activeAnswersDoctor = Cache::remember('active-answers-doctor:' . $skill->id, 120, function () use ($activeAnswersDoctor, $dateStart, $dateEnd) {
-                return $activeAnswersDoctor->table('doctors')
+                return $activeAnswersDoctor->select(['*', DB::raw('count(question_answers.id) as total')])
                     ->leftJoin('question_answers', 'doctors.id', '=', 'question_answers.doctor_id')
-                    ->select(['doctors.*', DB::raw('count(question_answers.id) as total')])
                     ->whereBetween('question_answers.created_at', [$dateStart, $dateEnd])
                     ->groupBy('doctors.id')
                     ->orderBy('total', 'DESC')
