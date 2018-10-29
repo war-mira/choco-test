@@ -19,7 +19,7 @@ class SmsNotificationResource extends Resource
             'client_name'                => $this->order->client->name??'',
             'client_phone'               => $this->recipient,
             'doctor_name'                => $this->order->doctor->name,
-            'medcenter_name'             => $this->order->medcenter->name,
+            'medcenter_name'             => $this->order->medcenter->name??'',
             'text'                       => $this->text,
             'order_id'                   => $this->order_id,
             'type'                       => $this->type,
