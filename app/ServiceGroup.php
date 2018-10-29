@@ -10,11 +10,14 @@ class ServiceGroup extends Model
 
     public function services()
     {
-        return $this->hasMany(Service::class,'group_id');
+        return $this->hasMany(Service::class,'group_id')->has('medcenters');
     }
     public function scopeActive($query)
     {
         return $query->where('active',1);
     }
 
+    public function allServices(){
+        return $this->hasMany(Service::class,'group_id');
+    }
 }
