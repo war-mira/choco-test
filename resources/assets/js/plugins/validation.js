@@ -15,6 +15,11 @@ $("#ask-question__form-send").click(function () {
                     $('#doctor_mess_ok').show();
                 }
                 else if (json.id) {
+                    ga('send', {
+                        'category' : 'form',
+                        'action' : 'send',
+                        'label': 'ask_doctor_form'
+                    });
                     $('#doctor_mess_ok').removeClass('error').addClass('access').html('<b>Спасибо за вопрос! Когда врач ответит, мы Вам обязательно сообщим.</b>');
                     $('#doctor_mess_ok').show();
                     form.hide();
