@@ -124,7 +124,7 @@ class DoctorController extends Controller
         $doctorsTop = null;
         $activeCommentsDoctor = null;
         $activeAnswersDoctor = null;
-        $activeDoctor = null;
+        $doubleActiveDoctor = null;
         $comercial = Doctor::where('comercial', 1)->orderBy('firstname', 'asc');
         $districts = District::all();
 
@@ -135,14 +135,14 @@ class DoctorController extends Controller
             if ($top_doctors && $skill->top_doctors) {
                 $doctorsTop = Doctor::whereIn('id', $skill->top_doctors)->orderByRaw('FIELD(id,' . $top_doctors . ')')->where('status', 1)->get();
             }
-        }
 
-        if($skill) {
             $dateStart = date("Y-m-d h:m:s", strtotime('monday this week'));
             $dateEnd = date("Y-m-d h:m:s", strtotime('sunday this week'));
+            $activeCommentsDoctor = clone $doctors;
+            $activeAnswersDoctor = clone $doctors;
 
-            $activeCommentsDoctor = Cache::remember('active-comments-doctor:' . $skill->id, 120, function () use ($doctors, $dateStart, $dateEnd) {
-                return $doctors->select(['*', DB::raw('count(comments.id) as total')])
+            $activeCommentsDoctor = Cache::remember('active-comments-doctor:' . $skill->id, 120, function () use ($activeCommentsDoctor, $dateStart, $dateEnd) {
+                return $activeCommentsDoctor->table('doctors')->select(['*', DB::raw('count(comments.id) as total')])
                     ->leftJoin('comments', 'doctors.id', '=', 'comments.owner_id')
                     ->whereBetween('comments.created_at', [$dateStart, $dateEnd])
                     ->groupBy('doctors.id')
@@ -150,19 +150,20 @@ class DoctorController extends Controller
                     ->first();
             });
 
-            $activeAnswersDoctor = Cache::remember('active-answers-doctor:' . $skill->id, 120, function () use ($doctors, $dateStart, $dateEnd) {
-                return $doctors->select(['*', DB::raw('count(question_answers.id) as total')])
+            $activeAnswersDoctor = Cache::remember('active-answers-doctor:' . $skill->id, 120, function () use ($activeAnswersDoctor, $dateStart, $dateEnd) {
+                return $activeAnswersDoctor->table('doctors')
                     ->leftJoin('question_answers', 'doctors.id', '=', 'question_answers.doctor_id')
+                    ->select(['doctors.*', DB::raw('count(question_answers.id) as total')])
                     ->whereBetween('question_answers.created_at', [$dateStart, $dateEnd])
                     ->groupBy('doctors.id')
                     ->orderBy('total', 'DESC')
                     ->first();
             });
 
-            if(isset($activeCommentsDoctor) && isset($activeAnswersDoctor) && $activeCommentsDoctor->id == $activeAnswersDoctor->id)
-                $activeDoctor = $activeCommentsDoctor;
-        }
+            if(isset($activeCommentsDoctor) && isset($activeAnswersDoctor) && $activeCommentsDoctor->alias == $activeAnswersDoctor->alias)
+                $doubleActiveDoctor = $activeCommentsDoctor;
 
+        }
 
         if (isset($doctorsTop))
             $doctors = $doctors->whereNotIn('doctors.id', $skill->top_doctors);
@@ -197,7 +198,7 @@ class DoctorController extends Controller
         $meta = SeoMetadataHelper::getMeta($skill ?? $pageSeo, $city);
 
         return view('search.page',
-            compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage', 'skill', 'comercial', 'districts', 'activeCommentsDoctor', 'activeAnswersDoctor', 'activeDoctor'));
+            compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage', 'skill', 'comercial', 'districts', 'activeCommentsDoctor', 'activeAnswersDoctor', 'doubleActiveDoctor'));
 
     }
 

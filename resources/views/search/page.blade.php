@@ -41,11 +41,11 @@
                                 </div>
                             @endforeach
                         @endif
-                        @if(isset($activeDoctor))
+                        @if(isset($doubleActiveDoctor))
                             <div class="search-result__item entity-line doc-line" data-type="doctor"
-                                 data-id="{{$activeDoctor->id}}"
-                                 id="doctor-result-{{$activeDoctor->id}}">
-                                @component('model.doctor.prof_new',['doctor'=>$activeDoctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'activeDoctor'=>true, 'responsiveDoctor'=>true])
+                                 data-id="{{$doubleActiveDoctor->id}}"
+                                 id="doctor-result-{{$doubleActiveDoctor->id}}">
+                                @component('model.doctor.prof_new',['doctor'=>$doubleActiveDoctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'doubleActiveDoctor'=>true])
                                 @endcomponent
                             </div>
                         @elseif(isset($activeCommentsDoctor))

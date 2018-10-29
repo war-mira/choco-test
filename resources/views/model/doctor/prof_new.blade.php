@@ -109,14 +109,19 @@
         <div class="appointment-book-big__heading">Записаться на прием</div>
     @endif
     <div class="appointment-book-big__timeline">
-        @if(isset($activeDoctor))
+        @if(isset($doubleActiveDoctor))
+            <div class="entity-thumb-img__label red entity-thumb-img__label_active double_active">
+                <div class="entity-thumb-img__label_text">
+                    <div class="entity-thumb-span_most">Самый</div>активный и отзывчивый
+                </div>
+            </div>
+        @elseif(isset($activeCommentsDoctor))
             <div class="entity-thumb-img__label red entity-thumb-img__label_active">
                 <div class="entity-thumb-img__label_text">
                     <div class="entity-thumb-span_most">Самый</div>активный
                 </div>
             </div>
-        @endif
-        @if(isset($responsiveDoctor))
+        @elseif(isset($responsiveDoctor))
             <div class="entity-thumb-img__label red entity-thumb-img__label_responsive">
                 <div class="entity-thumb-img__label_text">
                     <div class="entity-thumb-span_most">Самый</div>отзывчивый
