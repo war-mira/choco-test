@@ -109,22 +109,21 @@
         <div class="appointment-book-big__heading">Записаться на прием</div>
     @endif
     <div class="appointment-book-big__timeline">
-        {!! $doctor->timetable !!}
+        @if(isset($activeDoctor))
+            <div class="entity-thumb-img__label red entity-thumb-img__label_active">
+                <div class="entity-thumb-img__label_text">
+                    <div class="entity-thumb-span_most">Самый</div>активный
+                </div>
+            </div>
+        @endif
+        @if(isset($responsiveDoctor))
+            <div class="entity-thumb-img__label red entity-thumb-img__label_responsive">
+                <div class="entity-thumb-img__label_text">
+                    <div class="entity-thumb-span_most">Самый</div>отзывчивый
+                </div>
+            </div>
+        @endif
     </div>
-        {{--@if($doctor->whoIsIt() == \App\Doctor::TYPE[3])--}}
-        {{--<div class="appointment-book-big__bot-line">--}}
-            {{--<find-doctor-btn model="{{ \App\Doctor::FIND_DOCTOR_COUNT }}" id="{{ $doctor->id }}">--}}
-                {{--<template slot="link-to-modal"></template>--}}
-            {{--</find-doctor-btn>--}}
-            {{--<a href="{{ route('register') }}" class="btn btn_theme_usual">Это я</a>--}}
-        {{--</div>--}}
-        {{--@else--}}
-            {{--@if( $doctor->whoIsIt() != \App\Doctor::TYPE[4] && $doctor->whoIsIt() != \App\Doctor::TYPE[5])--}}
-                {{--<phone-show-btn model="{{ \App\Doctor::SHOW_PHONE_COUNT }}" id="{{ $doctor->id }}">--}}
-                    {{--<template slot="phone-number"></template>--}}
-                {{--</phone-show-btn>--}}
-            {{--@endif--}}
-        {{--@endif--}}
     @if($doctor->checkForShowPhone())
         <phone-show-btn model="{{ \App\Doctor::SHOW_PHONE_COUNT }}" id="{{ $doctor->id }}" phone="{{ \App\Helpers\HtmlHelper::phoneCode($doctor->showing_phone) }}">
             <template slot="phone-number"></template>

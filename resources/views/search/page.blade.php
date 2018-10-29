@@ -41,6 +41,28 @@
                                 </div>
                             @endforeach
                         @endif
+                        @if(isset($activeDoctor))
+                            <div class="search-result__item entity-line doc-line" data-type="doctor"
+                                 data-id="{{$activeDoctor->id}}"
+                                 id="doctor-result-{{$activeDoctor->id}}">
+                                @component('model.doctor.prof_new',['doctor'=>$activeDoctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'activeDoctor'=>true, 'responsiveDoctor'=>true])
+                                @endcomponent
+                            </div>
+                        @elseif(isset($activeCommentsDoctor))
+                            <div class="search-result__item entity-line doc-line" data-type="doctor"
+                                 data-id="{{$activeCommentsDoctor->id}}"
+                                 id="doctor-result-{{$activeCommentsDoctor->id}}">
+                                @component('model.doctor.prof_new',['doctor'=>$activeCommentsDoctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'activeDoctor'=>true])
+                                @endcomponent
+                            </div>
+                        @elseif(isset($activeAnswersDoctor))
+                            <div class="search-result__item entity-line doc-line" data-type="doctor"
+                                 data-id="{{$activeAnswersDoctor->id}}"
+                                 id="doctor-result-{{$activeAnswersDoctor->id}}">
+                                @component('model.doctor.prof_new',['doctor'=>$activeAnswersDoctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'responsiveDoctor'=>true])
+                                @endcomponent
+                            </div>
+                        @endif
                         <div class="doctor_list content_scroll__block">
                             @foreach($doctors as $doctor)
                                 <div class="search-result__item entity-line doc-line" data-type="doctor"

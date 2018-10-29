@@ -355,6 +355,11 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         return $this->hasMany(Order::class, 'doc_id', 'id');
     }
 
+    public function question_answers()
+    {
+        return $this->hasMany(QuestionAnswer::class, 'doctor_id', 'id');
+    }
+
 //    public function medname()
 //    {
 //        return $this->belongsToMany(Medcenter::class,'doctors','id','med_id');
@@ -626,14 +631,14 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
     }
 
     public function checkForShowPhone(){
+        $showPhone = false;
+
         if($this->show_phone == \App\Doctor::SHOW_PHONE){
             $showPhone = true;
         }elseif ($this->medcenters){
             foreach($this->medcenters as $medcenter){
                 if(in_array($medcenter->id, \App\Doctor::SHOW_PHONES)){
                     $showPhone = true;
-                }else{
-                    $showPhone = false;
                 }
             }
         }else{
