@@ -670,7 +670,7 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
        $requiredFieldCount = count($this->checkingFields) + $this->dynamicFieldsQuantity;
 
        $fullFieldCount = 0;
-        foreach ($this->checking_fields as $field){
+        foreach ($this->checkingFields as $field){
           if(!empty($this[$field]) && strlen($this[$field]) >= $this->validLength){
               ++$fullFieldCount;
           }
@@ -686,7 +686,24 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
 
         $percent = round(($fullFieldCount * 100) / $requiredFieldCount);
 
-        return $percent;
+        switch ($percent){
+            case $percent < 50:
+                $class = 'percent-red';
+                break;
+            case $percent >=50 && $percent <= 65:
+                $class = 'percent-orange';
+                break;
+            case $percent > 65 && $percent <=75:
+                $class = 'percent-green';
+                break;
+            case $percent > 75:
+                $class = 'percent-blue';
+                break;
+            default:
+                $class = 'percent-blue';
+        }
+
+        return ['percent' => $percent, 'class'=> $class];
    }
 
     public function clicksCount($dateFrom, $dateTo)

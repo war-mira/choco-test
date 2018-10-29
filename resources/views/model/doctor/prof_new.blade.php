@@ -38,6 +38,14 @@
             <template slot="dislikes">{{ $doctor->dislikes }}</template>
         </inp-rate>
     </div>
+    <div class="entity-thumb-img__scale">
+        <div class="percent-color {{$doctor->fillingPercentage['class']}}">
+            <div class="filling-scale">
+                <div class="progress-bar" style="width: {{ $doctor->fillingPercentage['percent'] }}%"></div>
+            </div>
+            <div class="progress-text">Заполнено на: <span>{{ $doctor->fillingPercentage['percent'] }}%</span></div>
+        </div>
+    </div>
 </div>
 <div class="entity-line__main">
     <h3 class="entity-line__name profiles__title"><a href="{{ route('doctor.item',['doctor'=>$doctor->alias]) }}">{{$doctor['name']}}</a></h3>
