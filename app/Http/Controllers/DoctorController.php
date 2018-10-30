@@ -145,7 +145,7 @@ class DoctorController extends Controller
             $activeCommentsDoctor = clone $doctors;
             $activeAnswersDoctor = clone $doctors;
 
-            $activeCommentsDoctor = Cache::remember('active-comments-doctor:' . $skill->id, 120, function () use ($activeCommentsDoctor, $dateStart, $dateEnd) {
+            $activeCommentsDoctor = Cache::tags(['doctors'])->remember('active-comments-doctor:' . $skill->id, 120, function () use ($activeCommentsDoctor, $dateStart, $dateEnd) {
                 return $activeCommentsDoctor->select(['*', DB::raw('count(comments.id) as total')])
                     ->leftJoin('comments', 'doctors.id', '=', 'comments.owner_id')
                     ->whereBetween('comments.created_at', [$dateStart, $dateEnd])
@@ -154,7 +154,7 @@ class DoctorController extends Controller
                     ->first();
             });
 
-            $activeAnswersDoctor = Cache::remember('active-answers-doctor:' . $skill->id, 120, function () use ($activeAnswersDoctor, $dateStart, $dateEnd) {
+            $activeAnswersDoctor = Cache::tags(['doctors'])->remember('active-answers-doctor:' . $skill->id, 120, function () use ($activeAnswersDoctor, $dateStart, $dateEnd) {
                 return $activeAnswersDoctor->select(['*', DB::raw('count(question_answers.id) as total')])
                     ->leftJoin('question_answers', 'doctors.id', '=', 'question_answers.doctor_id')
                     ->whereBetween('question_answers.created_at', [$dateStart, $dateEnd])
@@ -553,7 +553,6 @@ class DoctorController extends Controller
                 return $data;
         }
     }
-
 
     protected function getFilterforSeo($skill, $flag)
     {
