@@ -28,7 +28,7 @@
                    @keydown.up="focused_proposal   = -1"
             >
             <transition name="search">
-                <a :href="searchResults_hash!=''?'https://idoctor.kz/almaty/doctors?hash='+searchResults_hash:'#'"
+                <a :href="searchResults_hash!=''?'https://idoctor.kz/'+city+'/doctors?hash='+searchResults_hash:'#'"
                    :class="{'hidden-btn':!can_search}"
                    class="search-btn"
                    target="_blank"
@@ -200,6 +200,9 @@
             }
         },
         computed:{
+            city:function () {
+                return  this.model.split('-')[1];
+            },
             focused_proposal:{
                 get:function () {
                     if(this.results && this.results.length > this.focused_proposal_index)
