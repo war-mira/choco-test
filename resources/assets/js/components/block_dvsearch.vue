@@ -27,14 +27,14 @@
                    @keydown.down="focused_proposal = +1"
                    @keydown.up="focused_proposal   = -1"
             >
-            <div class="search-bar__item_submit">
-                <a
-                        :href="searchResults_hash!=''?'https://idoctor.kz/almaty/doctors?hash='+searchResults_hash:'#'"
-                        class="btn search_event"
-                        target="_blank"
-                >найти</a>
-            </div>
-
+            <transition name="search">
+                <a :href="searchResults_hash!=''?'https://idoctor.kz/almaty/doctors?hash='+searchResults_hash:'#'"
+                   :class="{'hidden-btn':!can_search}"
+                   class="search-btn"
+                   target="_blank"
+                   v-if="can_search"
+                >НАЙТИ</a>
+            </transition>
 
         </div>
         <div class="search-proposals" v-if="search_autocomplete">
@@ -174,9 +174,10 @@
                     document.querySelector('#dvSearch').focus();
                 }
 
-                this.search_in.forEach(function (field) {
-                    socket.emit('search inserting',val,[field],this.model,this.selectedTags);
-                }.bind(this));
+                if(val.lenght>=2)
+                    this.search_in.forEach(function (field) {
+                        socket.emit('search inserting',val,[field],this.model,this.selectedTags);
+                    }.bind(this));
             },
             selectedTags: function (val, old) {
                 this.search = '';
@@ -229,7 +230,13 @@
                 }).flatten(1).sortBy('distance').all();
             },
 
+            can_search:function(){
+                //if(this.search === '' && this.selectedTags.length === 0)
+                    //return true;
 
+                return !this.search_autocomplete;
+
+            },
             main_results:function(){
                 return collect(this.results)
                     .whereIn('attrib',['firstname','patronymic','lastname','skills','illnesses','qualifications'])
@@ -278,6 +285,10 @@
             },
             search_placeholder:function () {
                 let result_count = this.count;
+
+                if(this.selectedTags.length==0)
+                    return 'Начните поиск, например «Стоматологи»';
+
                 if(result_count===0)
                     return '🤔 По таким критериям не найдено ни одного врача!';
 
@@ -286,7 +297,7 @@
 
 
                 if(result_count>0)
-                    return 'Врачей в поиске: '+result_count+(this.selectedTags.length>0?' (по выбранным фильтрам) ':'');
+                    return 'Будет найдено врачей: '+result_count+(this.selectedTags.length>0?' (можно выбрать еще фильтры!) ':'');
 
                 return 'Поиск врача...';
             }
@@ -354,103 +365,144 @@
         }
     }
 </script>
-<style>
+<style lang="scss">
     .dv-search-widget{
-        /*margin: 40px 0;*/
-    }
+        background: #FFFFFF;
+        border: 0.5px solid rgba(2, 160, 242, 0.5);
+        box-sizing: border-box;
+        border-radius: 30px;
+        transition: all linear .1s;
 
-    .dv-search-widget.filters-opened .search-proposals-inner{
-        -webkit-box-shadow: 0px 13px 23px -4px rgba(136,136,136,0.3);
-        -moz-box-shadow: 0px 13px 23px -4px rgba(136,136,136,0.3);
-        box-shadow: 0px 13px 23px -4px rgba(136,136,136,0.3);
-    }
-    .dv-autocomplete{
-        display: flex;
-        width: 100%;
-        border: 1px solid #00A8FF;
-        border-radius:0 23px 23px 0;
-    }
-    .dv-autocomplete .dv-tag{
-        margin: 8px;
-        padding: 5px;
-        cursor: pointer;
-        text-wrap: avoid;
-        text-decoration: underline;
-        color:#000000;
-        width: max-content;
-    }
-    .dv-autocomplete .dv-tag.tag-fixed{
-        cursor: initial;
-        text-decoration: none;
-        color: #555555;
-    }
-    .dv-tag-action{
-        width: max-content;
-    }
-    .dv-autocomplete .search-line{
-        /*flex-grow: 1;*/
-        border-radius: 0;
-        border: none;
-        font-size: 16px;
-    }
-    .dv-autocomplete .search-line:focus{
-        -webkit-box-shadow: none;
-        -moz-box-shadow: none;
-        box-shadow: none;
-    }
-    .dv-autocomplete a{
-        border-radius: 0;
-    }
 
-    .dv-search-widget .search-proposals{
-        position: absolute;
-        z-index: 500;
-        width: 100%;
-        margin: 0 -30px;
-        padding: 0 30px;
-    }
-    .dv-search-widget .search-proposals-inner{
-        display: flex;
-        flex-direction: row;
-        border: 1px solid #ced4da;
-        border-top:none;
-        background: #ffffff;
-        width: 100%;
-        max-height: 30em;
-        overflow: auto;
-        padding: 15px;
-        border-radius: 0;
-    }
+        .dv-autocomplete{
+            display: flex;
+            width: 100%;
+            padding: 14px;
 
-    .dv-search-widget .search-group{
-        flex-grow: 1;
-        display: flex;
-    }
-    .dv-search-widget .hint_tag{
-        margin: 5px;
-        padding: 0 15px;
-        border: 1px solid #ffc107; /* #00a8ff */
-        border-radius: 12px;
-        cursor: pointer;
-    }
-    .dv-search-widget .propose{
-        font-size: 13px;
-        cursor: pointer;
-        padding: 1px 3px;
-    }
-    .dv-search-widget .propose:hover{
-        background: rgba(226, 225, 218, 0.15);
-    }
-    .dv-search-widget .focused-proposal{
-        background: #fafaca;
-    }
-    .dv-search-widget .focused-proposal:hover{
-        background: #fafaca;
-    }
-    .dv-search-widget .field-type{
-        color: #9c9c9c;
-        float: right;
-        font-size: 11px;
+            .dv-tag{
+                font-size:14px;
+                cursor: pointer;
+                text-wrap: avoid;
+                color:#ffffff;
+                width: max-content;
+                background: #02A0F2;
+                border-radius: 30px;
+                padding: 10px 15px;
+
+
+                &.tag-fixed{
+                    cursor: initial;
+                    color: #555555;
+                    background: transparent;
+                }
+            }
+
+            .dv-tag-action{
+                width: max-content;
+            }
+
+            .search-line{
+                border-radius: 0;
+                border: none;
+                font-size: 18px;
+                padding: 0 15px;
+
+                &:focus{
+                    -webkit-box-shadow: none;
+                    -moz-box-shadow: none;
+                    box-shadow: none;
+                }
+            }
+
+            .search-btn{
+                display: inline-block;
+                background: #DB3B61;
+                box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+                border-radius: 30px;
+                font-size: 14px;
+                padding: 10px 33px;
+                color:#ffffff;
+                letter-spacing: 1.11111px;
+                overflow: hidden;
+
+                &.hidden-btn{
+
+                }
+            }
+        }
+
+        .search-proposals{
+            position: absolute;
+            z-index: 500;
+            width: 100%;
+            margin: 0 -20px;
+            padding: 0 20px;
+
+
+            .search-proposals-inner{
+                display: flex;
+                flex-direction: row;
+                border: 0.5px solid rgba(2, 160, 242, 0.5);
+                border-top:none;
+                background: #ffffff;
+                width: 100%;
+                max-height: 30em;
+                overflow: auto;
+                padding: 15px;
+                border-radius: 0 0 8px 8px;
+
+                .search-group{
+                    flex-grow: 1;
+                    display: flex;
+
+                    .propose{
+                        font-size: 13px;
+                        cursor: pointer;
+                        padding: 1px 3px;
+                        border-radius: 3.6px;
+
+                        &:hover{
+                            background: rgba(219, 59, 97, 0.2);
+                        }
+
+
+                        &.focused-proposal{
+                            background: rgba(219, 59, 97, 0.2);
+
+                        }
+                        &.focused-proposal:hover{
+                            /*background: #fafaca;*/
+                        }
+
+
+                        .field-type{
+                            color: #9c9c9c;
+                            float: right;
+                            font-size: 11px;
+                        }
+                    }
+                }
+            }
+        }
+
+        &.filters-opened{
+            border-radius: 31px 31px 0px 0px;
+            transition: all linear .1s;
+
+            .search-proposals-inner{
+                -webkit-box-shadow: 0px 13px 23px -4px rgba(136,136,136,0.3);
+                -moz-box-shadow: 0px 13px 23px -4px rgba(136,136,136,0.3);
+                box-shadow: 0px 13px 23px -4px rgba(136,136,136,0.3);
+
+                .hint_tag{
+                    margin: 5px;
+                    padding: 0 15px;
+                    border: 0.5px solid rgba(2, 160, 242, 0.5);
+                    border-radius: 12px;
+                    cursor: pointer;
+                }
+            }
+        }
     }
 
     .fade-enter-active, .fade-leave-active {
@@ -458,5 +510,40 @@
     }
     .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
         opacity: 0;
+    }
+
+    .search-enter-active{
+        animation: search-animation .5s reverse;
+    }
+
+    .search-leave-active {
+        animation: search-animation .5s;
+    }
+
+
+    @keyframes search-animation {
+        0% {
+            transform: scale(1);
+            width: 120px;
+            padding: 10px 33px;
+            color: #ffffff;
+            opacity: 1;
+        }
+        50% {
+            transform: scale(1.5);
+            width: 16px;
+            padding: 10px 18px;
+            color: #DB3B61;
+            opacity: 0.5;
+
+        }
+        100% {
+            transform: scale(0.1);
+            width: 16px;
+            padding: 10px 18px;
+            color: #DB3B61;
+            opacity: 0;
+
+        }
     }
 </style>
