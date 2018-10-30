@@ -96,6 +96,16 @@ $font-bold: "ProximaNova-Bold", sans-serif;
         }
     }
 }
+.doctor-bar{
+    display: flex;
+    max-width: 1100px;
+    margin: auto;
+    padding-bottom:0;
+    
+    #filtersGroup{
+        display: block;
+    }
+}
 .doctor-result__list{
     
     .search-result__city-name{
@@ -151,6 +161,7 @@ $font-bold: "ProximaNova-Bold", sans-serif;
                 }
                 .doc-line__address-list{
                     line-height: 19px;
+                    font-size: 16px;
                     
                     .doc-line__address-clinic-link{
                         text-decoration: none;
@@ -160,17 +171,46 @@ $font-bold: "ProximaNova-Bold", sans-serif;
                 .appointment-book-big__timeline{
                     position: absolute;
                     right: -18px;
-                    top: 40%;
+                    top: 37%;
                 }
             }
             
             .entity-line__main{
                 width: 40%;
                 margin-right: 0;
+                position: relative;
+                
+                .entity-line__name{
+                    font-size: 20px;
+                }
+                .entity-line__descr{
+                    color: #303030;
+                    font-size: 14px;
+                    line-height: 16px;
+                    text-transform: none;
+                    width: 100%;
+                    max-width: 350px;
+                    height: 60px;
+                    margin-top: 10px;
+                }
+                .entity-line__features{
+                    display: block;
+                    
+                    .entity-line__feature{
+                        margin-top: 0;
+                    }
+                    
+                    .entity-line__qualification{
+                        margin-left: 10px;
+                        color: #000000;
+                        font-size: 16px;
+                    }
+                }
             }
             .appointment-book-big{
                 padding: 0;
             }
+            
         }
     }
 }

@@ -1,18 +1,12 @@
-<div class="result-control-bar">
+<div class="result-control-bar doctor-bar">
     {{ Breadcrumbs::render('search.index', [
     'city' => $city,
     'title' => empty($meta['h1'])?null:$meta['h1']
     ]) }}
 
-    <div class="container">
+    <div class="container doctor-search">
         <div class="result-control-bar__line" id="filtersGroup">
-            <div class="result-control-bar__query">
-                <div class="result-control-bar__query-count">найдено {{$doctors->total()}} врачей</div>
-
-                <input type="radio" style="display:none;" checked="true" name="order" value="asc">
-                <input type="radio" style="display:none;" name="order" value="desc">
-            </div>
-            <div class="result-control-bar__sort sort-line" id="filtersGroup">
+            <div class="result-control-bar__sort sort-line">
                 <select class="sort-select js-simple-select">
                     <option>Сортировать по</option>
                     <option>Рейтингу</option>

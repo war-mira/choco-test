@@ -56,10 +56,10 @@
         </a>
         @if(count($doctor['skills']) > 1 && $i!=(count($doctor['skills'])-1)) / @endif  @endforeach
     </div>
-    @if($doctor['qualification'])
-        <div class="entity-line__qualification">{{$doctor['qualification']}}</div>
-    @endif
     <div class="entity-line__features">
+        @if($doctor['qualification'])
+            <div class="entity-line__qualification">{{$doctor['qualification']}}</div>
+        @endif
         <div class="entity-line__feature entity-feature">
             <div class="entity-feature__info">
                 <div class="entity-line__label">Стаж {{$doctor->exp_formatted}}</div>
@@ -103,13 +103,14 @@
             </div>
         @endif
     </div>
-    <div class="appointment-book-big__timeline">
+        <div class="appointment-book-big__timeline">
+        @if(isset($doubleActiveDoctor))
             <div class="entity-thumb-img__label red entity-thumb-img__label_active double_active">
                 <div class="entity-thumb-img__label_text">
                     <div class="entity-thumb-span_most">Самый</div>активный и отзывчивый
                 </div>
             </div>
-        @if(isset($activeCommentsDoctor))
+        @elseif(isset($activeCommentsDoctor))
             <div class="entity-thumb-img__label red entity-thumb-img__label_active">
                 <div class="entity-thumb-img__label_text">
                     <div class="entity-thumb-span_most">Самый</div>активный

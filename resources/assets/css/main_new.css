@@ -1019,7 +1019,7 @@ img {
   text-align: center;
   line-height: 40px; }
 .entity-thumb-img__rating-line {
-  margin-top: 15px; }
+  margin-top: 0; }
 .entity-thumb-img__bot-line {
   display: -webkit-box;
   display: -webkit-flex;
