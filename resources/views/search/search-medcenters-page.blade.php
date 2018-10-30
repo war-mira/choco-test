@@ -6,31 +6,44 @@
 
     <div id="app" class="app">
         <form id="search-form">
-            @include('search.filtr_med')
+
+            @include('search.filtr_med',compact('city'))
+
 
             <div class="search-result">
                 <div class="container">
+                    <div class="search-result__city-name">
+                        <h1>
+                            @if(!empty($meta['h1']))
+                                {{$meta['h1']}}
+                            @endif
+                        </h1>
+                    </div>
                     <div class="search-result__list">
                         <div class="medcenter_list content_scroll__block">
                             @foreach($Medcenters as $medcenter)
-                                <div class="results d-result search-result__item entity-line clinic-line" data-type="doctor" data-id="{{$medcenter->id}}"
+                                <div class="results d-result search-result__item entity-line clinic-line"
+                                     data-type="doctor" data-id="{{$medcenter->id}}"
                                      id="doctor-result-{{$medcenter->id}}"
                                      style="">
 
-                                    @component('model.medcenter.new_profile-short',['medcenter'=>$medcenter,'width'=>'250px','highlightSkill'=>$highlightSkill??null])
+                                    @component('model.medcenter.new_profile-short',['medcenter'=>$medcenter,'width'=>'250px',
+                                    'medcenterType' => $medcenterType??null,
+                                    'highlightSkill'=>$highlightSkill??null])
                                     @endcomponent
+
                                 </div>
-                            @endforeach
-                        </div>
+
+                            @endforeach    </div>
                         @include('partials.loader')
                     </div>
 
                     @if($Medcenters->links() != "")
-                    <div class="results d-result" style="">
-                        <div class="text-center search-pagination" id="bottomPagination">
-                            {!! $Medcenters->appends(request()->query())->links() !!}
+                        <div class="results d-result" style="">
+                            <div class="text-center search-pagination" id="bottomPagination">
+                                {!! $Medcenters->appends(request()->query())->links() !!}
+                            </div>
                         </div>
-                    </div>
                     @endif
                 </div>
             </div>
@@ -44,8 +57,7 @@
 @endsection
 @push('custom.js')
     <script>
-        if($('.search-input-group select').length)
-        {
+        if ($('.search-input-group select').length) {
             $('.search-input-group select').selectpicker();
         }
 
@@ -127,10 +139,10 @@
             });
 
         });
-    $('.doctor_list').infiniteScroll({
-        path: '.pagination_next',
-        append: '.doc-line',
-        history: false,
-    });
+        $('.doctor_list').infiniteScroll({
+                  path: '.pagination_next',
+           	        append: '.doc-line',
+                  history: false,
+                });
     </script>
 @endpush

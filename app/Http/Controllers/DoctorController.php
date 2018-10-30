@@ -13,6 +13,7 @@ use App\Helpers\SessionContext;
 use App\Http\Middleware\Http2Push;
 use App\Http\Requests\Doctor\DoctorFilters;
 use App\Medcenter;
+use App\Models\Library\Illness;
 use App\PageSeo;
 use App\Skill;
 use App\Models\District;
@@ -23,6 +24,7 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redis;
+use morphos\Russian\GeographicalNamesInflection;
 use Psy\Util\Str;
 
 class DoctorController extends Controller
@@ -33,54 +35,44 @@ class DoctorController extends Controller
         $request->query->add(['model' => 'view-profile', 'id' => $doctor->id]);
 
         $this->clicksCount($request);
-        /**
-         *
-
-        if ($city->id !== $doctor->city->id) {
-            // return redirect()->route('doctor.item', ['doctor' => $doctor->alias], 301);
-        }
-        */
 
         $districts  =  Cache::remember('index:districts',120, function(){
             return District::all();
         });
+
         $meta = SeoMetadataHelper::getMeta($doctor, $city);
         $city_id = $doctor->city->id;
+        $skill_id = (!is_null($doctor->main_skill)?$doctor->main_skill->id:0);
 
-        $near_docs = Cache::tags(['doctors'])->remember('near_doctors-city_id-'.$city_id.'-skill-'.$doctor->main_skill->id??0,120,function() use ($city_id,$doctor){
+        $near_docs = Cache::tags(['doctors'])->remember('near_doctors-city_id-'.$city_id.'-skill-'.$skill_id,120,function() use ($city_id,$doctor,$skill_id){
             //   return Doctor::query()->where('doctors.status', 1)
             //                ->where('doctors.city_id', $city_id)->whereNotNull('avatar')->limit(9)->get();
-            return Doctor::query()->with('skills')->where('doctors.status', 1)
-                ->where('doctors.city_id', $city_id)
-                ->whereHas('skills', function($q) use ($doctor){
+            $query = Doctor::query()->with('skills')->where('doctors.status', 1)
+                ->where('doctors.city_id', $city_id);
+            if($skill_id !==0){
+                $query =  $query->whereHas('skills', function($q) use ($doctor){
                     $q->where('skills.id', $doctor->main_skill->id);
-                })
-                ->whereNotNull('avatar')->limit(9)->get();
+                });
+            }
+
+
+            return $query->whereNotNull('avatar')->limit(9)->get();
+        });
+
+        $services = Cache::remember('index:services-'.$doctor->id.'',120, function() use($doctor) {
+           return DB::table('doctors_services')
+                ->select('service_items.name AS name', 'doctors_services.price AS price')
+                ->join('service_items', 'service_items.id', '=', 'doctors_services.service_id')
+                ->where('doctors_services.doctor_id', $doctor->id)
+                ->get();
         });
 
         return view('doctors.item')
             ->with('meta', $meta)
             ->with('districts', $districts)
             ->with('near', $near_docs)
-            ->with('doctor', $doctor);
-    }
-
-    public function itemOld(City $city, Doctor $doctor)
-    {
-        if ($city->id !== $doctor->city->id) {
-            // return redirect()->route('doctor.item', ['doctor' => $doctor->alias], 301);
-        }
-        $districts = District::all();
-        $meta = SeoMetadataHelper::getMeta($doctor, $city);
-
-        $near_docs = Doctor::query()->where('doctors.status', 1)
-            ->where('doctors.city_id', $doctor->city->id)->limit(9)->get();
-
-        return view('doctors.item_old')
-            ->with('meta', $meta)
-            ->with('districts', $districts)
-            ->with('near', $near_docs)
-            ->with('doctor', $doctor);
+            ->with('doctor', $doctor)
+            ->with('services', $services);
     }
 
     public function commonList(Skill $skill = null, Request $request)
@@ -136,6 +128,9 @@ class DoctorController extends Controller
 
         // TODO: cache
         $doctorsTop = null;
+        $activeCommentsDoctor = null;
+        $activeAnswersDoctor = null;
+        $doubleActiveDoctor = null;
         $comercial = Doctor::where('comercial', 1)->orderBy('firstname', 'asc');
         $districts = District::all();
 
@@ -146,16 +141,46 @@ class DoctorController extends Controller
             if ($top_doctors && $skill->top_doctors) {
                 $doctorsTop = Doctor::whereIn('id', $skill->top_doctors)->orderByRaw('FIELD(id,' . $top_doctors . ')')->where('status', 1)->get();
             }
+
+            $dateStart = date("Y-m-d h:m:s", strtotime('monday this week'));
+            $dateEnd = date("Y-m-d h:m:s", strtotime('sunday this week'));
+            $activeCommentsDoctor = clone $doctors;
+            $activeAnswersDoctor = clone $doctors;
+
+            $activeCommentsDoctor = Cache::tags(['doctors'])->remember('active-comments-doctor:' . $skill->id, 120, function () use ($activeCommentsDoctor, $dateStart, $dateEnd) {
+                return $activeCommentsDoctor->select(['*', DB::raw('count(comments.id) as total')])
+                    ->leftJoin('comments', 'doctors.id', '=', 'comments.owner_id')
+                    ->whereBetween('comments.created_at', [$dateStart, $dateEnd])
+                    ->groupBy('doctors.id')
+                    ->orderBy('total', 'DESC')
+                    ->first();
+            });
+
+            $activeAnswersDoctor = Cache::tags(['doctors'])->remember('active-answers-doctor:' . $skill->id, 120, function () use ($activeAnswersDoctor, $dateStart, $dateEnd) {
+                return $activeAnswersDoctor->select(['*', DB::raw('count(question_answers.id) as total')])
+                    ->leftJoin('question_answers', 'doctors.id', '=', 'question_answers.doctor_id')
+                    ->whereBetween('question_answers.created_at', [$dateStart, $dateEnd])
+                    ->groupBy('doctors.id')
+                    ->orderBy('total', 'DESC')
+                    ->first();
+            });
+
+            if(isset($activeCommentsDoctor) && isset($activeAnswersDoctor) && $activeCommentsDoctor->alias == $activeAnswersDoctor->alias)
+                $doubleActiveDoctor = $activeCommentsDoctor;
+
         }
 
-
         if (isset($doctorsTop))
-            $doctors = $doctors->whereNotIn('id', $skill->top_doctors);
-
+            $doctors = $doctors->whereNotIn('doctors.id', $skill->top_doctors);
 
         if (isset($comercial))
-            $doctors = $doctors->whereNotIn('id', $comercial->pluck('id')->toArray());
+            $doctors = $doctors->whereNotIn('doctors.id', $comercial->pluck('id')->toArray());
 
+        if(isset($activeCommentsDoctor))
+            $doctors = $doctors->where('doctors.id', '!=', $activeCommentsDoctor->id);
+
+        if(isset($activeAnswersDoctor))
+            $doctors = $doctors->where('doctors.id', '!=', $activeAnswersDoctor->id);
 
         $this->applyDoctorsFilter($doctors, $filter);
 
@@ -166,7 +191,9 @@ class DoctorController extends Controller
          * return  $doctors->paginate(10)->appends($query);
          * });
          */
+
         $doctors = $doctors->paginate(10)->appends($query);
+
         if ($doctors->lastPage() < ($filter['page'] ?? 1))
             return redirect($doctors->url(1));
 
@@ -176,91 +203,32 @@ class DoctorController extends Controller
         $meta = SeoMetadataHelper::getMeta($skill ?? $pageSeo, $city);
 
         return view('search.page',
-            compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage', 'skill', 'comercial', 'districts'));
+            compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage', 'skill', 'comercial', 'districts', 'activeCommentsDoctor', 'activeAnswersDoctor', 'doubleActiveDoctor'));
 
     }
 
-    public function listOld(City $city = null, Skill $skill = null, Request $request)
+
+    public function listByIllness(City $city,Illness $illness)
     {
-        $doctors = Doctor::query()->where('doctors.status', 1);
-        $query = $request->only([
-            'q',
-            'child',
-            'ambulatory',
-            'sort',
-            'order',
-            'exp_range',
-            'price_range',
-            'rate_range',
-            'page',
-            'district'
-        ]);
-        $filter = $query;
-        $doctorsTop = null;
-        $currentPage = $request->input('page');
-
-        if (isset($skill)) {
-            $filter['skill'] = $skill->alias ?? null;
-            $doctors = $doctors->whereHas('skills', function ($skillsQuery) use ($skill) {
-                $skillsQuery->where('skills.id', $skill->id);
-            });
-            $top_doctors = FormatHelper::arrayToString($skill->top_doctors);
-            if ($top_doctors && $skill->top_doctors) {
-                $doctorsTop = Doctor::whereIn('id', $skill->top_doctors)->orderByRaw('FIELD(id,' . $top_doctors . ')')->where('status', 1)->get();
-            }
-
-        }
-
-        if (isset($doctorsTop)) {
-            $doctors = $doctors->whereNotIn('id', $skill->top_doctors);
-        }
-
-        if (isset($filter['page']) && $filter['page'] == 1) {
-            return redirect()->route(((empty($city->id) || $city->id == 1) ? "all.doctors.list" : 'doctors.list'), array_merge(['city' => $city->alias ?? null, 'skill' => $skill->alias ?? null], array_except($filter, 'page')));
-        }
-
-        $this->applyDoctorsFilter($doctors, $filter);
-
-
-        if (!empty($city->id)) {
-            $doctors = $doctors->where('doctors.city_id', $city->id);
-            $actionKey = $city->id != 1 ? 'list' : 'list_all';
-            $pageSeo = PageSeo::query()
-                ->where('class', 'Doctor')
-                ->where('action', $actionKey)
-                ->first();
-            $meta = SeoMetadataHelper::getMeta($pageSeo, $city);
-        } else {
+        $doctors = $illness->doctors()
+            ->where('doctors.city_id',$city->id)
+            ->paginate(10);
+        $pageSeo = PageSeo::query()
+            ->where('class','DoctorByIllness')
+            ->where('action', 'list')
+            ->first();
+        if(!is_null($pageSeo)){
+            $meta = SeoMetadataHelper::getMeta($pageSeo, $city,$illness);
+        } else{
             $title = 'iDoctor.kz - Врачи-специалисты. Список врачей-специалистов в Казахстане';
             $description = 'iDoctor.kz - Список врачей-специалистов по всему Казахстану. Поиск и бесплатная запись на прием к врачу любой специальности. У нас собрана большая база врачей различных специализаций по всему Казахстану';
             $meta = compact('title', 'description');
         }
-        $doctors = $doctors->paginate(10)->appends($query);
 
-        if ($doctors->lastPage() < ($filter['page'] ?? 1)) {
-            return redirect($doctors->url(1));
-        }
+        return view('search.page',
+            compact('meta','illness','city', 'doctors'));
 
-        $skills = \App\Skill::orderBy('name');
-        if (!empty($city->id)) {
-            $skills = $skills->havingDoctorsInCity($city);
-        }
-        $skills = $skills->get();
-
-        $medcenters = \App\Medcenter::orderBy('name');
-        if (!empty($city->id)) {
-            $medcenters = $medcenters->havingDoctorsInCity($city);
-        }
-        $medcenters = $medcenters->get();
-
-        if (isset($skill)) {
-            $meta = SeoMetadataHelper::getMeta($skill, $city);
-        }
-
-        return view('search.page_old',
-            compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage'));
     }
-
     public function get_dt(Request $request)
     {
         if ($request->ajax()) {
@@ -609,7 +577,6 @@ class DoctorController extends Controller
                 return $data;
         }
     }
-
 
     protected function getFilterforSeo($skill, $flag)
     {

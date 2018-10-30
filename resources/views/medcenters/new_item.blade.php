@@ -53,10 +53,23 @@
 
                     <div class="entity-line__about-text">
                         <p>
-                            {!! $medcenter->content !!}
+                            {!! empty($medcenter->content_lite)?$medcenter->content:$medcenter->content_lite !!}
                         </p>
                     </div>
-
+                    @if(!empty($medcenter->types->count() > 0))
+                        <div class="clinic-line__brief">
+                            <div class="clinic-line__brief-name">
+                                Типы мед.центра
+                            </div>
+                            <ul>
+                                @foreach($medcenter->types as $type)
+                                    <li>
+                                        <a href="{{route('medcenters.type',['medcenterType'=>$type->alias])}}">{{$type->name}}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <div class="clinic-line__brief">
                         <div class="clinic-line__brief-line">
                             <div class="clinic-line__brief-item">
@@ -90,7 +103,8 @@
                                     @endif
                                 </div>
                                 <div class="profiles__desc clinic-line__brief-descr get_info_error">
-                                    <a href="#error_report" class="trigger-link popup-with-form">Есть ошибка? Сообщите нам</a>
+                                    <a href="#error_report" class="trigger-link popup-with-form">Есть ошибка? Сообщите
+                                        нам</a>
                                 </div>
                             </div>
                         </div>
@@ -161,7 +175,7 @@
                     <span class="entity-about__tab-name">Врачи клиники</span>
                 </a>
                 <a href="#" data-tab="tab-3" class="entity-about__tab-item">
-                <span class="entity-about__tab-name">Отзывы</span>
+                    <span class="entity-about__tab-name">Отзывы</span>
                 </a>
                 {{--<a href="#" data-tab="tab-3" class="entity-about__tab-item">--}}
                 {{--<span class="entity-about__tab-name">Акции и скидки</span>--}}
@@ -278,7 +292,8 @@
                                        class="filter-line__item btn btn_theme_radio filter-btn btn_theme_radio_active">
                                         Все отзывы
                                     </a>
-                                    <a href="#" data-tab="taz2" class="filter-line__item btn btn_theme_radio filter-btn">
+                                    <a href="#" data-tab="taz2"
+                                       class="filter-line__item btn btn_theme_radio filter-btn">
                                         <span>Положительные</span>
                                         <span class="filter-btn__count">{{\App\Comment::where('owner_id', $medcenter->id)->where('user_rate','>',5)->where('owner_type', 'Medcenter')->where('status', 1)->count()}}</span>
                                     </a>

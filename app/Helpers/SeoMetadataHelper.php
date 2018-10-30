@@ -4,6 +4,8 @@ namespace App\Helpers;
 
 use App\City;
 use App\Interfaces\ISeoMetadata;
+use App\Interfaces\Replaceable;
+use Illuminate\Database\Eloquent\Model;
 use morphos\Russian\GeographicalNamesInflection;
 
 class SeoMetadataHelper
@@ -17,7 +19,7 @@ class SeoMetadataHelper
 
     const DEFAULT_DESCRIPTION = "iDoctor.kz - Сервис для поиска врача и бесплатной записи на прием. Мы собрали базу врачей в Алматы и Астане с рейтингами и отзывами наших клиентов.";
 
-    public static function getMeta($model, City $city = null)
+    public static function getMeta($model, City $city = null,$object = null)
     {
         if(!$model instanceof ISeoMetadata) {
             return null;
@@ -32,6 +34,10 @@ class SeoMetadataHelper
         $robots = self::getMetaRobots();
         $phs = $city?self::getCityPhs($city):[];
         $meta = compact('title', 'description', 'keywords', 'h1', 'seoText', 'robots', 'default_description');
+
+        if($object instanceof Replaceable){
+            $phs = $object->mergeWithCustomPlaceholders($phs);
+        }
 
         self::replacePlaceHolders($meta, $phs);
 
@@ -56,7 +62,7 @@ class SeoMetadataHelper
             return "noindex, nofollow";
         }
         if(isset($inputs["page"])){
-            return "noindex, follow";
+          // return "noindex, follow";
         }
     }
 

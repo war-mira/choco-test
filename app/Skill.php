@@ -57,7 +57,7 @@ class Skill extends Model implements ISeoMetadata
         'seo_h1',
     ];
     protected $casts = [
-        'top_doctors' => 'json'
+        'top_doctors' => 'array'
     ];
     protected $appends = [
 //        'href'

@@ -45,6 +45,16 @@ Route::group(['as' => 'medcenters.'], function () {
         Route::delete('medcenters/{id}', 'Admin\MedcenterController@delete')->name('delete');
     });
 });
+Route::group(['as' => 'medcenter_types.'], function () {
+    Route::get('medcenter_types/form/{id?}', 'Admin\MedcenterTypeController@getFormView')->name('form');
+    Route::get('medcenter_types/table', 'Admin\MedcenterTypeController@getTableView')->name('table');
+    Route::group(['as' => 'crud.', 'prefix' => 'crud'], function () {
+        Route::get('medcenter_types/{id?}', 'Admin\MedcenterTypeController@get')->name('get');
+        Route::post('medcenter_types', 'Admin\MedcenterTypeController@create')->name('create');
+        Route::post('medcenter_types/{id}', 'Admin\MedcenterTypeController@update')->name('update');
+        Route::delete('medcenter_types/{id}', 'Admin\MedcenterTypeController@delete')->name('delete');
+    });
+});
 
 
 Route::group(['as' => 'doctors.'], function () {

@@ -26,6 +26,8 @@
 @import "modules/breadcrumbs";
 @import "modules/doctor/image";
 @import "modules/doctor/profile";
+@import "modules/doctor/icons";
+@import "modules/doctor/scale";
 @import "modules/errors/main";
 @import "modules/question/list";
 @import "modules/question/landing";
@@ -45,6 +47,7 @@
 @import "modules/service/index";
 @import "modules/service/list";
 @import "modules/service/medcenters"; 
+@import "modules/service/doctors";
 
 .blur {
   -webkit-filter: url(#blur);

@@ -1,0 +1,71 @@
+.appointment-book-big__timeline{
+  position: relative;
+}
+
+.entity-thumb-img__label.red{
+  background: url(/img/icons/top-bg.png);
+  padding: 21px 0;
+  border-radius: 0;
+  width: 150px;
+  right: -20px;
+  left: auto;
+  top: -5px;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  .entity-thumb-img__label_text{
+    font-family: ProximaNova-Extrabold,sans-serif;
+    font-size: 12.5px;
+    padding-right: 15px;
+    text-align: right;
+    top: -5px;
+    position: relative;
+
+    .entity-thumb-span_most{
+      font-family: ProximaNova-Bold,sans-serif;
+      font-size: 18px;
+      text-transform: uppercase;
+    }
+  }
+
+  .entity-thumb-img__label_text::before{
+    position: absolute;
+    left: 22px;
+  }
+}
+
+.entity-thumb-img__label_responsive{
+  .entity-thumb-img__label_text{
+    font-size: 9.5px;
+  }
+}
+.entity-thumb-img__label_active{
+  .entity-thumb-img__label_text{
+    font-size: 12.5px;
+    text-transform: uppercase;
+  }
+}
+
+.entity-thumb-img__label_active{
+  .entity-thumb-img__label_text::before{
+    content: url("/img/icons/active-doctors.png");
+    top: 3px;
+  }
+}
+
+.entity-thumb-img__label_responsive{
+  .entity-thumb-img__label_text::before{
+    content: url("/img/icons/responsive-doctors.png");
+  }
+}
+
+.entity-thumb-img__label_active.double_active{
+  .entity-thumb-img__label_text{
+    font-size: 9.5px;
+  }
+
+  .entity-thumb-img__label_text::before{
+    top: 10px;
+  }
+}
+

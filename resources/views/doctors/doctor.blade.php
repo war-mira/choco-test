@@ -41,6 +41,14 @@
                             <template slot="dislikes">{{ $doctor->dislikes }}</template>
                         </inp-rate>
                     </div>
+                    <div class="entity-thumb-img__scale">
+                        <div class="percent-color {{$doctor->fillingPercentage['class']}}">
+                            <div class="filling-scale">
+                                <div class="progress-bar" style="width: {{ $doctor->fillingPercentage['percent'] }}%"></div>
+                            </div>
+                            <div class="progress-text">Заполнено на: <span>{{ $doctor->fillingPercentage['percent'] }}%</span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="entity-line__main">
@@ -141,16 +149,12 @@
                             {{--</div>--}}
                             {{--@else--}}
                             {{--@if( $doctor->whoIsIt() != \App\Doctor::TYPE[4] && $doctor->whoIsIt() != \App\Doctor::TYPE[5])--}}
-                            @if($doctor->medcenters)
-                                @foreach($doctor->medcenters as $medcenter)
-                                    @if(in_array($medcenter->id, \App\Doctor::SHOW_PHONES) || $doctor->	show_phone == \App\Doctor::SHOW_PHONE)
-                                        <phone-show-btn model="{{ \App\Doctor::SHOW_PHONE_COUNT }}"
-                                                        id="{{ $doctor->id }}"
-                                                        phone="{{ \App\Helpers\HtmlHelper::phoneCode($doctor->showing_phone) }}">
-                                            <template slot="phone-number"></template>
-                                        </phone-show-btn>
-                                    @endif
-                                @endforeach
+                            @if($doctor->checkForShowPhone())
+                                <phone-show-btn model="{{ \App\Doctor::SHOW_PHONE_COUNT }}"
+                                                id="{{ $doctor->id }}"
+                                                phone="{{ \App\Helpers\HtmlHelper::phoneCode($doctor->showing_phone) }}">
+                                    <template slot="phone-number"></template>
+                                </phone-show-btn>
                             @endif
                             {{--@endif--}}
                         </div>
@@ -223,9 +227,11 @@
                             class="entity-about__tab-count">{{$doctor->publicComments()->count()}}</span>
                 </h2>
             </a>
-            {{--<a href="#" data-tab="tab-3" class="entity-about__tab-item">--}}
-            {{--<h2 class="entity-about__tab-name">Акции и скидки</h2>--}}
-            {{--</a>--}}
+            @if($services->count() > 0)
+                <a href="#" data-tab="tab-3" class="entity-about__tab-item">
+                    <h2 class="entity-about__tab-name">Услуги</h2>
+                </a>
+            @endif
             <a href="#" data-tab="tab-4" class="entity-about__tab-item">
                 <h2 class="entity-about__tab-comments">Комментарии</h2>
             </a>
@@ -320,7 +326,14 @@
 
             <div id="tab-3" class="entity-about-article">
                 <div class="entity-content__main">
-
+                    @if(!empty($services))
+                        @foreach($services as $service)
+                            <div class="entity-content__services">
+                                <div class="entity-content__services_name entity-line__name">{{$service->name}}</div>
+                                <div class="entity-content__services_price">{{$service->price}} тг</div>
+                            </div>
+                        @endforeach
+                    @endif
                 </div>
                 <div class="entity-content__aside">
                     @component('elements.side-banner',['position' => App\Banner::POSITION_EXT_C['id']])@endcomponent
@@ -339,7 +352,7 @@
 </section>
 @include('jsond.person',[
 'image'=>url()->to($doctor->getAvatar(300,0)),
-'jobTitle' => $doctor->main_skill->name,
+'jobTitle' => $doctor->main_skill ? $doctor->main_skill->name:'',
 'name' => $doctor->name,
 'city' => $doctor->city->name,
 'address' => $doctor->medcenters->first() ? $doctor->medcenters->first()->sms_address:null,

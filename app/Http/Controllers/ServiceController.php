@@ -7,6 +7,7 @@ use App\Service;
 use App\ServiceGroup;
 use Illuminate\Http\Request;
 use Intervention\Image\Exception\NotFoundException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ServiceController extends Controller
 {
@@ -22,72 +23,86 @@ class ServiceController extends Controller
     {
 
         $serviceGroup = ServiceGroup::with('services')
+            ->with('services.medcenters')
+            ->whereHas('services', function ($q) {
+                return $q->has('medcenters', '>', '0');
+            })
             ->active()->get();
 
-        $service_count = Service::active()->count();
+        $service_count = Service::whereHas('medcenters')->active()->count();
         $meta = [
-            'title'=>'Медицинские услуги - цены в Алматы - iDoctor.kz',
-            'h1'=>'Медицинские услуги в Алматы',
-            'keywords'=>'медицинские услуги, алматы, цена, стоимость, услуга, idoctor.kz',
+            'title' => 'Медицинские услуги - цены в Алматы - iDoctor.kz',
+            'h1' => 'Медицинские услуги в Алматы',
+            'keywords' => 'медицинские услуги, алматы, цена, стоимость, услуга, idoctor.kz',
             'description' => 'Медицинские услуги - перечень медицинских услуг в Алматы с адресами. Стоимость услуг, запись на прием, отзывы пациентов на iDoctor.kz.'
         ];
 
-        return view('redesign.pages.service.index',[
+        return view('redesign.pages.service.index', [
             'serviceGroups' => $serviceGroup,
-            'meta'=>$meta,
+            'meta' => $meta,
             'service_count' => $service_count
         ]);
     }
 
     public function groupList($alias)
     {
-        $serviceGroup = ServiceGroup::whereAlias($alias)->active()->first();
+        $serviceGroup = ServiceGroup::whereAlias($alias)
+            ->with('services.medcenters')
+            ->whereHas('services',function ($q){
+                 $q->has('medcenters','>','0');
+            })
+            ->active()->first();
+        if(is_null($serviceGroup)){
+            throw new NotFoundHttpException;
+        }
         $meta = [
-            'title'=>$serviceGroup->name.' - цены в Алматы - iDoctor.kz',
-            'h1'=>$serviceGroup->name.' - цены в Алматы',
-            'keywords'=>$serviceGroup->name.' алматы, цена, стоимость, услуга, idoctor.kz',
-            'description' =>$serviceGroup->name.' - перечень медицинских услуг в Алматы с адресами. Стоимость услуг, запись на прием, отзывы пациентов на iDoctor.kz..
+            'title' => $serviceGroup->name . ' - цены в Алматы - iDoctor.kz',
+            'h1' => $serviceGroup->name . ' - цены в Алматы',
+            'keywords' => $serviceGroup->name . ' алматы, цена, стоимость, услуга, idoctor.kz',
+            'description' => $serviceGroup->name . ' - перечень медицинских услуг в Алматы с адресами. Стоимость услуг, запись на прием, отзывы пациентов на iDoctor.kz..
 '
         ];
-        return view('redesign.pages.service.list',[
-            'meta'=>$meta,
+        return view('redesign.pages.service.list', [
+            'meta' => $meta,
             'serviceGroup' => $serviceGroup,
         ]);
     }
-    public function medcentersList($group,$alias)
+
+    public function medcentersList($group, $alias)
     {
-        $service = Service::whereAlias($alias)->active()->first();
-        if(is_null($service)){
-            throw new NotFoundException();
+        $service = Service::whereAlias($alias)->has('medcenters')->active()->first();
+        if (is_null($service)) {
+            throw new NotFoundHttpException;
         }
 
-        if($service->group->alias !== $group){
-            return redirect(route('service.service-list',[
-                'group'=>$service->group->alias,
-                'alias'=>$service->alias
-            ]),301);
+        if ($service->group->alias !== $group) {
+            return redirect(route('service.service-list', [
+                'group' => $service->group->alias,
+                'alias' => $service->alias
+            ]), 301);
         }
 
         $meta = [
-            'title'=>$service->name.' - цены в Алматы - iDoctor.kz',
-            'h1'=>$service->name.' цены в Алматы',
-            'keywords'=>$service->name.' алматы, цена, стоимость, услуга, idoctor.kz',
-            'description' =>$service->name.' - Список медцентров в Алматы с адресами,
-            где можно сделать '.$service->name.'. Стоимость услуги, запись на прием, отзывы пациентов на iDoctor.kz.
+            'title' => $service->name . ' - цены в Алматы - iDoctor.kz',
+            'h1' => $service->name . ' цены в Алматы',
+            'keywords' => $service->name . ' алматы, цена, стоимость, услуга, idoctor.kz',
+            'description' => $service->name . ' - Список медцентров в Алматы с адресами,
+            где можно сделать ' . $service->name . '. Стоимость услуги, запись на прием, отзывы пациентов на iDoctor.kz.
 '
         ];
 
-        return view('redesign.pages.service.medcenters',[
-            'meta'=>$meta,
+        return view('redesign.pages.service.medcenters', [
+            'meta' => $meta,
             'service' => $service,
         ]);
     }
+
     public function seed()
     {
 
-         $groups = $this->getFromJson();
-         $this->fillData($groups);
-         dd($groups);
+        $groups = $this->getFromJson();
+        $this->fillData($groups);
+        dd($groups);
     }
 
     /**
@@ -147,10 +162,10 @@ class ServiceController extends Controller
                         unset($ids->{"Группа услуги"});
                         foreach ($ids as $key => $price) {
                             if (!empty($price)) {
-                                if(array_key_exists($key,$this->related)){
-                                    $service->medcenters()->attach($this->related[$key],['price'=>(int)preg_replace("/[^0-9]/", "", $price)]);
+                                if (array_key_exists($key, $this->related)) {
+                                    $service->medcenters()->attach($this->related[$key], ['price' => (int)preg_replace("/[^0-9]/", "", $price)]);
                                 }
-                                $service->medcenters()->attach($key,['price'=>(int)preg_replace("/[^0-9]/", "", $price)]);
+                                $service->medcenters()->attach($key, ['price' => (int)preg_replace("/[^0-9]/", "", $price)]);
                             }
                         }
 

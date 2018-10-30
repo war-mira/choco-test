@@ -237,6 +237,18 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         'name'
     ];
 
+    protected $checkingFields = [
+        'works_since_year',
+        'about_text',
+        'treatment_text',
+        'exp_text',
+        'grad_text',
+        'certs_text',
+        'showing_phone'
+    ];
+    protected $dynamicFieldsQuantity = 2;
+    protected $validLength = 4;
+
     public static function getInstance($id)
     {
         return \Cache::tags(['doctors'])->remember('doctor_id-'.$id,120,function() use($id){
@@ -343,6 +355,11 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         return $this->hasMany(Order::class, 'doc_id', 'id');
     }
 
+    public function question_answers()
+    {
+        return $this->hasMany(QuestionAnswer::class, 'doctor_id', 'id');
+    }
+
 //    public function medname()
 //    {
 //        return $this->belongsToMany(Medcenter::class,'doctors','id','med_id');
@@ -381,6 +398,16 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
                 'doctors_qualifications',
                 'doctor_id',
                 'qualification_id');
+    }
+
+    public function services()
+    {
+        return $this
+            ->belongsToMany(Service::class,
+                'doctors_services',
+                'doctor_id',
+                'service_id')
+            ->withPivot(['price']);
     }
 
     public function items()
@@ -613,6 +640,24 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         }
     }
 
+    public function checkForShowPhone(){
+        $showPhone = false;
+
+        if($this->show_phone == \App\Doctor::SHOW_PHONE){
+            $showPhone = true;
+        }elseif ($this->medcenters){
+            foreach($this->medcenters as $medcenter){
+                if(in_array($medcenter->id, \App\Doctor::SHOW_PHONES)){
+                    $showPhone = true;
+                }
+            }
+        }else{
+            $showPhone = false;
+        }
+
+        return $showPhone;
+    }
+
 
     public function getAdditionalAttribute()
     {
@@ -629,6 +674,47 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
 //        dd($opts);
         return $opts;
     }
+
+   public function getFillingPercentageAttribute()
+   {
+       $requiredFieldCount = count($this->checkingFields) + $this->dynamicFieldsQuantity;
+
+       $fullFieldCount = 0;
+        foreach ($this->checkingFields as $field){
+          if(!empty($this[$field]) && strlen($this[$field]) >= $this->validLength){
+              ++$fullFieldCount;
+          }
+        }
+
+        if(count($this->skills) > 0){
+            ++$fullFieldCount;
+        }
+
+        if(count($this->qualifications) > 0 || strlen($this->qualification) > 0){
+            ++$fullFieldCount;
+        }
+
+        $percent = round(($fullFieldCount * 100) / $requiredFieldCount);
+
+        switch ($percent){
+            case $percent < 50:
+                $class = 'percent-red';
+                break;
+            case $percent >=50 && $percent <= 65:
+                $class = 'percent-orange';
+                break;
+            case $percent > 65 && $percent <=75:
+                $class = 'percent-green';
+                break;
+            case $percent > 75:
+                $class = 'percent-blue';
+                break;
+            default:
+                $class = 'percent-blue';
+        }
+
+        return ['percent' => $percent, 'class'=> $class];
+   }
 
     public function clicksCount($dateFrom, $dateTo)
     {
