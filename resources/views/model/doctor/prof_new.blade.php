@@ -38,6 +38,14 @@
             <template slot="dislikes">{{ $doctor->dislikes }}</template>
         </inp-rate>
     </div>
+    <div class="entity-thumb-img__scale">
+        <div class="percent-color {{$doctor->fillingPercentage['class']}}">
+            <div class="filling-scale">
+                <div class="progress-bar" style="width: {{ $doctor->fillingPercentage['percent'] }}%"></div>
+            </div>
+            <div class="progress-text">Заполнено на: <span>{{ $doctor->fillingPercentage['percent'] }}%</span></div>
+        </div>
+    </div>
 </div>
 <div class="entity-line__main">
     <h3 class="entity-line__name profiles__title"><a href="{{ route('doctor.item',['doctor'=>$doctor->alias]) }}">{{$doctor['name']}}</a></h3>
@@ -109,7 +117,25 @@
         <div class="appointment-book-big__heading">Записаться на прием</div>
     @endif
     <div class="appointment-book-big__timeline">
-        {!! $doctor->timetable !!}
+        @if(isset($doubleActiveDoctor))
+            <div class="entity-thumb-img__label red entity-thumb-img__label_active double_active">
+                <div class="entity-thumb-img__label_text">
+                    <div class="entity-thumb-span_most">Самый</div>активный и отзывчивый
+                </div>
+            </div>
+        @elseif(isset($activeCommentsDoctor))
+            <div class="entity-thumb-img__label red entity-thumb-img__label_active">
+                <div class="entity-thumb-img__label_text">
+                    <div class="entity-thumb-span_most">Самый</div>активный
+                </div>
+            </div>
+        @elseif(isset($responsiveDoctor))
+            <div class="entity-thumb-img__label red entity-thumb-img__label_responsive">
+                <div class="entity-thumb-img__label_text">
+                    <div class="entity-thumb-span_most">Самый</div>отзывчивый
+                </div>
+            </div>
+        @endif
     </div>
         {{--@if($doctor->whoIsIt() == \App\Doctor::TYPE[3])--}}
         {{--<div class="appointment-book-big__bot-line">--}}
