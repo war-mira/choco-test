@@ -17,7 +17,7 @@
         </div>
             <div class="service-list-block">    
 
-                @foreach($serviceGroup->services->chunk($serviceGroup->services->count()/4) as $service_group)
+                @foreach($serviceGroup->services->chunk((int)ceil($serviceGroup->services->count()/4)) as $service_group)
                     <div class="service-list-column">
                         <div class="entity-line__list">
                             <ul>

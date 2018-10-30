@@ -13,6 +13,7 @@ use App\Helpers\SessionContext;
 use App\Http\Middleware\Http2Push;
 use App\Http\Requests\Doctor\DoctorFilters;
 use App\Medcenter;
+use App\Models\Library\Illness;
 use App\PageSeo;
 use App\Skill;
 use App\Models\District;
@@ -23,6 +24,7 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redis;
+use morphos\Russian\GeographicalNamesInflection;
 use Psy\Util\Str;
 
 class DoctorController extends Controller
@@ -205,6 +207,28 @@ class DoctorController extends Controller
 
     }
 
+
+    public function listByIllness(City $city,Illness $illness)
+    {
+        $doctors = $illness->doctors()
+            ->where('doctors.city_id',$city->id)
+            ->paginate(10);
+        $pageSeo = PageSeo::query()
+            ->where('class','DoctorByIllness')
+            ->where('action', 'list')
+            ->first();
+        if(!is_null($pageSeo)){
+            $meta = SeoMetadataHelper::getMeta($pageSeo, $city,$illness);
+        } else{
+            $title = 'iDoctor.kz - Врачи-специалисты. Список врачей-специалистов в Казахстане';
+            $description = 'iDoctor.kz - Список врачей-специалистов по всему Казахстану. Поиск и бесплатная запись на прием к врачу любой специальности. У нас собрана большая база врачей различных специализаций по всему Казахстану';
+            $meta = compact('title', 'description');
+        }
+
+        return view('search.page',
+            compact('meta','illness','city', 'doctors'));
+
+    }
     public function get_dt(Request $request)
     {
         if ($request->ajax()) {

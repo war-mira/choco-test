@@ -1,5 +1,8 @@
 (function(){
     let errorModal = document.getElementById('error_report');
+    if(!errorModal){
+        return false;
+    }
     let form = errorModal.querySelector('form');
     let button = form.querySelector('.btn');
     let textarea = form.querySelector('textarea').value;

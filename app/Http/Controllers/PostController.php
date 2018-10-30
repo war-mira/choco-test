@@ -17,7 +17,7 @@ class PostController extends Controller
         if(!$post){
             $article = IllnessesGroupArticle::where('alias',$alias)->firstOrFail();
             return redirect()->route('library.illnesses-group-article',[
-                'illnesses_group' => $article->illnessesGroup->alias,
+                'illnesses_group' => $article->group->alias,
                 'article' => $article->alias
             ]);
         }

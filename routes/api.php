@@ -63,9 +63,19 @@ Route::get('qr-list',function(){
     return response($list,200,["Content-type"=>"text/plain"]);
 });
 
+Route::get('analytics',function (){
+    $stat = new \App\Helpers\MetricManager();
+
+    return $stat->report(
+        '2018-10-01'
+    );
+});
+
 Route::get('metrics',function (){
     return [
+        'doctors_with_clicks' => count(Redis::keys('doctor:*:clicks')),
         'doctors_published' => Doctor::public()->count(),
+        'medcenters_published' => \App\Medcenter::public()->count(),
         'feedback_opened' => \App\Comment::where(['status'=>1,'owner_type'=>'Doctor'])->count(),
         'feedback_closed' => \App\Comment::where(['status'=>0,'owner_type'=>'Doctor'])->count(),
         'illnesses_opened' => \App\Models\Library\Illness::where('active',1)->count(),

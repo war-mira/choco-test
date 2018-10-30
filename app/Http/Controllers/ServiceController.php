@@ -7,6 +7,7 @@ use App\Service;
 use App\ServiceGroup;
 use Illuminate\Http\Request;
 use Intervention\Image\Exception\NotFoundException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ServiceController extends Controller
 {
@@ -45,7 +46,15 @@ class ServiceController extends Controller
 
     public function groupList($alias)
     {
-        $serviceGroup = ServiceGroup::whereAlias($alias)->active()->first();
+        $serviceGroup = ServiceGroup::whereAlias($alias)
+            ->with('services.medcenters')
+            ->whereHas('services',function ($q){
+                 $q->has('medcenters','>','0');
+            })
+            ->active()->first();
+        if(is_null($serviceGroup)){
+            throw new NotFoundHttpException;
+        }
         $meta = [
             'title' => $serviceGroup->name . ' - цены в Алматы - iDoctor.kz',
             'h1' => $serviceGroup->name . ' - цены в Алматы',
@@ -61,9 +70,9 @@ class ServiceController extends Controller
 
     public function medcentersList($group, $alias)
     {
-        $service = Service::whereAlias($alias)->active()->first();
+        $service = Service::whereAlias($alias)->has('medcenters')->active()->first();
         if (is_null($service)) {
-            throw new NotFoundException();
+            throw new NotFoundHttpException;
         }
 
         if ($service->group->alias !== $group) {
