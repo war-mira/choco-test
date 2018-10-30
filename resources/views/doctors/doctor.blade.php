@@ -227,9 +227,11 @@
                             class="entity-about__tab-count">{{$doctor->publicComments()->count()}}</span>
                 </h2>
             </a>
-            {{--<a href="#" data-tab="tab-3" class="entity-about__tab-item">--}}
-            {{--<h2 class="entity-about__tab-name">Акции и скидки</h2>--}}
-            {{--</a>--}}
+            @if($services->count() > 0)
+                <a href="#" data-tab="tab-3" class="entity-about__tab-item">
+                    <h2 class="entity-about__tab-name">Услуги</h2>
+                </a>
+            @endif
             <a href="#" data-tab="tab-4" class="entity-about__tab-item">
                 <h2 class="entity-about__tab-comments">Комментарии</h2>
             </a>
@@ -324,7 +326,14 @@
 
             <div id="tab-3" class="entity-about-article">
                 <div class="entity-content__main">
-
+                    @if(!empty($services))
+                        @foreach($services as $service)
+                            <div class="entity-content__services">
+                                <div class="entity-content__services_name entity-line__name">{{$service->name}}</div>
+                                <div class="entity-content__services_price">{{$service->price}} тг</div>
+                            </div>
+                        @endforeach
+                    @endif
                 </div>
                 <div class="entity-content__aside">
                     @component('elements.side-banner',['position' => App\Banner::POSITION_EXT_C['id']])@endcomponent
@@ -343,7 +352,7 @@
 </section>
 @include('jsond.person',[
 'image'=>url()->to($doctor->getAvatar(300,0)),
-'jobTitle' => $doctor->main_skill->name,
+'jobTitle' => $doctor->main_skill ? $doctor->main_skill->name:'',
 'name' => $doctor->name,
 'city' => $doctor->city->name,
 'address' => $doctor->medcenters->first() ? $doctor->medcenters->first()->sms_address:null,

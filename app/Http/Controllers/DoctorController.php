@@ -35,17 +35,11 @@ class DoctorController extends Controller
         $request->query->add(['model' => 'view-profile', 'id' => $doctor->id]);
 
         $this->clicksCount($request);
-        /**
-         *
-
-        if ($city->id !== $doctor->city->id) {
-            // return redirect()->route('doctor.item', ['doctor' => $doctor->alias], 301);
-        }
-        */
 
         $districts  =  Cache::remember('index:districts',120, function(){
             return District::all();
         });
+
         $meta = SeoMetadataHelper::getMeta($doctor, $city);
         $city_id = $doctor->city->id;
         $skill_id = (!is_null($doctor->main_skill)?$doctor->main_skill->id:0);
@@ -64,11 +58,21 @@ class DoctorController extends Controller
 
             return $query->whereNotNull('avatar')->limit(9)->get();
         });
+
+        $services = Cache::remember('index:services-'.$doctor->id.'',120, function() use($doctor) {
+           return DB::table('doctors_services')
+                ->select('service_items.name AS name', 'doctors_services.price AS price')
+                ->join('service_items', 'service_items.id', '=', 'doctors_services.service_id')
+                ->where('doctors_services.doctor_id', $doctor->id)
+                ->get();
+        });
+
         return view('doctors.item')
             ->with('meta', $meta)
             ->with('districts', $districts)
             ->with('near', $near_docs)
-            ->with('doctor', $doctor);
+            ->with('doctor', $doctor)
+            ->with('services', $services);
     }
 
     public function commonList(Skill $skill = null, Request $request)
@@ -143,7 +147,7 @@ class DoctorController extends Controller
             $activeCommentsDoctor = clone $doctors;
             $activeAnswersDoctor = clone $doctors;
 
-            $activeCommentsDoctor = Cache::remember('active-comments-doctor:' . $skill->id, 120, function () use ($activeCommentsDoctor, $dateStart, $dateEnd) {
+            $activeCommentsDoctor = Cache::tags(['doctors'])->remember('active-comments-doctor:' . $skill->id, 120, function () use ($activeCommentsDoctor, $dateStart, $dateEnd) {
                 return $activeCommentsDoctor->select(['*', DB::raw('count(comments.id) as total')])
                     ->leftJoin('comments', 'doctors.id', '=', 'comments.owner_id')
                     ->whereBetween('comments.created_at', [$dateStart, $dateEnd])
@@ -152,7 +156,7 @@ class DoctorController extends Controller
                     ->first();
             });
 
-            $activeAnswersDoctor = Cache::remember('active-answers-doctor:' . $skill->id, 120, function () use ($activeAnswersDoctor, $dateStart, $dateEnd) {
+            $activeAnswersDoctor = Cache::tags(['doctors'])->remember('active-answers-doctor:' . $skill->id, 120, function () use ($activeAnswersDoctor, $dateStart, $dateEnd) {
                 return $activeAnswersDoctor->select(['*', DB::raw('count(question_answers.id) as total')])
                     ->leftJoin('question_answers', 'doctors.id', '=', 'question_answers.doctor_id')
                     ->whereBetween('question_answers.created_at', [$dateStart, $dateEnd])
@@ -573,7 +577,6 @@ class DoctorController extends Controller
                 return $data;
         }
     }
-
 
     protected function getFilterforSeo($skill, $flag)
     {
