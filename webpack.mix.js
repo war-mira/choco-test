@@ -77,13 +77,16 @@ mix.js('resources/assets/js/app.js', 'public/build/js/vue_app.js')
     ], 'public/build/js/all.js')
     .babel([
         'resources/assets/js/plugins/scripts.js',
-        'resources/assets/js/plugins/form_sender.js',
     ], 'public/build/js/scripts.js')
+    .babel([
+        'resources/assets/js/plugins/form_sender.js',
+    ], 'public/build/js/vanilla_plugins.js')
     .sass('resources/assets/sass/app.scss', 'public/build/css')
     .combine([
         'public/build/js/all.js',
         'public/build/js/scripts.js',
         'public/build/js/vue_app.js',
+        'public/build/js/vanilla_plugins.js',
         'resources/assets/js/plugins/validation.js',
     ],'public/build/js/app.js')
     .options({
