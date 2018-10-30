@@ -136,7 +136,7 @@ class DoctorController extends Controller
 
 
         // TODO: multiple skills
-        if (isset($skill) && isset($filter['page']) && $filter['page'] != 1) {
+        if (isset($skill) && (!isset($filter['page']) || $filter['page'] == 1)){
             $top_doctors = FormatHelper::arrayToString($skill->top_doctors);
             if ($top_doctors && $skill->top_doctors) {
                 $doctorsTop = Doctor::whereIn('id', $skill->top_doctors)->orderByRaw('FIELD(id,' . $top_doctors . ')')->where('status', 1)->get();
