@@ -49,47 +49,26 @@
 </div>
 <div class="entity-line__main">
     <h3 class="entity-line__name profiles__title"><a href="{{ route('doctor.item',['doctor'=>$doctor->alias]) }}">{{$doctor['name']}}</a></h3>
-    <div class="entity-line__descr">@foreach ($doctor['skills'] as $i=>$skill)<a href="{{$skill->href}}"
-                                                                                 style="text-decoration: none">{{$skill->name }}</a>
-        @if(count($doctor['skills']) > 1 && $i!=(count($doctor['skills'])-1)) / @endif  @endforeach</div>
-    @if($doctor['qualification'])<div class="entity-line__label">{{$doctor['qualification']}}</div>@endif
+    <div class="entity-line__descr">
+        @foreach ($doctor['skills'] as $i=>$skill)
+        <a href="{{$skill->href}}" style="text-decoration: none">
+            {{$skill->name }}
+        </a>
+        @if(count($doctor['skills']) > 1 && $i!=(count($doctor['skills'])-1)) / @endif  @endforeach
+    </div>
+    @if($doctor['qualification'])
+        <div class="entity-line__qualification">{{$doctor['qualification']}}</div>
+    @endif
     <div class="entity-line__features">
         <div class="entity-line__feature entity-feature">
-            <div class="entity-feature__icon">
-                <img src="{{asset('img/icon-doc.svg')}}" alt="">
-            </div>
             <div class="entity-feature__info">
-                <div class="entity-feature__name">Стаж работы</div>
-                <div class="entity-feature__descr">{{$doctor->exp_formatted}}</div>
-            </div>
-        </div>
-        <div class="entity-line__feature entity-feature">
-            <div class="entity-feature__icon">
-                <img src="{{asset('img/icon-truck.svg')}}" alt="">
-            </div>
-            <div class="entity-feature__info">
-                <div class="entity-feature__name">Выезд на дом</div>
-                @if($doctor['ambulatory']==1)
-                    <div class="entity-feature__descr entity-feature__descr_positive">Да</div>
-                @else
-                    <div class="entity-feature__descr entity-feature__descr_negative">Нет</div>
-                @endif
-            </div>
-        </div>
-        <div class="entity-line__feature entity-feature">
-            <div class="entity-feature__icon">
-                <img src="{{asset('img/icon-baby.svg')}}" alt="">
-            </div>
-            <div class="entity-feature__info">
-                <div class="entity-feature__name">Детский врач</div>
-                @if($doctor['child']==1)
-                    <div class="entity-feature__descr entity-feature__descr_positive">Да</div>
-                @else
-                    <div class="entity-feature__descr entity-feature__descr_negative">Нет</div>
-                @endif
+                <div class="entity-line__label">Стаж {{$doctor->exp_formatted}}</div>
             </div>
         </div>
     </div>
+    
+</div>
+<div class="entity-line__additional appointment-book-big">
     <div class="doc-line__address">
         @if(count($doctor->jobs))
             <div class="doc-line__address-heading">Прием по адресу:</div>
@@ -111,19 +90,26 @@
             </div>
         @endif
     </div>
-</div>
-<div class="entity-line__additional appointment-book-big">
-    @if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])
-        <div class="appointment-book-big__heading">Записаться на прием</div>
+    @if($doctor->checkForShowPhone())
+        <phone-show-btn model="{{ \App\Doctor::SHOW_PHONE_COUNT }}" id="{{ $doctor->id }}" phone="{{ \App\Helpers\HtmlHelper::phoneCode($doctor->showing_phone) }}">
+            <template slot="phone-number"></template>
+        </phone-show-btn>
     @endif
+    <div class="appointment-book-big__bot-line">
+        @if(!empty($doctor->price))
+            <div class="appointment-book-big__price">
+                <div class="appointment-book-big__price-text">Прием от:</div>
+                <div class="appointment-book-big__price-val">от {{$doctor->price}} тг</div>
+            </div>
+        @endif
+    </div>
     <div class="appointment-book-big__timeline">
-        @if(isset($doubleActiveDoctor))
             <div class="entity-thumb-img__label red entity-thumb-img__label_active double_active">
                 <div class="entity-thumb-img__label_text">
                     <div class="entity-thumb-span_most">Самый</div>активный и отзывчивый
                 </div>
             </div>
-        @elseif(isset($activeCommentsDoctor))
+        @if(isset($activeCommentsDoctor))
             <div class="entity-thumb-img__label red entity-thumb-img__label_active">
                 <div class="entity-thumb-img__label_text">
                     <div class="entity-thumb-span_most">Самый</div>активный
@@ -137,24 +123,4 @@
             </div>
         @endif
     </div>
-    @if($doctor->checkForShowPhone())
-        <phone-show-btn model="{{ \App\Doctor::SHOW_PHONE_COUNT }}" id="{{ $doctor->id }}" phone="{{ \App\Helpers\HtmlHelper::phoneCode($doctor->showing_phone) }}">
-            <template slot="phone-number"></template>
-        </phone-show-btn>
-    @endif
-    @if($doctor->partner == \App\Doctor::PARTNER)
-        <form action="#" class="">
-            <div class="appointment-book-big__bot-line">
-                @if(!empty($doctor->price))
-                    <div class="appointment-book-big__price">
-                        <div class="appointment-book-big__price-text">Прием от:</div>
-                        <div class="appointment-book-big__price-val">от {{$doctor->price}} тг</div>
-                    </div>
-                @endif
-                <a href="#order_doctor" data-doc-id="{{$doctor->id}}" data-dname="{{$doctor['name']}}"
-                   class="appointment-book-big__book-btn btn btn_theme_usual trigger-link popup-with-form">Записаться<span
-                            class="hidden-xl"> онлайн</span></a>
-            </div>
-        </form>
-    @endif
 </div>

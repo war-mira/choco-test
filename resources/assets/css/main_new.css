@@ -2008,7 +2008,7 @@ img {
 
 .result-control-bar {
   border-bottom: 1px solid #f9f9f9;
-  padding: 20px 0 15px; }
+  padding: 30px 0 15px; }
 .parent_cont
 {
   display: block;
@@ -2193,7 +2193,6 @@ img {
   color: #ff0000; }
 
 .doc-line__address {
-  margin-top: 25px;
   font-size: 14px;
   line-height: 1.5; }
 .doc-line__address-heading {
@@ -2208,7 +2207,7 @@ img {
   flex-wrap: wrap;
   margin: 0 -30px; }
 .doc-line__address-item {
-  width: 50%;
+  width: 100%;
   margin-bottom: 10px;
   padding: 0 30px; }
 .doc-line__address-item:nth-child(even) {
@@ -2227,9 +2226,8 @@ img {
   flex-grow: 1; }
 
 .appointment-book-big {
-  background: #fcfcfc;
   padding: 10px 1.88235% 20px;
-  font-size: 14px; text-align: center}
+  font-size: 14px;}
 .appointment-book-big_bg_light {
   background: #fff; }
 .appointment-book-big__heading {

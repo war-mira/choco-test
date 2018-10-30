@@ -53,8 +53,8 @@
             </div>
             <div class="entity-line__main">
                 <div class="entity-line__name"><h1> {{$doctor['name']}}</h1></div>
-                <div class="entity-line__descr">@foreach ($doctor['skills'] as $i=>$skill)<a href="{{$skill->href}}"
-                                                                                             style="text-decoration: none">{{$skill->name }}</a>
+                <div class="entity-line__descr">@foreach ($doctor['skills'] as $i=>$skill)
+                    <a href="{{$skill->href}}" style="text-decoration: none">{{$skill->name }}</a>
                     @if(count($doctor['skills']) > 1 && $i!=(count($doctor['skills'])-1)) / @endif  @endforeach</div>
                 @if($doctor['qualification'])
                     <div class="entity-line__label">{{$doctor['qualification']}}</div>@endif

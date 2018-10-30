@@ -1,3 +1,6 @@
+$font-bold: "ProximaNova-Bold", sans-serif;
+
+
 .entity-line__about-text{
   transition: height .2s ease-in-out;
   &.less{
@@ -69,3 +72,108 @@
 #topPagination, #bottomPagination{
     display: none;
 }
+
+.breadcrumb li{
+    font-size: 14px;
+}
+.result-control-bar{
+    border-bottom: none;
+    
+    #filtersGroup{
+        .js-simple-select{
+            .selectize-input > *{
+                font-size: 14px;
+                line-height: 17px;
+                color: #454545;
+            }
+            .has-items{
+                border: 0.5px solid #DFDFDF;
+                border-radius: 30px;
+                padding: 9px 16px;
+                width: 165px;
+            }
+            
+        }
+    }
+}
+.doctor-result__list{
+    
+    .search-result__city-name{
+        display: flex;
+        flex-wrap: wrap;
+        text-align: left;
+        
+        .search_icon{
+            height: 20px;
+            width: 20px;
+            margin-right: 20px;
+        }
+        
+        h1{
+            font-family: $font-bold;
+            font-size: 24px;
+            line-height: 28px;
+            color: #808080;
+            margin-right: 16px;
+        }
+        span{
+            background-color: #F5F5F5;
+            font-size: 13px;
+            line-height: 14px;
+            padding: 6px 7px;
+        }
+    }
+    .doctor_list{
+        .doc-line{
+            margin-bottom: 24px;
+            padding: 24px 35px;
+            border: 0.5px solid #DFDFDF;
+            
+            &:hover{
+               background-color: #DFDFDF; 
+            }
+            .appointment-book-big{
+                position: relative;
+                padding-top: 0;
+                
+                .appointment-book-big__price-text, .doc-line__address-heading{
+                    color: #BEBEBE;
+                    font-size: 16px;
+                }
+                .appointment-book-big__price-val{
+                    font-family: $font-bold;
+                    font-size: 24px;
+                    line-height: 28px;
+                    color: #FA6783;
+                }
+                .doc-line__address-heading{
+                    margin-bottom: 8px;
+                }
+                .doc-line__address-list{
+                    line-height: 19px;
+                    
+                    .doc-line__address-clinic-link{
+                        text-decoration: none;
+                    }
+                }
+                
+                .appointment-book-big__timeline{
+                    position: absolute;
+                    right: -18px;
+                    top: 40%;
+                }
+            }
+            
+            .entity-line__main{
+                width: 40%;
+                margin-right: 0;
+            }
+            .appointment-book-big{
+                padding: 0;
+            }
+        }
+    }
+}
+
+
+
