@@ -120,68 +120,13 @@ Route::group(['middleware' => 'role:superdev', 'as' => 'sandbox.', 'prefix' => '
 
     Route::get('search-index',function (){
 
-        $index_set = Doctor::public();
-        $per_page = 50;
-        $total_pages = $index_set->count()/$per_page;
+        $cities = \App\City::where('status',1)->get();
 
-        $config = [
-            'model' => class_basename(Doctor::class),
-            'fields'=> [
-                'name',
-                'firstname',
-                'lastname',
-                'patronymic',
-                'skills'=>[
-                    'value'=>'name',
-                    'autocomplete'=>true,
-                    'dictionary'=>[]
-                ],
-                'illnesses'=>[
-                    'value'=>'name',
-                    'autocomplete'=>true,
-                    'dictionary'=>[]
-                ],
-                'qualifications'=>[
-                    'value'=>'name',
-                    'autocomplete'=>true,
-                    'dictionary'=>[]
-                ],
-                'medcenters'=>[
-                    'value'=>'name',
-                    'autocomplete'=>true,
-                    'dictionary'=>[]
-                ],
-                'additional'=>[
-                    'value'=>'name',
-                    'autocomplete'=>true,
-                    'dictionary'=>[]
-                ],
-                'city'=>[
-                    'value'=>'name',
-                    'autocomplete'=>true,
-                    'dictionary'=>[
-                        'Алматы'=>[
-                            'Алма-Ата',
-                            'Культурная столица'
-                        ]
-                    ]
-                ],
-            ]
-        ];
+        $cities->each(function ($item){
+            \App\Jobs\SearchIndexClusterJob::dispatch($item);
+        });
 
-        Redis::publish('search indexing pages',$total_pages);
-        Redis::publish('search indexing',$index_set->count());
-
-        for($page=0; $page<=$total_pages; $page++){
-
-            $data = $index_set->skip($per_page*$page)->take($per_page)->get();
-            \App\Jobs\SearchIndexJob::dispatch($config,$data);
-        }
-
-        dd(
-            $total_pages,
-            $index_set->count()
-        );
+        return 'for the Emperor!';
     });
 
 
