@@ -400,6 +400,16 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
                 'qualification_id');
     }
 
+    public function services()
+    {
+        return $this
+            ->belongsToMany(Service::class,
+                'doctors_services',
+                'doctor_id',
+                'service_id')
+            ->withPivot(['price']);
+    }
+
     public function items()
     {
         return $this->morphMany(ServiceItem::class, 'vendor');

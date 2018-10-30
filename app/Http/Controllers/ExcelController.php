@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\City;
 use App\Doctor;
 use App\Medcenter;
+use App\Service;
 use App\Skill;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ExcelController extends Controller
@@ -44,7 +46,7 @@ class ExcelController extends Controller
                         if (!$doctorExist) {
                             $city = City::where('name', $row[4])->first();
 
-                            if(!$city){
+                            if (!$city) {
                                 $city = new City();
                                 $city->parent_id = 1;
                                 $city->position = 1;
@@ -69,7 +71,7 @@ class ExcelController extends Controller
                             $doctor->address = $row[16];
                             $doctor->about_text = $row[18];
                             $doctor->status = 0;
-                            $doctor->city_id = $city ? $city->id: 6;
+                            $doctor->city_id = $city ? $city->id : 6;
                             $doctor->partner = Doctor::NOT_PARTNER;
                             $doctor->save();
 
@@ -136,11 +138,11 @@ class ExcelController extends Controller
             $results = $reader->toArray();
 
             foreach ($results as $rows) {
-                foreach ($rows as $row){
+                foreach ($rows as $row) {
                     $phone = trim(preg_replace('/[()]|\-|\–|\s+/', '', $row[2]));
                     $medcenter = Medcenter::find($row[0]);
-                    if($medcenter){
-                        foreach ($medcenter->doctors as $doctor){
+                    if ($medcenter) {
+                        foreach ($medcenter->doctors as $doctor) {
                             $doctor->showing_phone = $phone;
                             $doctor->update();
                         }
@@ -152,4 +154,40 @@ class ExcelController extends Controller
         });
     }
 
+    public function loadDoctorsServises()
+    {
+        ini_set('memory_limit', '-1');
+        ini_set('max_execution_time', 0);
+        Excel::load('files/services.xlsx', function ($reader) {
+            $doctorsIds = $reader->first()->toArray();
+            $reader->skipRows(1);
+            $results = $reader->toArray();
+            foreach ($results as $key => $result) {
+                if (isset($result[0])) {
+                    DB::table('service_items')->insert(
+                        ['name' => $result[0]]
+                    );
+
+                    $service = DB::table('service_items')->where('name', $result[0])->first();
+
+                    foreach ($doctorsIds as $key => $doctorId) {
+                        if ($key != 0) {
+                            $doctor = Doctor::find(intval($doctorId));
+                            if ($doctor && isset($result[$key])) {
+                                DB::table('doctors_services')->insert(
+                                    ['doctor_id' => $doctorId, 'service_id' => $service->id, 'price' => (int)preg_replace("/[^0-9]/", "", $result[$key])]
+                                );
+                            }
+                        }
+
+                    }
+                }
+
+            }
+
+        });
+
+        return 'ok';
+
+    }
 }
