@@ -65,7 +65,12 @@ class MedcenterController extends Controller
 
         $medcenters = $medcenters->paginate(10);
 
+        $otherCityMedcenters = \Cache::tags(['medcenters'])->remember('other_city_'.$city->id??0,120,function() use($city){
 
+            return  Medcenter::where('city_id', '<>' , $city->id)
+                ->whereStatus(1)
+                ->limit(10)->get();
+        });
         $h1_title = 'Клиники ' . $city->name;
 
         $sortOptions = [
@@ -81,6 +86,7 @@ class MedcenterController extends Controller
         return view("search.search-medcenters-page")
             ->with('h1_title', $h1_title)
             ->with('meta', $meta)
+            ->with('otherCityMedcenters', $otherCityMedcenters)
             ->with('Medcenters', $medcenters)
             ->with('Pagination', $medcenters)
             ->with(compact('filter', 'sortOptions'));
