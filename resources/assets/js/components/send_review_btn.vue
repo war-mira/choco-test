@@ -19,7 +19,6 @@
                 comment_type: this.type,
                 owner_id: this.ownerId,
                 owner_type: this.ownerType,
-
             }
         },
         methods: {

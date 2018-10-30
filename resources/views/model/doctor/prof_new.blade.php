@@ -125,34 +125,24 @@
                 {{--</phone-show-btn>--}}
             {{--@endif--}}
         {{--@endif--}}
-        @if($doctor->medcenters)
-            @foreach($doctor->medcenters as $medcenter)
-                @if(in_array($medcenter->id, \App\Doctor::SHOW_PHONES) || $doctor->	show_phone == \App\Doctor::SHOW_PHONE)
-                    <phone-show-btn model="{{ \App\Doctor::SHOW_PHONE_COUNT }}" id="{{ $doctor->id }}" phone="{{ \App\Helpers\HtmlHelper::phoneCode($doctor->showing_phone) }}">
-                        <template slot="phone-number"></template>
-                    </phone-show-btn>
-                @endif
-            @endforeach
+        @if($doctor->checkForShowPhone())
+            <phone-show-btn model="{{ \App\Doctor::SHOW_PHONE_COUNT }}" id="{{ $doctor->id }}" phone="{{ \App\Helpers\HtmlHelper::phoneCode($doctor->showing_phone) }}">
+                <template slot="phone-number"></template>
+            </phone-show-btn>
         @endif
-    @if($doctor->partner == \App\Doctor::PARTNER)
-        <form action="#" class="">
-            <div class="appointment-book-big__bot-line">
-                @if(!empty($doctor->price))
-                    <div class="appointment-book-big__price">
-                        <div class="appointment-book-big__price-text">Прием от:</div>
-                        <div class="appointment-book-big__price-val">от {{$doctor->price}} тг</div>
-                    </div>
-                @endif
-                <a href="#order_doctor" data-doc-id="{{$doctor->id}}" data-dname="{{$doctor['name']}}"
-                   class="appointment-book-big__book-btn btn btn_theme_usual trigger-link popup-with-form">Записаться<span
-                            class="hidden-xl"> онлайн</span></a>
-            </div>
-        </form>
-    @elseif($doctor->show_phone != \App\Doctor::SHOW_PHONE)
-            <send-review-btn user="{{ Auth::guest() ? 'guest':'user'}}" type="{{ \App\Comment::typeCommon }}" owner_type="Doctor" owner_id="{{$doctor->id}}">
-                <template slot="send-review-btn"></template>
-            </send-review-btn>
-    @endif
-
-
+        @if($doctor->partner == \App\Doctor::PARTNER)
+            <form action="#" class="">
+                <div class="appointment-book-big__bot-line">
+                    @if(!empty($doctor->price))
+                        <div class="appointment-book-big__price">
+                            <div class="appointment-book-big__price-text">Прием от:</div>
+                            <div class="appointment-book-big__price-val">от {{$doctor->price}} тг</div>
+                        </div>
+                    @endif
+                    <a href="#order_doctor" data-doc-id="{{$doctor->id}}" data-dname="{{$doctor['name']}}"
+                       class="appointment-book-big__book-btn btn btn_theme_usual trigger-link popup-with-form">Записаться<span
+                                class="hidden-xl"> онлайн</span></a>
+                </div>
+            </form>
+        @endif
 </div>
