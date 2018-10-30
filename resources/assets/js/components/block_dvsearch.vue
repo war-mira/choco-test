@@ -41,12 +41,14 @@
             <div class="search-proposals-inner" >
                 <div style="width: 100%">
                     <div>
-                        {{ hint }}
-                        <a :href="searchResults_hash!=''?'https://idoctor.kz/almaty/doctors?hash='+searchResults_hash:'#'"
-                           class="btn btn-sm btn-success"
-                           v-if="count==1"
-                           target="_blank"
-                        >Да</a>
+                        <div style="padding-bottom:20px">
+                            {{ hint }}
+                        </div>
+                        <!--<a :href="searchResults_hash!=''?'https://idoctor.kz/almaty/doctors?hash='+searchResults_hash:'#'"-->
+                           <!--class="btn btn-sm btn-success"-->
+                           <!--v-if="count==1"-->
+                           <!--target="_blank"-->
+                        <!--&gt;Да</a>-->
                         <div v-if="additional_results">
                                     <span class="hint_tag btn-warning"
                                           v-for="result in additional_results"
@@ -55,33 +57,37 @@
                         </div>
                     </div>
                     <div class="search-group">
-                        <div style="flex-grow: 1" v-if="main_results.length">
-                            <span style="color: #00A8FF; font-size: 11px">Выберите фильтр:</span>
-                            <div class="propose"
-                                 v-for="result in main_results"
-                                 @click="selectTag(result)"
-                                 @mouseOver="focusProposal(result)"
-                                 :class="{'focused-proposal':focused_proposal==result}"
-                            >
-                                <input type="checkbox" > {{ result.value }}
-                                <transition name="fade">
-                                    <strong v-if="result.count"> {{ result.count }}</strong>
-                                </transition>
-                                <span class="field-type"> {{ field_names[result.attrib] }}</span>
+                        <div style="flex-grow: 1" v-if="left_results">
+                            <div v-for="(group,key) in left_results">
+                                <div class="propose-group-header">{{ field_names[key] }}:</div>
+                                <div class="propose"
+                                     v-for="result in group.items"
+                                     @click="selectTag(result)"
+                                     @mouseOver="focusProposal(result)"
+                                     :class="{'focused-proposal':focused_proposal==result}"
+                                >
+                                    {{ result.value }}
+                                    <transition name="fade">
+                                        <strong v-if="result.count"> {{ result.count }}</strong>
+                                    </transition>
+                                </div>
                             </div>
+
                         </div>
-                        <div style="flex-grow: 1" v-if="sec_results.length">
-                            <span style="color: #00A8FF; font-size: 11px">Возможные врачи/клиники:</span>
-                            <div class="propose"
-                                 v-for="result in sec_results"
-                                 @click="selectTag(result)"
-                                 :class="{'focused-proposal':focused_proposal==result}"
-                            >
-                                {{ result.value }}
-                                <transition name="fade">
-                                    <strong v-if="result.count"> {{ result.count }}</strong>
-                                </transition>
-                                <span class="field-type">{{ field_names[result.attrib] }}</span>
+                        <div style="flex-grow: 1" v-if="right_results">
+                            <div v-for="(group,key) in right_results">
+                                <div class="propose-group-header">{{ field_names[key] }}:</div>
+                                <div class="propose"
+                                     v-for="result in group.items"
+                                     @click="selectTag(result)"
+                                     @mouseOver="focusProposal(result)"
+                                     :class="{'focused-proposal':focused_proposal==result}"
+                                >
+                                    {{ result.value }}
+                                    <transition name="fade">
+                                        <strong v-if="result.count"> {{ result.count }}</strong>
+                                    </transition>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -174,7 +180,7 @@
                     document.querySelector('#dvSearch').focus();
                 }
 
-                if(val.lenght>=2)
+                if(val.length>=2)
                     this.search_in.forEach(function (field) {
                         socket.emit('search inserting',val,[field],this.model,this.selectedTags);
                     }.bind(this));
@@ -233,18 +239,29 @@
             can_search:function(){
                 //if(this.search === '' && this.selectedTags.length === 0)
                     //return true;
+                if(!this.select_focused && this.search==='')
+                    return true;
 
-                return !this.search_autocomplete;
+                return this.search === '' && this.selectedTags.length > 0;
+
+
 
             },
             main_results:function(){
                 return collect(this.results)
-                    .whereIn('attrib',['firstname','patronymic','lastname','skills','illnesses','qualifications'])
+                    .whereIn('attrib',['firstname','patronymic','lastname'])
                     .all();
             },
-            sec_results:function(){
+            left_results:function(){
+                return collect(this.results)
+                    .whereIn('attrib',['skills','illnesses'])
+                    .groupBy('attrib')
+                    .all();
+            },
+            right_results:function(){
                 return collect(this.results)
                     .whereIn('attrib',['name','medcenters'])
+                    .groupBy('attrib')
                     .all();
 
             },
@@ -263,20 +280,26 @@
             },
             hint:function () {
 
-                if(this.selectedTags.length===0 && this.search==='')
+                if(this.selectedTags.length===0 && this.search.length<2)
                     return "👆 Начните вводить ФИО врача, специализацию, заболевание, клинику и тд...";
+
+                if(this.results && this.results.length == 0 && this.search.length>2)
+                    return "👆 Введенный в поиске текст не найден. попробуйте стереть часть текста.";
+
+                if(this.selectedTags.length===0 && this.search!=='')
+                    return "👇 Выберите один из предложенных вариантов";
 
                 if(this.count === 0)
                     return "🗨 По выбранным фильтрам нет врачей. Попробуйте выбрать другую комбинацию!";
 
-                if(this.count === 1)
-                    return "Найден 1 врач. Перейти к его профилю?";
+                // if(this.count === 1)
+                //     return "Найден 1 врач. Перейти к его профилю?";
 
-                if(this.count === 2)
-                    return "🗨 Найденные 2 врача отличаются данными характеристиками:";
+                // if(this.count === 2)
+                //     return "🗨 Найденные 2 врача отличаются данными характеристиками:";
 
                 if(this.count > 20 && this.selectedTags.length>0)
-                    return "🗨 Фильтру соответствует врачей: "+this.count+". Вы можете уточнить дополнительные критерии.";
+                    return "🗨  Вы можете продолжить поиск по дополнительным критериям.";
 
                 if(this.selectedTags.length>0)
                     return "Фильтру соответствует врачей: "+this.count+"";
@@ -454,6 +477,16 @@
                 .search-group{
                     flex-grow: 1;
                     display: flex;
+
+                    .propose-group-header{
+                        line-height: normal;
+                        font-size: 14px;
+                        color: #000000;
+                        mix-blend-mode: normal;
+                        opacity: 0.65;
+                        background: rgba(1, 111, 168, 0.08);
+                        font-weight: bold;
+                    }
 
                     .propose{
                         font-size: 13px;

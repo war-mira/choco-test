@@ -43,7 +43,7 @@
                     {{--<button class="btn">Найти</button>--}}
                 {{--</div>--}}
             {{--</form>--}}
-            <live-search></live-search>
+            <live-search model="Doctor-{{ \App\Helpers\SessionContext::city()->alias }}"></live-search>
         </div>
 
 
