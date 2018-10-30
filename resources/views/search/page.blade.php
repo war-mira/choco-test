@@ -20,17 +20,20 @@
                             <p>Топ лучших специалистов в {{ $city->name }}. Список {{ isset($skill) ? mb_strtolower($skill->name).'ов' : '' }} с фото, отзывами, рейтингом и проверенными контактами.</p>
                             <p>Быстрый поиск и запись на прием к {{isset($skill) ? mb_strtolower($skill->name).'у':'' }} на iDoctor.kz.</p>
                         </div>
-                        @if($comercial)
-                            @foreach($comercial->get() as $doctor)
-                                <div class="search-result__item entity-line doc-line" data-type="doctor"
-                                     data-id="{{$doctor->id}}"
-                                     id="doctor-result-{{$doctor->id}}">
-                                    @component('model.doctor.prof_new',['doctor'=>$doctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'comercial'=>true])
-                                    @endcomponent
-                                </div>
-                            @endforeach
+                        @if(isset($comercial))
+                            @if($comercial)
+                                @foreach($comercial->get() as $doctor)
+                                    <div class="search-result__item entity-line doc-line" data-type="doctor"
+                                         data-id="{{$doctor->id}}"
+                                         id="doctor-result-{{$doctor->id}}">
+                                        @component('model.doctor.prof_new',['doctor'=>$doctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'comercial'=>true])
+                                        @endcomponent
+                                    </div>
+                                @endforeach
+                            @endif
                         @endif
 
+                        @if(isset($doctorsTop))
                         @if($doctorsTop)
                             @foreach($doctorsTop as $doctor)
                                 <div class="search-result__item entity-line doc-line" data-type="doctor"
@@ -41,11 +44,12 @@
                                 </div>
                             @endforeach
                         @endif
-                        @if(isset($activeDoctor))
+                        @endif
+                        @if(isset($doubleActiveDoctor))
                             <div class="search-result__item entity-line doc-line" data-type="doctor"
-                                 data-id="{{$activeDoctor->id}}"
-                                 id="doctor-result-{{$activeDoctor->id}}">
-                                @component('model.doctor.prof_new',['doctor'=>$activeDoctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'activeDoctor'=>true, 'responsiveDoctor'=>true])
+                                 data-id="{{$doubleActiveDoctor->id}}"
+                                 id="doctor-result-{{$doubleActiveDoctor->id}}">
+                                @component('model.doctor.prof_new',['doctor'=>$doubleActiveDoctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'doubleActiveDoctor'=>true])
                                 @endcomponent
                             </div>
                         @elseif(isset($activeCommentsDoctor))

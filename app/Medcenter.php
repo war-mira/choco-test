@@ -244,8 +244,8 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
                 $geo  = Geolocation::whereHash($address_hash)->first();
                 if(is_null($geo)){
                     $points = Geolocation::getFromYandexMapApi($address,$address_hash);
-                    $longitude = $points[0];
-                    $latitude = $points[1];
+                    $longitude = $points[0]??0;
+                    $latitude = $points[1]??0;
                     $geo = new Geolocation();
                     $geo->address = $address;
                     $geo->hash = $address_hash;
@@ -253,6 +253,9 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
                     $geo->latitude = $latitude;
                     $geo->save();
                     $this->update(['geo_id'=>$geo->id]);
+                    if(!isset($points[1])){
+                        $points = ["0","0"];
+                    }
 
                     return  implode(', ', array_reverse($points));
                 } else{
@@ -408,6 +411,11 @@ class Medcenter extends Model implements IReferenceable, ISeoMetadata
     {
      //   dd($value);
         $this->types()->sync($value);
+    }
+
+    public function services(){
+        return $this->belongsToMany(Service::class,'service_medcenter','medcenter_id','service_id')
+            ->withPivot(['price']);
     }
     public function types()
     {

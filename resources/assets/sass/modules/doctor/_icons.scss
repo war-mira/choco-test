@@ -59,3 +59,13 @@
   }
 }
 
+.entity-thumb-img__label_active.double_active{
+  .entity-thumb-img__label_text{
+    font-size: 9.5px;
+  }
+
+  .entity-thumb-img__label_text::before{
+    top: 10px;
+  }
+}
+
