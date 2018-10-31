@@ -49,21 +49,21 @@
                             <div class="search-result__item entity-line doc-line" data-type="doctor"
                                  data-id="{{$doubleActiveDoctor->id}}"
                                  id="doctor-result-{{$doubleActiveDoctor->id}}">
-                                @component('model.doctor.prof_new',['doctor'=>$doubleActiveDoctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'doubleActiveDoctor'=>true])
+                                @component('model.doctor.prof_new',['doctor'=>$doubleActiveDoctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'doubleActiveDoctor'=>true, 'withLabel' => true])
                                 @endcomponent
                             </div>
                         @elseif(isset($activeCommentsDoctor))
                             <div class="search-result__item entity-line doc-line" data-type="doctor"
                                  data-id="{{$activeCommentsDoctor->id}}"
                                  id="doctor-result-{{$activeCommentsDoctor->id}}">
-                                @component('model.doctor.prof_new',['doctor'=>$activeCommentsDoctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'activeDoctor'=>true])
+                                @component('model.doctor.prof_new',['doctor'=>$activeCommentsDoctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'activeCommentsDoctor'=>true, 'withLabel' => true])
                                 @endcomponent
                             </div>
                         @elseif(isset($activeAnswersDoctor))
                             <div class="search-result__item entity-line doc-line" data-type="doctor"
                                  data-id="{{$activeAnswersDoctor->id}}"
                                  id="doctor-result-{{$activeAnswersDoctor->id}}">
-                                @component('model.doctor.prof_new',['doctor'=>$activeAnswersDoctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'responsiveDoctor'=>true])
+                                @component('model.doctor.prof_new',['doctor'=>$activeAnswersDoctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'responsiveDoctor'=>true, 'withLabel' => true])
                                 @endcomponent
                             </div>
                         @endif
