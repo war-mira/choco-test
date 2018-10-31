@@ -8,6 +8,7 @@
       height: auto;
       height: initial;
       overflow: initial;
+      padding-top:80px;
       & > div{
         flex-basis:100%;
       }
@@ -19,6 +20,10 @@
 
       .index-nav-line{
         top:0;
+        position:absolute;
+        &.desktop.fixed-top{
+          position:fixed;  
+        }
       }
     }
   }
