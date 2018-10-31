@@ -91,7 +91,32 @@
                     </div>
                 @endif
             </div>
+            @if(isset($otherCityDoctors))
+                <div class="search-result">
+                    <div class="container">
+                        <div class="search-result__list">
+                            <div class="search-result__city-name">
+                                <h2>
+                                    Врачи в других городах
+                                </h2>
+                            </div>
 
+                            <div class="doctor_list content_scroll__block">
+                                @foreach($otherCityDoctors as $otherCityDoctor)
+                                    <div class="search-result__item entity-line doc-line" data-type="doctor"
+                                         data-id="{{$otherCityDoctor->id}}"
+                                         id="doctor-result-{{$otherCityDoctor->id}}">
+                                        @component('model.doctor.prof_new',['doctor'=>$otherCityDoctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null])
+                                        @endcomponent
+                                    </div>
+                                @endforeach
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            @endif
         </form>
     </div>
 
