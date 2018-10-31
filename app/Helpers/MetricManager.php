@@ -19,13 +19,13 @@ class MetricManager
 
     ];
     static $metrics = [
-//        'feedback_opened',
-//        'medcenters_with_feedback',
+        'feedback_opened',
+        'medcenters_with_feedback',
         'doctors_with_feedback',
         'doctors_without_phones_with_feedback',
         'doctor_clicks',
-//        'doctors_with_clicks',
-//        'doctors_with_clicks_total'
+        'doctors_with_clicks',
+        'doctors_with_clicks_total'
     ];
 
 
