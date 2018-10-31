@@ -186,7 +186,8 @@ class DoctorController extends Controller
 
         $this->applyDoctorsFilter($doctors, $filter);
 
-        $otherCityDoctors = Cache::tags(['doctors'])->remember('other_city-'.$skill->alias??'no'.'city_id-'.$city->id??0,120,function() use ($city,$skill){
+
+        $otherCityDoctors = Cache::tags(['doctors'])->remember('other_city-'.($skill->alias??'no').'city_id-'.$city->id??0,120,function() use ($city,$skill){
             //   return Doctor::query()->where('doctors.status', 1)
             //                ->where('doctors.city_id', $city_id)->whereNotNull('avatar')->limit(9)->get();
 
