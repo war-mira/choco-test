@@ -48,13 +48,13 @@
 @import "modules/service/list";
 @import "modules/service/medcenters"; 
 @import "modules/service/doctors";
+@import "modules/index/base";
+@import "modules/search/base";
+@import "modules/search/autocomplete";
 
 .blur {
-  -webkit-filter: url(#blur);
   filter: url(#blur);
-  -webkit-filter: blur(3px);
   filter: blur(3px);
   filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius='4');
-  -webkit-transition: 0.3s -webkit-filter linear;
   transition: 0.3s filter linear;
 }

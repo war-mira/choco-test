@@ -1,0 +1,25 @@
+.page{
+  &--index{
+    &__intro{
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      position: relative;
+      height: auto;
+      height: initial;
+      overflow: initial;
+      & > div{
+        flex-basis:100%;
+      }
+      .index-intro__container .index-intro__search-bar:before{
+        @media (max-width: 768px) {
+          display: none;
+        }
+      }
+
+      .index-nav-line{
+        top:0;
+      }
+    }
+  }
+}
