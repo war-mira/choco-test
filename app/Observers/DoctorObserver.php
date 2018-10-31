@@ -34,10 +34,6 @@ class DoctorObserver
     {
         $this->invalidateCache();
     }
-    public function saved(Doctor $doctor)
-    {
-        $this->invalidateCache();
-    }
     public function invalidateCache()
     {
         \Cache::tags(['doctors'])->flush();
