@@ -107,7 +107,6 @@ class DoctorController extends Controller
             ])
                 ->add($searcher));
 
-
         $query = request()->only([
             'q',
             'child',
@@ -142,13 +141,14 @@ class DoctorController extends Controller
                 $doctorsTop = Doctor::whereIn('id', $skill->top_doctors)->orderByRaw('FIELD(id,' . $top_doctors . ')')->where('status', 1)->get();
             }
 
+
             $dateStart = date("Y-m-d h:m:s", strtotime('monday this week'));
             $dateEnd = date("Y-m-d h:m:s", strtotime('sunday this week'));
             $activeCommentsDoctor = clone $doctors;
             $activeAnswersDoctor = clone $doctors;
 
             $activeCommentsDoctor = Cache::tags(['doctors'])->remember('active-comments-doctor:' . $skill->id, 120, function () use ($activeCommentsDoctor, $dateStart, $dateEnd) {
-                return $activeCommentsDoctor->select(['*', DB::raw('count(comments.id) as total')])
+                return $activeCommentsDoctor->select(['doctors.*', DB::raw('count(comments.id) as total')])
                     ->leftJoin('comments', 'doctors.id', '=', 'comments.owner_id')
                     ->whereBetween('comments.created_at', [$dateStart, $dateEnd])
                     ->groupBy('doctors.id')
@@ -157,7 +157,7 @@ class DoctorController extends Controller
             });
 
             $activeAnswersDoctor = Cache::tags(['doctors'])->remember('active-answers-doctor:' . $skill->id, 120, function () use ($activeAnswersDoctor, $dateStart, $dateEnd) {
-                return $activeAnswersDoctor->select(['*', DB::raw('count(question_answers.id) as total')])
+                return $activeAnswersDoctor->select(['doctors.*', DB::raw('count(question_answers.id) as total')])
                     ->leftJoin('question_answers', 'doctors.id', '=', 'question_answers.doctor_id')
                     ->whereBetween('question_answers.created_at', [$dateStart, $dateEnd])
                     ->groupBy('doctors.id')
@@ -165,7 +165,7 @@ class DoctorController extends Controller
                     ->first();
             });
 
-            if(isset($activeCommentsDoctor) && isset($activeAnswersDoctor) && $activeCommentsDoctor->alias == $activeAnswersDoctor->alias)
+            if(isset($activeCommentsDoctor) && isset($activeAnswersDoctor) && $activeCommentsDoctor->id == $activeAnswersDoctor->id)
                 $doubleActiveDoctor = $activeCommentsDoctor;
 
         }
@@ -183,7 +183,6 @@ class DoctorController extends Controller
             $doctors = $doctors->where('doctors.id', '!=', $activeAnswersDoctor->id);
 
         $this->applyDoctorsFilter($doctors, $filter);
-
 
         /**
          *

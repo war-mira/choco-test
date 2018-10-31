@@ -113,10 +113,8 @@
     </div>
 </div>
 <div class="entity-line__additional appointment-book-big">
-    @if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])
-        <div class="appointment-book-big__heading">Записаться на прием</div>
-    @endif
-    <div class="appointment-book-big__timeline">
+    @if(isset($withLabel))
+    <div class="appointment-book_label">
         @if(isset($doubleActiveDoctor))
             <div class="entity-thumb-img__label red entity-thumb-img__label_active double_active">
                 <div class="entity-thumb-img__label_text">
@@ -136,6 +134,13 @@
                 </div>
             </div>
         @endif
+    </div>
+    @endif
+    @if($doctor->partner == \App\Doctor::PARTNER || $doctor->whoIsIt() == \App\Doctor::TYPE[2])
+        <div class="appointment-book-big__heading">Записаться на прием</div>
+    @endif
+    <div class="appointment-book-big__timeline">
+        {!! $doctor->timetable !!}
     </div>
         {{--@if($doctor->whoIsIt() == \App\Doctor::TYPE[3])--}}
         {{--<div class="appointment-book-big__bot-line">--}}
