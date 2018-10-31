@@ -45,7 +45,7 @@ class SendDoctorReviewWeeklyDigest implements ShouldQueue
                 $name = $doc->firstname . ' ' . $doc->lastname;
                 $mail = $doc->user ? $doc->user->email : $doc->email;
 
-                $mail = 'alex@fed.kz';
+//                $mail = 'alex@fed.kz';
 
                 if(str_is('*@*.*',$mail))
                     Mail::to($mail)->send(new \App\Mail\DoctorReviewsWeeklyMail($name, $item));
