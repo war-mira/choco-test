@@ -456,7 +456,7 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
 
     public function scopeRedisSearchSet($query, $hash)
     {
-        if($set = Redis::get('search.index4:Doctor-queryset:'.$hash))
+        if($set = Redis::get('search.index4:Doctor-'.$this->city->alias.'-queryset:'.$hash))
             $ids = json_decode($set);
         else
             return $ids = [0];
