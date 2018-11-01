@@ -1,0 +1,35 @@
+.cities{
+  &--list{
+    padding: 16px 0;
+    ul{
+      li{
+        padding-left:0;
+        margin: 8px 0;
+      }
+      &.list-unstyled{
+        li{
+          &:before{
+            content:'';
+          }
+        }
+      }
+
+    }
+    .col_4{
+      &>div{
+        padding: 0 8px;
+        &:first-child{
+          @media (min-width: 768px) {
+            padding-left: 0;
+          }
+        }
+        &:last-child{
+
+          @media (min-width: 768px) {
+            padding-right: 0;
+          }
+        }
+      }
+    }
+  }
+}

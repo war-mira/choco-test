@@ -7,7 +7,6 @@
     <div class="container">
         <div class="result-control-bar__line" id="filtersGroup">
             <div class="result-control-bar__query">
-                <div class="result-control-bar__query-count">найдено {{$doctors->total()}} врачей</div>
 
                 <input type="radio" style="display:none;" checked="true" name="order" value="asc">
                 <input type="radio" style="display:none;" name="order" value="desc">

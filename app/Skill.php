@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Helpers\SeoMetadataHelper;
 use App\Helpers\SessionContext;
 use App\Interfaces\ISeoMetadata;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use morphos\Russian\GeographicalNamesInflection;
 use morphos\Russian\NounPluralization;
 
@@ -154,6 +156,17 @@ class Skill extends Model implements ISeoMetadata
         return empty($this->seo_h1) ?  NounPluralization::getCase($this->name, 'именительный').' в '. GeographicalNamesInflection::getCase($city->name, 'предложный'): $this->seo_h1;
     }
 
+    public function getTitleForCity($city = null)
+    {
+        if(is_null($city)){
+            return  Str::ucfirst(NounPluralization::getCase($this->name, 'именительный'));
+
+        } else{
+            return  Str::ucfirst(NounPluralization::getCase($this->name, 'именительный').' в '. (SeoMetadataHelper::CityPP[$city->id] ??GeographicalNamesInflection::getCase($city->name, 'предложный')));
+
+        }
+
+    }
     public function scopeActive($query)
     {
         return $query->where('active',1);

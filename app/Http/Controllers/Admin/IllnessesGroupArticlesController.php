@@ -108,7 +108,7 @@ class IllnessesGroupArticlesController extends Controller
     private function postProcessIllnessesGroup($model)
     {
         $newName =  preg_replace('~[\\*?"<>|]~', '', $model->name);
-        $transName = \Slug::make($newName); 
+        $transName = \Slug::make($newName);
         $model->alias = $model->id . "-" . $transName;
         $model->save();
     }

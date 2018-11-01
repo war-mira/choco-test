@@ -35,13 +35,15 @@ class DoctorController extends Controller
         $request->query->add(['model' => 'view-profile', 'id' => $doctor->id]);
 
         $this->clicksCount($request);
-
+        $city_id = $doctor->city->id;
+        if($city->id !== $city_id){
+            return redirect(route('doctor.item',['doctor'=>$doctor->alias,'city'=>$doctor->city->alias]));
+        }
         $districts  =  Cache::remember('index:districts',120, function(){
             return District::all();
         });
 
         $meta = SeoMetadataHelper::getMeta($doctor, $city);
-        $city_id = $doctor->city->id;
         $skill_id = (!is_null($doctor->main_skill)?$doctor->main_skill->id:0);
 
         $near_docs = Cache::tags(['doctors'])->remember('near_doctors-city_id-'.$city_id.'-skill-'.$skill_id,120,function() use ($city_id,$doctor,$skill_id){
@@ -184,6 +186,12 @@ class DoctorController extends Controller
 
         $this->applyDoctorsFilter($doctors, $filter);
 
+
+        $otherCities = \Cache::tags(['cities'])->remember('other_city_'.$city->id??0,120,function() use($city){
+            return  City::where('id', '<>' , $city->id)
+                ->active()->get();
+        });
+
         /**
          *
          * $doctors = \Cache::tags(['doctors'])->remember(CacheHelper::getKeyFromUrl(),24*7*60,function() use($doctors,$query){
@@ -202,7 +210,7 @@ class DoctorController extends Controller
         $meta = SeoMetadataHelper::getMeta($skill ?? $pageSeo, $city);
 
         return view('search.page',
-            compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage', 'skill', 'comercial', 'districts', 'activeCommentsDoctor', 'activeAnswersDoctor', 'doubleActiveDoctor'));
+            compact('meta','otherCities','doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage', 'skill', 'comercial', 'districts', 'activeCommentsDoctor', 'activeAnswersDoctor', 'doubleActiveDoctor'));
 
     }
 
