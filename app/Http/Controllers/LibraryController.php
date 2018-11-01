@@ -111,14 +111,14 @@ class LibraryController
     public function illness( Illness $illness)
     {
 
-        $links = $this->getNavigationFromContent($illness->description);
-        $titleInDesc = $this->checkIfFirstTitleExist($illness->description);
 
         $meta = SeoMetadataHelper::getMeta($illness);
         if(!empty($illness->content)){
             $grid = new Grid($illness->json_content->rows);
             $text = $grid->prepare();
         }
+        $titleInDesc = $this->checkIfFirstTitleExist($text??$illness->description);
+        $links = $this->getNavigationFromContent($text??$illness->description);
 
 
         return view('library.illnesses.item', compact('illness', 'links','meta', 'titleInDesc','text'));
