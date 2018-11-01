@@ -32,17 +32,21 @@
                                 <span></span>
                             </div>
                         </div>
-                        @if($comercial)
-                            @foreach($comercial->get() as $doctor)
-                                <div class="search-result__item entity-line doc-line" data-type="doctor"
-                                     data-id="{{$doctor->id}}"
-                                     id="doctor-result-{{$doctor->id}}">
-                                    @component('model.doctor.prof_new',['doctor'=>$doctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'comercial'=>true])
-                                    @endcomponent
-                                </div>
-                            @endforeach
+                        
+                        @if(isset($comercial))
+                            @if($comercial)
+                                @foreach($comercial->get() as $doctor)
+                                    <div class="search-result__item entity-line doc-line" data-type="doctor"
+                                         data-id="{{$doctor->id}}"
+                                         id="doctor-result-{{$doctor->id}}">
+                                        @component('model.doctor.prof_new',['doctor'=>$doctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'comercial'=>true])
+                                        @endcomponent
+                                    </div>
+                                @endforeach
+                            @endif
                         @endif
 
+                        @if(isset($doctorsTop))
                         @if($doctorsTop)
                             @foreach($doctorsTop as $doctor)
                                 <div class="search-result__item entity-line doc-line" data-type="doctor"
@@ -53,25 +57,26 @@
                                 </div>
                             @endforeach
                         @endif
+                        @endif
                         @if(isset($doubleActiveDoctor))
                             <div class="search-result__item entity-line doc-line" data-type="doctor"
                                  data-id="{{$doubleActiveDoctor->id}}"
                                  id="doctor-result-{{$doubleActiveDoctor->id}}">
-                                @component('model.doctor.prof_new',['doctor'=>$doubleActiveDoctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'doubleActiveDoctor'=>true])
+                                @component('model.doctor.prof_new',['doctor'=>$doubleActiveDoctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'doubleActiveDoctor'=>true, 'withLabel' => true])
                                 @endcomponent
                             </div>
                         @elseif(isset($activeCommentsDoctor))
                             <div class="search-result__item entity-line doc-line" data-type="doctor"
                                  data-id="{{$activeCommentsDoctor->id}}"
                                  id="doctor-result-{{$activeCommentsDoctor->id}}">
-                                @component('model.doctor.prof_new',['doctor'=>$activeCommentsDoctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'activeDoctor'=>true])
+                                @component('model.doctor.prof_new',['doctor'=>$activeCommentsDoctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'activeCommentsDoctor'=>true, 'withLabel' => true])
                                 @endcomponent
                             </div>
                         @elseif(isset($activeAnswersDoctor))
                             <div class="search-result__item entity-line doc-line" data-type="doctor"
                                  data-id="{{$activeAnswersDoctor->id}}"
                                  id="doctor-result-{{$activeAnswersDoctor->id}}">
-                                @component('model.doctor.prof_new',['doctor'=>$activeAnswersDoctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'responsiveDoctor'=>true])
+                                @component('model.doctor.prof_new',['doctor'=>$activeAnswersDoctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null,'responsiveDoctor'=>true, 'withLabel' => true])
                                 @endcomponent
                             </div>
                         @endif
@@ -99,6 +104,32 @@
                     </div>
                 @endif
             </div>
+            @if(isset($otherCityDoctors))
+                <div class="search-result">
+                    <div class="container">
+                        <div class="search-result__list">
+                            <div class="search-result__city-name">
+                                <h2>
+                                    Врачи в других городах
+                                </h2>
+                            </div>
+
+                            <div class="doctor_list content_scroll__block">
+                                @foreach($otherCityDoctors as $otherCityDoctor)
+                                    <div class="search-result__item entity-line doc-line" data-type="doctor"
+                                         data-id="{{$otherCityDoctor->id}}"
+                                         id="doctor-result-{{$otherCityDoctor->id}}">
+                                        @component('model.doctor.prof_new',['doctor'=>$otherCityDoctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null])
+                                        @endcomponent
+                                    </div>
+                                @endforeach
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            @endif
         </form>
     </div>
 

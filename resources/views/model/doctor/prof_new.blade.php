@@ -8,7 +8,7 @@
             {{$doctor->publicComments()->count()}}
         </a>
     </div>
-    <a href="{{ route('doctor.item',['doctor'=>$doctor->alias]) }}">
+    <a href="{{ route('doctor.item',['doctor'=>$doctor->alias,'city'=>$doctor->city->alias]) }}">
     @component('components.prof-img',[  'width'=>140,
                                 'height'=>200,
                                 'doctor'=>$doctor])
@@ -41,7 +41,7 @@
     </div>
 
     <div class="entity-thumb-img__bot-line">
-        <a href="{{ route('doctor.item',['doctor'=>$doctor->alias]).'#tab-2' }}" class="entity-thumb-img__reviews">{{$doctor->publicComments()->count()}} отзывов</a>
+        <a href="{{ route('doctor.item',['doctor'=>$doctor->alias,'city'=>$doctor->city->alias]).'#tab-2' }}" class="entity-thumb-img__reviews">{{$doctor->publicComments()->count()}} отзывов</a>
         <inp-rate obj="doctor" id="{{ $doctor->id }}" type="likes" >
             <template slot="likes">{{ $doctor->likes }}</template>
             <template slot="dislikes">{{ $doctor->dislikes }}</template>
@@ -57,7 +57,7 @@
     </div>
 </div>
 <div class="entity-line__main">
-    <h3 class="entity-line__name profiles__title"><a href="{{ route('doctor.item',['doctor'=>$doctor->alias]) }}">{{$doctor['name']}}</a></h3>
+    <h3 class="entity-line__name profiles__title"><a href="{{ route('doctor.item',['doctor'=>$doctor->alias,'city'=>$doctor->city->alias]) }}">{{$doctor['name']}}</a></h3>
     <div class="entity-line__descr">
         @foreach ($doctor['skills'] as $i=>$skill)
         <a href="{{$skill->href}}" style="text-decoration: none">
@@ -65,6 +65,7 @@
         </a>
         @if(count($doctor['skills']) > 1 && $i!=(count($doctor['skills'])-1)) / @endif  @endforeach
     </div>
+
     <div class="entity-line__features">
         @if($doctor['qualification'])
             <div class="entity-line__qualification">{{$doctor['qualification']}}</div>
@@ -104,20 +105,26 @@
             </div>
         @endif
     </div>
-    @if($doctor->checkForShowPhone())
-        <phone-show-btn model="{{ \App\Doctor::SHOW_PHONE_COUNT }}" id="{{ $doctor->id }}" phone="{{ \App\Helpers\HtmlHelper::phoneCode($doctor->showing_phone) }}">
-            <template slot="phone-number"></template>
-        </phone-show-btn>
-    @endif
-    <div class="appointment-book-big__bot-line">
-        @if(!empty($doctor->price))
-            <div class="appointment-book-big__price">
-                <div class="appointment-book-big__price-text">Прием от:</div>
-                <div class="appointment-book-big__price-val">от {{$doctor->price}} тг</div>
-            </div>
-        @endif
-    </div>
-        <div class="appointment-book-big__timeline">
+<div class="entity-line__additional appointment-book-big">
+	@if($doctor->checkForShowPhone())
+		<phone-show-btn model="{{ \App\Doctor::SHOW_PHONE_COUNT }}" id="{{ $doctor->id }}" phone="{{ \App\Helpers\HtmlHelper::phoneCode($doctor->showing_phone) }}">
+			<template slot="phone-number"></template>
+		</phone-show-btn>
+	@endif
+	@if($doctor->partner == \App\Doctor::PARTNER)
+		<form action="#" class="">
+			<div class="appointment-book-big__bot-line">
+				@if(!empty($doctor->price))
+					<div class="appointment-book-big__price">
+						<div class="appointment-book-big__price-text">Прием от:</div>
+						<div class="appointment-book-big__price-val">от {{$doctor->price}} тг</div>
+					</div>
+				@endif
+			</div>
+		</form>
+	@endif
+	    @if(isset($withLabel))
+    <div class="appointment-book_label">
         @if(isset($doubleActiveDoctor))
             <div class="entity-thumb-img__label red entity-thumb-img__label_active double_active">
                 <div class="entity-thumb-img__label_text">
@@ -138,4 +145,5 @@
             </div>
         @endif
     </div>
+    @endif
 </div>

@@ -64,6 +64,7 @@ class TextElement extends AbstractElement {
     }
     initMedium(placeholder = 'Введите текст...'){
         let selector = this.instance.querySelector('.editable');
+        let autolist = new AutoList();
         this.editor = new MediumEditor(selector,{
             toolbar: {
                 /* These are the default options for the toolbar,
@@ -83,6 +84,14 @@ class TextElement extends AbstractElement {
                     'justifyLeft',
                     'justifyCenter',
                     'justifyRight',
+                    {
+                        name: 'unorderedlist',
+                        contentDefault: '<i class="fa fa-list-ul"></i>'
+                    },
+                    {
+                        name: 'orderedlist',
+                        contentDefault: '<i class="fa fa-list-ol"></i>'
+                    },
                     'removeFormat'
                 ],
                 diffLeft: 0,
@@ -96,6 +105,9 @@ class TextElement extends AbstractElement {
                 align: 'center',
                 sticky: false,
                 updateOnEmptySelection: false
+            },
+            extensions: {
+                'autolist': autolist
             },
             placeholder: {
                 text: placeholder,

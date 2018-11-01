@@ -78,7 +78,7 @@ class MedcenterTypeController extends Controller
 
     public function delete(Request $request, $id)
     {
-        Medcenter::find($id)->delete();
+        MedcenterType::find($id)->delete();
         if ($request->input('back', 0) == 1)
             return back()->withInput();
     }

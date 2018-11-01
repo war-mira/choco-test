@@ -28,8 +28,8 @@ Vue.component('btn-ajax', require('./components/btn_ajax.vue'));
 Vue.component('inp-rate', require('./components/inp_rate.vue'));
 Vue.component('rx-span', require('./components/rx_span.vue'));
 Vue.component('phone-show-btn', require('./components/phone_show_btn.vue'));
-Vue.component('find-doctor-btn', require('./components/find_doctor_btn.vue'));
 Vue.component('load-doctors-btn', require('./components/load_doctors_btn.vue'));
+Vue.component('find-doctor', require('./components/find_doctor_btn.vue'));
 Vue.component('live-search', require('./components/block_dvsearch.vue'));
 
 window.socket = Echo.connector.socket;

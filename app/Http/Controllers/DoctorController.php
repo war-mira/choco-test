@@ -13,6 +13,7 @@ use App\Helpers\SessionContext;
 use App\Http\Middleware\Http2Push;
 use App\Http\Requests\Doctor\DoctorFilters;
 use App\Medcenter;
+use App\Models\Library\Illness;
 use App\PageSeo;
 use App\Skill;
 use App\Models\District;
@@ -23,6 +24,7 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redis;
+use morphos\Russian\GeographicalNamesInflection;
 use Psy\Util\Str;
 
 class DoctorController extends Controller
@@ -33,19 +35,15 @@ class DoctorController extends Controller
         $request->query->add(['model' => 'view-profile', 'id' => $doctor->id]);
 
         $this->clicksCount($request);
-        /**
-         *
-
-        if ($city->id !== $doctor->city->id) {
-            // return redirect()->route('doctor.item', ['doctor' => $doctor->alias], 301);
+        $city_id = $doctor->city->id;
+        if($city->id !== $city_id){
+            return redirect(route('doctor.item',['doctor'=>$doctor->alias,'city'=>$doctor->city->alias]));
         }
-        */
-
         $districts  =  Cache::remember('index:districts',120, function(){
             return District::all();
         });
+
         $meta = SeoMetadataHelper::getMeta($doctor, $city);
-        $city_id = $doctor->city->id;
         $skill_id = (!is_null($doctor->main_skill)?$doctor->main_skill->id:0);
 
         $near_docs = Cache::tags(['doctors'])->remember('near_doctors-city_id-'.$city_id.'-skill-'.$skill_id,120,function() use ($city_id,$doctor,$skill_id){
@@ -62,11 +60,21 @@ class DoctorController extends Controller
 
             return $query->whereNotNull('avatar')->limit(9)->get();
         });
+
+        $services = Cache::remember('index:services-'.$doctor->id.'',120, function() use($doctor) {
+           return DB::table('doctors_services')
+                ->select('service_items.name AS name', 'doctors_services.price AS price')
+                ->join('service_items', 'service_items.id', '=', 'doctors_services.service_id')
+                ->where('doctors_services.doctor_id', $doctor->id)
+                ->get();
+        });
+
         return view('doctors.item')
             ->with('meta', $meta)
             ->with('districts', $districts)
             ->with('near', $near_docs)
-            ->with('doctor', $doctor);
+            ->with('doctor', $doctor)
+            ->with('services', $services);
     }
 
     public function commonList(Skill $skill = null, Request $request)
@@ -101,7 +109,6 @@ class DoctorController extends Controller
             ])
                 ->add($searcher));
 
-
         $query = request()->only([
             'q',
             'child',
@@ -130,19 +137,20 @@ class DoctorController extends Controller
 
 
         // TODO: multiple skills
-        if (isset($skill)) {
+        if (isset($skill) && (!isset($filter['page']) || $filter['page'] == 1)){
             $top_doctors = FormatHelper::arrayToString($skill->top_doctors);
             if ($top_doctors && $skill->top_doctors) {
                 $doctorsTop = Doctor::whereIn('id', $skill->top_doctors)->orderByRaw('FIELD(id,' . $top_doctors . ')')->where('status', 1)->get();
             }
+
 
             $dateStart = date("Y-m-d h:m:s", strtotime('monday this week'));
             $dateEnd = date("Y-m-d h:m:s", strtotime('sunday this week'));
             $activeCommentsDoctor = clone $doctors;
             $activeAnswersDoctor = clone $doctors;
 
-            $activeCommentsDoctor = Cache::remember('active-comments-doctor:' . $skill->id, 120, function () use ($activeCommentsDoctor, $dateStart, $dateEnd) {
-                return $activeCommentsDoctor->select(['*', DB::raw('count(comments.id) as total')])
+            $activeCommentsDoctor = Cache::tags(['doctors'])->remember('active-comments-doctor:' . $skill->id, 120, function () use ($activeCommentsDoctor, $dateStart, $dateEnd) {
+                return $activeCommentsDoctor->select(['doctors.*', DB::raw('count(comments.id) as total')])
                     ->leftJoin('comments', 'doctors.id', '=', 'comments.owner_id')
                     ->whereBetween('comments.created_at', [$dateStart, $dateEnd])
                     ->groupBy('doctors.id')
@@ -150,8 +158,8 @@ class DoctorController extends Controller
                     ->first();
             });
 
-            $activeAnswersDoctor = Cache::remember('active-answers-doctor:' . $skill->id, 120, function () use ($activeAnswersDoctor, $dateStart, $dateEnd) {
-                return $activeAnswersDoctor->select(['*', DB::raw('count(question_answers.id) as total')])
+            $activeAnswersDoctor = Cache::tags(['doctors'])->remember('active-answers-doctor:' . $skill->id, 120, function () use ($activeAnswersDoctor, $dateStart, $dateEnd) {
+                return $activeAnswersDoctor->select(['doctors.*', DB::raw('count(question_answers.id) as total')])
                     ->leftJoin('question_answers', 'doctors.id', '=', 'question_answers.doctor_id')
                     ->whereBetween('question_answers.created_at', [$dateStart, $dateEnd])
                     ->groupBy('doctors.id')
@@ -159,7 +167,7 @@ class DoctorController extends Controller
                     ->first();
             });
 
-            if(isset($activeCommentsDoctor) && isset($activeAnswersDoctor) && $activeCommentsDoctor->alias == $activeAnswersDoctor->alias)
+            if(isset($activeCommentsDoctor) && isset($activeAnswersDoctor) && $activeCommentsDoctor->id == $activeAnswersDoctor->id)
                 $doubleActiveDoctor = $activeCommentsDoctor;
 
         }
@@ -179,6 +187,20 @@ class DoctorController extends Controller
         $this->applyDoctorsFilter($doctors, $filter);
 
 
+        $otherCityDoctors = Cache::tags(['doctors'])->remember('other_city-'.($skill->alias??'no').'city_id-'.$city->id??0,120,function() use ($city,$skill){
+            //   return Doctor::query()->where('doctors.status', 1)
+            //                ->where('doctors.city_id', $city_id)->whereNotNull('avatar')->limit(9)->get();
+
+            $query =   Doctor::where('city_id', '<>' , $city->id??0)
+                ->public();
+            if(!is_null($skill)){
+                $query = $query->whereHas('skills',function ($query) use ($skill){
+                    return $query->where('alias',$skill->alias);
+                });
+            }
+            return $query->whereNotNull('avatar')->limit(10)->get();
+        });
+
         /**
          *
          * $doctors = \Cache::tags(['doctors'])->remember(CacheHelper::getKeyFromUrl(),24*7*60,function() use($doctors,$query){
@@ -197,10 +219,32 @@ class DoctorController extends Controller
         $meta = SeoMetadataHelper::getMeta($skill ?? $pageSeo, $city);
 
         return view('search.page',
-            compact('meta', 'doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage', 'skill', 'comercial', 'districts', 'activeCommentsDoctor', 'activeAnswersDoctor', 'doubleActiveDoctor'));
+            compact('meta','otherCityDoctors','doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage', 'skill', 'comercial', 'districts', 'activeCommentsDoctor', 'activeAnswersDoctor', 'doubleActiveDoctor'));
 
     }
 
+
+    public function listByIllness(City $city,Illness $illness)
+    {
+        $doctors = $illness->doctors()
+            ->where('doctors.city_id',$city->id)
+            ->paginate(10);
+        $pageSeo = PageSeo::query()
+            ->where('class','DoctorByIllness')
+            ->where('action', 'list')
+            ->first();
+        if(!is_null($pageSeo)){
+            $meta = SeoMetadataHelper::getMeta($pageSeo, $city,$illness);
+        } else{
+            $title = 'iDoctor.kz - Врачи-специалисты. Список врачей-специалистов в Казахстане';
+            $description = 'iDoctor.kz - Список врачей-специалистов по всему Казахстану. Поиск и бесплатная запись на прием к врачу любой специальности. У нас собрана большая база врачей различных специализаций по всему Казахстану';
+            $meta = compact('title', 'description');
+        }
+
+        return view('search.page',
+            compact('meta','illness','city', 'doctors'));
+
+    }
     public function get_dt(Request $request)
     {
         if ($request->ajax()) {
@@ -549,7 +593,6 @@ class DoctorController extends Controller
                 return $data;
         }
     }
-
 
     protected function getFilterforSeo($skill, $flag)
     {

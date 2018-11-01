@@ -56,6 +56,7 @@ Route::get('medcenter/{medcenter}', function (\App\Medcenter $medcenter) {
 
 Route::group(['prefix' => '{city}'], function () {
     Route::group(['prefix' => 'doctors', 'as' => 'doctors.'], function () { //Добавил z - удалить
+        Route::get('/illness/{illness}', 'DoctorController@listByIllness')->name('list_illness');
         Route::get('/{input?}/{modifier?}', 'DoctorController@list')->name('list');
     });
     Route::group(['prefix' => 'doctors_old', 'as' => 'doctors_old.'], function () { //Добавил z - удалить
@@ -232,6 +233,7 @@ Route::get('/load', 'ExcelController@loadDoctors')->name('load.doctors');
 Route::get('/load-skills', 'ExcelController@loadSkills')->name('load.skills');
 Route::get('/load-skills-illnesses-group', 'ExcelController@loadSkillsIllnessesGroup')->name('load.load-skills-illnesses-group');
 Route::get('/add-phones', 'ExcelController@addPhones')->name('load.phones');
+Route::get('/load-doctors-servises', 'ExcelController@loadDoctorsServises')->name('load.load-doctors-servises');
 
 Route::get('/clients-sms', 'SmsController@sendToClients')->name('sms.clients');
 

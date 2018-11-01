@@ -400,6 +400,16 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
                 'qualification_id');
     }
 
+    public function services()
+    {
+        return $this
+            ->belongsToMany(Service::class,
+                'doctors_services',
+                'doctor_id',
+                'service_id')
+            ->withPivot(['price']);
+    }
+
     public function items()
     {
         return $this->morphMany(ServiceItem::class, 'vendor');
@@ -446,10 +456,11 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
 
     public function scopeRedisSearchSet($query, $hash)
     {
-        if($set = Redis::get('search.index4:Doctor-queryset:'.$hash))
+
+        if($set = Redis::get('search.index4:Doctor-'.\App\Helpers\SessionContext::city()->alias.'-queryset:'.$hash))
             $ids = json_decode($set);
         else
-            return $query;
+            return $ids = [0];
 
         return $query->find($ids);
     }

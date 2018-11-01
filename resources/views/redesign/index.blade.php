@@ -2,7 +2,7 @@
 @section('content')
 
     <!-- section intro start -->
-    <section class="index-intro pattern-bg">
+    <section class="page--index__intro index-intro pattern-bg">
         @include('redesign.partials.nav_line')
         <div class="container">
             <div class="index-intro__container">
@@ -156,10 +156,6 @@
         </div>
     </section>
     <!-- section partners end-->
-    <style>
-        .index-intro {
-            height:fit-content!important;
-        }
-    </style>
+
 
 @endsection

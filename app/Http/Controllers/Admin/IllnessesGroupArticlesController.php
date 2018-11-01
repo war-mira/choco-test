@@ -105,19 +105,12 @@ class IllnessesGroupArticlesController extends Controller
         return $data;
     }
 
-    private function postProcessIllnessesGroup($illnessesGroup)
+    private function postProcessIllnessesGroup($model)
     {
-        $titleTrans = \Slug::make($illnessesGroup->name);
-        $words = preg_split("/[^A-Za-z0-9]/", $titleTrans);
-        $index = 0;
-        $alias = $illnessesGroup->id;
-        while (strlen($alias) < 50 && count($words) > $index) {
-            if (strlen($words[$index]) > 0)
-                $alias .= "-" . $words[$index];
-            $index++;
-        }
-        $illnessesGroup->alias = $alias;
-        $illnessesGroup->save();
+        $newName =  preg_replace('~[\\*?"<>|]~', '', $model->name);
+        $transName = \Slug::make($newName);
+        $model->alias = $model->id . "-" . $transName;
+        $model->save();
     }
 
 }

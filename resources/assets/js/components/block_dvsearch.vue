@@ -27,26 +27,28 @@
                    @keydown.down="focused_proposal = +1"
                    @keydown.up="focused_proposal   = -1"
             >
-            <div class="search-bar__item_submit">
-                <a
-                        :href="searchResults_hash!=''?'https://idoctor.kz/almaty/doctors?hash='+searchResults_hash:'#'"
-                        class="btn search_event"
-                        target="_blank"
-                >найти</a>
-            </div>
-
+            <transition name="search">
+                <a :href="searchResults_hash!=''?'https://idoctor.kz/'+city+'/doctors?hash='+searchResults_hash:'#'"
+                   :class="{'hidden-btn':!can_search}"
+                   class="search-btn"
+                   target="_blank"
+                   v-if="can_search"
+                >НАЙТИ</a>
+            </transition>
 
         </div>
         <div class="search-proposals" v-if="search_autocomplete">
             <div class="search-proposals-inner" >
                 <div style="width: 100%">
                     <div>
-                        {{ hint }}
-                        <a :href="searchResults_hash!=''?'https://idoctor.kz/almaty/doctors?hash='+searchResults_hash:'#'"
-                           class="btn btn-sm btn-success"
-                           v-if="count==1"
-                           target="_blank"
-                        >Да</a>
+                        <div style="padding-bottom:20px">
+                            {{ hint }}
+                        </div>
+                        <!--<a :href="searchResults_hash!=''?'https://idoctor.kz/almaty/doctors?hash='+searchResults_hash:'#'"-->
+                           <!--class="btn btn-sm btn-success"-->
+                           <!--v-if="count==1"-->
+                           <!--target="_blank"-->
+                        <!--&gt;Да</a>-->
                         <div v-if="additional_results">
                                     <span class="hint_tag btn-warning"
                                           v-for="result in additional_results"
@@ -55,33 +57,37 @@
                         </div>
                     </div>
                     <div class="search-group">
-                        <div style="flex-grow: 1" v-if="main_results.length">
-                            <span style="color: #00A8FF; font-size: 11px">Выберите фильтр:</span>
-                            <div class="propose"
-                                 v-for="result in main_results"
-                                 @click="selectTag(result)"
-                                 @mouseOver="focusProposal(result)"
-                                 :class="{'focused-proposal':focused_proposal==result}"
-                            >
-                                <input type="checkbox" > {{ result.value }}
-                                <transition name="fade">
-                                    <strong v-if="result.count"> {{ result.count }}</strong>
-                                </transition>
-                                <span class="field-type"> {{ field_names[result.attrib] }}</span>
+                        <div style="flex-grow: 1" v-if="left_results">
+                            <div v-for="(group,key) in left_results">
+                                <div class="propose-group-header">{{ field_names[key] }}:</div>
+                                <div class="propose"
+                                     v-for="result in group.items"
+                                     @click="selectTag(result)"
+                                     @mouseOver="focusProposal(result)"
+                                     :class="{'focused-proposal':focused_proposal==result}"
+                                >
+                                    {{ result.value }}
+                                    <transition name="fade">
+                                        <strong v-if="result.count"> {{ result.count }}</strong>
+                                    </transition>
+                                </div>
                             </div>
+
                         </div>
-                        <div style="flex-grow: 1" v-if="sec_results.length">
-                            <span style="color: #00A8FF; font-size: 11px">Возможные врачи/клиники:</span>
-                            <div class="propose"
-                                 v-for="result in sec_results"
-                                 @click="selectTag(result)"
-                                 :class="{'focused-proposal':focused_proposal==result}"
-                            >
-                                {{ result.value }}
-                                <transition name="fade">
-                                    <strong v-if="result.count"> {{ result.count }}</strong>
-                                </transition>
-                                <span class="field-type">{{ field_names[result.attrib] }}</span>
+                        <div style="flex-grow: 1" v-if="right_results">
+                            <div v-for="(group,key) in right_results">
+                                <div class="propose-group-header">{{ field_names[key] }}:</div>
+                                <div class="propose"
+                                     v-for="result in group.items"
+                                     @click="selectTag(result)"
+                                     @mouseOver="focusProposal(result)"
+                                     :class="{'focused-proposal':focused_proposal==result}"
+                                >
+                                    {{ result.value }}
+                                    <transition name="fade">
+                                        <strong v-if="result.count"> {{ result.count }}</strong>
+                                    </transition>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -174,9 +180,10 @@
                     document.querySelector('#dvSearch').focus();
                 }
 
-                this.search_in.forEach(function (field) {
-                    socket.emit('search inserting',val,[field],this.model,this.selectedTags);
-                }.bind(this));
+                if(val.length>=2)
+                    this.search_in.forEach(function (field) {
+                        socket.emit('search inserting',val,[field],this.model,this.selectedTags);
+                    }.bind(this));
             },
             selectedTags: function (val, old) {
                 this.search = '';
@@ -193,6 +200,9 @@
             }
         },
         computed:{
+            city:function () {
+                return  this.model.split('-')[1];
+            },
             focused_proposal:{
                 get:function () {
                     if(this.results && this.results.length > this.focused_proposal_index)
@@ -229,15 +239,32 @@
                 }).flatten(1).sortBy('distance').all();
             },
 
+            can_search:function(){
+                //if(this.search === '' && this.selectedTags.length === 0)
+                    //return true;
+                if(!this.select_focused && this.search==='')
+                    return true;
 
+                return this.search === '' && this.selectedTags.length > 0;
+
+
+
+            },
             main_results:function(){
                 return collect(this.results)
-                    .whereIn('attrib',['firstname','patronymic','lastname','skills','illnesses','qualifications'])
+                    .whereIn('attrib',['firstname','patronymic','lastname'])
                     .all();
             },
-            sec_results:function(){
+            left_results:function(){
+                return collect(this.results)
+                    .whereIn('attrib',['skills','illnesses'])
+                    .groupBy('attrib')
+                    .all();
+            },
+            right_results:function(){
                 return collect(this.results)
                     .whereIn('attrib',['name','medcenters'])
+                    .groupBy('attrib')
                     .all();
 
             },
@@ -256,20 +283,26 @@
             },
             hint:function () {
 
-                if(this.selectedTags.length===0 && this.search==='')
+                if(this.selectedTags.length===0 && this.search.length<2)
                     return "👆 Начните вводить ФИО врача, специализацию, заболевание, клинику и тд...";
+
+                if(this.results && this.results.length == 0 && this.search.length>2)
+                    return "👆 Введенный в поиске текст не найден. попробуйте стереть часть текста.";
+
+                if(this.selectedTags.length===0 && this.search!=='')
+                    return "👇 Выберите один из предложенных вариантов";
 
                 if(this.count === 0)
                     return "🗨 По выбранным фильтрам нет врачей. Попробуйте выбрать другую комбинацию!";
 
-                if(this.count === 1)
-                    return "Найден 1 врач. Перейти к его профилю?";
+                // if(this.count === 1)
+                //     return "Найден 1 врач. Перейти к его профилю?";
 
-                if(this.count === 2)
-                    return "🗨 Найденные 2 врача отличаются данными характеристиками:";
+                // if(this.count === 2)
+                //     return "🗨 Найденные 2 врача отличаются данными характеристиками:";
 
                 if(this.count > 20 && this.selectedTags.length>0)
-                    return "🗨 Фильтру соответствует врачей: "+this.count+". Вы можете уточнить дополнительные критерии.";
+                    return "🗨  Вы можете продолжить поиск по дополнительным критериям.";
 
                 if(this.selectedTags.length>0)
                     return "Фильтру соответствует врачей: "+this.count+"";
@@ -278,6 +311,10 @@
             },
             search_placeholder:function () {
                 let result_count = this.count;
+
+                if(this.selectedTags.length==0)
+                    return 'Начните поиск, например «Стоматологи»';
+
                 if(result_count===0)
                     return '🤔 По таким критериям не найдено ни одного врача!';
 
@@ -286,7 +323,7 @@
 
 
                 if(result_count>0)
-                    return 'Врачей в поиске: '+result_count+(this.selectedTags.length>0?' (по выбранным фильтрам) ':'');
+                    return 'Будет найдено врачей: '+result_count+(this.selectedTags.length>0?' (можно выбрать еще фильтры!) ':'');
 
                 return 'Поиск врача...';
             }
@@ -354,109 +391,3 @@
         }
     }
 </script>
-<style>
-    .dv-search-widget{
-        /*margin: 40px 0;*/
-    }
-
-    .dv-search-widget.filters-opened .search-proposals-inner{
-        -webkit-box-shadow: 0px 13px 23px -4px rgba(136,136,136,0.3);
-        -moz-box-shadow: 0px 13px 23px -4px rgba(136,136,136,0.3);
-        box-shadow: 0px 13px 23px -4px rgba(136,136,136,0.3);
-    }
-    .dv-autocomplete{
-        display: flex;
-        width: 100%;
-        border: 1px solid #00A8FF;
-        border-radius:0 23px 23px 0;
-    }
-    .dv-autocomplete .dv-tag{
-        margin: 8px;
-        padding: 5px;
-        cursor: pointer;
-        text-wrap: avoid;
-        text-decoration: underline;
-        color:#000000;
-        width: max-content;
-    }
-    .dv-autocomplete .dv-tag.tag-fixed{
-        cursor: initial;
-        text-decoration: none;
-        color: #555555;
-    }
-    .dv-tag-action{
-        width: max-content;
-    }
-    .dv-autocomplete .search-line{
-        /*flex-grow: 1;*/
-        border-radius: 0;
-        border: none;
-        font-size: 16px;
-    }
-    .dv-autocomplete .search-line:focus{
-        -webkit-box-shadow: none;
-        -moz-box-shadow: none;
-        box-shadow: none;
-    }
-    .dv-autocomplete a{
-        border-radius: 0;
-    }
-
-    .dv-search-widget .search-proposals{
-        position: absolute;
-        z-index: 500;
-        width: 100%;
-        margin: 0 -30px;
-        padding: 0 30px;
-    }
-    .dv-search-widget .search-proposals-inner{
-        display: flex;
-        flex-direction: row;
-        border: 1px solid #ced4da;
-        border-top:none;
-        background: #ffffff;
-        width: 100%;
-        max-height: 30em;
-        overflow: auto;
-        padding: 15px;
-        border-radius: 0;
-    }
-
-    .dv-search-widget .search-group{
-        flex-grow: 1;
-        display: flex;
-    }
-    .dv-search-widget .hint_tag{
-        margin: 5px;
-        padding: 0 15px;
-        border: 1px solid #ffc107; /* #00a8ff */
-        border-radius: 12px;
-        cursor: pointer;
-    }
-    .dv-search-widget .propose{
-        font-size: 13px;
-        cursor: pointer;
-        padding: 1px 3px;
-    }
-    .dv-search-widget .propose:hover{
-        background: rgba(226, 225, 218, 0.15);
-    }
-    .dv-search-widget .focused-proposal{
-        background: #fafaca;
-    }
-    .dv-search-widget .focused-proposal:hover{
-        background: #fafaca;
-    }
-    .dv-search-widget .field-type{
-        color: #9c9c9c;
-        float: right;
-        font-size: 11px;
-    }
-
-    .fade-enter-active, .fade-leave-active {
-        transition: opacity .5s;
-    }
-    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-        opacity: 0;
-    }
-</style>

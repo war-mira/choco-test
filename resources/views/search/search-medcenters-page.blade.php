@@ -46,6 +46,33 @@
                         </div>
                     @endif
                 </div>
+                @if(isset($otherCityMedcenters))
+                    <div class="container">
+                        <div class="search-result__city-name">
+                            <h2>
+                                Медцентры в других городах
+                            </h2>
+                        </div>
+                        <div class="search-result__list">
+                            <div class="medcenter_list ">
+                                @foreach($otherCityMedcenters as $otherCityMedcenter)
+                                    <div class="results d-result search-result__item entity-line clinic-line"
+                                         data-type="doctor" data-id="{{$otherCityMedcenter->id}}"
+                                         id="doctor-result-{{$otherCityMedcenter->id}}"
+                                         style="">
+
+                                        @component('model.medcenter.new_profile-short',['medcenter'=>$otherCityMedcenter,'width'=>'250px',
+                                        'medcenterType' => $medcenterType??null,
+                                        'highlightSkill'=>$highlightSkill??null])
+                                        @endcomponent
+
+                                    </div>
+
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
             @if(!empty($meta['seoText']))
                 <div class="results" style="float: right;">{!! $meta['seoText'] !!}</div>

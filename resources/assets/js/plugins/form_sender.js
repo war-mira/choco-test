@@ -28,7 +28,6 @@
     }
 })();
 
-
 (function(){
     let switcher = document.getElementById('switch-view');
     switcher.addEventListener('click', function (event){
