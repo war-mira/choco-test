@@ -91,30 +91,47 @@
                     </div>
                 @endif
             </div>
-            @if(isset($otherCityDoctors))
-                <div class="search-result">
-                    <div class="container">
-                        <div class="search-result__list">
-                            <div class="search-result__city-name">
-                                <h2>
-                                    Врачи в других городах
-                                </h2>
-                            </div>
+            @if(isset($otherCities))
+                <div class="container">
+                    <div class="search-result__city-name">
+                        <h2>
+                           @if(!isset($skill))
+                                Врачи в других городах
+                               @else
+                                {{$skill->getTitleForCity()}} в других городах
+                            @endif
+                        </h2>
+                    </div>
+                    <div class="grid cities--list">
+                        <div class="col_4">
+                            @foreach($otherCities->chunk((int)ceil($otherCities->count()/4)) as $city_row)
+                                <div data-width="1">
+                                    <ul class="list-unstyled">
+                                        @foreach($city_row as $city)
+                                            <li>
+                                                @if(!isset($skill))
+                                                    <a href="{{route('doctors.list',[
+                                                        'city'=>$city->alias
+                                                    ])}}">
 
-                            <div class="doctor_list content_scroll__block">
-                                @foreach($otherCityDoctors as $otherCityDoctor)
-                                    <div class="search-result__item entity-line doc-line" data-type="doctor"
-                                         data-id="{{$otherCityDoctor->id}}"
-                                         id="doctor-result-{{$otherCityDoctor->id}}">
-                                        @component('model.doctor.prof_new',['doctor'=>$otherCityDoctor,'width'=>'250px','highlightSkill'=>$highlightSkill??null])
-                                        @endcomponent
-                                    </div>
-                                @endforeach
-                            </div>
+                                                        Врачи в {{\App\Helpers\SeoMetadataHelper::getCityName($city)}}
+                                                    </a>
+                                                @else
+                                                    <a href="{{route('doctors.list',[
+                                                        'city'=>$city->alias,
+                                                        'input' => $skill->alias
+                                                    ])}}">
+                                                        {{$skill->getTitleForCity($city)}}
+                                                     </a>
+                                                @endif
 
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
-
                 </div>
             @endif
         </form>

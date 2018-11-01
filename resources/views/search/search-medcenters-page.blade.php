@@ -46,28 +46,29 @@
                         </div>
                     @endif
                 </div>
-                @if(isset($otherCityMedcenters))
+                @if(isset($otherCities))
                     <div class="container">
                         <div class="search-result__city-name">
                             <h2>
                                 Медцентры в других городах
                             </h2>
                         </div>
-                        <div class="search-result__list">
-                            <div class="medcenter_list ">
-                                @foreach($otherCityMedcenters as $otherCityMedcenter)
-                                    <div class="results d-result search-result__item entity-line clinic-line"
-                                         data-type="doctor" data-id="{{$otherCityMedcenter->id}}"
-                                         id="doctor-result-{{$otherCityMedcenter->id}}"
-                                         style="">
-
-                                        @component('model.medcenter.new_profile-short',['medcenter'=>$otherCityMedcenter,'width'=>'250px',
-                                        'medcenterType' => $medcenterType??null,
-                                        'highlightSkill'=>$highlightSkill??null])
-                                        @endcomponent
-
-                                    </div>
-
+                        <div class="grid cities--list">
+                            <div class="col_4">
+                                @foreach($otherCities->chunk((int)ceil($otherCities->count()/4)) as $city_row)
+                                <div data-width="1">
+                                    <ul class="list-unstyled">
+                                        @foreach($city_row as $city)
+                                            <li>
+                                                <a href="{{route('medcenters.list',[
+                                                'city'=>$city->alias
+                                            ])}}">
+                                                    Медцентры в {{\App\Helpers\SeoMetadataHelper::getCityName($city)}}
+                                                </a>
+                                            </li>
+                                         @endforeach
+                                    </ul>
+                                </div>
                                 @endforeach
                             </div>
                         </div>

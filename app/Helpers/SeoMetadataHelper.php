@@ -66,6 +66,9 @@ class SeoMetadataHelper
         }
     }
 
+    public static function getCityName($city,$case ='предложный' ){
+     return  (self::CityPP[$city->id] ?? GeographicalNamesInflection::getCase($city->name, $case));
+    }
     private static function getCityPP($cityId = null)
     {
         $city = City::find($cityId);

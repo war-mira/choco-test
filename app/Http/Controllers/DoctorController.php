@@ -187,18 +187,9 @@ class DoctorController extends Controller
         $this->applyDoctorsFilter($doctors, $filter);
 
 
-        $otherCityDoctors = Cache::tags(['doctors'])->remember('other_city-'.($skill->alias??'no').'city_id-'.$city->id??0,120,function() use ($city,$skill){
-            //   return Doctor::query()->where('doctors.status', 1)
-            //                ->where('doctors.city_id', $city_id)->whereNotNull('avatar')->limit(9)->get();
-
-            $query =   Doctor::where('city_id', '<>' , $city->id??0)
-                ->public();
-            if(!is_null($skill)){
-                $query = $query->whereHas('skills',function ($query) use ($skill){
-                    return $query->where('alias',$skill->alias);
-                });
-            }
-            return $query->whereNotNull('avatar')->limit(10)->get();
+        $otherCities = \Cache::tags(['cities'])->remember('other_city_'.$city->id??0,120,function() use($city){
+            return  City::where('id', '<>' , $city->id)
+                ->active()->get();
         });
 
         /**
@@ -219,7 +210,7 @@ class DoctorController extends Controller
         $meta = SeoMetadataHelper::getMeta($skill ?? $pageSeo, $city);
 
         return view('search.page',
-            compact('meta','otherCityDoctors','doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage', 'skill', 'comercial', 'districts', 'activeCommentsDoctor', 'activeAnswersDoctor', 'doubleActiveDoctor'));
+            compact('meta','otherCities','doctors', 'doctorsTop', 'skills', 'medcenters', 'filter', 'query', 'city', 'currentPage', 'skill', 'comercial', 'districts', 'activeCommentsDoctor', 'activeAnswersDoctor', 'doubleActiveDoctor'));
 
     }
 
