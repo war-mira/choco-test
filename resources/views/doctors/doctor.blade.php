@@ -23,11 +23,11 @@
                         @endcomponent
                     </div>
                     <div class="entity-thumb-img__rating-line rating-line">
-                        <div class="rating-line__val">{{$doctor->avg_rate}}</div>
                         <div class="rating-line__stars">
                             @component('components.rstars',['rating' => $doctor->avg_rate == 0 ? 5:$doctor->avg_rate])
                             @endcomponent
                         </div>
+                        <div class="rating-line__val">{{$doctor->avg_rate}}</div>
                     </div>
                     <div class="entity-thumb-img__bot-line">
                         <?php if(!empty($doctor->publicComments()->count())){ ?>

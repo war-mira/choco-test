@@ -1,4 +1,13 @@
 <div class="entity-line__img">
+    <div class="mob--switch_rating">
+        <div class="rating-line__stars">
+            <i aria-hidden="true" class="fa fa-star"></i>
+            {{$doctor->avg_rate}}
+        </div>
+        <a href="{{ route('doctor.item',['doctor'=>$doctor->alias]).'#tab-2' }}" class="entity-thumb-img__reviews">
+            {{$doctor->publicComments()->count()}}
+        </a>
+    </div>
     <a href="{{ route('doctor.item',['doctor'=>$doctor->alias]) }}">
     @component('components.prof-img',[  'width'=>140,
                                 'height'=>200,
@@ -26,9 +35,9 @@
     <br>
 
     <div class="entity-thumb-img__rating-line rating-line">
-        <div class="rating-line__val">{{$doctor->avg_rate}}</div>
         @component('components.rstars',['rating' => $doctor->avg_rate == 0 ? 0:$doctor->avg_rate])
         @endcomponent
+        <div class="rating-line__val">{{$doctor->avg_rate}}</div>
     </div>
 
     <div class="entity-thumb-img__bot-line">
@@ -64,6 +73,11 @@
             <div class="entity-feature__info">
                 <div class="entity-line__label">Стаж {{$doctor->exp_formatted}}</div>
             </div>
+            @if(!empty($doctor->price))
+            <div class="doctor-mobile-price">
+                Прием от: <span>{{$doctor->price}} тг</span>
+            </div>
+            @endif
         </div>
     </div>
     

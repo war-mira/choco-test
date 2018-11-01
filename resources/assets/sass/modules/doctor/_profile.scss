@@ -76,29 +76,13 @@ $font-bold: "ProximaNova-Bold", sans-serif;
 .breadcrumb li{
     font-size: 14px;
 }
+.mobile--doctor__filter{
+    display: none;
+}
 .result-control-bar{
     border-bottom: none;
-    
-    #filtersGroup{
-        .js-simple-select{
-            .selectize-input > *{
-                font-size: 14px;
-                line-height: 17px;
-                color: #454545;
-            }
-            .has-items{
-                border: 0.5px solid #DFDFDF;
-                border-radius: 30px;
-                padding: 9px 16px;
-                width: 165px;
-            }
-            
-        }
-    }
 }
 .doctor-bar{
-    display: flex;
-    max-width: 1100px;
     margin: auto;
     padding-bottom:0;
     
@@ -138,6 +122,10 @@ $font-bold: "ProximaNova-Bold", sans-serif;
             margin-bottom: 24px;
             padding: 24px 35px;
             border: 0.5px solid #DFDFDF;
+            
+            .mob--switch_rating{
+                display: none;
+            }
             
             &:hover{
                background-color: #DFDFDF; 
@@ -198,6 +186,10 @@ $font-bold: "ProximaNova-Bold", sans-serif;
                     
                     .entity-line__feature{
                         margin-top: 0;
+                        
+                        .doctor-mobile-price{
+                            display: none;
+                        }
                     }
                     
                     .entity-line__qualification{
@@ -214,6 +206,175 @@ $font-bold: "ProximaNova-Bold", sans-serif;
         }
     }
 }
-
-
-
+@media(max-width: 768px){
+    .mobile--doctor__filter{
+        display: flex;
+        justify-content: space-around;
+        padding: 12px;
+        position: absolute;
+        top:0;
+        right: 0;
+        
+        div{
+            background-color: #DB3B61;
+            color: #ffffff;
+            font-size: 12.5px;
+            line-height: 15px;
+            letter-spacing: 0.99px;
+            padding: 10px 25px;
+            border-radius: 17px;
+            display: inline-block;
+        }
+        
+        .mob {
+            &--filter{
+                &:before{
+                    font-family: FontAwesome;
+                    content: "\f037";
+                    margin-right: 5px;
+                }
+            }
+            &--region{
+                &:before{
+                    font-family: FontAwesome;
+                    content: "\f041";
+                    margin-right: 5px;
+                }
+            }
+            &--switch{
+                &:before{
+                    font-family: FontAwesome;
+                    content: "\f03a";
+                }
+            }
+        }
+    }
+    #search-form{
+        position:relative;
+        
+        .doctor-bar{
+            display:none;
+        }
+        .search-result{
+            .container{
+                padding: 0;
+                .doctor-result__list{
+                    .search-result__spec-descr{
+                        display: none;
+                    }
+                    h1{
+                        color: #000000;
+                        font-size: 20px;
+                    }
+                }
+                .content_scroll__block{
+                    
+                    .doc-line{
+                        padding: 0 0 11px;
+                        border: none;
+                        border-bottom: 0.5px solid #DEDEDE;
+                        border-top: 0.5px solid #DEDEDE;
+                        box-shadow: none;
+                        margin-bottom: 0;
+                        
+                        .entity-line__img{
+                            margin: 10px 20px;
+                            width:40%;
+                            
+                            img{
+                                width: 98px;
+                                height: 98px;
+                            }
+                            
+                            .rating-line{
+                                
+                                .rating-line__val{
+                                    font-size: 12px;
+                                    color: #787878;
+                                    text-align: center;
+                                }
+                            }
+                        }
+                        
+                        .entity-line__main{
+                            width: 45%;
+                            
+                            .profiles__title{
+                                font-size: 16px;
+                                line-height: 19px;
+                            }
+                            .entity-feature{
+                                display: block;
+                                margin-top: 5px;
+                                
+                                .doctor-mobile-price{
+                                    display: block;
+                                    margin-top: 10px;
+                                    font-family: $font-bold;
+                                    
+                                    span{
+                                        color: #FA6783;
+                                        font-size: 14px;
+                                        line-height: 16px;
+                                        font-weight: bold;
+                                    }
+                                }
+                                
+                                .entity-line__label{
+                                    margin-top: 0;
+                                }
+                            }
+                        }
+                        .appointment-book-big{
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .doctor_table{
+        display: flex;
+        flex-wrap: wrap;
+        
+        .doc-line{
+            width: 50%;
+            border: 0.5px solid #DEDEDE!important;
+            padding: 8px!important;
+            text-align: center;
+            
+            .entity-line__img{
+                width: 96%!important;
+                margin:10px 0!important;
+                
+                .mob--switch_rating{
+                    display: flex;
+                    justify-content: space-between;
+                    line-height: 14px;
+                    
+                    .rating-line__stars i{
+                        color: #FFC600;
+                    }
+                    .entity-thumb-img__reviews{
+                        margin: 0;
+                        &:before{
+                            font-family: FontAwesome;
+                            content: "\F087";
+                        }
+                    }
+                }
+                
+                img{
+                    margin: auto;
+                }
+                
+                .rating-line, .entity-thumb-img__bot-line{
+                    display: none;
+                }
+            }
+            .entity-line__main{
+                width: 96%!important;
+            }
+        }
+    }
+}
