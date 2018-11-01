@@ -1,25 +1,38 @@
 @extends('redesign.layouts.inner-page')
 @section('content')
     @include('search.search_box')
-
     <div id="app" class="app">
         <form id="search-form">
             @include('search.filtr_panel')
             <input type="hidden" name="page" value="{{$filter['page']??1}}">
             <div class="search-result">
                 <div class="container">
-                    <div class="search-result__list">
+                    <div class="search-result__list doctor-result__list">
                         <div class="search-result__city-name">
+                            <img src="{{asset('img/icons/stethoscope.png')}}" class="search_icon">
                             <h1>
                                 @if(!empty($meta['h1']))
                                     {{$meta['h1']}}
                                 @endif
                             </h1>
+                            <span>{{$doctors->total()}} врачей</span>
                         </div>
                         <div class="search-result__spec-descr">
                             <p>Топ лучших специалистов в {{ $city->name }}. Список {{ isset($skill) ? mb_strtolower($skill->name).'ов' : '' }} с фото, отзывами, рейтингом и проверенными контактами.</p>
                             <p>Быстрый поиск и запись на прием к {{isset($skill) ? mb_strtolower($skill->name).'у':'' }} на iDoctor.kz.</p>
                         </div>
+                        <div class="mobile--doctor__filter">
+                            <div class="mob--filter" style="display: none;">
+                                <span>Фильтр</span>
+                            </div>
+                            <div class="mob--region" style="display: none;">
+                                <span>Регион</span>
+                            </div>
+                            <div class="mob--switch" id="switch-view">
+                                <span></span>
+                            </div>
+                        </div>
+                        
                         @if(isset($comercial))
                             @if($comercial)
                                 @foreach($comercial->get() as $doctor)
