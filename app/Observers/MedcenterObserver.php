@@ -27,9 +27,12 @@ class MedcenterObserver
         //$this->makeSlug($medcenter);
     }
 
-    public function updated()
-    {        $this->invalidateCache();
+    public function updated(Medcenter $medcenter)
+    {
+        if(!isset($medcenter->alias))
+            $this->makeSlug($medcenter);
 
+        $this->invalidateCache();
     }
 
     public function invalidateCache()

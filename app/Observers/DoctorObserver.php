@@ -27,7 +27,9 @@ class DoctorObserver
     }
     public function updated(Doctor $doctor)
     {
-        $this->makeSlug($doctor);
+        if(!isset($doctor->id))
+            $this->makeSlug($doctor);
+
         $this->invalidateCache();
     }
     public function created(Doctor $doctor)
