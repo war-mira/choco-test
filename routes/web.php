@@ -79,7 +79,7 @@ Route::group(['prefix' => '{city}'], function () {
     });
     Route::group(['prefix' => 'medcenter', 'as' => 'medcenter.'], function () {
         Route::get('/{medcenter}', 'MedcenterController@item')->name('item');
-        Route::get('/{medcenter}/doctors', 'MedcenterController@loadDoctors')->name('doctors');
+        Route::get('/{id}/doctors', 'MedcenterController@loadDoctors')->name('doctors');
         Route::get('/{medcenter}/feedback', 'MedcenterController@feedback')->name('feedback');
     });
 

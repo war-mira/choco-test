@@ -213,7 +213,7 @@
                         <div class="entity-content__main entity-content__main_single">
                             <div class="doc-list-bar">
                                 <div class="doc-list-bar__line" id="medoc_filter"
-                                     data-action="{{route('medcenter.doctors',['medcenter'=>$medcenter->alias])}}">
+                                     data-action="{{route('medcenter.doctors',['id'=>$medcenter->id])}}">
                                     <input type="hidden" name="orderm" value="DESC"/>
                                     <input type="hidden" name="fname" value="rate"/>
                                     <div class="doc-list-bar__filter">
