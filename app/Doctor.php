@@ -415,6 +415,14 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         return $this->morphMany(ServiceItem::class, 'vendor');
     }
 
+    public function rang(){
+        return $this->HasMany(DoctorRang::class, 'doctor_id', 'id');
+    }
+
+    public function totalRang(){
+        return $this->rang()->where('key', DoctorRang::RANG_KEY_TOTAL['id']);
+    }
+
     public function scopeInCities($query, $city_id)
     {
         return $query->where('city_id', $city_id);
