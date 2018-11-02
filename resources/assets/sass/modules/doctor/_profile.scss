@@ -303,27 +303,35 @@ $font-bold: "ProximaNova-Bold", sans-serif;
                                 font-size: 16px;
                                 line-height: 19px;
                             }
-                            .entity-feature{
-                                display: block;
-                                margin-top: 5px;
-                                
-                                .doctor-mobile-price{
+                            .entity-line__descr{
+                                font-size: 12px;
+                            }
+                            .entity-line__features{
+                                .entity-line__qualification{
+                                    font-size: 12px;
+                                }
+                                .entity-feature{
                                     display: block;
-                                    margin-top: 10px;
-                                    font-family: $font-bold;
-                                    
-                                    span{
-                                        color: #FA6783;
-                                        font-size: 14px;
-                                        line-height: 16px;
-                                        font-weight: bold;
+                                    margin-top: 5px;
+
+                                    .doctor-mobile-price{
+                                        display: block;
+                                        margin-top: 10px;
+                                        font-family: $font-bold;
+
+                                        span{
+                                            color: #FA6783;
+                                            font-size: 14px;
+                                            line-height: 16px;
+                                            font-weight: bold;
+                                        }
+                                    }
+                                    .entity-line__label{
+                                        margin-top: 0;
                                     }
                                 }
-                                
-                                .entity-line__label{
-                                    margin-top: 0;
-                                }
                             }
+                            
                         }
                         .appointment-book-big{
                             display: none;
@@ -374,6 +382,10 @@ $font-bold: "ProximaNova-Bold", sans-serif;
             }
             .entity-line__main{
                 width: 96%!important;
+                
+                .entity-line__descr{
+                    height: auto!important;
+                }
             }
         }
     }
