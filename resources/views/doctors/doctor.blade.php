@@ -182,6 +182,20 @@
                             <div class="entity-map__address-descr">({{$doctor['address']}})</div>@endif
                     </div>
                 </div>
+                <div class="entity-line__share" id="share">
+                    <div class="social" data-url="" data-title="">
+                        <a href="http://www.facebook.com/sharer.php?u={{ route('doctor.item',['doctor'=>$doctor->alias,'city'=>$doctor->city->alias]) }}&t={{$doctor['name']}}&src=sp" target="_blank" title="{{$doctor['name']}}" class="push facebook" data-id="fb">
+                            <i class="fa fa-facebook"></i> Поделиться
+                        </a>
+                        <a href="http://whatsapp://send?text={{$doctor['name']}} на сайте " data-action="share/whatsapp/share"
+                           class="push whatsapp">
+                            <i class="fa fa-whatsapp"></i> Отправить
+                        </a>
+                        <a href="https://t.me/share/url?url={{ route('doctor.item',['doctor'=>$doctor->alias,'city'=>$doctor->city->alias]) }}&text={{$doctor['name']}}" class="push telegram">
+                            <i class="fa fa-telegram"></i> Отправить
+                        </a>
+                    </div>
+                </div>
                 @push('custom.js')
                     <script type="text/javascript">
                         ymaps.ready(function () {
