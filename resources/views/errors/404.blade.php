@@ -1,4 +1,4 @@
-@extends('app')
+@extends('redesign.layouts.inner-page')
 @section('content')
     <section class="section error--section__container">
         <div class="container">
