@@ -10,7 +10,7 @@
     </div>
     <a href="{{ route('doctor.item',['doctor'=>$doctor->alias,'city'=>$doctor->city->alias]) }}">
         @component('components.prof-img',[  'width'=>140,
-                                    'height'=>200,
+                                    'height'=>140,
                                     'doctor'=>$doctor])
             @slot('src')
                 {{$doctor['avatar']}}
