@@ -126,6 +126,9 @@
                             <div class="appointment-book-big__price-val">от {{$doctor->price}} тг</div>
                         </div>
                     @endif
+                    <a href="#order_doctor" data-doc-id="{{$doctor->id}}" data-dname="{{$doctor['name']}}"
+                       class="appointment-book-big__book-btn btn btn_theme_usual trigger-link popup-with-form">Записаться<span
+                                class="hidden-xl"> онлайн</span></a>
                 </div>
             </form>
         @endif
