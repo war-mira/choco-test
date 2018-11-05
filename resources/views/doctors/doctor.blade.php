@@ -166,8 +166,8 @@
                                 <a href="https://www.facebook.com/sharer/sharer.php?u={{ route('doctor.item',['doctor'=>$doctor->alias,'city'=>$doctor->city->alias]) }}&t={{$doctor['name']}}" target="_blank" title="{{$doctor['name']}}" class="push facebook" data-id="fb">
                                     <i class="fa fa-facebook"></i> Поделиться
                                 </a>
-                                <a href="http://whatsapp://send?text={{$doctor['name']}} на сайте {{ route('doctor.item',['doctor'=>$doctor->alias,'city'=>$doctor->city->alias]) }}" data-action="share/whatsapp/share"
-                                   class="push whatsapp">
+                                <a href="whatsapp://send?text={{$doctor['name']}} на сайте {{ route('doctor.item',['doctor'=>$doctor->alias,'city'=>$doctor->city->alias]) }}"
+                                   rel="nofollow" target="_blank" class="push whatsapp">
                                     <i class="fa fa-whatsapp"></i> Отправить
                                 </a>
                                 <a href="https://t.me/share/url?url={{ route('doctor.item',['doctor'=>$doctor->alias,'city'=>$doctor->city->alias]) }}&text={{$doctor['name']}}" class="push telegram">
