@@ -97,7 +97,7 @@
         </div>
         <div class="work-hours__book">
             {{--<a href="#order_med" data-doc-id="{{$medcenter->id}}" data-dname="{{$medcenter['name']}}" data-status="6" class="appointment-book-big__book-btn btn btn_theme_usual trigger-link popup-with-form">Записаться<span class="hidden-xl"> онлайн</span></a>--}}
-            <a href="{{ route('medcenter.item',['medcenter'=>$medcenter->alias, 'city' => $medcenter->city->alias]) }}" class="appointment-book-big__book-btn btn btn_theme_usual trigger-link">Побробнее</a>
+            <a href="{{ route('medcenter.item',['medcenter'=>$medcenter->alias, 'city' => $medcenter->city->alias]) }}" class="appointment-book-big__book-btn btn btn_theme_usual trigger-link">Подробнее</a>
         </div>
     </div>
 </div>
