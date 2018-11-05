@@ -92,45 +92,94 @@ $font-bold: "ProximaNova-Bold", sans-serif;
 }
 
 .entity-line__share{
-    width: 100%;
-    font-size: 14px;
-    color: #ffffff;
-    display: none;
-    
-    div{
-        display: flex;
-        text-align: center;
-        
-        a{
-            width: 100%;
-            padding: 12px 0;
-            
-            i{
-                margin-right: 5px;
-            }
+    &--mob{
+        @media(min-width: 768px) {
+            display: none;
         }
-        .facebook {
-            background-color:#3b5998;
+        width: 100%;
+        font-size: 14px;
+        color: #ffffff;
+        div{
+            display: flex;
+            text-align: center;
 
-            &:hover{
-                background-color:#2d4373;
-            }
-        }
-        .whatsapp{
-            background-color: #25D366;
+            a{
+                width: 100%;
+                padding: 12px 0;
 
-            &:hover{
-                background-color:#189447;
+                i{
+                    margin-right: 5px;
+                }
             }
-        }
-        .telegram{
-            background-color: #0088CC;
-            
-            &:hover{
-                background-color: #004c71;
+            .facebook {
+                background-color:#3b5998;
+
+                &:hover{
+                    background-color:#2d4373;
+                }
+            }
+            .whatsapp{
+                background-color: #25D366;
+
+                &:hover{
+                    background-color:#189447;
+                }
+            }
+            .telegram{
+                background-color: #0088CC;
+
+                &:hover{
+                    background-color: #004c71;
+                }
             }
         }
     }
+    &--decs{
+        text-align: center;
+        float: right;
+        margin-top: 10px;
+        
+        @media(max-width: 768px) {
+            display: none;
+        }
+        .social{
+            border: 0.5px solid #DDDDDD;
+            border-radius: 16px;
+            padding: 9px 16px;
+            width: 100%;
+            max-width: 175px;
+            font-size: 12px;
+            
+            a{
+                width: 100%;
+                padding: 3px;
+                font-size: 16px;
+            }
+            .facebook {
+                color:#3b5998;
+
+                &:hover{
+                    color:#2d4373;
+                }
+            }
+            .whatsapp{
+                color: #25D366;
+
+                &:hover{
+                    color:#189447;
+                }
+            }
+            .telegram{
+                color: #0088CC;
+
+                &:hover{
+                    color: #004c71;
+                }
+            }
+        }
+    }
+    
+
 }
 
 .doctor-result__list{
