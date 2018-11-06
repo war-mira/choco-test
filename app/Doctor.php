@@ -464,7 +464,7 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
 
     public function scopeSortByRang($query)
     {
-        return $query->join('doctors_rang',function ($join) {
+        return $query->leftJoin('doctors_rang',function ($join) {
             $join->on('doctors.id','=','doctors_rang.doctor_id')
                 ->where('doctors_rang.key', '=', 0);
         })->orderBy('doctors_rang.value','desc');
