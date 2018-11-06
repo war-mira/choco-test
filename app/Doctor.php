@@ -462,6 +462,15 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         return $filters->apply($query);
     }
 
+    public function scopeSortByRang($query)
+    {
+        return $query->join('doctors_rang',function ($join) {
+            $join->on('doctors.id','=','doctors_rang.doctor_id')
+                ->where('doctors_rang.key', '=', 0);
+        })->orderBy('doctors_rang.value','desc');
+    }
+
+
     public function scopeRedisSearchSet($query, $hash)
     {
 
