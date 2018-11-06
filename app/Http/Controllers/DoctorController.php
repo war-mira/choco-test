@@ -305,7 +305,7 @@ class DoctorController extends Controller
 
         $order = [$filter['sort'] ?? 'rate', $filter['order'] ?? 'desc'];
 
-        $doctors->SortByRang();
+        $doctors->withCount('publicComments')->SortByRang();
 
 //        if ($order[0] == 'rate')
 //            $doctors->orderBy('rate', $order[1]);
