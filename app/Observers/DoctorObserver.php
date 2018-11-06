@@ -34,6 +34,8 @@ class DoctorObserver
     }
     public function created(Doctor $doctor)
     {
+        $this->makeSlug($doctor);
+
         $this->invalidateCache();
     }
     public function invalidateCache()
