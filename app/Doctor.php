@@ -487,6 +487,36 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
 //        return $this->belongsTo(Medcenter::class,'med_id','id');
 //    }
 
+    public function computeRang()
+    {
+        $components = collect(DoctorRang::RANG_COMPUTED)->mapWithKeys(function ($component,$key){
+            $option = constant('\App\DoctorRang::'.$component);
+            $logic = \App\DoctorRang::{$option['name'].'_setter'}($this);
+
+            $this->rang()->updateOrCreate([
+                    'key'=> $option['id'],
+                ], [
+                    'value'=>$logic
+                ]);
+
+            return [$option['name']=>[
+                'value'=>$logic,
+                'weight'=>$option['weight']
+            ]];
+        });
+
+        $total = $components->reduce(function ($cary, $item){
+            return $cary + $item['value']*$item['weight'];
+        });
+
+        $this->rang()->updateOrCreate(['key'=> 0,], ['value'=>$total]);
+
+        return [
+            'items'=>$components,
+            'total'=>$total
+        ];
+    }
+
     public function getExpFormattedAttribute()
     {
         if ($this->works_since == null)
