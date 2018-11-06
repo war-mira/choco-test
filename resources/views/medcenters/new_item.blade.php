@@ -258,8 +258,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="doc-list">
-                                <div class="doc-list__list">
+                            <div class="doctor-result__list">
+                                <div class="doctor_list">
 
                                     @foreach($medcenter->publicDoctors()->with('medcenters')
                                     ->whereHas(
