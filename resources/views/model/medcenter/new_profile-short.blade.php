@@ -56,7 +56,7 @@
                 </div>
                 <div class="profiles__desc clinic-line__brief-descr">
                     <a class="link-dotted"
-                       href="{{route('medcenters.list')}}">{{$medcenter['city']->name}}</a>, {{$medcenter['map']}}
+                       href="{{route('medcenters.item',['medcenter'=>$medcenter->alias, 'city' => $medcenter->city->alias])}}">{{$medcenter['city']->name}}</a>, {{$medcenter['map']}}
                 </div>
             </div>
         </div>

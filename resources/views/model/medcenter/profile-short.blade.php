@@ -21,7 +21,7 @@
     <ul class="profiles__desc-list">
         <li><span>Рейтинг:</span> {{round($medcenter['rate'],1)}}</li>
         <li><span>Адрес:</span> <a class="link-dotted"
-                                   href="{{route('medcenters.list')}}">{{$medcenter['city']->name}}</a>, {{$medcenter['map']}}
+                                   href="{{route('medcenters.item',['medcenter'=>$medcenter->alias, 'city' => $medcenter->city->alias])}}">{{$medcenter['city']->name}}</a>, {{$medcenter['map']}}
         </li>
         <li><span>Выезд на дом:</span>
             @if($medcenter['ambulatory']==1)
