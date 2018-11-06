@@ -19,13 +19,13 @@ class MetricManager
 
     ];
     static $metrics = [
-        'feedback_opened',
-        'medcenters_with_feedback',
+//        'feedback_opened',
+//        'medcenters_with_feedback',
         'doctors_with_feedback',
-        'doctors_without_phones_with_feedback',
-        'doctor_clicks',
-        'doctors_with_clicks',
-        'doctors_with_clicks_total'
+//        'doctors_without_phones_with_feedback',
+//        'doctor_clicks',
+//        'doctors_with_clicks',
+//        'doctors_with_clicks_total'
     ];
 
 
@@ -84,7 +84,7 @@ class MetricManager
                 where owner_type = 'Doctor'
                 and created_at <= '{$point->{'endOf'.$scale}()->toDateTimeString()}'
                 group by owner_id
-                having cnt>=1) as tmp")[0]->num
+                having cnt>=5) as tmp")[0]->num
             ;
     }
 
@@ -110,7 +110,7 @@ class MetricManager
                     $point->{'startOf'.$scale}()->timestamp,
                     $point->{'endOf'.$scale}()->timestamp))
             ];
-        })->where('count','>',5)->count();
+        })->where('count','>',50)->count();
 
         return $ids;
     }
@@ -157,7 +157,7 @@ class MetricManager
             ];
         })
             ->where('count','>=',1)
-//            ->where('count','<',10)
+            ->where('count','<',10)
             ->count();
 
         return $ids;

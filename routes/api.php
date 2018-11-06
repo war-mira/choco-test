@@ -68,13 +68,13 @@ Route::get('analytics',function (){
     $stat = new \App\Helpers\MetricManager();
 
     return $stat->report(
-        '2018-10-01'
+        '2018-10-22'
     );
 });
 
 Route::get('metrics',function (){
     return [
-        'doctors_with_clicks' => count(Redis::keys('doctor:*:clicks')),
+        'doctors_with_clicks' => count(Redis::keys('doctor:*:show-phone')),
         'doctors_published' => Doctor::public()->count(),
         'medcenters_published' => \App\Medcenter::public()->count(),
         'feedback_opened' => \App\Comment::where(['status'=>1,'owner_type'=>'Doctor'])->count(),

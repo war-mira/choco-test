@@ -415,6 +415,14 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         return $this->morphMany(ServiceItem::class, 'vendor');
     }
 
+    public function rang(){
+        return $this->HasMany(DoctorRang::class, 'doctor_id', 'id');
+    }
+
+    public function totalRang(){
+        return $this->rang()->where('key', DoctorRang::RANG_KEY_TOTAL['id']);
+    }
+
     public function scopeInCities($query, $city_id)
     {
         return $query->where('city_id', $city_id);
@@ -454,6 +462,15 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
         return $filters->apply($query);
     }
 
+    public function scopeSortByRang($query)
+    {
+        return $query->join('doctors_rang',function ($join) {
+            $join->on('doctors.id','=','doctors_rang.doctor_id')
+                ->where('doctors_rang.key', '=', 0);
+        })->orderBy('doctors_rang.value','desc');
+    }
+
+
     public function scopeRedisSearchSet($query, $hash)
     {
 
@@ -478,6 +495,36 @@ class Doctor extends Model implements IReferenceable, ISeoMetadata
 //    {
 //        return $this->belongsTo(Medcenter::class,'med_id','id');
 //    }
+
+    public function computeRang()
+    {
+        $components = collect(DoctorRang::RANG_COMPUTED)->mapWithKeys(function ($component,$key){
+            $option = constant('\App\DoctorRang::'.$component);
+            $logic = \App\DoctorRang::{$option['name'].'_setter'}($this);
+
+            $this->rang()->updateOrCreate([
+                    'key'=> $option['id'],
+                ], [
+                    'value'=>$logic
+                ]);
+
+            return [$option['name']=>[
+                'value'=>$logic,
+                'weight'=>$option['weight']
+            ]];
+        });
+
+        $total = $components->reduce(function ($cary, $item){
+            return $cary + $item['value']*$item['weight'];
+        });
+
+        $this->rang()->updateOrCreate(['key'=> 0,], ['value'=>$total]);
+
+        return [
+            'items'=>$components,
+            'total'=>$total
+        ];
+    }
 
     public function getExpFormattedAttribute()
     {
