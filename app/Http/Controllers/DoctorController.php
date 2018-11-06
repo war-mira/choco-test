@@ -304,16 +304,19 @@ class DoctorController extends Controller
             SearchHelper::searchByFields($doctors, ['firstname', 'lastname', 'patronymic', 'skills' => ['name']], $filter['q']);
 
         $order = [$filter['sort'] ?? 'rate', $filter['order'] ?? 'desc'];
-        if ($order[0] == 'rate')
-            $doctors->orderBy('rate', $order[1]);
-        else if ($order[0] == 'price')
-            $doctors->orderBy('price', $order[1]);
-        else if ($order[0] == 'orders_count')
-            $doctors->orderBy('orders_count', $order[1]);
-        else if ($order[0] == 'exp')
-            $doctors->orderBy('works_since', $order[1] == 'asc' ? 'desc' : 'asc');
-        else if ($order[0] == 'comments_count')
-            $doctors->withCount('publicComments')->orderBy('public_comments_count', $order[1]);
+
+        $doctors->withCount('publicComments')->SortByRang();
+
+//        if ($order[0] == 'rate')
+//            $doctors->orderBy('rate', $order[1]);
+//        else if ($order[0] == 'price')
+//            $doctors->orderBy('price', $order[1]);
+//        else if ($order[0] == 'orders_count')
+//            $doctors->orderBy('orders_count', $order[1]);
+//        else if ($order[0] == 'exp')
+//            $doctors->orderBy('works_since', $order[1] == 'asc' ? 'desc' : 'asc');
+//        else if ($order[0] == 'comments_count')
+//            $doctors->withCount('publicComments')->orderBy('public_comments_count', $order[1]);
     }
 
     public function tourism_list()

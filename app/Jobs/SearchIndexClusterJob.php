@@ -93,6 +93,7 @@ class SearchIndexClusterJob implements ShouldQueue
 
             $data = $index_set->skip($per_page*$page)->take($per_page)->get();
             \App\Jobs\SearchIndexJob::dispatch($config,$data);
+            \App\Jobs\DoctorRangCalculateJob::dispatch($data);
         }
 
     }

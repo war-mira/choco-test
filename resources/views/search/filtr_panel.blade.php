@@ -5,7 +5,7 @@
     ]) }}
 
     <div class="container">
-        <div class="result-control-bar__line" id="filtersGroup">
+        {{--<div class="result-control-bar__line" id="filtersGroup">
             <div class="result-control-bar__query">
 
                 <input type="radio" style="display:none;" checked="true" name="order" value="asc">
@@ -51,7 +51,7 @@
                     <input type="radio" style="display:none;" name="sort" value="orders_count"/>
                 </a>
             </div>
-        </div>
+        </div>--}}
     </div>
 </div>
 @push('custom.js')

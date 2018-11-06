@@ -45,8 +45,9 @@
                         </div>
                         <div class="form-group col-md-6 small-padding-left">
                             <label>Телефон</label>
-                            <input id="user_email" type="text" placeholder="+7 (123) 456-7890" data-format="+7 (ddd) ddd-dddd" required
-                                   pattern="\+7 \(\d{3}\) \d{3}-\d{4}" name="user_email" required>
+                            <input class="bfh-phone" id="user_email" name="phone"
+                                title="Телефон в формате +7 (XXX) XXX XX-XX" type="tel"
+                                placeholder="Телефон" name="user_email" required>
                         </div>
                     </div>
                     @endif

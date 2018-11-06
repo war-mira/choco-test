@@ -341,14 +341,14 @@ $font-bold: "ProximaNova-Bold", sans-serif;
             }
         }
     }
-    #search-form{
+    #search-form, #tab-2{
         position:relative;
         
         .doctor-bar{
             display:none;
         }
-        .search-result{
-            .container{
+        .search-result, .entity-content{
+            .container, .entity-content__main_single{
                 padding: 0;
                 .doctor-result__list{
                     .search-result__spec-descr{
@@ -359,7 +359,7 @@ $font-bold: "ProximaNova-Bold", sans-serif;
                         font-size: 20px;
                     }
                 }
-                .content_scroll__block{
+                .content_scroll__block, .doctor_list{
                     
                     .doc-line{
                         padding: 0 0 11px;
