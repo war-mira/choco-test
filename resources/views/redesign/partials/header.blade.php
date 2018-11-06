@@ -63,6 +63,24 @@
             </div>
         </div>
         <div class="mobile-menu pattern-bg">
+            <a href="#" class="mobile-menu__item mobile-menu-item">
+                <span>Врачи</span>
+            </a>
+            <a href="#" class="mobile-menu__item mobile-menu-item">
+                <span>Медцентры</span>
+            </a>
+            <a href="#" class="mobile-menu__item mobile-menu-item">
+                <span>Медбиблиотека</span>
+            </a>
+            <a href="#" class="mobile-menu__item mobile-menu-item">
+                <span>Справочник заболеваний</span>
+            </a>
+            <a href="#" class="mobile-menu__item mobile-menu-item">
+                <span>Вопросы и ответы</span>
+            </a>
+            <a href="#" class="mobile-menu__item mobile-menu-item">
+                <span>Блог</span>
+            </a>
                 @if(Auth::guest())
                     <a href="#signin-modal"  rel="modal-link"  class="mobile-menu__item mobile-menu-item">
                         <span>Войти</span>
@@ -79,9 +97,6 @@
                         {{ csrf_field() }}
                     </form>
                 @endif
-            
-            
-            
             
             {{--<a href="#" class="mobile-menu__item mobile-menu-item">--}}
                 {{--<span>Сотрудничество</span>--}}

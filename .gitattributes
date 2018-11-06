@@ -1,5 +1,6 @@
 * text=auto
 *.php text=off
+*.scss text=off
 *.css linguist-vendored
 *.scss linguist-vendored
 *.js linguist-vendored

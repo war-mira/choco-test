@@ -84,6 +84,10 @@ class Grid {
         //console.log('hello');
         this.initButtons();
         this.initSortable();
+        if(!this.hasRaw()){
+            this.addRowBlock();
+            this.rows.get(1).columns.get(1).addItem(this.options.defaultItem);
+        }
         // this.initRowIcons();
     }
     initRaw(){

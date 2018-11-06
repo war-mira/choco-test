@@ -1,6 +1,6 @@
 <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
 <script src="{{hotreload("/build/js/app.js")}}"></script>
-
+@include('jsond.search')
 <script type="text/javascript">
     $('.search_event').on('click', function () {
         ga('send', 'event', {

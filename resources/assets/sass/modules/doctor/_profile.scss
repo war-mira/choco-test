@@ -90,6 +90,98 @@ $font-bold: "ProximaNova-Bold", sans-serif;
         display: block;
     }
 }
+
+.entity-line__share{
+    &--mob{
+        @media(min-width: 768px) {
+            display: none;
+        }
+        width: 100%;
+        font-size: 14px;
+        color: #ffffff;
+        div{
+            display: flex;
+            text-align: center;
+
+            a{
+                width: 100%;
+                padding: 12px 0;
+
+                i{
+                    margin-right: 5px;
+                }
+            }
+            .facebook {
+                background-color:#3b5998;
+
+                &:hover{
+                    background-color:#2d4373;
+                }
+            }
+            .whatsapp{
+                background-color: #25D366;
+
+                &:hover{
+                    background-color:#189447;
+                }
+            }
+            .telegram{
+                background-color: #0088CC;
+
+                &:hover{
+                    background-color: #004c71;
+                }
+            }
+        }
+    }
+    &--decs{
+        text-align: center;
+        float: right;
+        margin-top: 10px;
+        
+        @media(max-width: 768px) {
+            display: none;
+        }
+        .social{
+            border: 0.5px solid #DDDDDD;
+            border-radius: 16px;
+            padding: 9px 16px;
+            width: 100%;
+            max-width: 175px;
+            font-size: 12px;
+            
+            a{
+                width: 100%;
+                padding: 3px;
+                font-size: 16px;
+            }
+            .facebook {
+                color:#3b5998;
+
+                &:hover{
+                    color:#2d4373;
+                }
+            }
+            .whatsapp{
+                color: #25D366;
+
+                &:hover{
+                    color:#189447;
+                }
+            }
+            .telegram{
+                color: #0088CC;
+
+                &:hover{
+                    color: #004c71;
+                }
+            }
+        }
+    }
+    
+
+}
+
 .doctor-result__list{
     
     .search-result__city-name{
@@ -303,28 +395,37 @@ $font-bold: "ProximaNova-Bold", sans-serif;
                                 font-size: 16px;
                                 line-height: 19px;
                             }
-                            .entity-feature{
-                                display: block;
-                                margin-top: 5px;
-                                
-                                .doctor-mobile-price{
+                            .entity-line__descr{
+                                font-size: 12px;
+                            }
+                            .entity-line__features{
+                                .entity-line__qualification{
+                                    font-size: 12px;
+                                }
+                                .entity-feature{
                                     display: block;
-                                    margin-top: 10px;
-                                    font-family: $font-bold;
-                                    
-                                    span{
-                                        color: #FA6783;
-                                        font-size: 14px;
-                                        line-height: 16px;
-                                        font-weight: bold;
+                                    margin-top: 5px;
+
+                                    .doctor-mobile-price{
+                                        display: block;
+                                        margin-top: 10px;
+                                        font-family: $font-bold;
+
+                                        span{
+                                            color: #FA6783;
+                                            font-size: 14px;
+                                            line-height: 16px;
+                                            font-weight: bold;
+                                        }
+                                    }
+                                    .entity-line__label{
+                                        margin-top: 0;
                                     }
                                 }
-                                
-                                .entity-line__label{
-                                    margin-top: 0;
-                                }
                             }
+                            
                         }
+                        
                         .appointment-book-big{
                             display: none;
                         }
@@ -374,6 +475,10 @@ $font-bold: "ProximaNova-Bold", sans-serif;
             }
             .entity-line__main{
                 width: 96%!important;
+                
+                .entity-line__descr{
+                    height: auto!important;
+                }
             }
         }
     }

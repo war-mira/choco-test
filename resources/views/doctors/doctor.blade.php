@@ -159,8 +159,37 @@
                             {{--@endif--}}
                         </div>
                     </div>
-
                 </div>
+                    <div class="entity-line__share">
+                        <div class="entity-line__share--mob" id="share">
+                            <div class="social">
+                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ route('doctor.item',['doctor'=>$doctor->alias,'city'=>$doctor->city->alias]) }}&t={{$doctor['name']}}" target="_blank" title="{{$doctor['name']}}" class="push facebook" data-id="fb">
+                                    <i class="fa fa-facebook"></i> Поделиться
+                                </a>
+                                <a href="whatsapp://send?text={{$doctor['name']}} на сайте {{ route('doctor.item',['doctor'=>$doctor->alias,'city'=>$doctor->city->alias]) }}"
+                                   rel="nofollow" target="_blank" class="push whatsapp">
+                                    <i class="fa fa-whatsapp"></i> Отправить
+                                </a>
+                                <a href="https://t.me/share/url?url={{ route('doctor.item',['doctor'=>$doctor->alias,'city'=>$doctor->city->alias]) }}&text={{$doctor['name']}}" class="push telegram">
+                                    <i class="fa fa-telegram"></i> Отправить
+                                </a>
+                            </div>
+                        </div>
+                        <div class="entity-line__share--decs">
+                            <div class="social">
+                                <span>Поделиться</span>
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ route('doctor.item',['doctor'=>$doctor->alias,'city'=>$doctor->city->alias]) }}&t={{$doctor['name']}}" target="_blank" class="push facebook">
+                                    <i class="fa fa-facebook"></i> 
+                                </a>
+                                <a href="https://api.whatsapp.com/send?text={{$doctor['name']}}на сайте {{ route('doctor.item',['doctor'=>$doctor->alias,'city'=>$doctor->city->alias]) }}" target="_blank" class="push whatsapp">
+                                    <i class="fa fa-whatsapp"></i>
+                                </a>
+                                <a href="https://t.me/share/url?url={{ route('doctor.item',['doctor'=>$doctor->alias,'city'=>$doctor->city->alias]) }}&text={{$doctor['name']}}" target="_blank" class="push telegram">
+                                    <i class="fa fa-telegram"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
             </div>
             <div class="entity-line__additional">

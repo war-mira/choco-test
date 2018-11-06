@@ -73,6 +73,7 @@ class TextElement extends AbstractElement {
                 buttons: [
                     'bold',
                     'italic',
+                    'h1',
                     'h2',
                     'h3',
                     'h4',
